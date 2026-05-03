@@ -7,10 +7,22 @@ type RouteContext = {
 };
 
 type ResumeRequestBody = {
+  action?: "generate" | "improve-bullet";
   targetRole?: string;
   experienceLevel?: string;
-  tone?: string;
+  industry?: string;
   achievement?: string;
+  tools?: string;
+  metrics?: string;
+  tone?: string;
+  outputMode?: string;
+  bullet?: string;
+};
+
+type ResumeGeneration = {
+  bullets: string[];
+  keywords: string[];
+  tips: string[];
 };
 
 type GroqChatResponse = {
@@ -27,7 +39,7 @@ type GroqChatResponse = {
 const GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL = "llama-3.3-70b-versatile";
 const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX_REQUESTS = 5;
+const RATE_LIMIT_MAX_REQUESTS = 8;
 const requestLog = new Map<string, number[]>();
 
 function getClientId(request: NextRequest) {
@@ -58,32 +70,182 @@ function sanitizeInput(value: unknown, maxLength: number) {
   return value.trim().slice(0, maxLength);
 }
 
-function parseBullets(content: string) {
-  try {
-    const parsed = JSON.parse(content) as unknown;
-    if (Array.isArray(parsed)) {
-      return parsed.filter((item): item is string => typeof item === "string").slice(0, 5);
-    }
-
-    if (parsed && typeof parsed === "object" && "bullets" in parsed) {
-      const maybeObject = parsed as { bullets?: unknown };
-      if (!Array.isArray(maybeObject.bullets)) {
-        return [];
-      }
-
-      return maybeObject.bullets
-        .filter((item): item is string => typeof item === "string")
-        .slice(0, 5);
-    }
-  } catch {
-    // Fall through to line parsing for occasional non-JSON model responses.
+function getStringArray(value: unknown, maxItems: number) {
+  if (!Array.isArray(value)) {
+    return [];
   }
 
-  return content
-    .split("\n")
-    .map((line) => line.replace(/^[-*\d.)\s]+/, "").trim())
+  return value
+    .filter((item): item is string => typeof item === "string")
+    .map((item) => item.trim())
     .filter(Boolean)
-    .slice(0, 5);
+    .slice(0, maxItems);
+}
+
+function parseJsonObject(content: string) {
+  try {
+    const parsed = JSON.parse(content) as unknown;
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch {
+    const match = content.match(/\{[\s\S]*\}/);
+    if (!match) {
+      return null;
+    }
+
+    try {
+      const parsed = JSON.parse(match[0]) as unknown;
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+}
+
+function parseGeneration(content: string): ResumeGeneration {
+  const parsed = parseJsonObject(content) as {
+    bullets?: unknown;
+    keywords?: unknown;
+    tips?: unknown;
+  } | null;
+
+  return {
+    bullets: getStringArray(parsed?.bullets, 5),
+    keywords: getStringArray(parsed?.keywords, 10),
+    tips: getStringArray(parsed?.tips, 3),
+  };
+}
+
+function parseImprovedBullet(content: string) {
+  const parsed = parseJsonObject(content) as { bullet?: unknown } | null;
+  return typeof parsed?.bullet === "string" ? parsed.bullet.trim() : "";
+}
+
+function getModeGuidance(outputMode: string) {
+  if (outputMode === "ATS-optimized") {
+    return "Prioritize role-relevant ATS keywords, standard resume phrasing, and searchable skills without keyword stuffing.";
+  }
+
+  if (outputMode === "Short & punchy") {
+    return "Keep bullets very tight, direct, and punchy; prefer 16-22 words per bullet.";
+  }
+
+  return "Balance human recruiter readability with measurable impact, credibility, and role-specific context.";
+}
+
+function getToneGuidance(tone: string) {
+  if (tone === "Professional") {
+    return "Use polished, credible business language with restrained claims.";
+  }
+
+  if (tone === "Concise") {
+    return "Use compact wording, remove filler, and keep each bullet under 22 words.";
+  }
+
+  return "Use confident action verbs and sharper impact language while staying believable.";
+}
+
+async function callGroq(apiKey: string, prompt: string, maxCompletionTokens: number) {
+  const groqResponse = await fetch(GROQ_CHAT_COMPLETIONS_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: GROQ_MODEL,
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are an expert resume writer and technical recruiter. You write specific, truthful, ATS-friendly bullets with strong action verbs and role-relevant keywords.",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      temperature: 0.42,
+      max_completion_tokens: maxCompletionTokens,
+      response_format: { type: "json_object" },
+    }),
+  });
+
+  const data = (await groqResponse.json()) as GroqChatResponse;
+
+  if (!groqResponse.ok) {
+    throw new Error(
+      data.error?.message || "AI generation failed. Please try again in a moment.",
+    );
+  }
+
+  return data.choices?.[0]?.message?.content || "";
+}
+
+function getCleanBody(rawBody: ResumeRequestBody) {
+  return {
+    action: rawBody.action || "generate",
+    targetRole: sanitizeInput(rawBody.targetRole, 120),
+    experienceLevel: sanitizeInput(rawBody.experienceLevel, 60) || "Mid level",
+    industry: sanitizeInput(rawBody.industry, 120),
+    achievement: sanitizeInput(rawBody.achievement, 1_000),
+    tools: sanitizeInput(rawBody.tools, 300),
+    metrics: sanitizeInput(rawBody.metrics, 240),
+    tone: sanitizeInput(rawBody.tone, 40) || "Impactful",
+    outputMode: sanitizeInput(rawBody.outputMode, 60) || "Recruiter-friendly",
+    bullet: sanitizeInput(rawBody.bullet, 400),
+  };
+}
+
+function buildGeneratePrompt(input: ReturnType<typeof getCleanBody>) {
+  const metricsGuidance = input.metrics
+    ? `Use these user-provided metrics/results where relevant: ${input.metrics}`
+    : "If no metrics are provided, add conservative, realistic metrics only when the task implies measurable scope or improvement. Do not invent extreme revenue, headcount, or company-wide claims.";
+
+  return [
+    "Generate recruiter-ready resume content for this candidate.",
+    `Target role: ${input.targetRole}`,
+    `Experience level: ${input.experienceLevel}`,
+    `Industry/domain: ${input.industry || "Not specified"}`,
+    `Achievement/task: ${input.achievement}`,
+    `Tools/technologies used: ${input.tools || "Not specified"}`,
+    `Tone: ${input.tone}`,
+    `Output mode: ${input.outputMode}`,
+    `Mode guidance: ${getModeGuidance(input.outputMode)}`,
+    `Tone guidance: ${getToneGuidance(input.tone)}`,
+    metricsGuidance,
+    "Rules:",
+    "- Produce exactly 5 resume bullets.",
+    "- Start every bullet with a strong action verb.",
+    "- Include role-relevant keywords naturally.",
+    "- Avoid generic phrases such as responsible for, helped with, worked on, or involved in.",
+    "- Avoid overused AI-sounding language such as leveraged, spearheaded, cutting-edge, robust, seamless, and game-changing unless truly natural.",
+    "- Keep bullets concise, ATS-friendly, and credible.",
+    "- Use numbers, percentages, timeframes, volumes, or quality indicators where useful.",
+    "- If adding inferred metrics, keep them modest and plausible.",
+    "- Return 6-10 keywords that were used or should be represented.",
+    "- Return 2-3 short improvement tips for the user's resume input.",
+    'Return only JSON in this exact shape: {"bullets":["...","...","...","...","..."],"keywords":["..."],"tips":["..."]}.',
+  ].join("\n");
+}
+
+function buildImprovePrompt(input: ReturnType<typeof getCleanBody>) {
+  return [
+    "Rewrite only the provided resume bullet into a stronger version.",
+    `Target role: ${input.targetRole}`,
+    `Experience level: ${input.experienceLevel}`,
+    `Industry/domain: ${input.industry || "Not specified"}`,
+    `Tools/technologies used: ${input.tools || "Not specified"}`,
+    `Metrics/results: ${input.metrics || "Not specified"}`,
+    `Tone: ${input.tone}`,
+    `Output mode: ${input.outputMode}`,
+    `Original bullet: ${input.bullet}`,
+    "Rules:",
+    "- Keep the meaning truthful to the original bullet.",
+    "- Improve specificity, action verb strength, ATS keywords, and measurable impact.",
+    "- Keep it concise and recruiter-ready.",
+    "- Do not rewrite other bullets.",
+    '- Return only JSON in this exact shape: {"bullet":"..."}',
+  ].join("\n");
 }
 
 export async function POST(request: NextRequest, { params }: RouteContext) {
@@ -109,80 +271,57 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
     );
   }
 
-  const body = (await request.json()) as ResumeRequestBody;
-  const targetRole = sanitizeInput(body.targetRole, 120);
-  const experienceLevel = sanitizeInput(body.experienceLevel, 60) || "Mid level";
-  const tone = sanitizeInput(body.tone, 40) || "Impactful";
-  const achievement = sanitizeInput(body.achievement, 900);
+  const input = getCleanBody((await request.json()) as ResumeRequestBody);
 
-  if (!targetRole || !achievement) {
+  if (!input.targetRole || !input.achievement) {
     return NextResponse.json(
       { error: "Please enter a target role and achievement before generating." },
       { status: 400 },
     );
   }
 
-  const prompt = [
-    "Create exactly 5 ATS-friendly resume bullet points.",
-    `Target role: ${targetRole}`,
-    `Experience level: ${experienceLevel}`,
-    `Tone: ${tone}`,
-    `Achievement/task: ${achievement}`,
-    "Rules:",
-    "- Use concise, strong action verbs.",
-    "- Tailor each bullet to the role, level, and tone.",
-    "- Include measurable impact language where possible, but do not invent fake numbers.",
-    "- Keep each bullet under 28 words.",
-    '- Return only JSON in this shape: {"bullets":["...","...","...","...","..."]}. No markdown. No explanation.',
-  ].join("\n");
+  try {
+    if (input.action === "improve-bullet") {
+      if (!input.bullet) {
+        return NextResponse.json(
+          { error: "Choose a bullet to improve first." },
+          { status: 400 },
+        );
+      }
 
-  const groqResponse = await fetch(GROQ_CHAT_COMPLETIONS_URL, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: GROQ_MODEL,
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are an expert resume writer who writes concise, ATS-friendly bullets for modern job seekers.",
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-      temperature: 0.45,
-      max_completion_tokens: 450,
-      response_format: { type: "json_object" },
-    }),
-  });
+      const content = await callGroq(apiKey, buildImprovePrompt(input), 220);
+      const bullet = parseImprovedBullet(content);
 
-  const data = (await groqResponse.json()) as GroqChatResponse;
+      if (!bullet) {
+        return NextResponse.json(
+          { error: "AI response was incomplete. Please try improving the bullet again." },
+          { status: 502 },
+        );
+      }
 
-  if (!groqResponse.ok) {
+      return NextResponse.json({ bullet });
+    }
+
+    const content = await callGroq(apiKey, buildGeneratePrompt(input), 850);
+    const result = parseGeneration(content);
+
+    if (result.bullets.length !== 5) {
+      return NextResponse.json(
+        { error: "AI response was incomplete. Please try generating again." },
+        { status: 502 },
+      );
+    }
+
+    return NextResponse.json(result);
+  } catch (error) {
     return NextResponse.json(
       {
         error:
-          data.error?.message ||
-          "AI generation failed. Please try again in a moment.",
+          error instanceof Error
+            ? error.message
+            : "AI generation failed. Please try again in a moment.",
       },
-      { status: groqResponse.status },
+      { status: 500 },
     );
   }
-
-  const content = data.choices?.[0]?.message?.content || "";
-  const bullets = parseBullets(content);
-
-  if (bullets.length !== 5) {
-    return NextResponse.json(
-      { error: "AI response was incomplete. Please try generating again." },
-      { status: 502 },
-    );
-  }
-
-  return NextResponse.json({ bullets });
 }

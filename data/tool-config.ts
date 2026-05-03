@@ -22,17 +22,17 @@ export type ToolField = {
   defaultValue?: string;
   rows?: number;
   options?: ToolFieldOption[];
+  layout?: "half" | "full";
 };
 
 export type ToolFormValues = Record<string, string>;
 
-export type ToolMockOutput = {
+export type ToolOutputConfig = {
   title: string;
   description: string;
   emptyTitle: string;
   emptyDescription: string;
   downloadFileName: string;
-  generate: (values: ToolFormValues) => string[];
 };
 
 export type ToolConfig = {
@@ -45,7 +45,7 @@ export type ToolConfig = {
   icon: LucideIcon;
   inputFields: ToolField[];
   quickFacts: string[];
-  mockOutput: ToolMockOutput;
+  output: ToolOutputConfig;
   seo: {
     title: string;
     description: string;
@@ -65,24 +65,11 @@ const toneOptions: ToolFieldOption[] = [
   { label: "Concise", value: "Concise" },
 ];
 
-function resumeBulletMockOutput(values: ToolFormValues) {
-  const role = values.targetRole?.trim() || "target role";
-  const achievement =
-    values.achievement?.trim() ||
-    "improved team workflows, managed stakeholder requests, and delivered projects on time";
-  const level = (values.experienceLevel || "Mid level").toLowerCase();
-  const tone = values.tone || "Impactful";
-  const toneLead =
-    tone === "Concise" ? "Delivered" : tone === "Professional" ? "Supported" : "Accelerated";
-
-  return [
-    `${toneLead} ${level} ${role} outcomes by translating ${achievement} into clear priorities, improving execution consistency across teams.`,
-    `Strengthened ${role} resume keywords by documenting processes, tracking measurable progress, and aligning daily work with business goals.`,
-    `Improved operational visibility for ${role} initiatives by organizing task details, stakeholder updates, and follow-through into repeatable workflows.`,
-    `Collaborated with cross-functional partners to convert ${achievement} into action plans that reduced ambiguity and supported faster decision-making.`,
-    `Created recruiter-ready evidence of impact by connecting responsibilities, tools, and results to ATS-friendly ${role} accomplishments.`,
-  ];
-}
+const outputModeOptions: ToolFieldOption[] = [
+  { label: "Recruiter-friendly", value: "Recruiter-friendly" },
+  { label: "ATS-optimized", value: "ATS-optimized" },
+  { label: "Short & punchy", value: "Short & punchy" },
+];
 
 export const tools: ToolConfig[] = [
   {
@@ -92,7 +79,7 @@ export const tools: ToolConfig[] = [
     shortDescription:
       "Turn everyday work into polished, ATS-friendly resume bullets with sharper impact.",
     longDescription:
-      "Transform a task or achievement into five polished resume bullets tailored to your role, level, and preferred tone.",
+      "Transform a task or achievement into five recruiter-ready resume bullets tailored to your role, level, industry, tools, metrics, and preferred tone.",
     status: "live",
     icon: BriefcaseBusiness,
     inputFields: [
@@ -101,6 +88,14 @@ export const tools: ToolConfig[] = [
         label: "Target role",
         type: "text",
         placeholder: "e.g. Marketing Manager",
+        layout: "half",
+      },
+      {
+        name: "industry",
+        label: "Industry/domain",
+        type: "text",
+        placeholder: "e.g. SaaS, healthcare, fintech",
+        layout: "half",
       },
       {
         name: "experienceLevel",
@@ -108,13 +103,15 @@ export const tools: ToolConfig[] = [
         type: "select",
         defaultValue: "Mid level",
         options: experienceOptions,
+        layout: "half",
       },
       {
-        name: "tone",
-        label: "Tone",
+        name: "outputMode",
+        label: "Output mode",
         type: "select",
-        defaultValue: "Impactful",
-        options: toneOptions,
+        defaultValue: "Recruiter-friendly",
+        options: outputModeOptions,
+        layout: "half",
       },
       {
         name: "achievement",
@@ -123,21 +120,40 @@ export const tools: ToolConfig[] = [
         placeholder: "Describe what you did, improved, supported, analyzed, launched, or managed.",
         rows: 6,
       },
+      {
+        name: "tools",
+        label: "Tools/technologies used",
+        type: "text",
+        placeholder: "e.g. Excel, SQL, Salesforce, React, Jira",
+      },
+      {
+        name: "metrics",
+        label: "Optional metrics/results",
+        type: "text",
+        placeholder: "e.g. reduced response time by 20%, supported 500 users",
+      },
+      {
+        name: "tone",
+        label: "Tone",
+        type: "select",
+        defaultValue: "Impactful",
+        options: toneOptions,
+        layout: "half",
+      },
     ],
-    quickFacts: ["ATS-friendly", "Impactful", "Mid level"],
-    mockOutput: {
-      title: "Resume bullets",
-      description: "Copy the bullets or export them as a TXT file when the draft is ready.",
-      emptyTitle: "Your polished bullets will appear here.",
+    quickFacts: ["Recruiter-ready", "ATS-friendly", "5 AI bullets"],
+    output: {
+      title: "Recruiter-ready output",
+      description: "Review the strongest bullets, keywords, and improvement tips.",
+      emptyTitle: "Your AI resume bullets will appear here.",
       emptyDescription:
         "Start with one honest work note. SkillMint will turn it into clean, recruiter-friendly bullets you can review, copy, and refine.",
       downloadFileName: "skillmint-resume-bullets.txt",
-      generate: resumeBulletMockOutput,
     },
     seo: {
       title: "AI Resume Bullet Generator",
       description:
-        "Generate mock ATS-friendly resume bullets from a role, experience level, achievement, and preferred tone.",
+        "Generate recruiter-ready ATS-friendly resume bullets from a role, experience level, industry, tools, metrics, achievement, and preferred tone.",
     },
   },
   {
@@ -156,13 +172,12 @@ export const tools: ToolConfig[] = [
       { name: "background", label: "Relevant background", type: "textarea", rows: 5 },
     ],
     quickFacts: ["Role-aware", "Recruiter-ready", "Editable drafts"],
-    mockOutput: {
+    output: {
       title: "Cover letter draft",
       description: "A polished cover letter draft will appear here.",
       emptyTitle: "Cover letter drafts are coming soon.",
       emptyDescription: "This tool will help turn role details into concise application letters.",
       downloadFileName: "skillmint-cover-letter.txt",
-      generate: () => [],
     },
     seo: {
       title: "AI Cover Letter Generator",
@@ -185,13 +200,12 @@ export const tools: ToolConfig[] = [
       { name: "tone", label: "Tone", type: "select", options: toneOptions },
     ],
     quickFacts: ["Profile-ready", "Concise", "Professional"],
-    mockOutput: {
+    output: {
       title: "LinkedIn headlines",
       description: "Headline options will appear here.",
       emptyTitle: "LinkedIn headline ideas are coming soon.",
       emptyDescription: "This tool will help shape sharper first impressions on LinkedIn.",
       downloadFileName: "skillmint-linkedin-headlines.txt",
-      generate: () => [],
     },
     seo: {
       title: "AI LinkedIn Headline Generator",
@@ -213,13 +227,12 @@ export const tools: ToolConfig[] = [
       { name: "example", label: "Your example", type: "textarea", rows: 5 },
     ],
     quickFacts: ["STAR-friendly", "Clear structure", "Practice-ready"],
-    mockOutput: {
+    output: {
       title: "Coached answer",
       description: "A structured interview answer will appear here.",
       emptyTitle: "Interview coaching is coming soon.",
       emptyDescription: "This tool will help shape rough examples into stronger interview responses.",
       downloadFileName: "skillmint-interview-answer.txt",
-      generate: () => [],
     },
     seo: {
       title: "AI Interview Answer Coach",
@@ -242,13 +255,12 @@ export const tools: ToolConfig[] = [
       { name: "tone", label: "Tone", type: "select", options: toneOptions },
     ],
     quickFacts: ["Work-ready", "Polished tone", "Fast replies"],
-    mockOutput: {
+    output: {
       title: "Email reply",
       description: "A professional reply will appear here.",
       emptyTitle: "Email replies are coming soon.",
       emptyDescription: "This tool will help turn context into crisp workplace responses.",
       downloadFileName: "skillmint-email-reply.txt",
-      generate: () => [],
     },
     seo: {
       title: "AI Email Reply Assistant",

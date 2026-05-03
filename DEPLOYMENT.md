@@ -84,7 +84,7 @@ On `/tools/resume-bullet-generator`, verify:
 
 - Page styling loads correctly
 - Form inputs are usable
-- Generate creates five mock resume bullets
+- Generate creates five AI resume bullets
 - Copy to clipboard works
 - Download as TXT works
 - Layout is usable on mobile and desktop widths

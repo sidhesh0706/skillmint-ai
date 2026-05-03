@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Clipboard, Download, FileText, Sparkles } from "lucide-react";
+import { Clipboard, Download, FileText, RefreshCw, Sparkles, Wand2 } from "lucide-react";
 import {
   getInitialToolValues,
   getToolBySlug,
@@ -11,6 +11,18 @@ import {
 
 type ToolWorkspaceProps = {
   slug: string;
+};
+
+type ResumeOutput = {
+  bullets: string[];
+  keywords: string[];
+  tips: string[];
+};
+
+const emptyOutput: ResumeOutput = {
+  bullets: [],
+  keywords: [],
+  tips: [],
 };
 
 function renderField(
@@ -59,25 +71,92 @@ function renderField(
   );
 }
 
+function formatOutputText(output: ResumeOutput) {
+  return [
+    "Best 5 bullets",
+    ...output.bullets.map((bullet) => `- ${bullet}`),
+    "",
+    "Keywords used",
+    output.keywords.join(", "),
+    "",
+    "Improvement tips",
+    ...output.tips.map((tip) => `- ${tip}`),
+  ].join("\n");
+}
+
+function getFieldLayout(field: ToolField) {
+  if (field.layout === "half") {
+    return "block";
+  }
+
+  return "block sm:col-span-2";
+}
+
 export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   const tool = getToolBySlug(slug)!;
 
   const [form, setForm] = useState<ToolFormValues>(() => getInitialToolValues(tool));
-  const [generated, setGenerated] = useState<string[]>([]);
+  const [generated, setGenerated] = useState<ResumeOutput>(emptyOutput);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [improvingIndex, setImprovingIndex] = useState<number | null>(null);
   const [lastGeneratedAt, setLastGeneratedAt] = useState(0);
 
-  const outputText = useMemo(() => generated.map((item) => `- ${item}`).join("\n"), [generated]);
+  const hasOutput = generated.bullets.length > 0;
+  const outputText = useMemo(() => formatOutputText(generated), [generated]);
   const contextChips = [
-    ...tool.quickFacts,
+    form.outputMode,
     form.tone,
     form.experienceLevel,
   ].filter(Boolean);
 
   function updateForm(name: string, value: string) {
     setForm((current) => ({ ...current, [name]: value }));
+  }
+
+  function validateInputs() {
+    if (!form.targetRole?.trim()) {
+      return "Please enter a target role before generating.";
+    }
+
+    if (!form.achievement?.trim()) {
+      return "Please describe an achievement or task before generating.";
+    }
+
+    return "";
+  }
+
+  async function requestGeneration(action: "generate" | "improve-bullet", bullet?: string) {
+    const validationError = validateInputs();
+
+    if (validationError) {
+      setError(validationError);
+      return null;
+    }
+
+    const response = await fetch(`/api/tools/${tool.slug}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...form,
+        action,
+        bullet,
+      }),
+    });
+
+    const data = (await response.json()) as Partial<ResumeOutput> & {
+      bullet?: string;
+      error?: string;
+    };
+
+    if (!response.ok) {
+      throw new Error(data.error || "Unable to generate resume bullets right now.");
+    }
+
+    return data;
   }
 
   async function handleGenerate() {
@@ -94,24 +173,17 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setIsGenerating(true);
 
     try {
-      const response = await fetch(`/api/tools/${tool.slug}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      const data = await requestGeneration("generate");
 
-      const data = (await response.json()) as {
-        bullets?: string[];
-        error?: string;
-      };
-
-      if (!response.ok || !data.bullets?.length) {
-        throw new Error(data.error || "Unable to generate resume bullets right now.");
+      if (!data?.bullets?.length) {
+        throw new Error("Unable to generate resume bullets right now.");
       }
 
-      setGenerated(data.bullets);
+      setGenerated({
+        bullets: data.bullets,
+        keywords: data.keywords || [],
+        tips: data.tips || [],
+      });
       setLastGeneratedAt(Date.now());
     } catch (caughtError) {
       setError(
@@ -124,8 +196,36 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     }
   }
 
+  async function handleImproveBullet(index: number) {
+    setError("");
+    setImprovingIndex(index);
+
+    try {
+      const data = await requestGeneration("improve-bullet", generated.bullets[index]);
+
+      if (!data?.bullet) {
+        throw new Error("Unable to improve this bullet right now.");
+      }
+
+      setGenerated((current) => ({
+        ...current,
+        bullets: current.bullets.map((bullet, bulletIndex) =>
+          bulletIndex === index ? data.bullet || bullet : bullet,
+        ),
+      }));
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Unable to improve this bullet right now.",
+      );
+    } finally {
+      setImprovingIndex(null);
+    }
+  }
+
   async function handleCopy() {
-    if (!outputText) {
+    if (!hasOutput) {
       return;
     }
 
@@ -135,7 +235,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   }
 
   function handleDownload() {
-    if (!outputText) {
+    if (!hasOutput) {
       return;
     }
 
@@ -143,7 +243,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = tool.mockOutput.downloadFileName;
+    anchor.download = tool.output.downloadFileName;
     anchor.click();
     URL.revokeObjectURL(url);
   }
@@ -164,17 +264,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           <div>
             <h2 className="text-2xl font-semibold text-ink">Build your draft</h2>
             <p className="mt-2 leading-7 text-slate-600">
-              Fill in the fields below. SkillMint will generate tailored resume bullets.
+              Add context so SkillMint can generate specific, recruiter-ready bullets.
             </p>
           </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
           {tool.inputFields.map((field) => (
-            <label
-              key={field.name}
-              className={field.type === "select" ? "block" : "block sm:col-span-2"}
-            >
+            <label key={field.name} className={getFieldLayout(field)}>
               <span className="text-sm font-semibold text-ink">{field.label}</span>
               {renderField(field, form[field.name] || "", updateForm)}
             </label>
@@ -186,7 +283,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             className="button-primary w-full disabled:cursor-not-allowed disabled:opacity-70 sm:col-span-2"
           >
             <Sparkles className="h-4 w-4" aria-hidden="true" />
-            {isGenerating ? "Generating..." : "Generate"}
+            {isGenerating ? "Generating..." : hasOutput ? "Regenerate" : "Generate"}
           </button>
         </div>
       </form>
@@ -199,14 +296,26 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 AI preview
               </p>
-              <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.mockOutput.title}</h2>
-              <p className="mt-2 leading-7 text-slate-600">{tool.mockOutput.description}</p>
+              <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.output.title}</h2>
+              <p className="mt-2 leading-7 text-slate-600">{tool.output.description}</p>
             </div>
             <div className="flex gap-2">
+              {hasOutput ? (
+                <button
+                  type="button"
+                  onClick={handleGenerate}
+                  disabled={isGenerating}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+                  aria-label="Regenerate output"
+                  title="Regenerate"
+                >
+                  <RefreshCw className="h-4 w-4" aria-hidden="true" />
+                </button>
+              ) : null}
               <button
                 type="button"
                 onClick={handleCopy}
-                disabled={!generated.length}
+                disabled={!hasOutput}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
                 aria-label="Copy output to clipboard"
                 title="Copy"
@@ -216,7 +325,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               <button
                 type="button"
                 onClick={handleDownload}
-                disabled={!generated.length}
+                disabled={!hasOutput}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
                 aria-label="Download output as TXT"
                 title="Download TXT"
@@ -245,22 +354,64 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           ) : null}
 
-          {generated.length ? (
-            <div className="flex flex-1 flex-col">
-              <div className="space-y-3">
-                {generated.map((item, index) => (
-                  <div key={item} className="rounded-lg border border-slate-200 bg-white p-4 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100">
-                    <div className="flex gap-3">
-                      <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint-50 text-xs font-semibold text-mint-700">
-                        {index + 1}
-                      </span>
-                      <p className="leading-7 text-slate-700">{item}</p>
+          {hasOutput ? (
+            <div className="flex flex-1 flex-col gap-6">
+              <section>
+                <h3 className="text-sm font-semibold uppercase text-mint-700">Best 5 bullets</h3>
+                <div className="mt-3 space-y-3">
+                  {generated.bullets.map((item, index) => (
+                    <div key={`${item}-${index}`} className="rounded-lg border border-slate-200 bg-white p-4 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100">
+                      <div className="flex gap-3">
+                        <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint-50 text-xs font-semibold text-mint-700">
+                          {index + 1}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <p className="leading-7 text-slate-700">{item}</p>
+                          <button
+                            type="button"
+                            onClick={() => handleImproveBullet(index)}
+                            disabled={improvingIndex !== null || isGenerating}
+                            className="mt-3 inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            <Wand2 className="h-3.5 w-3.5" aria-hidden="true" />
+                            {improvingIndex === index ? "Improving..." : "Improve"}
+                          </button>
+                        </div>
+                      </div>
                     </div>
+                  ))}
+                </div>
+              </section>
+
+              {generated.keywords.length ? (
+                <section>
+                  <h3 className="text-sm font-semibold uppercase text-mint-700">Keywords used</h3>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {generated.keywords.map((keyword) => (
+                      <span
+                        key={keyword}
+                        className="rounded-full border border-mint-100 bg-mint-50 px-3 py-1.5 text-sm font-semibold text-mint-700"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </section>
+              ) : null}
+
+              {generated.tips.length ? (
+                <section className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                  <h3 className="text-sm font-semibold uppercase text-slate-700">Improvement tips</h3>
+                  <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+                    {generated.tips.map((tip) => (
+                      <li key={tip}>- {tip}</li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+
               {copied ? (
-                <p className="mt-4 text-sm font-semibold text-mint-700">Copied to clipboard.</p>
+                <p className="text-sm font-semibold text-mint-700">Copied to clipboard.</p>
               ) : null}
             </div>
           ) : (
@@ -269,8 +420,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white text-mint-700 shadow-soft">
                   <Sparkles className="h-5 w-5" aria-hidden="true" />
                 </div>
-                <p className="text-lg font-semibold text-ink">{tool.mockOutput.emptyTitle}</p>
-                <p className="mt-2 leading-7 text-slate-600">{tool.mockOutput.emptyDescription}</p>
+                <p className="text-lg font-semibold text-ink">{tool.output.emptyTitle}</p>
+                <p className="mt-2 leading-7 text-slate-600">{tool.output.emptyDescription}</p>
               </div>
             </div>
           )}

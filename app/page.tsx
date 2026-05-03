@@ -76,7 +76,7 @@ export default function Home() {
             </div>
             <div className="mt-7 grid max-w-lg grid-cols-3 gap-2.5 sm:gap-3">
               {[
-                ["5", "mock bullets"],
+                ["5", "AI bullets"],
                 ["0", "signup steps"],
                 ["1", "career hub"],
               ].map(([value, label]) => (
