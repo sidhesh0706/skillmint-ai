@@ -92,7 +92,7 @@ export const tools: ToolConfig[] = [
     shortDescription:
       "Turn everyday work into polished, ATS-friendly resume bullets with sharper impact.",
     longDescription:
-      "Transform a task or achievement into five polished resume bullets tailored to your role, level, and preferred tone. This first version uses mock output only.",
+      "Transform a task or achievement into five polished resume bullets tailored to your role, level, and preferred tone.",
     status: "live",
     icon: BriefcaseBusiness,
     inputFields: [
@@ -130,7 +130,7 @@ export const tools: ToolConfig[] = [
       description: "Copy the bullets or export them as a TXT file when the draft is ready.",
       emptyTitle: "Your polished bullets will appear here.",
       emptyDescription:
-        "Start with one honest work note. SkillMint will turn it into clean, recruiter-friendly sample bullets you can review before the real AI generation layer is added.",
+        "Start with one honest work note. SkillMint will turn it into clean, recruiter-friendly bullets you can review, copy, and refine.",
       downloadFileName: "skillmint-resume-bullets.txt",
       generate: resumeBulletMockOutput,
     },

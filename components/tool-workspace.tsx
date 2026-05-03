@@ -65,6 +65,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   const [form, setForm] = useState<ToolFormValues>(() => getInitialToolValues(tool));
   const [generated, setGenerated] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [lastGeneratedAt, setLastGeneratedAt] = useState(0);
 
   const outputText = useMemo(() => generated.map((item) => `- ${item}`).join("\n"), [generated]);
   const contextChips = [
@@ -77,9 +80,48 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
-  function handleGenerate() {
-    setGenerated(tool.mockOutput.generate(form));
+  async function handleGenerate() {
+    const now = Date.now();
+    const cooldownRemaining = 10_000 - (now - lastGeneratedAt);
+
+    if (cooldownRemaining > 0) {
+      setError(`Please wait ${Math.ceil(cooldownRemaining / 1000)} seconds before generating again.`);
+      return;
+    }
+
+    setError("");
     setCopied(false);
+    setIsGenerating(true);
+
+    try {
+      const response = await fetch(`/api/tools/${tool.slug}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = (await response.json()) as {
+        bullets?: string[];
+        error?: string;
+      };
+
+      if (!response.ok || !data.bullets?.length) {
+        throw new Error(data.error || "Unable to generate resume bullets right now.");
+      }
+
+      setGenerated(data.bullets);
+      setLastGeneratedAt(Date.now());
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Unable to generate resume bullets right now.",
+      );
+    } finally {
+      setIsGenerating(false);
+    }
   }
 
   async function handleCopy() {
@@ -122,7 +164,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           <div>
             <h2 className="text-2xl font-semibold text-ink">Build your draft</h2>
             <p className="mt-2 leading-7 text-slate-600">
-              Fill in the fields below. This version uses polished mock output.
+              Fill in the fields below. SkillMint will generate tailored resume bullets.
             </p>
           </div>
         </div>
@@ -138,9 +180,13 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </label>
           ))}
 
-          <button type="submit" className="button-primary w-full sm:col-span-2">
+          <button
+            type="submit"
+            disabled={isGenerating}
+            className="button-primary w-full disabled:cursor-not-allowed disabled:opacity-70 sm:col-span-2"
+          >
             <Sparkles className="h-4 w-4" aria-hidden="true" />
-            Generate
+            {isGenerating ? "Generating..." : "Generate"}
           </button>
         </div>
       </form>
@@ -151,7 +197,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             <div>
               <p className="inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase text-mint-700 shadow-line">
                 <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                AI mock preview
+                AI preview
               </p>
               <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.mockOutput.title}</h2>
               <p className="mt-2 leading-7 text-slate-600">{tool.mockOutput.description}</p>
@@ -192,6 +238,12 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               </div>
             ))}
           </div>
+
+          {error ? (
+            <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+              {error}
+            </div>
+          ) : null}
 
           {generated.length ? (
             <div className="flex flex-1 flex-col">

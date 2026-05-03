@@ -188,8 +188,8 @@ export default function Home() {
                 Turn rough work notes into stronger resume bullets.
               </h2>
               <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-                Try the first SkillMint AI tool with mock output today. The interface
-                is ready for real generation when the API layer comes later.
+                Try the first SkillMint AI tool today. The interface is ready for
+                real resume bullet generation through a secure server route.
               </p>
             </div>
             <Link href="/tools/resume-bullet-generator" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50">

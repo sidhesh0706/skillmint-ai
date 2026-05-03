@@ -12,6 +12,12 @@ npm run lint
 npm run build
 ```
 
+Create `.env.local` for local AI generation:
+
+```bash
+GROQ_API_KEY=your_groq_api_key_here
+```
+
 Confirm these routes work locally:
 
 - `http://localhost:3000/`
@@ -55,7 +61,9 @@ git push origin main
    - Install command: `npm install`
    - Build command: `npm run build`
    - Output directory: leave empty
-6. Environment variables: none required for this version.
+6. Add the required environment variable:
+   - Name: `GROQ_API_KEY`
+   - Value: your Groq API key from GroqCloud
 7. Click **Deploy**.
 8. Wait for the deployment build to complete.
 9. Open the production URL.
@@ -90,7 +98,7 @@ For coming-soon pages, verify:
 
 ## Notes
 
-- No OpenAI API is configured yet.
+- AI generation uses Groq through a secure server-side API route.
 - No authentication is configured yet.
 - No payments are configured yet.
-- No environment variables are required for this deployment.
+- `GROQ_API_KEY` is required for live generation.

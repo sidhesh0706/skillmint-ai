@@ -1,6 +1,6 @@
 # SkillMint AI
 
-SkillMint AI is a premium, lightweight portfolio of free AI career tools. The first live tool is an AI Resume Bullet Generator that uses mock output only, making the app ready for a first static Vercel deployment without backend services, authentication, payments, or API keys.
+SkillMint AI is a premium, lightweight portfolio of free AI career tools. The first live tool is an AI Resume Bullet Generator powered by a secure server-side Groq API route. The app does not include authentication, payments, or a database.
 
 ## Tech Stack
 
@@ -18,7 +18,7 @@ SkillMint AI is a premium, lightweight portfolio of free AI career tools. The fi
 - Config-driven multi-tool architecture
 - Tools listing generated from centralized configuration
 - Dynamic tool routes at `/tools/[slug]`
-- Live mock Resume Bullet Generator
+- Live AI Resume Bullet Generator
 - Coming-soon pages for planned tools
 - Copy generated output to clipboard
 - Download generated output as `.txt`
@@ -39,7 +39,14 @@ SkillMint AI is a premium, lightweight portfolio of free AI career tools. The fi
 
 ```bash
 npm install
+cp .env.example .env.local
 npm run dev
+```
+
+Add your Groq key to `.env.local`:
+
+```bash
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 Open `http://localhost:3000`.
@@ -63,14 +70,15 @@ Run both commands before deploying.
    - Install command: `npm install`
    - Build command: `npm run build`
    - Output directory: leave empty
-6. Do not add environment variables for this first version.
+6. Add the required environment variable:
+   - `GROQ_API_KEY`
 7. Click **Deploy**.
 8. After deployment, test every route listed above.
 
 ## Roadmap
 
-- Add real AI generation with the OpenAI API
-- Add more live tools from the existing configuration
+- Improve prompt quality and add optional user guidance for better resume inputs
+- Add more live tools from the existing configuration using secure server routes
 - Add saved history and user accounts when needed
 - Add usage limits or billing only if the product needs it
 - Add analytics and conversion tracking
