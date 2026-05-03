@@ -8,6 +8,22 @@ export const metadata: Metadata = {
   title: "AI Career Tools",
   description:
     "Browse SkillMint AI tools for resumes, cover letters, LinkedIn profiles, interview preparation, and professional email replies.",
+  alternates: {
+    canonical: "/tools",
+  },
+  openGraph: {
+    title: "AI Career Tools | SkillMint AI",
+    description:
+      "Browse SkillMint AI tools for resumes, cover letters, LinkedIn profiles, interview preparation, and professional email replies.",
+    url: "/tools",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Career Tools | SkillMint AI",
+    description:
+      "Browse free AI career tools for modern job seekers and professionals.",
+  },
 };
 
 export default function ToolsPage() {

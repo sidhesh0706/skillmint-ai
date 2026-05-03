@@ -2,12 +2,14 @@
 
 import { useMemo, useState } from "react";
 import { Clipboard, Download, FileText, RefreshCw, Sparkles, Wand2 } from "lucide-react";
+import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
 import {
   getInitialToolValues,
   getToolBySlug,
   type ToolField,
   type ToolFormValues,
 } from "@/data/tool-config";
+import { trackEvent } from "@/lib/analytics";
 
 type ToolWorkspaceProps = {
   slug: string;
@@ -24,6 +26,24 @@ const emptyOutput: ResumeOutput = {
   keywords: [],
   tips: [],
 };
+
+const recommendations = [
+  {
+    title: "Resume templates",
+    description: "Use a clean structure that makes your strongest bullets easy to scan.",
+    href: "#resume-templates",
+  },
+  {
+    title: "LinkedIn optimization guide",
+    description: "Turn your new bullets into a sharper profile summary and headline.",
+    href: "#linkedin-optimization-guide",
+  },
+  {
+    title: "Interview prep checklist",
+    description: "Convert resume wins into concise stories for behavioral interviews.",
+    href: "#interview-prep-checklist",
+  },
+];
 
 function renderField(
   field: ToolField,
@@ -159,7 +179,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     return data;
   }
 
-  async function handleGenerate() {
+  async function handleGenerate(eventName: "generate_click" | "regenerate_click" = hasOutput ? "regenerate_click" : "generate_click") {
     const now = Date.now();
     const cooldownRemaining = 10_000 - (now - lastGeneratedAt);
 
@@ -171,6 +191,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setError("");
     setCopied(false);
     setIsGenerating(true);
+    trackEvent(eventName, { tool: tool.slug, outputMode: form.outputMode });
 
     try {
       const data = await requestGeneration("generate");
@@ -230,6 +251,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     }
 
     await navigator.clipboard.writeText(outputText);
+    trackEvent("copy_click", { tool: tool.slug });
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1800);
   }
@@ -245,6 +267,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     anchor.href = url;
     anchor.download = tool.output.downloadFileName;
     anchor.click();
+    trackEvent("download_click", { tool: tool.slug });
     URL.revokeObjectURL(url);
   }
 
@@ -254,7 +277,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         className="card-surface p-4 sm:p-6 lg:sticky lg:top-24"
         onSubmit={(event) => {
           event.preventDefault();
-          handleGenerate();
+          handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
         }}
       >
         <div className="mb-6 flex items-start gap-4 sm:mb-7">
@@ -294,7 +317,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             <div>
               <p className="inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase text-mint-700 shadow-line">
                 <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                AI preview
+                AI output
               </p>
               <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.output.title}</h2>
               <p className="mt-2 leading-7 text-slate-600">{tool.output.description}</p>
@@ -303,7 +326,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               {hasOutput ? (
                 <button
                   type="button"
-                  onClick={handleGenerate}
+                  onClick={() => handleGenerate("regenerate_click")}
                   disabled={isGenerating}
                   className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
                   aria-label="Regenerate output"
@@ -409,6 +432,27 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   </ul>
                 </section>
               ) : null}
+
+              <section>
+                <h3 className="text-sm font-semibold uppercase text-mint-700">Recommended next steps</h3>
+                <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                  {recommendations.map((recommendation) => (
+                    <AffiliateRecommendationCard
+                      key={recommendation.title}
+                      title={recommendation.title}
+                      description={recommendation.description}
+                      href={recommendation.href}
+                      label="Next step"
+                      onClick={() =>
+                        trackEvent("affiliate_click", {
+                          tool: tool.slug,
+                          resource: recommendation.title,
+                        })
+                      }
+                    />
+                  ))}
+                </div>
+              </section>
 
               {copied ? (
                 <p className="text-sm font-semibold text-mint-700">Copied to clipboard.</p>

@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skillmint.ai"),
+  metadataBase: new URL("https://skillmint-ai.vercel.app"),
   title: {
     default: "SkillMint AI | Free AI Tools to Build Your Career Faster",
     template: "%s | SkillMint AI",
@@ -28,10 +28,16 @@ export const metadata: Metadata = {
     title: "SkillMint AI",
     description:
       "Free AI tools for resumes, cover letters, LinkedIn profiles, and career productivity.",
-    url: "https://skillmint.ai",
+    url: "https://skillmint-ai.vercel.app",
     siteName: "SkillMint AI",
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SkillMint AI",
+    description:
+      "Free AI tools for resumes, cover letters, LinkedIn profiles, and career productivity.",
   },
 };
 

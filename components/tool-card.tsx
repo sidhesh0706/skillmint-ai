@@ -43,7 +43,7 @@ export function ToolCard({ tool }: ToolCardProps) {
               : "bg-slate-100 text-slate-600 hover:-translate-y-0.5 hover:bg-slate-200",
           )}
         >
-          {isLive ? "Open tool" : "Preview tool"}
+          {isLive ? "Open tool" : "View details"}
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>

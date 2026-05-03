@@ -29,7 +29,15 @@ export function Footer() {
             <Link href="/tools/resume-bullet-generator" className="transition hover:text-white">
               Resume Generator
             </Link>
-            <span>Secure AI route</span>
+            <Link href="/privacy" className="transition hover:text-white">
+              Privacy
+            </Link>
+            <Link href="/terms" className="transition hover:text-white">
+              Terms
+            </Link>
+            <Link href="/contact" className="transition hover:text-white">
+              Contact
+            </Link>
           </div>
         </div>
 

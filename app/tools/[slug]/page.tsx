@@ -30,6 +30,20 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   return {
     title: tool.seo.title,
     description: tool.seo.description,
+    alternates: {
+      canonical: `/tools/${tool.slug}`,
+    },
+    openGraph: {
+      title: `${tool.seo.title} | SkillMint AI`,
+      description: tool.seo.description,
+      url: `/tools/${tool.slug}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${tool.seo.title} | SkillMint AI`,
+      description: tool.seo.description,
+    },
   };
 }
 

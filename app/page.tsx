@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
   ArrowRight,
   CheckCircle2,
@@ -11,6 +12,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
+import { AdSlot } from "@/components/ad-slot";
+import { EmailCapture } from "@/components/email-capture";
 import { ToolGrid } from "@/components/tool-grid";
 import { TrustPills } from "@/components/trust-pills";
 import { featuredTools } from "@/data/tool-config";
@@ -36,11 +39,33 @@ const benefits = [
   },
 ];
 
-const previewFeatures: Array<[string, LucideIcon]> = [
+const heroFeatures: Array<[string, LucideIcon]> = [
   ["ATS-ready", CheckCircle2],
   ["Copyable", Copy],
   ["TXT export", Download],
 ];
+
+export const metadata: Metadata = {
+  title: "Free AI Tools to Build Your Career Faster",
+  description:
+    "Use SkillMint AI to create stronger resume bullets and discover career tools for resumes, LinkedIn, interviews, and professional productivity.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "SkillMint AI | Free AI Tools to Build Your Career Faster",
+    description:
+      "Create recruiter-ready resume bullets and career assets with free AI tools.",
+    url: "/",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SkillMint AI | Free AI Career Tools",
+    description:
+      "Create recruiter-ready resume bullets and career assets with free AI tools.",
+  },
+};
 
 export default function Home() {
   return (
@@ -93,10 +118,10 @@ export default function Home() {
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-semibold text-ink">AI Resume Bullet Generator</p>
-                  <p className="mt-1 text-xs font-medium text-slate-500">Preview workspace</p>
+                  <p className="mt-1 text-xs font-medium text-slate-500">AI workspace</p>
                 </div>
                 <span className="rounded-full border border-mint-100 bg-white px-3 py-1 text-xs font-semibold text-mint-700">
-                  Live preview
+                  Live tool
                 </span>
               </div>
             </div>
@@ -118,7 +143,7 @@ export default function Home() {
                 </div>
               ))}
               <div className="grid gap-3 sm:grid-cols-3">
-                {previewFeatures.map(([label, Icon]) => (
+                {heroFeatures.map(([label, Icon]) => (
                   <div
                     key={label}
                     className="flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-center text-sm font-semibold text-slate-700"
@@ -132,6 +157,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <AdSlot label="Career resource placement" />
 
       <section className="pt-10 pb-16 sm:pt-12 sm:pb-20">
         <div className="container-shell">
@@ -159,7 +186,7 @@ export default function Home() {
             centered
             eyebrow="Benefits"
             title="A focused toolkit for faster, cleaner applications."
-            description="SkillMint AI keeps the experience lightweight: no accounts, no paywalls, and no backend needed for this first version."
+            description="SkillMint AI keeps the experience lightweight: no accounts, no paywalls, and secure AI generation for the live resume tool."
           />
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {benefits.map((benefit) => {
@@ -178,6 +205,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <EmailCapture />
 
       <section className="py-16 sm:py-20">
         <div className="container-shell">
