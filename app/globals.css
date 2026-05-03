@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background: #f7fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(31, 201, 153, 0.12) 0%, transparent 34%),
+    linear-gradient(220deg, rgba(245, 158, 11, 0.10) 0%, transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f7fafc 48%, #ffffff 100%);
+  color: #172033;
+}
+
+::selection {
+  background: #d8f8ed;
+  color: #0f8466;
+}
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .container-shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .card-surface {
+    @apply rounded-lg border border-white/80 bg-white/[0.92] shadow-soft ring-1 ring-slate-900/[0.025] backdrop-blur;
+  }
+
+  .page-band {
+    @apply border-y border-white/70 bg-white/[0.58] backdrop-blur;
+  }
+
+  .button-primary {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-ink via-slate-800 to-mint-700 px-6 py-3 font-semibold text-white shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-mint-100;
+  }
+
+  .button-secondary {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 font-semibold text-ink shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-slate-400 hover:bg-white hover:shadow-soft active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-mint-100;
+  }
+
+  .fade-in-up {
+    animation: fade-in-up 680ms ease-out both;
+  }
+
+  .fade-in-up-delayed {
+    animation: fade-in-up 760ms ease-out 120ms both;
+  }
+
+  .hero-glow {
+    background:
+      linear-gradient(115deg, rgba(31, 201, 153, 0.22), rgba(255, 255, 255, 0) 40%),
+      linear-gradient(245deg, rgba(245, 158, 11, 0.14), rgba(255, 255, 255, 0) 34%);
+    filter: blur(8px);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-up,
+  .fade-in-up-delayed {
+    animation: none;
+  }
+}
