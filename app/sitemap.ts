@@ -5,7 +5,7 @@ import { tools } from "@/data/tool-config";
 const baseUrl = "https://skillmint-ai.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/tools", "/privacy", "/terms", "/contact"].map((route) => ({
+  const staticRoutes = ["", "/tools", "/resources", "/privacy", "/terms", "/contact"].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
   }));

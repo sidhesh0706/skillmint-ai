@@ -16,6 +16,7 @@ import { AdSlot } from "@/components/ad-slot";
 import { EmailCapture } from "@/components/email-capture";
 import { ToolGrid } from "@/components/tool-grid";
 import { TrustPills } from "@/components/trust-pills";
+import { seoLandingPages } from "@/data/seo-landing-pages";
 import { featuredTools } from "@/data/tool-config";
 
 const benefits = [
@@ -159,6 +160,44 @@ export default function Home() {
       </section>
 
       <AdSlot label="Career resource placement" />
+
+      <section className="pt-10 pb-16 sm:pt-12 sm:pb-20">
+        <div className="container-shell">
+          <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
+            <SectionHeading
+              eyebrow="Resume Bullet Examples"
+              title="Explore resume bullet examples by role."
+              description="Browse focused guides with ATS-friendly examples, writing tips, and action verbs, then generate your own bullets with SkillMint AI."
+            />
+            <Link href="/resources" className="button-secondary self-start text-sm">
+              View resources
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {seoLandingPages.map((page) => (
+              <Link
+                key={page.slug}
+                href={`/${page.slug}`}
+                className="group rounded-lg border border-slate-200 bg-white/85 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
+              >
+                <p className="text-sm font-semibold uppercase text-mint-700">{page.audience}</p>
+                <h3 className="mt-3 text-lg font-semibold leading-snug text-ink">
+                  {page.title}
+                </h3>
+                <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
+                  {page.metaDescription}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-mint-700">
+                  Read examples
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="pt-10 pb-16 sm:pt-12 sm:pb-20">
         <div className="container-shell">
