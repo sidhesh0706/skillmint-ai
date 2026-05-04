@@ -84,8 +84,8 @@ export default function Home() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
               SkillMint AI helps you create stronger resumes, cover letters,
-              LinkedIn profiles, and productivity assets with simple tools made
-              for modern career builders.
+              LinkedIn profiles, and productivity assets, starting with secure
+              Groq-powered resume bullet generation.
             </p>
             <div className="mt-5">
               <TrustPills />
@@ -118,7 +118,7 @@ export default function Home() {
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-semibold text-ink">AI Resume Bullet Generator</p>
-                  <p className="mt-1 text-xs font-medium text-slate-500">AI workspace</p>
+                  <p className="mt-1 text-xs font-medium text-slate-500">Groq AI workspace</p>
                 </div>
                 <span className="rounded-full border border-mint-100 bg-white px-3 py-1 text-xs font-semibold text-mint-700">
                   Live tool
@@ -217,8 +217,8 @@ export default function Home() {
                 Turn rough work notes into stronger resume bullets.
               </h2>
               <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-                Try the first SkillMint AI tool today. The interface is ready for
-                real resume bullet generation through a secure server route.
+                Try the first SkillMint AI tool today. Generate sharper resume
+                bullets through a secure server route powered by Groq.
               </p>
             </div>
             <Link href="/tools/resume-bullet-generator" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50">

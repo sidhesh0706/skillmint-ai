@@ -1,7 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Clipboard, Download, FileText, RefreshCw, Sparkles, Wand2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Clipboard,
+  Download,
+  FileDown,
+  FileText,
+  History,
+  Linkedin,
+  RefreshCw,
+  Sparkles,
+  Trash2,
+  Wand2,
+} from "lucide-react";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
 import {
   getInitialToolValues,
@@ -19,6 +30,14 @@ type ResumeOutput = {
   bullets: string[];
   keywords: string[];
   tips: string[];
+};
+
+type GenerationHistoryItem = {
+  id: string;
+  role: string;
+  createdAt: string;
+  form: ToolFormValues;
+  output: ResumeOutput;
 };
 
 const emptyOutput: ResumeOutput = {
@@ -104,6 +123,44 @@ function formatOutputText(output: ResumeOutput) {
   ].join("\n");
 }
 
+function formatOutputMarkdown(output: ResumeOutput) {
+  return [
+    "## Best 5 bullets",
+    ...output.bullets.map((bullet) => `- ${bullet}`),
+    "",
+    "## Keywords used",
+    output.keywords.length ? output.keywords.map((keyword) => `\`${keyword}\``).join(", ") : "None",
+    "",
+    "## Improvement tips",
+    ...output.tips.map((tip) => `- ${tip}`),
+  ].join("\n");
+}
+
+function formatLinkedInCopy(output: ResumeOutput) {
+  return [
+    "A few resume-ready wins from my recent work:",
+    "",
+    ...output.bullets.map((bullet) => `- ${bullet}`),
+    "",
+    output.keywords.length ? `Keywords: ${output.keywords.join(", ")}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function formatDocsCopy(output: ResumeOutput) {
+  return [
+    "Best 5 Resume Bullets",
+    ...output.bullets.map((bullet) => `- ${bullet}`),
+    "",
+    "Keywords Used",
+    output.keywords.join(", "),
+    "",
+    "Improvement Tips",
+    ...output.tips.map((tip) => `- ${tip}`),
+  ].join("\n");
+}
+
 function getFieldLayout(field: ToolField) {
   if (field.layout === "half") {
     return "block";
@@ -114,25 +171,130 @@ function getFieldLayout(field: ToolField) {
 
 export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   const tool = getToolBySlug(slug)!;
+  const formStorageKey = `skillmint:${tool.slug}:form`;
+  const outputStorageKey = `skillmint:${tool.slug}:output`;
+  const historyStorageKey = `skillmint:${tool.slug}:history`;
 
   const [form, setForm] = useState<ToolFormValues>(() => getInitialToolValues(tool));
   const [generated, setGenerated] = useState<ResumeOutput>(emptyOutput);
+  const [history, setHistory] = useState<GenerationHistoryItem[]>([]);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [improvingIndex, setImprovingIndex] = useState<number | null>(null);
   const [lastGeneratedAt, setLastGeneratedAt] = useState(0);
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [toast, setToast] = useState("");
 
   const hasOutput = generated.bullets.length > 0;
   const outputText = useMemo(() => formatOutputText(generated), [generated]);
+  const outputMarkdown = useMemo(() => formatOutputMarkdown(generated), [generated]);
   const contextChips = [
     form.outputMode,
     form.tone,
     form.experienceLevel,
   ].filter(Boolean);
 
+  useEffect(() => {
+    try {
+      const savedForm = localStorage.getItem(formStorageKey);
+      const savedOutput = localStorage.getItem(outputStorageKey);
+      const savedHistory = localStorage.getItem(historyStorageKey);
+
+      if (savedForm) {
+        setForm((current) => ({
+          ...current,
+          ...(JSON.parse(savedForm) as ToolFormValues),
+        }));
+      }
+
+      if (savedOutput) {
+        const parsedOutput = JSON.parse(savedOutput) as ResumeOutput;
+        if (Array.isArray(parsedOutput.bullets)) {
+          setGenerated({
+            bullets: parsedOutput.bullets || [],
+            keywords: parsedOutput.keywords || [],
+            tips: parsedOutput.tips || [],
+          });
+        }
+      }
+
+      if (savedHistory) {
+        const parsedHistory = JSON.parse(savedHistory) as GenerationHistoryItem[];
+        if (Array.isArray(parsedHistory)) {
+          setHistory(parsedHistory.slice(0, 10));
+        }
+      }
+    } catch {
+      setHistory([]);
+    } finally {
+      setIsHydrated(true);
+    }
+  }, [formStorageKey, historyStorageKey, outputStorageKey]);
+
+  useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
+
+    localStorage.setItem(formStorageKey, JSON.stringify(form));
+  }, [form, formStorageKey, isHydrated]);
+
+  useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
+
+    if (hasOutput) {
+      localStorage.setItem(outputStorageKey, JSON.stringify(generated));
+    }
+  }, [generated, hasOutput, isHydrated, outputStorageKey]);
+
+  useEffect(() => {
+    if (!toast) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setToast(""), 2400);
+    return () => window.clearTimeout(timeout);
+  }, [toast]);
+
   function updateForm(name: string, value: string) {
     setForm((current) => ({ ...current, [name]: value }));
+  }
+
+  function showToast(message: string) {
+    setToast(message);
+  }
+
+  function saveToHistory(output: ResumeOutput, sourceForm: ToolFormValues) {
+    const item: GenerationHistoryItem = {
+      id: `${Date.now()}`,
+      role: sourceForm.targetRole || "Untitled role",
+      createdAt: new Date().toISOString(),
+      form: sourceForm,
+      output,
+    };
+
+    setHistory((current) => {
+      const nextHistory = [item, ...current].slice(0, 10);
+      localStorage.setItem(historyStorageKey, JSON.stringify(nextHistory));
+      return nextHistory;
+    });
+    showToast("Saved to recent generations.");
+  }
+
+  function reopenHistoryItem(item: GenerationHistoryItem) {
+    setForm((current) => ({ ...current, ...item.form }));
+    setGenerated(item.output);
+    setError("");
+    showToast("Past generation restored.");
+  }
+
+  function clearHistory() {
+    setHistory([]);
+    localStorage.removeItem(historyStorageKey);
+    showToast("Recent generations cleared.");
   }
 
   function validateInputs() {
@@ -205,6 +367,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         keywords: data.keywords || [],
         tips: data.tips || [],
       });
+      saveToHistory(
+        {
+          bullets: data.bullets,
+          keywords: data.keywords || [],
+          tips: data.tips || [],
+        },
+        form,
+      );
       setLastGeneratedAt(Date.now());
     } catch (caughtError) {
       setError(
@@ -234,6 +404,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           bulletIndex === index ? data.bullet || bullet : bullet,
         ),
       }));
+      showToast("Bullet improved.");
     } catch (caughtError) {
       setError(
         caughtError instanceof Error
@@ -245,30 +416,32 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     }
   }
 
-  async function handleCopy() {
+  async function copyText(text: string, message: string) {
     if (!hasOutput) {
       return;
     }
 
-    await navigator.clipboard.writeText(outputText);
+    await navigator.clipboard.writeText(text);
     trackEvent("copy_click", { tool: tool.slug });
     setCopied(true);
+    showToast(message);
     window.setTimeout(() => setCopied(false), 1800);
   }
 
-  function handleDownload() {
+  function downloadText(text: string, fileName: string, message: string) {
     if (!hasOutput) {
       return;
     }
 
-    const blob = new Blob([outputText], { type: "text/plain;charset=utf-8" });
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = tool.output.downloadFileName;
+    anchor.download = fileName;
     anchor.click();
     trackEvent("download_click", { tool: tool.slug });
     URL.revokeObjectURL(url);
+    showToast(message);
   }
 
   return (
@@ -308,6 +481,10 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             <Sparkles className="h-4 w-4" aria-hidden="true" />
             {isGenerating ? "Generating..." : hasOutput ? "Regenerate" : "Generate"}
           </button>
+
+          <p className="rounded-lg border border-mint-100 bg-mint-50/80 px-4 py-3 text-sm font-semibold text-mint-800 sm:col-span-2">
+            Saved only in your browser. No account required.
+          </p>
         </div>
       </form>
 
@@ -322,7 +499,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.output.title}</h2>
               <p className="mt-2 leading-7 text-slate-600">{tool.output.description}</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2 sm:justify-end">
               {hasOutput ? (
                 <button
                   type="button"
@@ -337,7 +514,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               ) : null}
               <button
                 type="button"
-                onClick={handleCopy}
+                onClick={() => copyText(outputText, "Copied resume output.")}
                 disabled={!hasOutput}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
                 aria-label="Copy output to clipboard"
@@ -347,13 +524,49 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               </button>
               <button
                 type="button"
-                onClick={handleDownload}
+                onClick={() =>
+                  downloadText(outputText, tool.output.downloadFileName, "TXT downloaded.")
+                }
                 disabled={!hasOutput}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
                 aria-label="Download output as TXT"
                 title="Download TXT"
               >
                 <Download className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  downloadText(outputMarkdown, "skillmint-resume-bullets.md", "Markdown downloaded.")
+                }
+                disabled={!hasOutput}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+                aria-label="Download output as Markdown"
+                title="Download Markdown"
+              >
+                <FileDown className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => copyText(formatLinkedInCopy(generated), "Copied for LinkedIn.")}
+                disabled={!hasOutput}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+                aria-label="Copy output for LinkedIn"
+                title="Copy for LinkedIn"
+              >
+                <Linkedin className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  copyText(formatDocsCopy(generated), "Copied for Google Docs / resume editor.")
+                }
+                disabled={!hasOutput}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+                aria-label="Copy output for Google Docs or resume editor"
+                title="Copy for Google Docs / resume editor"
+              >
+                <FileText className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -469,8 +682,62 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               </div>
             </div>
           )}
+
+          {history.length ? (
+            <section className="mt-6 rounded-lg border border-slate-200 bg-white/90 p-4 shadow-line">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
+                    <History className="h-4 w-4" aria-hidden="true" />
+                    Recent generations
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Saved locally for quick reuse while you apply.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={clearHistory}
+                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+                >
+                  <Trash2 className="h-4 w-4" aria-hidden="true" />
+                  Clear history
+                </button>
+              </div>
+
+              <div className="mt-4 space-y-3">
+                {history.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => reopenHistoryItem(item)}
+                    className="block w-full rounded-lg border border-slate-200 bg-slate-50 p-4 text-left transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/60"
+                  >
+                    <span className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                      <span className="font-semibold text-ink">{item.role}</span>
+                      <span className="text-xs font-semibold uppercase text-slate-500">
+                        {new Intl.DateTimeFormat(undefined, {
+                          dateStyle: "medium",
+                          timeStyle: "short",
+                        }).format(new Date(item.createdAt))}
+                      </span>
+                    </span>
+                    <span className="mt-2 line-clamp-2 block text-sm leading-6 text-slate-600">
+                      {item.output.bullets[0] || "Resume bullets saved in this browser."}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          ) : null}
         </div>
       </section>
+
+      {toast ? (
+        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-full border border-mint-100 bg-ink px-5 py-3 text-center text-sm font-semibold text-white shadow-soft">
+          {toast}
+        </div>
+      ) : null}
     </div>
   );
 }
