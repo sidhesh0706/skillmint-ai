@@ -24,6 +24,9 @@ export const metadata: Metadata = {
     "LinkedIn headline generator",
     "career AI",
   ],
+  verification: {
+    google: "AFw3_keXJ1i0qgzviqw5LxSgCHdaxS2oZK9IJoaZJsE",
+  },
   openGraph: {
     title: "SkillMint AI",
     description:
