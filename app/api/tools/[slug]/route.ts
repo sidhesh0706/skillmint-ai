@@ -23,6 +23,28 @@ type ResumeGeneration = {
   bullets: string[];
   keywords: string[];
   tips: string[];
+  scores: BulletScore[];
+  summary: ResumeStrengthSummary;
+  missingKeywords: string[];
+};
+
+type BulletScore = {
+  score: number;
+  reason: string;
+  suggestion: string;
+};
+
+type ResumeStrengthSummary = {
+  overallScore: number;
+  strengths: string[];
+  weaknesses: string[];
+  nextAction: string;
+};
+
+type ImprovedBullet = {
+  bullet: string;
+  score: BulletScore;
+  changes: string[];
 };
 
 type GroqChatResponse = {
@@ -82,6 +104,69 @@ function getStringArray(value: unknown, maxItems: number) {
     .slice(0, maxItems);
 }
 
+function getScore(value: unknown) {
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    return 0;
+  }
+
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+function getBulletScores(value: unknown, maxItems: number) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => {
+      if (!item || typeof item !== "object") {
+        return {
+          score: 0,
+          reason: "",
+          suggestion: "",
+        };
+      }
+
+      const scoreItem = item as {
+        score?: unknown;
+        reason?: unknown;
+        suggestion?: unknown;
+      };
+
+      return {
+        score: getScore(scoreItem.score),
+        reason:
+          typeof scoreItem.reason === "string"
+            ? scoreItem.reason.trim().slice(0, 180)
+            : "",
+        suggestion:
+          typeof scoreItem.suggestion === "string"
+            ? scoreItem.suggestion.trim().slice(0, 180)
+            : "",
+      };
+    })
+    .slice(0, maxItems);
+}
+
+function getSummary(value: unknown): ResumeStrengthSummary {
+  const summary = value as {
+    overallScore?: unknown;
+    strengths?: unknown;
+    weaknesses?: unknown;
+    nextAction?: unknown;
+  };
+
+  return {
+    overallScore: getScore(summary?.overallScore),
+    strengths: getStringArray(summary?.strengths, 3),
+    weaknesses: getStringArray(summary?.weaknesses, 3),
+    nextAction:
+      typeof summary?.nextAction === "string"
+        ? summary.nextAction.trim().slice(0, 180)
+        : "",
+  };
+}
+
 function parseJsonObject(content: string) {
   try {
     const parsed = JSON.parse(content) as unknown;
@@ -106,18 +191,37 @@ function parseGeneration(content: string): ResumeGeneration {
     bullets?: unknown;
     keywords?: unknown;
     tips?: unknown;
+    scores?: unknown;
+    summary?: unknown;
+    missingKeywords?: unknown;
   } | null;
 
   return {
     bullets: getStringArray(parsed?.bullets, 5),
     keywords: getStringArray(parsed?.keywords, 10),
     tips: getStringArray(parsed?.tips, 3),
+    scores: getBulletScores(parsed?.scores, 5),
+    summary: getSummary(parsed?.summary),
+    missingKeywords: getStringArray(parsed?.missingKeywords, 8),
   };
 }
 
-function parseImprovedBullet(content: string) {
-  const parsed = parseJsonObject(content) as { bullet?: unknown } | null;
-  return typeof parsed?.bullet === "string" ? parsed.bullet.trim() : "";
+function parseImprovedBullet(content: string): ImprovedBullet {
+  const parsed = parseJsonObject(content) as {
+    bullet?: unknown;
+    score?: unknown;
+    changes?: unknown;
+  } | null;
+
+  return {
+    bullet: typeof parsed?.bullet === "string" ? parsed.bullet.trim() : "",
+    score: getBulletScores([parsed?.score], 1)[0] || {
+      score: 0,
+      reason: "",
+      suggestion: "",
+    },
+    changes: getStringArray(parsed?.changes, 3),
+  };
 }
 
 function getModeGuidance(outputMode: string) {
@@ -223,8 +327,12 @@ function buildGeneratePrompt(input: ReturnType<typeof getCleanBody>) {
     "- Use numbers, percentages, timeframes, volumes, or quality indicators where useful.",
     "- If adding inferred metrics, keep them modest and plausible.",
     "- Return 6-10 keywords that were used or should be represented.",
+    "- Suggest 4-8 missing role or industry keywords the user may add only if truthful.",
+    "- Score each bullet from 0-100 based on clarity, impact, specificity, ATS keyword strength, metric usage, and action verb quality.",
+    "- For each score, include a short reason and one improvement suggestion.",
+    "- Return an overall resume strength summary with overall score, strengths, weaknesses, and next recommended action.",
     "- Return 2-3 short improvement tips for the user's resume input.",
-    'Return only JSON in this exact shape: {"bullets":["...","...","...","...","..."],"keywords":["..."],"tips":["..."]}.',
+    'Return only JSON in this exact shape: {"bullets":["...","...","...","...","..."],"keywords":["..."],"tips":["..."],"scores":[{"score":85,"reason":"...","suggestion":"..."}],"summary":{"overallScore":84,"strengths":["..."],"weaknesses":["..."],"nextAction":"..."},"missingKeywords":["..."]}.',
   ].join("\n");
 }
 
@@ -242,9 +350,11 @@ function buildImprovePrompt(input: ReturnType<typeof getCleanBody>) {
     "Rules:",
     "- Keep the meaning truthful to the original bullet.",
     "- Improve specificity, action verb strength, ATS keywords, and measurable impact.",
+    "- Return 1-3 concise notes explaining what changed.",
+    "- Score the improved bullet from 0-100 based on clarity, impact, specificity, ATS keyword strength, metric usage, and action verb quality.",
     "- Keep it concise and recruiter-ready.",
     "- Do not rewrite other bullets.",
-    '- Return only JSON in this exact shape: {"bullet":"..."}',
+    '- Return only JSON in this exact shape: {"bullet":"...","score":{"score":90,"reason":"...","suggestion":"..."},"changes":["..."]}',
   ].join("\n");
 }
 
@@ -289,20 +399,20 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
         );
       }
 
-      const content = await callGroq(apiKey, buildImprovePrompt(input), 220);
-      const bullet = parseImprovedBullet(content);
+      const content = await callGroq(apiKey, buildImprovePrompt(input), 360);
+      const result = parseImprovedBullet(content);
 
-      if (!bullet) {
+      if (!result.bullet) {
         return NextResponse.json(
           { error: "AI response was incomplete. Please try improving the bullet again." },
           { status: 502 },
         );
       }
 
-      return NextResponse.json({ bullet });
+      return NextResponse.json(result);
     }
 
-    const content = await callGroq(apiKey, buildGeneratePrompt(input), 850);
+    const content = await callGroq(apiKey, buildGeneratePrompt(input), 1_300);
     const result = parseGeneration(content);
 
     if (result.bullets.length !== 5) {
@@ -310,6 +420,25 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
         { error: "AI response was incomplete. Please try generating again." },
         { status: 502 },
       );
+    }
+
+    if (result.scores.length !== 5) {
+      result.scores = result.bullets.map((bullet) => ({
+        score: 72,
+        reason: bullet.match(/\d/) ? "Clear bullet with some measurable evidence." : "Clear wording, but impact could be more specific.",
+        suggestion: bullet.match(/\d/) ? "Keep the metric tied to the outcome." : "Add a truthful metric, scope, or result if available.",
+      }));
+    }
+
+    if (!result.summary.overallScore) {
+      result.summary = {
+        overallScore: Math.round(
+          result.scores.reduce((total, score) => total + score.score, 0) / result.scores.length,
+        ),
+        strengths: ["Uses action-oriented resume language.", "Includes role-relevant phrasing."],
+        weaknesses: ["Some bullets may need more proof or context."],
+        nextAction: "Add truthful metrics, tools, and business outcomes where possible.",
+      };
     }
 
     return NextResponse.json(result);

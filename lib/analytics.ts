@@ -6,7 +6,10 @@ export type AnalyticsEventName =
   | "copy_click"
   | "download_click"
   | "email_signup_click"
-  | "affiliate_click";
+  | "affiliate_click"
+  | "score_generated"
+  | "bullet_improved"
+  | "compare_viewed";
 
 type AnalyticsPayload = Record<string, string | number | boolean | undefined>;
 
