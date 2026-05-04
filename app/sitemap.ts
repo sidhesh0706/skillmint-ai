@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { seoLandingPages } from "@/data/seo-landing-pages";
 import { tools } from "@/data/tool-config";
 
 const baseUrl = "https://skillmint-ai.vercel.app";
@@ -14,5 +15,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }));
 
-  return [...staticRoutes, ...toolRoutes];
+  const seoRoutes = seoLandingPages.map((page) => ({
+    url: `${baseUrl}/${page.slug}`,
+    lastModified: new Date(),
+  }));
+
+  return [...staticRoutes, ...toolRoutes, ...seoRoutes];
 }
