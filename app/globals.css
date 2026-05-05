@@ -18,6 +18,7 @@ html {
 body {
   min-height: 100vh;
   background:
+    radial-gradient(circle at 50% -10%, rgba(31, 201, 153, 0.18), transparent 30rem),
     linear-gradient(135deg, rgba(31, 201, 153, 0.12) 0%, transparent 34%),
     linear-gradient(220deg, rgba(245, 158, 11, 0.10) 0%, transparent 28%),
     linear-gradient(180deg, #ffffff 0%, #f7fafc 48%, #ffffff 100%);
@@ -41,7 +42,7 @@ body {
   }
 
   .card-surface {
-    @apply rounded-lg border border-white/80 bg-white/[0.92] shadow-soft ring-1 ring-slate-900/[0.025] backdrop-blur;
+    @apply rounded-lg border border-white/80 bg-white/[0.94] shadow-soft ring-1 ring-slate-900/[0.03] backdrop-blur;
   }
 
   .page-band {

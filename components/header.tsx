@@ -14,6 +14,12 @@ export function Header() {
 
         <nav aria-label="Main navigation" className="flex items-center gap-2 text-sm font-medium">
           <Link
+            href="/resources"
+            className="hidden rounded-full px-4 py-2.5 text-slate-700 transition hover:bg-white hover:text-ink hover:shadow-line sm:inline-flex"
+          >
+            Resources
+          </Link>
+          <Link
             href="/tools"
             className="rounded-full px-4 py-2.5 text-slate-700 transition hover:bg-white hover:text-ink hover:shadow-line"
           >

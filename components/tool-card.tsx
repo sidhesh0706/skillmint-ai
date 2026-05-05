@@ -13,9 +13,10 @@ export function ToolCard({ tool }: ToolCardProps) {
   const statusLabel = isLive ? "Live" : "Coming soon";
 
   return (
-    <article className="group card-surface flex h-full flex-col overflow-hidden p-5 transition duration-300 hover:-translate-y-1 hover:border-mint-100 hover:shadow-xl sm:p-6">
+    <article className="group card-surface relative flex h-full flex-col overflow-hidden p-5 transition duration-300 hover:-translate-y-1 hover:border-mint-100 hover:shadow-xl sm:p-6">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-mint-500 via-amber-300 to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
       <div className="flex items-start justify-between gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-mint-50 to-white text-mint-700 shadow-line transition duration-300 group-hover:scale-105 group-hover:shadow-soft">
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-mint-50 via-white to-amber-50 text-mint-700 shadow-line transition duration-300 group-hover:scale-105 group-hover:shadow-soft">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </div>
         <span
