@@ -25,6 +25,23 @@ const nextConfig = {
         source: "/sitemap-google.xml",
         headers: sitemapHeaders,
       },
+      {
+        source: "/sitemap.txt",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "text/plain; charset=utf-8",
+          },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+          {
+            key: "X-Robots-Tag",
+            value: "index, follow",
+          },
+        ],
+      },
     ];
   },
 };

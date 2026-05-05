@@ -9,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: [
       "https://skillmint-ai.vercel.app/sitemap.xml",
       "https://skillmint-ai.vercel.app/sitemap-google.xml",
+      "https://skillmint-ai.vercel.app/sitemap.txt",
     ],
   };
 }
