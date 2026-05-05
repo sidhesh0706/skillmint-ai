@@ -43,7 +43,9 @@ export function GET() {
 
   return new Response(xml, {
     headers: {
-      "Content-Type": "application/xml",
+      "Cache-Control": "public, max-age=0, must-revalidate",
+      "Content-Type": "application/xml; charset=utf-8",
+      "X-Robots-Tag": "index, follow",
     },
   });
 }
