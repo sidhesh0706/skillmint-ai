@@ -6,10 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: [
-      "https://skillmint-ai.vercel.app/sitemap.xml",
-      "https://skillmint-ai.vercel.app/sitemap-google.xml",
-      "https://skillmint-ai.vercel.app/sitemap.txt",
-    ],
+    sitemap: "https://skillmint-ai.vercel.app/sitemap.xml",
   };
 }
