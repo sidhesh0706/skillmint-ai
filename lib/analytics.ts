@@ -1,5 +1,7 @@
 "use client";
 
+import { track } from "@vercel/analytics";
+
 export type AnalyticsEventName =
   | "generate_click"
   | "regenerate_click"
@@ -24,8 +26,17 @@ export function trackEvent(event: AnalyticsEventName, payload: AnalyticsPayload 
     return;
   }
 
+  const cleanPayload = Object.fromEntries(
+    Object.entries(payload).filter((entry): entry is [string, string | number | boolean] => {
+      const value = entry[1];
+      return typeof value === "string" || typeof value === "number" || typeof value === "boolean";
+    }),
+  );
+
   window.dataLayer?.push({
     event,
-    ...payload,
+    ...cleanPayload,
   });
+
+  track(event, cleanPayload);
 }
