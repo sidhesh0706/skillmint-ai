@@ -358,7 +358,7 @@ export default function Home() {
               </h2>
               <p className="mt-4 max-w-2xl leading-7 text-slate-300">
                 Try the first SkillMint AI tool today. Generate sharper resume
-                bullets through a secure server route powered by Groq.
+                bullets through a secure, private AI workflow.
               </p>
             </div>
             <Link href="/tools/resume-bullet-generator" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50">

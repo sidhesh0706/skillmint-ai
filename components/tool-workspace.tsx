@@ -100,6 +100,39 @@ const recommendations = [
   },
 ];
 
+const exportActions = [
+  {
+    label: "Copy",
+    description: "Plain resume format",
+    icon: Clipboard,
+    action: "copy" as const,
+  },
+  {
+    label: "TXT",
+    description: "Download text",
+    icon: Download,
+    action: "txt" as const,
+  },
+  {
+    label: "Markdown",
+    description: "Download .md",
+    icon: FileDown,
+    action: "markdown" as const,
+  },
+  {
+    label: "LinkedIn",
+    description: "Profile-ready copy",
+    icon: Linkedin,
+    action: "linkedin" as const,
+  },
+  {
+    label: "Docs",
+    description: "Editor-friendly copy",
+    icon: FileText,
+    action: "docs" as const,
+  },
+];
+
 function renderField(
   field: ToolField,
   value: string,
@@ -296,6 +329,18 @@ function getScoreClasses(score: number) {
   }
 
   return "border-red-200 bg-red-50 text-red-700";
+}
+
+function getScoreBarColor(score: number) {
+  if (score >= 85) {
+    return "bg-mint-500";
+  }
+
+  if (score >= 70) {
+    return "bg-amber-400";
+  }
+
+  return "bg-red-400";
 }
 
 export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
@@ -616,6 +661,30 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     });
   }
 
+  function handleExportAction(action: (typeof exportActions)[number]["action"]) {
+    if (action === "copy") {
+      copyText(outputText, "Copied resume output.");
+      return;
+    }
+
+    if (action === "txt") {
+      downloadText(outputText, tool.output.downloadFileName, "TXT downloaded.");
+      return;
+    }
+
+    if (action === "markdown") {
+      downloadText(outputMarkdown, "skillmint-resume-bullets.md", "Markdown downloaded.");
+      return;
+    }
+
+    if (action === "linkedin") {
+      copyText(formatLinkedInCopy(generated), "Copied for LinkedIn.");
+      return;
+    }
+
+    copyText(formatDocsCopy(generated), "Copied for Google Docs / resume editor.");
+  }
+
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
       <form
@@ -684,63 +753,35 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 </button>
               ) : null}
-              <button
-                type="button"
-                onClick={() => copyText(outputText, "Copied resume output.")}
-                disabled={!hasOutput}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
-                aria-label="Copy output to clipboard"
-                title="Copy"
-              >
-                <Clipboard className="h-4 w-4" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  downloadText(outputText, tool.output.downloadFileName, "TXT downloaded.")
-                }
-                disabled={!hasOutput}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
-                aria-label="Download output as TXT"
-                title="Download TXT"
-              >
-                <Download className="h-4 w-4" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  downloadText(outputMarkdown, "skillmint-resume-bullets.md", "Markdown downloaded.")
-                }
-                disabled={!hasOutput}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
-                aria-label="Download output as Markdown"
-                title="Download Markdown"
-              >
-                <FileDown className="h-4 w-4" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => copyText(formatLinkedInCopy(generated), "Copied for LinkedIn.")}
-                disabled={!hasOutput}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
-                aria-label="Copy output for LinkedIn"
-                title="Copy for LinkedIn"
-              >
-                <Linkedin className="h-4 w-4" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  copyText(formatDocsCopy(generated), "Copied for Google Docs / resume editor.")
-                }
-                disabled={!hasOutput}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
-                aria-label="Copy output for Google Docs or resume editor"
-                title="Copy for Google Docs / resume editor"
-              >
-                <FileText className="h-4 w-4" aria-hidden="true" />
-              </button>
             </div>
+          </div>
+
+          <div className="mt-5 grid gap-2 sm:grid-cols-5">
+            {exportActions.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <button
+                  key={item.action}
+                  type="button"
+                  onClick={() => handleExportAction(item.action)}
+                  disabled={!hasOutput}
+                  className="group flex min-h-16 items-center gap-3 rounded-lg border border-slate-200 bg-white/85 px-3 py-2 text-left shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:shadow-line"
+                  aria-label={item.label}
+                  title={item.description}
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-700 transition group-hover:bg-mint-50 group-hover:text-mint-700">
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-sm font-semibold text-ink">{item.label}</span>
+                    <span className="hidden truncate text-xs text-slate-500 sm:block">
+                      {item.description}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -830,13 +871,23 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                             <p className="leading-7 text-slate-700">{item}</p>
-                            <span
-                              className={`inline-flex shrink-0 items-center justify-center rounded-full border px-3 py-1 text-xs font-semibold ${getScoreClasses(
-                                generated.scores[index]?.score || 0,
-                              )}`}
-                            >
-                              {generated.scores[index]?.score || 0}/100
-                            </span>
+                            <div className="shrink-0">
+                              <span
+                                className={`inline-flex items-center justify-center rounded-full border px-3 py-1 text-xs font-semibold ${getScoreClasses(
+                                  generated.scores[index]?.score || 0,
+                                )}`}
+                              >
+                                {generated.scores[index]?.score || 0}/100
+                              </span>
+                              <div className="mt-2 h-1.5 w-24 overflow-hidden rounded-full bg-slate-100">
+                                <div
+                                  className={`h-full rounded-full ${getScoreBarColor(
+                                    generated.scores[index]?.score || 0,
+                                  )}`}
+                                  style={{ width: `${generated.scores[index]?.score || 0}%` }}
+                                />
+                              </div>
+                            </div>
                           </div>
 
                           <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm leading-6 text-slate-600">
