@@ -7,16 +7,18 @@ type RouteContext = {
 };
 
 type ResumeRequestBody = {
-  action?: "generate" | "improve-bullet";
+  action?: "generate" | "improve-bullet" | "rewrite-existing";
   targetRole?: string;
   experienceLevel?: string;
   industry?: string;
   achievement?: string;
+  jobDescription?: string;
   tools?: string;
   metrics?: string;
   tone?: string;
   outputMode?: string;
   bullet?: string;
+  existingBullet?: string;
 };
 
 type ResumeGeneration = {
@@ -26,12 +28,24 @@ type ResumeGeneration = {
   scores: BulletScore[];
   summary: ResumeStrengthSummary;
   missingKeywords: string[];
+  actionVerbs: string[];
+  whatToAdd: string[];
 };
 
 type BulletScore = {
   score: number;
   reason: string;
   suggestion: string;
+  breakdown?: BulletScoreBreakdown;
+};
+
+type BulletScoreBreakdown = {
+  clarity: number;
+  impact: number;
+  specificity: number;
+  metrics: number;
+  atsKeywordFit: number;
+  actionVerbStrength: number;
 };
 
 type ResumeStrengthSummary = {
@@ -45,6 +59,7 @@ type ImprovedBullet = {
   bullet: string;
   score: BulletScore;
   changes: string[];
+  original?: string;
 };
 
 type GroqChatResponse = {
@@ -112,6 +127,19 @@ function getScore(value: unknown) {
   return Math.max(0, Math.min(100, Math.round(value)));
 }
 
+function getScoreBreakdown(value: unknown): BulletScoreBreakdown {
+  const breakdown = value as Partial<Record<keyof BulletScoreBreakdown, unknown>>;
+
+  return {
+    clarity: getScore(breakdown?.clarity),
+    impact: getScore(breakdown?.impact),
+    specificity: getScore(breakdown?.specificity),
+    metrics: getScore(breakdown?.metrics),
+    atsKeywordFit: getScore(breakdown?.atsKeywordFit),
+    actionVerbStrength: getScore(breakdown?.actionVerbStrength),
+  };
+}
+
 function getBulletScores(value: unknown, maxItems: number) {
   if (!Array.isArray(value)) {
     return [];
@@ -131,6 +159,7 @@ function getBulletScores(value: unknown, maxItems: number) {
         score?: unknown;
         reason?: unknown;
         suggestion?: unknown;
+        breakdown?: unknown;
       };
 
       return {
@@ -143,6 +172,7 @@ function getBulletScores(value: unknown, maxItems: number) {
           typeof scoreItem.suggestion === "string"
             ? scoreItem.suggestion.trim().slice(0, 180)
             : "",
+        breakdown: getScoreBreakdown(scoreItem.breakdown),
       };
     })
     .slice(0, maxItems);
@@ -194,6 +224,8 @@ function parseGeneration(content: string): ResumeGeneration {
     scores?: unknown;
     summary?: unknown;
     missingKeywords?: unknown;
+    actionVerbs?: unknown;
+    whatToAdd?: unknown;
   } | null;
 
   return {
@@ -203,6 +235,8 @@ function parseGeneration(content: string): ResumeGeneration {
     scores: getBulletScores(parsed?.scores, 5),
     summary: getSummary(parsed?.summary),
     missingKeywords: getStringArray(parsed?.missingKeywords, 8),
+    actionVerbs: getStringArray(parsed?.actionVerbs, 10),
+    whatToAdd: getStringArray(parsed?.whatToAdd, 6),
   };
 }
 
@@ -211,6 +245,7 @@ function parseImprovedBullet(content: string): ImprovedBullet {
     bullet?: unknown;
     score?: unknown;
     changes?: unknown;
+    original?: unknown;
   } | null;
 
   return {
@@ -221,6 +256,7 @@ function parseImprovedBullet(content: string): ImprovedBullet {
       suggestion: "",
     },
     changes: getStringArray(parsed?.changes, 3),
+    original: typeof parsed?.original === "string" ? parsed.original.trim() : "",
   };
 }
 
@@ -292,11 +328,13 @@ function getCleanBody(rawBody: ResumeRequestBody) {
     experienceLevel: sanitizeInput(rawBody.experienceLevel, 60) || "Mid level",
     industry: sanitizeInput(rawBody.industry, 120),
     achievement: sanitizeInput(rawBody.achievement, 1_000),
+    jobDescription: sanitizeInput(rawBody.jobDescription, 2_000),
     tools: sanitizeInput(rawBody.tools, 300),
     metrics: sanitizeInput(rawBody.metrics, 240),
     tone: sanitizeInput(rawBody.tone, 40) || "Impactful",
     outputMode: sanitizeInput(rawBody.outputMode, 60) || "Recruiter-friendly",
     bullet: sanitizeInput(rawBody.bullet, 400),
+    existingBullet: sanitizeInput(rawBody.existingBullet, 500),
   };
 }
 
@@ -311,6 +349,7 @@ function buildGeneratePrompt(input: ReturnType<typeof getCleanBody>) {
     `Experience level: ${input.experienceLevel}`,
     `Industry/domain: ${input.industry || "Not specified"}`,
     `Achievement/task: ${input.achievement}`,
+    `Job description / target posting: ${input.jobDescription || "Not provided"}`,
     `Tools/technologies used: ${input.tools || "Not specified"}`,
     `Tone: ${input.tone}`,
     `Output mode: ${input.outputMode}`,
@@ -327,12 +366,16 @@ function buildGeneratePrompt(input: ReturnType<typeof getCleanBody>) {
     "- Use numbers, percentages, timeframes, volumes, or quality indicators where useful.",
     "- If adding inferred metrics, keep them modest and plausible.",
     "- Return 6-10 keywords that were used or should be represented.",
-    "- Suggest 4-8 missing role or industry keywords the user may add only if truthful.",
+    "- If a job description is provided, extract relevant ATS keywords and identify missing keywords from the posting that the user may add only if truthful.",
+    "- Suggest 4-8 missing role, industry, or job-description keywords the user may add only if truthful.",
+    "- Return 6-10 stronger action verbs that fit the target role.",
+    "- Return 3-6 concrete suggestions for what the user should add if truthful, such as tools, scope, metrics, customers, timeframes, or outcomes.",
     "- Score each bullet from 0-100 based on clarity, impact, specificity, ATS keyword strength, metric usage, and action verb quality.",
+    "- For each score, include a breakdown object with clarity, impact, specificity, metrics, atsKeywordFit, and actionVerbStrength from 0-100.",
     "- For each score, include a short reason and one improvement suggestion.",
     "- Return an overall resume strength summary with overall score, strengths, weaknesses, and next recommended action.",
     "- Return 2-3 short improvement tips for the user's resume input.",
-    'Return only JSON in this exact shape: {"bullets":["...","...","...","...","..."],"keywords":["..."],"tips":["..."],"scores":[{"score":85,"reason":"...","suggestion":"..."}],"summary":{"overallScore":84,"strengths":["..."],"weaknesses":["..."],"nextAction":"..."},"missingKeywords":["..."]}.',
+    'Return only JSON in this exact shape: {"bullets":["...","...","...","...","..."],"keywords":["..."],"tips":["..."],"scores":[{"score":85,"reason":"...","suggestion":"...","breakdown":{"clarity":88,"impact":82,"specificity":79,"metrics":75,"atsKeywordFit":84,"actionVerbStrength":90}}],"summary":{"overallScore":84,"strengths":["..."],"weaknesses":["..."],"nextAction":"..."},"missingKeywords":["..."],"actionVerbs":["..."],"whatToAdd":["..."]}.',
   ].join("\n");
 }
 
@@ -342,6 +385,7 @@ function buildImprovePrompt(input: ReturnType<typeof getCleanBody>) {
     `Target role: ${input.targetRole}`,
     `Experience level: ${input.experienceLevel}`,
     `Industry/domain: ${input.industry || "Not specified"}`,
+    `Job description / target posting: ${input.jobDescription || "Not provided"}`,
     `Tools/technologies used: ${input.tools || "Not specified"}`,
     `Metrics/results: ${input.metrics || "Not specified"}`,
     `Tone: ${input.tone}`,
@@ -352,9 +396,31 @@ function buildImprovePrompt(input: ReturnType<typeof getCleanBody>) {
     "- Improve specificity, action verb strength, ATS keywords, and measurable impact.",
     "- Return 1-3 concise notes explaining what changed.",
     "- Score the improved bullet from 0-100 based on clarity, impact, specificity, ATS keyword strength, metric usage, and action verb quality.",
+    "- Include a breakdown object with clarity, impact, specificity, metrics, atsKeywordFit, and actionVerbStrength from 0-100.",
     "- Keep it concise and recruiter-ready.",
     "- Do not rewrite other bullets.",
-    '- Return only JSON in this exact shape: {"bullet":"...","score":{"score":90,"reason":"...","suggestion":"..."},"changes":["..."]}',
+    '- Return only JSON in this exact shape: {"bullet":"...","score":{"score":90,"reason":"...","suggestion":"...","breakdown":{"clarity":90,"impact":88,"specificity":84,"metrics":80,"atsKeywordFit":86,"actionVerbStrength":92}},"changes":["..."]}',
+  ].join("\n");
+}
+
+function buildRewriteExistingPrompt(input: ReturnType<typeof getCleanBody>) {
+  return [
+    "Score and rewrite the user's existing resume bullet into a stronger before-vs-after version.",
+    `Target role: ${input.targetRole}`,
+    `Experience level: ${input.experienceLevel}`,
+    `Industry/domain: ${input.industry || "Not specified"}`,
+    `Job description / target posting: ${input.jobDescription || "Not provided"}`,
+    `Tools/technologies used: ${input.tools || "Not specified"}`,
+    `Metrics/results: ${input.metrics || "Not specified"}`,
+    `Tone: ${input.tone}`,
+    `Existing bullet: ${input.existingBullet}`,
+    "Rules:",
+    "- Preserve truthfulness and do not invent extreme claims.",
+    "- Improve action verb, clarity, specificity, ATS keyword fit, and measurable impact.",
+    "- If the bullet has no numbers, add only conservative metrics when plausible or phrase scope without fabricating.",
+    "- Include 1-3 concise notes explaining what changed.",
+    "- Score the improved bullet from 0-100 and include a breakdown object.",
+    '- Return only JSON in this exact shape: {"original":"...","bullet":"...","score":{"score":88,"reason":"...","suggestion":"...","breakdown":{"clarity":90,"impact":86,"specificity":82,"metrics":76,"atsKeywordFit":84,"actionVerbStrength":90}},"changes":["..."]}',
   ].join("\n");
 }
 
@@ -383,14 +449,35 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
 
   const input = getCleanBody((await request.json()) as ResumeRequestBody);
 
-  if (!input.targetRole || !input.achievement) {
+  if (!input.targetRole || (input.action !== "rewrite-existing" && !input.achievement)) {
     return NextResponse.json(
-      { error: "Please enter a target role and achievement before generating." },
+      { error: "Please enter a target role and the work details before generating." },
       { status: 400 },
     );
   }
 
   try {
+    if (input.action === "rewrite-existing") {
+      if (!input.existingBullet) {
+        return NextResponse.json(
+          { error: "Paste an existing bullet to rewrite first." },
+          { status: 400 },
+        );
+      }
+
+      const content = await callGroq(apiKey, buildRewriteExistingPrompt(input), 460);
+      const result = parseImprovedBullet(content);
+
+      if (!result.bullet) {
+        return NextResponse.json(
+          { error: "AI response was incomplete. Please try rewriting the bullet again." },
+          { status: 502 },
+        );
+      }
+
+      return NextResponse.json(result);
+    }
+
     if (input.action === "improve-bullet") {
       if (!input.bullet) {
         return NextResponse.json(
@@ -427,6 +514,14 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
         score: 72,
         reason: bullet.match(/\d/) ? "Clear bullet with some measurable evidence." : "Clear wording, but impact could be more specific.",
         suggestion: bullet.match(/\d/) ? "Keep the metric tied to the outcome." : "Add a truthful metric, scope, or result if available.",
+        breakdown: {
+          clarity: 76,
+          impact: 70,
+          specificity: 68,
+          metrics: bullet.match(/\d/) ? 76 : 55,
+          atsKeywordFit: 70,
+          actionVerbStrength: 76,
+        },
       }));
     }
 
@@ -439,6 +534,18 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
         weaknesses: ["Some bullets may need more proof or context."],
         nextAction: "Add truthful metrics, tools, and business outcomes where possible.",
       };
+    }
+
+    if (!result.actionVerbs.length) {
+      result.actionVerbs = ["Improved", "Built", "Analyzed", "Coordinated", "Optimized"];
+    }
+
+    if (!result.whatToAdd.length) {
+      result.whatToAdd = [
+        "Add a truthful metric such as time saved, users supported, or quality improvement.",
+        "Name the tools or workflows that match the target role.",
+        "Clarify the business outcome or stakeholder impact.",
+      ];
     }
 
     return NextResponse.json(result);

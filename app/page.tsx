@@ -114,6 +114,15 @@ const workflowSteps = [
   },
 ];
 
+const audienceSegments = [
+  "Students",
+  "Freshers",
+  "Interns",
+  "Software engineers",
+  "Data analysts",
+  "Career switchers",
+];
+
 export const metadata: Metadata = {
   title: "Free AI Tools to Build Your Career Faster",
   description:
@@ -176,21 +185,21 @@ export default function Home() {
             </div>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <TrackedLink
-                href="/tools"
+                href="/tools/resume-bullet-generator"
                 className="button-primary"
                 eventName="homepage_cta_click"
-                eventPayload={{ cta: "explore_tools" }}
+                eventPayload={{ cta: "generate_resume_bullets" }}
               >
-                Explore Tools
+                Generate resume bullets
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </TrackedLink>
               <TrackedLink
-                href="/tools/resume-bullet-generator"
+                href="/resources"
                 className="button-secondary"
                 eventName="homepage_cta_click"
-                eventPayload={{ cta: "try_resume_generator" }}
+                eventPayload={{ cta: "browse_examples" }}
               >
-                Try Resume Generator
+                Browse examples
               </TrackedLink>
             </div>
             <div className="mt-7 grid max-w-lg grid-cols-3 gap-2.5 sm:gap-3">
@@ -270,8 +279,6 @@ export default function Home() {
         </div>
       </section>
 
-      <AdSlot label="Career resource placement" />
-
       <section className="pt-10 pb-16 sm:pt-12 sm:pb-20">
         <div className="container-shell">
           <div className="grid gap-4 md:grid-cols-3">
@@ -287,6 +294,33 @@ export default function Home() {
                 <p className="mt-2 leading-7 text-slate-600">{step.description}</p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-16 sm:pb-20">
+        <div className="container-shell">
+          <div className="card-surface grid gap-6 p-6 sm:p-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase text-mint-700">Who this is for</p>
+              <h2 className="mt-2 text-3xl font-semibold leading-tight text-ink">
+                Built for real application momentum.
+              </h2>
+              <p className="mt-3 leading-7 text-slate-600">
+                Use SkillMint when you need clearer, more specific resume bullets without creating
+                an account or losing privacy.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {audienceSegments.map((segment) => (
+                <div
+                  key={segment}
+                  className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 shadow-line"
+                >
+                  {segment}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -423,6 +457,10 @@ export default function Home() {
       </section>
 
       <EmailCapture />
+
+      <div className="container-shell">
+        <AdSlot label="Career growth resource placement" />
+      </div>
 
       <section className="py-16 sm:py-20">
         <div className="container-shell">

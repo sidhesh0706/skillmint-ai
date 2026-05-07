@@ -1,19 +1,39 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { AdSlot } from "@/components/ad-slot";
+import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
 import { JsonLd } from "@/components/json-ld";
 import { TrackedLink } from "@/components/tracked-link";
+import { recommendedResources } from "@/config/monetization";
 import type { SeoLandingPage as SeoLandingPageData } from "@/data/seo-landing-pages";
-import { breadcrumbSchema, faqSchema } from "@/lib/structured-data";
+import { getSeoLandingPage } from "@/data/seo-landing-pages";
+import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/structured-data";
 
 type SeoLandingPageProps = {
   page: SeoLandingPageData;
 };
 
 export function SeoLandingPage({ page }: SeoLandingPageProps) {
+  const relatedPages = (page.relatedSlugs || [])
+    .map((slug) => getSeoLandingPage(slug))
+    .filter((relatedPage): relatedPage is SeoLandingPageData => Boolean(relatedPage))
+    .slice(0, 5);
+  const atsKeywords = page.atsKeywords?.length
+    ? page.atsKeywords
+    : page.keywords.slice(0, 6);
+  const commonMistakes = page.commonMistakes?.length
+    ? page.commonMistakes
+    : ["Using vague task descriptions", "Skipping measurable scope", "Leaving out role keywords"];
+
   return (
     <>
       <JsonLd
         data={[
+          articleSchema({
+            title: page.metaTitle,
+            description: page.metaDescription,
+            path: `/${page.slug}`,
+          }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Resources", path: "/resources" },
@@ -48,6 +68,9 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
               </TrackedLink>
               <Link href="/tools" className="button-secondary">
                 Explore AI tools
+              </Link>
+              <Link href="/resources" className="button-secondary">
+                Browse resources
               </Link>
             </div>
           </div>
@@ -105,7 +128,79 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
                   </span>
                 ))}
               </div>
+              <div className="mt-6 border-t border-slate-200 pt-5">
+                <p className="text-sm font-semibold uppercase text-mint-700">ATS keywords</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {atsKeywords.map((keyword) => (
+                    <span
+                      key={keyword}
+                      className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              {relatedPages.length ? (
+                <div className="mt-6 border-t border-slate-200 pt-5">
+                  <p className="text-sm font-semibold uppercase text-mint-700">Related guides</p>
+                  <div className="mt-3 grid gap-2">
+                    {relatedPages.map((relatedPage) => (
+                      <Link
+                        key={relatedPage.slug}
+                        href={`/${relatedPage.slug}`}
+                        className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                      >
+                        {relatedPage.title.replace(" (2026 Guide)", "").replace(" (2026 Examples)", "")}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </aside>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-16 sm:pb-20">
+        <div className="container-shell">
+          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase text-mint-700">Common mistakes</p>
+              <h2 className="mt-2 text-3xl font-semibold leading-tight text-ink">
+                What weakens these bullets
+              </h2>
+              <p className="mt-4 leading-7 text-slate-600">
+                Small wording mistakes can make strong experience look generic. Avoid these before
+                sending applications.
+              </p>
+            </div>
+            <div className="grid gap-3">
+              {commonMistakes.map((mistake) => (
+                <div key={mistake} className="rounded-lg border border-amber-200 bg-amber-50/80 p-4">
+                  <p className="leading-7 text-amber-900">{mistake}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-16 sm:pb-20">
+        <div className="container-shell">
+          <div className="grid gap-3 sm:grid-cols-3">
+            {recommendedResources.slice(0, 3).map((resource) => (
+              <AffiliateRecommendationCard
+                key={resource.title}
+                title={resource.title}
+                description={resource.description}
+                href={resource.href}
+                label="Recommended resource"
+              />
+            ))}
+          </div>
+          <div className="mt-4">
+            <AdSlot label="Resume guide resource placement" />
           </div>
         </div>
       </section>

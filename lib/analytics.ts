@@ -18,7 +18,17 @@ export type AnalyticsEventName =
   | "generation_success"
   | "export_used"
   | "history_reopened"
-  | "share_click";
+  | "share_click"
+  | "page_view"
+  | "tool_generate_clicked"
+  | "tool_generate_success"
+  | "tool_generate_error"
+  | "bullet_copied"
+  | "export_txt_clicked"
+  | "export_markdown_clicked"
+  | "email_signup_submitted"
+  | "affiliate_card_clicked"
+  | "seo_cta_clicked";
 
 type AnalyticsPayload = Record<string, string | number | boolean | undefined>;
 
@@ -33,17 +43,21 @@ export function trackEvent(event: AnalyticsEventName, payload: AnalyticsPayload 
     return;
   }
 
-  const cleanPayload = Object.fromEntries(
-    Object.entries(payload).filter((entry): entry is [string, string | number | boolean] => {
-      const value = entry[1];
-      return typeof value === "string" || typeof value === "number" || typeof value === "boolean";
-    }),
-  );
+  try {
+    const cleanPayload = Object.fromEntries(
+      Object.entries(payload).filter((entry): entry is [string, string | number | boolean] => {
+        const value = entry[1];
+        return typeof value === "string" || typeof value === "number" || typeof value === "boolean";
+      }),
+    );
 
-  window.dataLayer?.push({
-    event,
-    ...cleanPayload,
-  });
+    window.dataLayer?.push({
+      event,
+      ...cleanPayload,
+    });
 
-  track(event, cleanPayload);
+    track(event, cleanPayload);
+  } catch {
+    // Analytics should never block generation, exports, or navigation.
+  }
 }

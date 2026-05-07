@@ -18,7 +18,10 @@ import {
   Trash2,
   Wand2,
 } from "lucide-react";
+import { AdSlot } from "@/components/ad-slot";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
+import { EmailCapture } from "@/components/email-capture";
+import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
   getToolBySlug,
@@ -38,6 +41,8 @@ type ResumeOutput = {
   scores: BulletScore[];
   summary: ResumeStrengthSummary;
   missingKeywords: string[];
+  actionVerbs: string[];
+  whatToAdd: string[];
   comparisons: Record<number, BulletComparison>;
 };
 
@@ -45,6 +50,16 @@ type BulletScore = {
   score: number;
   reason: string;
   suggestion: string;
+  breakdown: BulletScoreBreakdown;
+};
+
+type BulletScoreBreakdown = {
+  clarity: number;
+  impact: number;
+  specificity: number;
+  metrics: number;
+  atsKeywordFit: number;
+  actionVerbStrength: number;
 };
 
 type BulletComparison = {
@@ -80,25 +95,124 @@ const emptyOutput: ResumeOutput = {
     nextAction: "",
   },
   missingKeywords: [],
+  actionVerbs: [],
+  whatToAdd: [],
   comparisons: {},
 };
 
-const recommendations = [
+type RewriteResult = {
+  original: string;
+  bullet: string;
+  score: BulletScore;
+  changes: string[];
+};
+
+const examplePresets = [
   {
-    title: "Resume templates",
-    description: "Use a clean structure that makes your strongest bullets easy to scan.",
-    href: "#resume-templates",
+    label: "Software project",
+    values: {
+      targetRole: "Software Engineer",
+      industry: "SaaS",
+      experienceLevel: "Entry level",
+      outputMode: "ATS-optimized",
+      achievement:
+        "Built a React dashboard for users to track onboarding tasks and support requests.",
+      tools: "React, TypeScript, Tailwind CSS, REST APIs",
+      metrics: "reduced duplicate status questions by 25%",
+      tone: "Impactful",
+      jobDescription:
+        "Looking for a software engineer with React, TypeScript, API integration, dashboard development, collaboration, and performance optimization experience.",
+    },
   },
   {
-    title: "LinkedIn optimization guide",
-    description: "Turn your new bullets into a sharper profile summary and headline.",
-    href: "#linkedin-optimization-guide",
+    label: "Data analysis project",
+    values: {
+      targetRole: "Data Analyst",
+      industry: "Ecommerce",
+      experienceLevel: "Mid level",
+      outputMode: "ATS-optimized",
+      achievement:
+        "Analyzed customer purchase data to identify retention patterns and campaign opportunities.",
+      tools: "SQL, Excel, Tableau",
+      metrics: "analyzed 50,000 customer records and reduced weekly reporting time by 6 hours",
+      tone: "Professional",
+      jobDescription:
+        "Data analyst role requiring SQL, dashboards, customer analytics, stakeholder reporting, data cleaning, and business insights.",
+    },
   },
   {
-    title: "Interview prep checklist",
-    description: "Convert resume wins into concise stories for behavioral interviews.",
-    href: "#interview-prep-checklist",
+    label: "Internship task",
+    values: {
+      targetRole: "Marketing Intern",
+      industry: "B2B technology",
+      experienceLevel: "Entry level",
+      outputMode: "Recruiter-friendly",
+      achievement:
+        "Supported weekly content planning, competitor research, and social media reporting during internship.",
+      tools: "Google Sheets, Canva, LinkedIn, Google Analytics",
+      metrics: "researched 15 competitors and prepared 4 weekly reports",
+      tone: "Concise",
+      jobDescription:
+        "Marketing internship focused on content planning, competitor research, social media, campaign reporting, and analytics.",
+    },
   },
+  {
+    label: "Leadership activity",
+    values: {
+      targetRole: "Project Coordinator",
+      industry: "Student organization",
+      experienceLevel: "Entry level",
+      outputMode: "Recruiter-friendly",
+      achievement:
+        "Led a student team to organize a campus event, coordinate vendors, manage timeline, and track registrations.",
+      tools: "Google Sheets, Notion, email",
+      metrics: "coordinated 8 volunteers and supported 120 attendees",
+      tone: "Impactful",
+      jobDescription:
+        "Project coordinator role requiring stakeholder communication, scheduling, documentation, event coordination, and task tracking.",
+    },
+  },
+  {
+    label: "Customer support work",
+    values: {
+      targetRole: "Customer Support Specialist",
+      industry: "Software",
+      experienceLevel: "Mid level",
+      outputMode: "ATS-optimized",
+      achievement:
+        "Resolved customer questions across chat and email while documenting recurring product issues.",
+      tools: "Zendesk, Intercom, Salesforce",
+      metrics: "handled 45 tickets per day and maintained 94% CSAT",
+      tone: "Professional",
+      jobDescription:
+        "Customer support specialist role requiring ticket resolution, Zendesk, customer communication, escalation, documentation, and CSAT ownership.",
+    },
+  },
+  {
+    label: "Marketing campaign",
+    values: {
+      targetRole: "Digital Marketing Specialist",
+      industry: "Consumer apps",
+      experienceLevel: "Mid level",
+      outputMode: "Short & punchy",
+      achievement:
+        "Managed paid social campaign reporting and adjusted messaging based on conversion performance.",
+      tools: "Meta Ads, Google Analytics, HubSpot",
+      metrics: "improved qualified lead volume by 18%",
+      tone: "Impactful",
+      jobDescription:
+        "Digital marketing role focused on paid social campaigns, conversion optimization, reporting, Google Analytics, CRM, and lifecycle messaging.",
+    },
+  },
+];
+
+const breakdownLabels: Array<[keyof BulletScoreBreakdown, string]> = [
+  ["clarity", "Clarity"],
+  ["impact", "Impact"],
+  ["specificity", "Specificity"],
+  ["metrics", "Metrics"],
+  ["atsKeywordFit", "ATS fit"],
+  ["actionVerbStrength", "Verb"],
 ];
 
 const exportActions = [
@@ -200,6 +314,12 @@ function formatOutputText(output: ResumeOutput) {
     "Missing keywords to consider",
     output.missingKeywords.join(", "),
     "",
+    "Stronger action verbs",
+    output.actionVerbs.join(", "),
+    "",
+    "What to add if truthful",
+    ...output.whatToAdd.map((item) => `- ${item}`),
+    "",
     "Improvement tips",
     ...output.tips.map((tip) => `- ${tip}`),
   ]
@@ -230,6 +350,14 @@ function formatOutputMarkdown(output: ResumeOutput) {
       ? output.missingKeywords.map((keyword) => `\`${keyword}\``).join(", ")
       : "None",
     "",
+    "## Stronger action verbs",
+    output.actionVerbs.length
+      ? output.actionVerbs.map((verb) => `\`${verb}\``).join(", ")
+      : "None",
+    "",
+    "## What to add if truthful",
+    ...(output.whatToAdd.length ? output.whatToAdd.map((item) => `- ${item}`) : ["None"]),
+    "",
     "## Improvement tips",
     ...output.tips.map((tip) => `- ${tip}`),
   ]
@@ -257,16 +385,40 @@ function formatDocsCopy(output: ResumeOutput) {
     "Keywords Used",
     output.keywords.join(", "),
     "",
+    "Missing Keywords From Target Posting",
+    output.missingKeywords.join(", "),
+    "",
+    "Stronger Action Verbs",
+    output.actionVerbs.join(", "),
+    "",
     "Improvement Tips",
     ...output.tips.map((tip) => `- ${tip}`),
   ].join("\n");
 }
 
-function normalizeScore(score: Partial<BulletScore> | undefined, bullet: string): BulletScore {
-  const numericScore = typeof score?.score === "number" ? score.score : bullet.match(/\d/) ? 78 : 68;
+function normalizeBreakdown(
+  breakdown: Partial<BulletScoreBreakdown> | undefined,
+  fallbackScore: number,
+): BulletScoreBreakdown {
+  const clean = (value: unknown) =>
+    Math.max(0, Math.min(100, Math.round(typeof value === "number" ? value : fallbackScore)));
 
   return {
-    score: Math.max(0, Math.min(100, Math.round(numericScore))),
+    clarity: clean(breakdown?.clarity),
+    impact: clean(breakdown?.impact),
+    specificity: clean(breakdown?.specificity),
+    metrics: clean(breakdown?.metrics),
+    atsKeywordFit: clean(breakdown?.atsKeywordFit),
+    actionVerbStrength: clean(breakdown?.actionVerbStrength),
+  };
+}
+
+function normalizeScore(score: Partial<BulletScore> | undefined, bullet: string): BulletScore {
+  const numericScore = typeof score?.score === "number" ? score.score : bullet.match(/\d/) ? 78 : 68;
+  const cleanScore = Math.max(0, Math.min(100, Math.round(numericScore)));
+
+  return {
+    score: cleanScore,
     reason:
       score?.reason ||
       (bullet.match(/\d/)
@@ -277,6 +429,7 @@ function normalizeScore(score: Partial<BulletScore> | undefined, bullet: string)
       (bullet.match(/\d/)
         ? "Make sure the metric is truthful and tied to a business outcome."
         : "Add a truthful metric, tool, scope, or outcome if available."),
+    breakdown: normalizeBreakdown(score?.breakdown, cleanScore),
   };
 }
 
@@ -307,6 +460,12 @@ function normalizeOutput(output: Partial<ResumeOutput> | null | undefined): Resu
     },
     missingKeywords: Array.isArray(output?.missingKeywords)
       ? output.missingKeywords.filter(Boolean).slice(0, 8)
+      : [],
+    actionVerbs: Array.isArray(output?.actionVerbs)
+      ? output.actionVerbs.filter(Boolean).slice(0, 10)
+      : [],
+    whatToAdd: Array.isArray(output?.whatToAdd)
+      ? output.whatToAdd.filter(Boolean).slice(0, 6)
       : [],
     comparisons: output?.comparisons || {},
   };
@@ -362,6 +521,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   const [toast, setToast] = useState("");
   const [expandedComparisons, setExpandedComparisons] = useState<Record<number, boolean>>({});
   const [hasTrackedFormStart, setHasTrackedFormStart] = useState(false);
+  const [existingBullet, setExistingBullet] = useState("");
+  const [rewriteResult, setRewriteResult] = useState<RewriteResult | null>(null);
+  const [isRewriting, setIsRewriting] = useState(false);
 
   const hasOutput = generated.bullets.length > 0;
   const outputText = useMemo(() => formatOutputText(generated), [generated]);
@@ -371,6 +533,15 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     form.tone,
     form.experienceLevel,
   ].filter(Boolean);
+  const contextFields = tool.inputFields.filter((field) =>
+    ["targetRole", "industry", "experienceLevel", "outputMode", "tone"].includes(field.name),
+  );
+  const detailFields = tool.inputFields.filter((field) =>
+    ["achievement", "jobDescription"].includes(field.name),
+  );
+  const proofFields = tool.inputFields.filter((field) =>
+    ["tools", "metrics"].includes(field.name),
+  );
 
   useEffect(() => {
     try {
@@ -444,6 +615,13 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
       setHasTrackedFormStart(true);
     }
     setForm((current) => ({ ...current, [name]: value }));
+  }
+
+  function applyPreset(values: ToolFormValues) {
+    setForm((current) => ({ ...current, ...values }));
+    trackEvent("tool_form_started", { tool: tool.slug, field: "preset" });
+    setHasTrackedFormStart(true);
+    showToast("Example fields added. Adjust anything before generating.");
   }
 
   function showToast(message: string) {
@@ -542,6 +720,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setCopied(false);
     setIsGenerating(true);
     trackEvent(eventName, { tool: tool.slug, outputMode: form.outputMode });
+    trackEvent("tool_generate_clicked", { tool: tool.slug, outputMode: form.outputMode });
 
     try {
       const data = await requestGeneration("generate");
@@ -564,8 +743,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         outputMode: form.outputMode,
         overallScore: output.summary.overallScore,
       });
+      trackEvent("tool_generate_success", {
+        tool: tool.slug,
+        outputMode: form.outputMode,
+        overallScore: output.summary.overallScore,
+      });
       setLastGeneratedAt(Date.now());
     } catch (caughtError) {
+      trackEvent("tool_generate_error", { tool: tool.slug });
       setError(
         caughtError instanceof Error
           ? caughtError.message
@@ -634,6 +819,66 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     }
   }
 
+  async function handleRewriteExisting() {
+    const cleanBullet = existingBullet.trim();
+
+    if (!form.targetRole?.trim()) {
+      setError("Enter a target role before rewriting a bullet.");
+      return;
+    }
+
+    if (!cleanBullet) {
+      setError("Paste an existing resume bullet to rewrite.");
+      return;
+    }
+
+    setError("");
+    setIsRewriting(true);
+
+    try {
+      const response = await fetch(`/api/tools/${tool.slug}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...form,
+          action: "rewrite-existing",
+          existingBullet: cleanBullet,
+        }),
+      });
+
+      const data = (await response.json()) as Partial<RewriteResult> & { error?: string };
+
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to rewrite this bullet right now.");
+      }
+
+      if (!data.bullet) {
+        throw new Error("Unable to rewrite this bullet right now.");
+      }
+
+      setRewriteResult({
+        original: data.original || cleanBullet,
+        bullet: data.bullet,
+        score: normalizeScore(data.score, data.bullet),
+        changes: Array.isArray(data.changes) && data.changes.length
+          ? data.changes
+          : ["Improved action verb, clarity, and recruiter readability."],
+      });
+      trackEvent("bullet_improved", { tool: tool.slug, source: "before_after" });
+      showToast("Before vs after rewrite ready.");
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Unable to rewrite this bullet right now.",
+      );
+    } finally {
+      setIsRewriting(false);
+    }
+  }
+
   async function copyText(text: string, message: string) {
     if (!hasOutput) {
       return;
@@ -641,6 +886,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
     await navigator.clipboard.writeText(text);
     trackEvent("copy_click", { tool: tool.slug });
+    trackEvent("bullet_copied", { tool: tool.slug });
     setCopied(true);
     showToast(message);
     window.setTimeout(() => setCopied(false), 1800);
@@ -688,12 +934,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
     if (action === "txt") {
       trackEvent("export_used", { tool: tool.slug, format: "txt" });
+      trackEvent("export_txt_clicked", { tool: tool.slug });
       downloadText(outputText, tool.output.downloadFileName, "TXT downloaded.");
       return;
     }
 
     if (action === "markdown") {
       trackEvent("export_used", { tool: tool.slug, format: "markdown" });
+      trackEvent("export_markdown_clicked", { tool: tool.slug });
       downloadText(outputMarkdown, "skillmint-resume-bullets.md", "Markdown downloaded.");
       return;
     }
@@ -729,24 +977,84 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
-          {tool.inputFields.map((field) => (
-            <label key={field.name} className={getFieldLayout(field)}>
-              <span className="text-sm font-semibold text-ink">{field.label}</span>
-              {renderField(field, form[field.name] || "", updateForm)}
-            </label>
-          ))}
+        <div className="space-y-6">
+          <div>
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <p className="text-sm font-semibold uppercase text-mint-700">Try an example</p>
+              <span className="hidden text-xs font-semibold text-slate-400 sm:inline">
+                Great for first-time users
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {examplePresets.map((preset) => (
+                <button
+                  key={preset.label}
+                  type="button"
+                  onClick={() => applyPreset(preset.values)}
+                  className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-4">
+            <p className="text-sm font-semibold uppercase text-slate-500">Role context</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
+              {contextFields.map((field) => (
+                <label key={field.name} className={getFieldLayout(field)}>
+                  <span className="text-sm font-semibold text-ink">{field.label}</span>
+                  {renderField(field, form[field.name] || "", updateForm)}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-line">
+            <p className="text-sm font-semibold uppercase text-slate-500">Work details</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
+              {detailFields.map((field) => (
+                <label key={field.name} className={getFieldLayout(field)}>
+                  <span className="text-sm font-semibold text-ink">{field.label}</span>
+                  {renderField(field, form[field.name] || "", updateForm)}
+                  {field.name === "achievement" ? (
+                    <span className="mt-2 block text-xs leading-5 text-slate-500">
+                      Example: improved onboarding docs, analyzed support tickets, launched a dashboard,
+                      or coordinated a campaign.
+                    </span>
+                  ) : (
+                    <span className="mt-2 block text-xs leading-5 text-slate-500">
+                      Optional, but useful: paste responsibilities, tools, qualifications, or keywords from the posting.
+                    </span>
+                  )}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-4">
+            <p className="text-sm font-semibold uppercase text-slate-500">Proof points</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
+              {proofFields.map((field) => (
+                <label key={field.name} className={getFieldLayout(field)}>
+                  <span className="text-sm font-semibold text-ink">{field.label}</span>
+                  {renderField(field, form[field.name] || "", updateForm)}
+                </label>
+              ))}
+            </div>
+          </div>
 
           <button
             type="submit"
             disabled={isGenerating}
-            className="button-primary w-full disabled:cursor-not-allowed disabled:opacity-70 sm:col-span-2"
+            className="button-primary sticky bottom-3 z-10 w-full disabled:cursor-not-allowed disabled:opacity-70 sm:static"
           >
             <Sparkles className="h-4 w-4" aria-hidden="true" />
             {isGenerating ? "Generating..." : hasOutput ? "Regenerate" : "Generate"}
           </button>
 
-          <p className="rounded-lg border border-mint-100 bg-mint-50/80 px-4 py-3 text-sm font-semibold text-mint-800 sm:col-span-2">
+          <p className="rounded-lg border border-mint-100 bg-mint-50/80 px-4 py-3 text-sm font-semibold text-mint-800">
             Saved only in your browser. No account required.
           </p>
         </div>
@@ -922,6 +1230,18 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                               <span className="font-semibold text-ink">Improve:</span>{" "}
                               {generated.scores[index]?.suggestion}
                             </p>
+                            <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                              {breakdownLabels.map(([key, label]) => (
+                                <div key={key} className="rounded-lg bg-white px-3 py-2 shadow-line">
+                                  <span className="block text-[11px] font-semibold uppercase text-slate-500">
+                                    {label}
+                                  </span>
+                                  <span className="mt-1 block font-semibold text-ink">
+                                    {generated.scores[index]?.breakdown?.[key] || 0}/100
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
 
                           <div className="mt-3 flex flex-wrap gap-2">
@@ -997,7 +1317,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               {generated.missingKeywords.length ? (
                 <section className="rounded-lg border border-amber-200 bg-amber-50/70 p-4">
                   <h3 className="text-sm font-semibold uppercase text-amber-700">
-                    Missing keywords to consider
+                    Missing keywords from job description
                   </h3>
                   <p className="mt-2 text-sm leading-6 text-amber-800">
                     Add these only if they truthfully match your experience, tools, or role scope.
@@ -1012,6 +1332,37 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                       </span>
                     ))}
                   </div>
+                </section>
+              ) : null}
+
+              {generated.actionVerbs.length ? (
+                <section>
+                  <h3 className="text-sm font-semibold uppercase text-mint-700">
+                    Stronger action verbs
+                  </h3>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {generated.actionVerbs.map((verb) => (
+                      <span
+                        key={verb}
+                        className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-line"
+                      >
+                        {verb}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              {generated.whatToAdd.length ? (
+                <section className="rounded-lg border border-mint-100 bg-mint-50/60 p-4">
+                  <h3 className="text-sm font-semibold uppercase text-mint-700">
+                    What to add if truthful
+                  </h3>
+                  <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                    {generated.whatToAdd.map((item) => (
+                      <li key={item}>- {item}</li>
+                    ))}
+                  </ul>
                 </section>
               ) : null}
 
@@ -1063,26 +1414,34 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 </div>
               </section>
 
+              <EmailCapture compact location="tool_output_capture" />
+
               <section>
                 <h3 className="text-sm font-semibold uppercase text-mint-700">Recommended next steps</h3>
                 <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                  {recommendations.map((recommendation) => (
+                  {recommendedResources.slice(0, 3).map((recommendation) => (
                     <AffiliateRecommendationCard
                       key={recommendation.title}
                       title={recommendation.title}
                       description={recommendation.description}
                       href={recommendation.href}
                       label="Next step"
-                      onClick={() =>
+                      onClick={() => {
                         trackEvent("affiliate_click", {
                           tool: tool.slug,
                           resource: recommendation.title,
-                        })
-                      }
+                        });
+                        trackEvent("affiliate_card_clicked", {
+                          tool: tool.slug,
+                          resource: recommendation.title,
+                        });
+                      }}
                     />
                   ))}
                 </div>
               </section>
+
+              <AdSlot label="Resume tool resource placement" />
 
               {copied ? (
                 <p className="text-sm font-semibold text-mint-700">Copied to clipboard.</p>
@@ -1096,9 +1455,74 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 </div>
                 <p className="text-lg font-semibold text-ink">{tool.output.emptyTitle}</p>
                 <p className="mt-2 leading-7 text-slate-600">{tool.output.emptyDescription}</p>
+                <div className="mt-5 rounded-lg border border-slate-200 bg-white p-4 text-left shadow-line">
+                  <p className="text-xs font-semibold uppercase text-mint-700">Preview example</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">
+                    - Improved onboarding documentation for a 12-person team, reducing repeated
+                    setup questions and helping new hires ramp faster.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {["Score", "Keywords", "Rewrite", "Export"].map((item) => (
+                      <span key={item} className="rounded-full bg-mint-50 px-2.5 py-1 text-xs font-semibold text-mint-700">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           )}
+
+          <section className="mt-6 rounded-lg border border-slate-200 bg-white/90 p-4 shadow-line">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase text-mint-700">Before vs After</p>
+                <h3 className="mt-1 text-xl font-semibold text-ink">Rewrite an existing bullet</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  Paste a bullet you already have. SkillMint will score it, rewrite it, and explain
+                  what changed.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleRewriteExisting}
+                disabled={isRewriting}
+                className="button-secondary min-h-10 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <Wand2 className="h-4 w-4" aria-hidden="true" />
+                {isRewriting ? "Rewriting..." : "Rewrite"}
+              </button>
+            </div>
+            <textarea
+              value={existingBullet}
+              onChange={(event) => setExistingBullet(event.target.value)}
+              rows={3}
+              placeholder="e.g. Responsible for creating weekly reports for sales team."
+              className="mt-4 min-h-24 w-full resize-none rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100"
+            />
+            {rewriteResult ? (
+              <div className="mt-4 grid gap-3 rounded-lg border border-mint-100 bg-mint-50/50 p-4 sm:grid-cols-2">
+                <div>
+                  <p className="text-xs font-semibold uppercase text-slate-500">Before</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">{rewriteResult.original}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase text-mint-700">
+                    After - {rewriteResult.score.score}/100
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">{rewriteResult.bullet}</p>
+                </div>
+                <div className="sm:col-span-2">
+                  <p className="text-xs font-semibold uppercase text-slate-500">What changed</p>
+                  <ul className="mt-2 space-y-1 text-sm leading-6 text-slate-700">
+                    {rewriteResult.changes.map((change) => (
+                      <li key={change}>- {change}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : null}
+          </section>
 
           {history.length ? (
             <section className="mt-6 rounded-lg border border-slate-200 bg-white/90 p-4 shadow-line">

@@ -21,6 +21,9 @@ export function TrackedLink({
       {...props}
       onClick={() => {
         trackEvent(eventName, eventPayload);
+        if (eventName === "seo_page_cta_click") {
+          trackEvent("seo_cta_clicked", eventPayload);
+        }
       }}
     >
       {children}

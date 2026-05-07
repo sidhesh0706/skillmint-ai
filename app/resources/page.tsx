@@ -4,6 +4,62 @@ import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
 import { seoLandingPages } from "@/data/seo-landing-pages";
 
+function pagesInCategory(category: "experience" | "role" | "goal" | "use-case") {
+  return seoLandingPages.filter((page) => {
+    if (page.category) {
+      return page.category === category;
+    }
+
+    if (category === "experience") {
+      return ["resume-bullets-for-freshers", "entry-level-resume-bullets"].includes(page.slug);
+    }
+
+    if (category === "role") {
+      return [
+        "software-engineer-resume-bullets",
+        "data-analyst-resume-bullets",
+        "product-manager-resume-bullets",
+        "marketing-resume-bullets",
+        "customer-service-resume-bullets",
+        "sales-resume-bullets",
+        "finance-resume-bullets",
+        "hr-resume-bullets",
+        "teacher-resume-bullets",
+        "project-manager-resume-bullets",
+      ].includes(page.slug);
+    }
+
+    if (category === "goal") {
+      return ["resume-bullet-generator", "ats-resume-bullet-generator", "resume-bullet-examples"].includes(page.slug);
+    }
+
+    return false;
+  });
+}
+
+const resourceCategories = [
+  {
+    title: "By experience level",
+    description: "Guides for students, freshers, interns, and entry-level candidates.",
+    pages: pagesInCategory("experience"),
+  },
+  {
+    title: "By job role",
+    description: "Role-specific examples for common career paths and job families.",
+    pages: pagesInCategory("role"),
+  },
+  {
+    title: "By resume goal",
+    description: "Improve ATS fit, rewrite achievements, add metrics, and optimize keywords.",
+    pages: pagesInCategory("goal"),
+  },
+  {
+    title: "By use case",
+    description: "Focused guides for projects, internships, and practical resume scenarios.",
+    pages: pagesInCategory("use-case"),
+  },
+].filter((category) => category.pages.length);
+
 export const metadata: Metadata = {
   title: "Resume Bullet Resources",
   description:
@@ -78,41 +134,51 @@ export default function ResourcesPage() {
         <div className="container-shell">
           <div className="mb-8">
             <SectionHeading
-              eyebrow="Guides"
-              title="Resume Bullet Examples"
-              description="Use these pages for inspiration, then tailor the language to your real projects, tools, and measurable results."
+              eyebrow="Resource library"
+              title="Find the right resume guide faster"
+              description="Browse by experience level, role, resume goal, or use case. Each guide links back to the free resume bullet generator."
             />
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {seoLandingPages.map((page) => (
-              <Link
-                key={page.slug}
-                href={`/${page.slug}`}
-                className="group rounded-lg border border-slate-200 bg-white/90 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
-              >
-                <p className="text-sm font-semibold uppercase text-mint-700">{page.audience}</p>
-                <h2 className="mt-3 text-xl font-semibold leading-snug text-ink">
-                  {page.title}
-                </h2>
-                <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
-                  {page.metaDescription}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {page.actionVerbs.slice(0, 3).map((verb) => (
-                    <span
-                      key={verb}
-                      className="rounded-full border border-mint-100 bg-mint-50 px-3 py-1 text-xs font-semibold text-mint-700"
+          <div className="space-y-12">
+            {resourceCategories.map((category) => (
+              <section key={category.title}>
+                <div className="mb-5">
+                  <h2 className="text-2xl font-semibold text-ink">{category.title}</h2>
+                  <p className="mt-2 leading-7 text-slate-600">{category.description}</p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {category.pages.map((page) => (
+                    <Link
+                      key={page.slug}
+                      href={`/${page.slug}`}
+                      className="group rounded-lg border border-slate-200 bg-white/90 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
                     >
-                      {verb}
-                    </span>
+                      <p className="text-sm font-semibold uppercase text-mint-700">{page.audience}</p>
+                      <h3 className="mt-3 text-xl font-semibold leading-snug text-ink">
+                        {page.title}
+                      </h3>
+                      <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
+                        {page.metaDescription}
+                      </p>
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {page.actionVerbs.slice(0, 3).map((verb) => (
+                          <span
+                            key={verb}
+                            className="rounded-full border border-mint-100 bg-mint-50 px-3 py-1 text-xs font-semibold text-mint-700"
+                          >
+                            {verb}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-mint-700">
+                        Open guide
+                        <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
+                      </span>
+                    </Link>
                   ))}
                 </div>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-mint-700">
-                  Open guide
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
-                </span>
-              </Link>
+              </section>
             ))}
           </div>
         </div>

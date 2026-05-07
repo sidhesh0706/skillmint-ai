@@ -64,3 +64,35 @@ export function faqSchema(faqs: Array<{ question: string; answer: string }>) {
     })),
   };
 }
+
+export function articleSchema({
+  title,
+  description,
+  path,
+}: {
+  title: string;
+  description: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    url: `${siteUrl}${path}`,
+    author: {
+      "@type": "Organization",
+      name: "SkillMint AI",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "SkillMint AI",
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/brand-mark.svg`,
+      },
+    },
+    dateModified: "2026-05-07",
+    datePublished: "2026-05-07",
+  };
+}

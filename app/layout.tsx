@@ -5,6 +5,7 @@ import "./globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { JsonLd } from "@/components/json-ld";
+import { PageViewTracker } from "@/components/page-view-tracker";
 import { websiteSchema } from "@/lib/structured-data";
 
 const inter = Inter({
@@ -78,6 +79,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <JsonLd data={websiteSchema()} />
+        <PageViewTracker />
         <Analytics />
       </body>
     </html>

@@ -121,6 +121,13 @@ export const tools: ToolConfig[] = [
         rows: 6,
       },
       {
+        name: "jobDescription",
+        label: "Job description / target posting",
+        type: "textarea",
+        placeholder: "Optional: paste the role description so SkillMint can suggest truthful missing keywords.",
+        rows: 5,
+      },
+      {
         name: "tools",
         label: "Tools/technologies used",
         type: "text",
