@@ -12,6 +12,7 @@ import {
   History,
   Linkedin,
   RefreshCw,
+  Share2,
   Sparkles,
   Target,
   Trash2,
@@ -360,6 +361,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   const [isHydrated, setIsHydrated] = useState(false);
   const [toast, setToast] = useState("");
   const [expandedComparisons, setExpandedComparisons] = useState<Record<number, boolean>>({});
+  const [hasTrackedFormStart, setHasTrackedFormStart] = useState(false);
 
   const hasOutput = generated.bullets.length > 0;
   const outputText = useMemo(() => formatOutputText(generated), [generated]);
@@ -437,6 +439,10 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   }, [toast]);
 
   function updateForm(name: string, value: string) {
+    if (!hasTrackedFormStart) {
+      trackEvent("tool_form_started", { tool: tool.slug, field: name });
+      setHasTrackedFormStart(true);
+    }
     setForm((current) => ({ ...current, [name]: value }));
   }
 
@@ -467,6 +473,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setGenerated(normalizeOutput(item.output));
     setError("");
     setExpandedComparisons({});
+    trackEvent("history_reopened", { tool: tool.slug });
     showToast("Past generation restored.");
   }
 
@@ -552,6 +559,11 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         tool: tool.slug,
         overallScore: output.summary.overallScore,
       });
+      trackEvent("generation_success", {
+        tool: tool.slug,
+        outputMode: form.outputMode,
+        overallScore: output.summary.overallScore,
+      });
       setLastGeneratedAt(Date.now());
     } catch (caughtError) {
       setError(
@@ -634,6 +646,12 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     window.setTimeout(() => setCopied(false), 1800);
   }
 
+  async function copyGeneratorLink(message = "Generator link copied.") {
+    await navigator.clipboard.writeText(`${window.location.origin}/tools/${tool.slug}`);
+    trackEvent("share_click", { tool: tool.slug, action: "copy_link" });
+    showToast(message);
+  }
+
   function downloadText(text: string, fileName: string, message: string) {
     if (!hasOutput) {
       return;
@@ -663,25 +681,30 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
   function handleExportAction(action: (typeof exportActions)[number]["action"]) {
     if (action === "copy") {
+      trackEvent("export_used", { tool: tool.slug, format: "copy" });
       copyText(outputText, "Copied resume output.");
       return;
     }
 
     if (action === "txt") {
+      trackEvent("export_used", { tool: tool.slug, format: "txt" });
       downloadText(outputText, tool.output.downloadFileName, "TXT downloaded.");
       return;
     }
 
     if (action === "markdown") {
+      trackEvent("export_used", { tool: tool.slug, format: "markdown" });
       downloadText(outputMarkdown, "skillmint-resume-bullets.md", "Markdown downloaded.");
       return;
     }
 
     if (action === "linkedin") {
+      trackEvent("export_used", { tool: tool.slug, format: "linkedin" });
       copyText(formatLinkedInCopy(generated), "Copied for LinkedIn.");
       return;
     }
 
+    trackEvent("export_used", { tool: tool.slug, format: "docs" });
     copyText(formatDocsCopy(generated), "Copied for Google Docs / resume editor.");
   }
 
@@ -1002,6 +1025,43 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   </ul>
                 </section>
               ) : null}
+
+              <section className="rounded-lg border border-mint-100 bg-white p-4 shadow-line">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
+                      <Share2 className="h-4 w-4" aria-hidden="true" />
+                      Share and keep improving
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                      Send the generator to a friend or start a fresh draft for another target role.
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-2 sm:flex-row">
+                    <button
+                      type="button"
+                      onClick={() => copyGeneratorLink("Share link copied.")}
+                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                    >
+                      <Clipboard className="h-4 w-4" aria-hidden="true" />
+                      Copy link
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setGenerated(emptyOutput);
+                        setExpandedComparisons({});
+                        setError("");
+                        trackEvent("share_click", { tool: tool.slug, action: "try_another_role" });
+                        showToast("Ready for another role.");
+                      }}
+                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+                    >
+                      Try another role
+                    </button>
+                  </div>
+                </div>
+              </section>
 
               <section>
                 <h3 className="text-sm font-semibold uppercase text-mint-700">Recommended next steps</h3>

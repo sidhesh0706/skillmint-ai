@@ -24,12 +24,21 @@ export const metadata: Metadata = {
       "Explore role-specific resume bullet examples and writing guides, then generate your own bullets with AI.",
     url: "/resources",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "SkillMint AI resume bullet resources",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Resume Bullet Resources | SkillMint AI",
     description:
       "Explore role-specific resume bullet examples and writing guides from SkillMint AI.",
+    images: ["/opengraph-image"],
   },
 };
 

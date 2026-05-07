@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import { BrandMark } from "@/components/brand-mark";
 import { seoLandingPages } from "@/data/seo-landing-pages";
 
 export function Footer() {
@@ -9,9 +9,7 @@ export function Footer() {
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
             <Link href="/" className="flex items-center gap-3 font-semibold">
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-ink">
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
-              </span>
+              <BrandMark inverted />
               <span>SkillMint AI</span>
             </Link>
             <p className="mt-4 text-sm leading-6 text-slate-300">

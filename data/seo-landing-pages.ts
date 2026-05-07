@@ -319,6 +319,586 @@ export const seoLandingPages: SeoLandingPage[] = [
       },
     ],
   },
+  {
+    slug: "resume-bullet-generator",
+    title: "Free AI Resume Bullet Generator",
+    intro:
+      "Use this guide to understand what strong resume bullets look like, then generate your own scored, recruiter-ready bullets with SkillMint AI. The best bullets combine action, scope, keywords, and proof of impact.",
+    metaTitle: "Free AI Resume Bullet Generator | Create Better Resume Bullets",
+    metaDescription:
+      "Generate recruiter-ready resume bullets with AI, scoring, rewrites, keyword suggestions, and export options.",
+    keywords: [
+      "resume bullet generator",
+      "AI resume bullet generator",
+      "free resume bullet generator",
+      "resume bullet points generator",
+    ],
+    audience: "Job seekers improving resume bullet points",
+    examplesTitle: "Strong Resume Bullet Examples",
+    bullets: [
+      "Improved onboarding documentation for a 12-person team, reducing repeated setup questions and helping new hires ramp faster.",
+      "Analyzed weekly customer feedback trends to identify recurring issues and prioritize process improvements for the support team.",
+      "Coordinated cross-functional status updates across product, operations, and customer success to keep launch risks visible.",
+      "Created a reusable reporting template that reduced weekly manual tracking time by approximately 3 hours.",
+      "Updated help center content for high-volume questions, improving self-service clarity and reducing avoidable follow-ups.",
+      "Managed project timelines, owner assignments, and stakeholder updates to deliver priority work before deadline.",
+      "Reviewed campaign performance data to recommend budget shifts toward higher-converting channels.",
+      "Built a lightweight dashboard to track task progress, blockers, and weekly outcomes for leadership review.",
+      "Standardized intake notes and handoff checklists, improving accuracy across recurring customer requests.",
+      "Presented clear project summaries to stakeholders, translating operational details into decisions and next steps.",
+    ],
+    tips: [
+      "Start with a strong verb and avoid passive phrasing like responsible for.",
+      "Add scope with users, records, projects, tickets, team size, revenue, or time saved.",
+      "Include role keywords naturally, especially tools, workflows, and business outcomes.",
+      "Keep each bullet concise enough for a recruiter to scan in a few seconds.",
+    ],
+    actionVerbs: ["Improved", "Analyzed", "Coordinated", "Created", "Managed", "Presented"],
+    faqs: [
+      {
+        question: "What does an AI resume bullet generator do?",
+        answer:
+          "It turns your role, task, tools, and results into clearer resume bullets that emphasize action, impact, and relevant keywords.",
+      },
+      {
+        question: "Are AI-generated resume bullets safe to use?",
+        answer:
+          "Yes, if you review every bullet and keep only statements that truthfully reflect your experience, scope, tools, and results.",
+      },
+      {
+        question: "Should resume bullets include numbers?",
+        answer:
+          "Numbers usually make bullets stronger. Use honest metrics such as time saved, users supported, projects delivered, records analyzed, or conversion lift.",
+      },
+      {
+        question: "How many bullets should I generate for one role?",
+        answer:
+          "Generate multiple versions, then choose the 3 to 6 strongest bullets that match the job description and your real work.",
+      },
+    ],
+  },
+  {
+    slug: "ats-resume-bullet-generator",
+    title: "ATS Resume Bullet Generator: Keywords, Metrics, and Examples",
+    intro:
+      "ATS-friendly resume bullets balance clear human writing with relevant job keywords. Use these examples to understand how to add tools, responsibilities, and outcomes without keyword stuffing.",
+    metaTitle: "ATS Resume Bullet Generator | Keyword-Friendly Resume Bullets",
+    metaDescription:
+      "Create ATS-friendly resume bullets with role keywords, action verbs, measurable impact, and clean formatting.",
+    keywords: [
+      "ATS resume bullet generator",
+      "ATS friendly resume bullets",
+      "resume keywords",
+      "AI ATS resume generator",
+    ],
+    audience: "Job seekers targeting ATS-friendly resumes",
+    examplesTitle: "ATS-Friendly Resume Bullet Examples",
+    bullets: [
+      "Optimized CRM reporting workflows in Salesforce, improving pipeline visibility and reducing manual reconciliation for sales leaders.",
+      "Built SQL queries to analyze customer retention trends and summarize key findings for monthly business reviews.",
+      "Managed email campaign segmentation in HubSpot, improving message relevance and supporting higher engagement rates.",
+      "Documented standard operating procedures for onboarding, quality checks, and recurring support escalations.",
+      "Created Excel dashboards tracking weekly KPIs, helping managers identify bottlenecks and prioritize follow-up actions.",
+      "Coordinated Agile sprint ceremonies, backlog updates, and stakeholder communication for a cross-functional delivery team.",
+      "Analyzed Search Console and analytics data to identify content gaps and improve organic keyword coverage.",
+      "Implemented QA checklists for recurring workflows, reducing preventable errors before customer-facing delivery.",
+      "Prepared executive summaries using PowerPoint and data exports to communicate trends, risks, and recommendations.",
+      "Maintained accurate customer records across CRM systems, improving handoff quality between sales and support teams.",
+    ],
+    tips: [
+      "Pull keywords from the job description, especially tools, methods, and role responsibilities.",
+      "Use keywords naturally inside achievement-focused bullets instead of listing them separately.",
+      "Avoid tables, unusual symbols, and overly complex formatting in the resume file.",
+      "Balance ATS language with readable impact so recruiters still understand the result.",
+    ],
+    actionVerbs: ["Optimized", "Built", "Managed", "Documented", "Analyzed", "Implemented"],
+    faqs: [
+      {
+        question: "What makes a resume bullet ATS-friendly?",
+        answer:
+          "An ATS-friendly bullet uses relevant job keywords, simple formatting, clear role language, and specific achievements that match the target position.",
+      },
+      {
+        question: "Can I repeat keywords in multiple bullets?",
+        answer:
+          "Yes, but use repetition naturally. Overusing the same keyword can make the resume feel forced and less credible.",
+      },
+      {
+        question: "Do ATS systems read bullet points?",
+        answer:
+          "Yes. Modern ATS tools parse resume text, including bullet points, so clear formatting and relevant keywords matter.",
+      },
+      {
+        question: "Should every bullet include a tool name?",
+        answer:
+          "No. Include tools when they strengthen the achievement or match the role. Do not force tools into unrelated bullets.",
+      },
+    ],
+  },
+  {
+    slug: "resume-bullet-examples",
+    title: "Resume Bullet Examples for Better Job Applications",
+    intro:
+      "These resume bullet examples show how to turn everyday work into outcomes recruiters can understand. Use them as patterns, then tailor each bullet to your real achievements.",
+    metaTitle: "Resume Bullet Examples | Strong Resume Bullets for 2026",
+    metaDescription:
+      "Browse strong resume bullet examples with action verbs, metrics, keywords, and tips for better job applications.",
+    keywords: [
+      "resume bullet examples",
+      "resume bullet points examples",
+      "good resume bullets",
+      "resume achievements examples",
+    ],
+    audience: "Professionals rewriting resume achievements",
+    examplesTitle: "General Resume Bullet Examples",
+    bullets: [
+      "Reduced weekly reporting time by 5 hours by automating recurring data cleanup and dashboard refresh steps.",
+      "Improved customer response quality by creating reusable templates for common questions and escalation scenarios.",
+      "Led a 6-week process improvement project that clarified ownership, reduced handoff delays, and improved team visibility.",
+      "Analyzed operational metrics to identify recurring bottlenecks and recommend practical workflow changes.",
+      "Created training materials for new team members, reducing onboarding confusion and improving process consistency.",
+      "Managed vendor communication, timeline tracking, and budget updates for a high-priority internal initiative.",
+      "Partnered with cross-functional teams to resolve blockers and deliver customer-facing updates on schedule.",
+      "Updated documentation and quality checks, reducing repeated errors in recurring monthly processes.",
+      "Presented performance insights to leadership, translating detailed analysis into clear recommendations.",
+      "Built a tracker for open tasks, owners, and due dates, improving accountability across multiple workstreams.",
+    ],
+    tips: [
+      "Use the pattern action + scope + result.",
+      "Replace vague tasks with specific ownership and outcomes.",
+      "Use numbers where you can support them honestly.",
+      "Match the language to the target job without exaggerating your work.",
+    ],
+    actionVerbs: ["Reduced", "Improved", "Led", "Analyzed", "Created", "Partnered"],
+    faqs: [
+      {
+        question: "What are good resume bullet examples?",
+        answer:
+          "Good bullets show what you did, the scope of the work, and the impact or business reason in concise language.",
+      },
+      {
+        question: "How do I make a task sound like an achievement?",
+        answer:
+          "Add context, ownership, tools, scale, and result. Even routine work can become stronger when the outcome is clear.",
+      },
+      {
+        question: "How many resume bullets should I include per job?",
+        answer:
+          "Use 3 to 6 bullets for recent relevant roles, fewer for older roles, and prioritize measurable achievements.",
+      },
+      {
+        question: "Should bullets be full sentences?",
+        answer:
+          "Resume bullets can be sentence fragments, but they should be clear, grammatical, and focused on one achievement.",
+      },
+    ],
+  },
+  {
+    slug: "entry-level-resume-bullets",
+    title: "Entry-Level Resume Bullet Points (2026 Examples)",
+    intro:
+      "Entry-level resume bullets should show learning speed, ownership, teamwork, projects, internships, and practical skills. Use these examples to make limited experience feel job-ready.",
+    metaTitle: "Entry-Level Resume Bullet Points | 2026 Examples",
+    metaDescription:
+      "Explore entry-level resume bullet examples for internships, projects, coursework, volunteering, and first jobs.",
+    keywords: [
+      "entry level resume bullets",
+      "entry level resume examples",
+      "first job resume bullet points",
+      "resume bullets for no experience",
+    ],
+    audience: "Entry-level candidates and first-job seekers",
+    examplesTitle: "Entry-Level Resume Bullet Examples",
+    bullets: [
+      "Completed a 6-week internship supporting customer research, data entry, and weekly reporting for an operations team.",
+      "Built a portfolio project using React and Tailwind CSS to practice responsive layouts and reusable components.",
+      "Analyzed class survey data in Excel, identifying trends and presenting recommendations in a final project review.",
+      "Coordinated student club event logistics, vendor communication, and registration tracking for 120+ attendees.",
+      "Created social media content calendars that improved posting consistency for a campus organization.",
+      "Documented project setup steps and troubleshooting notes to help teammates contribute faster.",
+      "Practiced SQL queries on sample datasets to summarize sales, customer, and product metrics.",
+      "Supported volunteer onboarding by preparing checklists, scheduling updates, and task assignments.",
+      "Researched competitor messaging across 10 brands and summarized positioning gaps for a marketing assignment.",
+      "Delivered weekly project updates to faculty reviewers, keeping milestones, risks, and next steps visible.",
+    ],
+    tips: [
+      "Use internships, projects, coursework, club leadership, and volunteering as proof of skills.",
+      "Show learning speed and ownership instead of apologizing for limited experience.",
+      "Mention tools and project scope when they match the target role.",
+      "Use honest metrics such as event size, team size, records analyzed, or hours saved.",
+    ],
+    actionVerbs: ["Completed", "Built", "Analyzed", "Coordinated", "Created", "Researched"],
+    faqs: [
+      {
+        question: "How do I write resume bullets with little experience?",
+        answer:
+          "Use academic projects, internships, volunteering, and practical work that proves relevant skills, ownership, and outcomes.",
+      },
+      {
+        question: "Can entry-level candidates use project bullets?",
+        answer:
+          "Yes. Projects are useful when they show tools, decisions, teamwork, problem-solving, or measurable results.",
+      },
+      {
+        question: "Should entry-level bullets include soft skills?",
+        answer:
+          "Yes, but show them through actions like coordinating, presenting, documenting, or resolving issues.",
+      },
+      {
+        question: "How long should an entry-level resume be?",
+        answer:
+          "Most entry-level resumes should be one page with concise bullets and the most relevant projects or experience first.",
+      },
+    ],
+  },
+  {
+    slug: "customer-service-resume-bullets",
+    title: "Customer Service Resume Bullet Points (2026 Examples)",
+    intro:
+      "Customer service resume bullets should show communication quality, issue resolution, customer satisfaction, process improvement, and tool fluency. Use these examples to highlight support impact.",
+    metaTitle: "Customer Service Resume Bullet Points | 2026 Examples",
+    metaDescription:
+      "Use customer service resume bullet examples with metrics, support keywords, action verbs, and AI generation tips.",
+    keywords: [
+      "customer service resume bullets",
+      "customer support resume examples",
+      "support representative resume bullet points",
+      "ATS customer service resume",
+    ],
+    audience: "Customer service and support professionals",
+    examplesTitle: "Customer Service Resume Bullet Examples",
+    bullets: [
+      "Resolved 45+ customer inquiries per day across email and chat while maintaining clear documentation in Zendesk.",
+      "Improved first-response quality by creating reusable templates for billing, account, and troubleshooting questions.",
+      "Reduced repeat contacts by updating help center articles for high-volume support topics and common user blockers.",
+      "Escalated priority issues with complete context, improving handoff quality between support, product, and engineering teams.",
+      "Tracked customer feedback trends and shared weekly insights that informed process improvements and product fixes.",
+      "Maintained a 94% customer satisfaction rating by combining fast response times with clear, empathetic communication.",
+      "Onboarded new support team members by preparing workflow notes, macros, and quality review examples.",
+      "Handled refund, cancellation, and account update requests while following compliance and data privacy requirements.",
+      "Identified recurring ticket themes and recommended support automation opportunities to reduce manual follow-up.",
+      "Coordinated with operations to resolve delayed orders, improving visibility and reducing customer frustration.",
+    ],
+    tips: [
+      "Show volume, response quality, customer satisfaction, and issue resolution.",
+      "Name tools like Zendesk, Intercom, Freshdesk, Salesforce, or CRM platforms when relevant.",
+      "Use metrics carefully, including tickets per day, CSAT, response time, or repeat contact reduction.",
+      "Highlight calm communication and escalation judgment through concrete examples.",
+    ],
+    actionVerbs: ["Resolved", "Improved", "Reduced", "Escalated", "Tracked", "Onboarded"],
+    faqs: [
+      {
+        question: "What should customer service resume bullets include?",
+        answer:
+          "Include support channels, ticket volume, tools, customer satisfaction, process improvements, and clear examples of issue resolution.",
+      },
+      {
+        question: "Should I include CSAT on my resume?",
+        answer:
+          "Yes, if you have a truthful CSAT, QA, or customer satisfaction metric that reflects your work quality.",
+      },
+      {
+        question: "Are support tools important keywords?",
+        answer:
+          "Yes. Mention relevant tools such as Zendesk, Intercom, Salesforce, Freshdesk, chat platforms, and CRM systems.",
+      },
+      {
+        question: "How can I make customer support sound professional?",
+        answer:
+          "Focus on problem-solving, communication quality, escalation judgment, process improvement, and customer outcomes.",
+      },
+    ],
+  },
+  {
+    slug: "sales-resume-bullets",
+    title: "Sales Resume Bullet Points (2026 Examples)",
+    intro:
+      "Sales resume bullets should show pipeline ownership, revenue impact, prospecting quality, CRM discipline, negotiation, and customer relationships. Use these examples to make sales wins easy to scan.",
+    metaTitle: "Sales Resume Bullet Points | 2026 Examples",
+    metaDescription:
+      "Explore sales resume bullet examples with revenue metrics, CRM keywords, action verbs, and ATS-friendly wording.",
+    keywords: [
+      "sales resume bullets",
+      "sales resume examples",
+      "account executive resume bullet points",
+      "business development resume bullets",
+    ],
+    audience: "Sales, SDR, BDR, and account professionals",
+    examplesTitle: "Sales Resume Bullet Examples",
+    bullets: [
+      "Managed a pipeline of 80+ qualified opportunities in Salesforce, keeping next steps, close dates, and deal risks current.",
+      "Generated 35+ weekly discovery calls through targeted outbound sequences, LinkedIn outreach, and follow-up discipline.",
+      "Exceeded quarterly quota by 14% by prioritizing high-fit accounts and improving discovery call qualification.",
+      "Partnered with marketing to refine lead handoff criteria, improving follow-up quality and reducing low-fit meetings.",
+      "Negotiated renewal conversations with existing customers, protecting recurring revenue and identifying expansion opportunities.",
+      "Created personalized outreach templates by industry, increasing positive reply rates across priority account segments.",
+      "Tracked objection patterns from prospect calls and shared insights to improve enablement materials and messaging.",
+      "Maintained accurate CRM notes and forecast updates, improving visibility for sales managers and customer success teams.",
+      "Built account research briefs for enterprise prospects, helping tailor discovery questions and value propositions.",
+      "Coordinated demos with solutions consultants and product stakeholders to address buyer requirements more effectively.",
+    ],
+    tips: [
+      "Use revenue, quota, pipeline, meetings booked, conversion rate, or renewal metrics when truthful.",
+      "Mention CRM tools and sales methods that match the target role.",
+      "Show both activity quality and business outcomes.",
+      "Avoid vague claims like strong communicator without proof.",
+    ],
+    actionVerbs: ["Managed", "Generated", "Exceeded", "Partnered", "Negotiated", "Tracked"],
+    faqs: [
+      {
+        question: "What metrics should sales resumes include?",
+        answer:
+          "Useful metrics include quota attainment, revenue, pipeline value, meetings booked, conversion rates, renewals, and account growth.",
+      },
+      {
+        question: "Should sales bullets mention Salesforce?",
+        answer:
+          "Yes, if you used Salesforce or another CRM. CRM fluency is a strong ATS keyword for many sales roles.",
+      },
+      {
+        question: "How do SDRs write strong resume bullets?",
+        answer:
+          "Show outbound volume, meeting quality, personalization, reply rates, pipeline contribution, and CRM discipline.",
+      },
+      {
+        question: "How many sales bullets should I include?",
+        answer:
+          "Use 4 to 6 bullets for recent sales roles, prioritizing quota, pipeline, revenue, and relationship outcomes.",
+      },
+    ],
+  },
+  {
+    slug: "finance-resume-bullets",
+    title: "Finance Resume Bullet Points (2026 Examples)",
+    intro:
+      "Finance resume bullets should show analytical accuracy, forecasting, reporting, controls, stakeholder support, and measurable business value. Use these examples to strengthen finance achievements.",
+    metaTitle: "Finance Resume Bullet Points | 2026 Examples",
+    metaDescription:
+      "Browse finance resume bullet examples with Excel, forecasting, reporting, controls, metrics, and ATS keywords.",
+    keywords: [
+      "finance resume bullets",
+      "financial analyst resume examples",
+      "finance resume bullet points",
+      "ATS finance resume",
+    ],
+    audience: "Finance, accounting, and analyst professionals",
+    examplesTitle: "Finance Resume Bullet Examples",
+    bullets: [
+      "Built Excel models to track monthly revenue, expenses, and variance drivers for leadership review.",
+      "Prepared budget versus actual reports, identifying cost trends and supporting department-level planning decisions.",
+      "Automated recurring financial reconciliations, reducing manual spreadsheet work by approximately 30%.",
+      "Analyzed cash flow trends and summarized risks, timing issues, and recommended follow-up actions.",
+      "Partnered with operations to validate invoice discrepancies and improve month-end close accuracy.",
+      "Created PowerPoint summaries that translated financial performance into clear insights for non-finance stakeholders.",
+      "Maintained accurate account schedules and supporting documentation for audit and compliance requirements.",
+      "Improved forecast templates by standardizing assumptions, formulas, and version control across business units.",
+      "Reviewed vendor spend categories to identify savings opportunities and support procurement negotiations.",
+      "Developed KPI dashboards for revenue, margin, and operating expense trends across quarterly planning cycles.",
+    ],
+    tips: [
+      "Show accuracy, financial scope, process improvement, and decision support.",
+      "Mention tools such as Excel, Power BI, SQL, ERP systems, or financial planning tools when relevant.",
+      "Use metrics such as budget size, time saved, variance reduced, or reports delivered.",
+      "Avoid disclosing confidential financial details; use ranges or percentages when needed.",
+    ],
+    actionVerbs: ["Built", "Prepared", "Automated", "Analyzed", "Partnered", "Reviewed"],
+    faqs: [
+      {
+        question: "What should finance resume bullets focus on?",
+        answer:
+          "Finance bullets should focus on analysis, reporting, forecasting, controls, accuracy, process improvement, and business decisions supported.",
+      },
+      {
+        question: "Should I include Excel in finance bullets?",
+        answer:
+          "Yes, when Excel was central to the achievement. Mention models, dashboards, reconciliations, forecasts, or automation work.",
+      },
+      {
+        question: "How do I quantify finance work without confidential numbers?",
+        answer:
+          "Use percentages, time saved, report frequency, business units supported, or broad ranges instead of sensitive amounts.",
+      },
+      {
+        question: "Are finance resume bullets different from accounting bullets?",
+        answer:
+          "They overlap, but finance bullets often emphasize forecasting and decision support, while accounting bullets emphasize accuracy, close, controls, and compliance.",
+      },
+    ],
+  },
+  {
+    slug: "hr-resume-bullets",
+    title: "HR Resume Bullet Points (2026 Examples)",
+    intro:
+      "HR resume bullets should show recruiting, onboarding, employee support, policy coordination, HR systems, and measurable people operations impact. Use these examples to clarify HR value.",
+    metaTitle: "HR Resume Bullet Points | 2026 Examples",
+    metaDescription:
+      "Explore HR resume bullet examples for recruiting, onboarding, employee relations, HRIS, policy, and people operations.",
+    keywords: [
+      "HR resume bullets",
+      "human resources resume examples",
+      "HR generalist resume bullet points",
+      "recruiter resume bullets",
+    ],
+    audience: "HR, recruiting, and people operations professionals",
+    examplesTitle: "HR Resume Bullet Examples",
+    bullets: [
+      "Coordinated onboarding for 40+ new hires, improving documentation, schedule clarity, and manager handoffs.",
+      "Maintained HRIS records with accurate employee data, status changes, and compliance documentation.",
+      "Supported recruiting workflows by scheduling interviews, tracking candidate feedback, and improving pipeline visibility.",
+      "Updated employee handbook sections to clarify leave policies, benefits processes, and internal escalation paths.",
+      "Analyzed onboarding survey feedback to identify recurring gaps and recommend improvements to the first-week experience.",
+      "Prepared monthly people operations reports covering headcount, attrition, hiring progress, and open roles.",
+      "Partnered with managers to coordinate performance review timelines, reminders, and documentation requirements.",
+      "Improved employee query response consistency by creating templates for benefits, payroll, and policy questions.",
+      "Supported engagement initiatives by coordinating events, communication plans, and participation tracking.",
+      "Audited employee files for missing documents, improving compliance readiness before internal review.",
+    ],
+    tips: [
+      "Show people impact, process reliability, confidentiality, and stakeholder support.",
+      "Mention HRIS, ATS, payroll, benefits, onboarding, and recruiting tools when relevant.",
+      "Use metrics such as hires supported, employees served, time saved, or survey improvements.",
+      "Demonstrate judgment and trust without sharing sensitive employee details.",
+    ],
+    actionVerbs: ["Coordinated", "Maintained", "Supported", "Updated", "Analyzed", "Audited"],
+    faqs: [
+      {
+        question: "What should HR resume bullets include?",
+        answer:
+          "Include HR processes, tools, employee population, recruiting support, onboarding outcomes, compliance, and people operations improvements.",
+      },
+      {
+        question: "Should HR bullets include confidential details?",
+        answer:
+          "No. Keep bullets professional and anonymized while still showing scope, process, and impact.",
+      },
+      {
+        question: "What HR keywords help with ATS?",
+        answer:
+          "Useful keywords include HRIS, ATS, onboarding, recruiting, benefits, employee relations, compliance, payroll, and performance reviews.",
+      },
+      {
+        question: "How can HR coordinators quantify their resume?",
+        answer:
+          "Use number of hires onboarded, interviews scheduled, employees supported, files audited, reports prepared, or time saved.",
+      },
+    ],
+  },
+  {
+    slug: "teacher-resume-bullets",
+    title: "Teacher Resume Bullet Points (2026 Examples)",
+    intro:
+      "Teacher resume bullets should show classroom impact, curriculum planning, student progress, parent communication, differentiation, and school community contributions.",
+    metaTitle: "Teacher Resume Bullet Points | 2026 Examples",
+    metaDescription:
+      "Browse teacher resume bullet examples with classroom metrics, curriculum keywords, action verbs, and education-focused tips.",
+    keywords: [
+      "teacher resume bullets",
+      "teacher resume examples",
+      "education resume bullet points",
+      "ATS teacher resume",
+    ],
+    audience: "Teachers, tutors, and education professionals",
+    examplesTitle: "Teacher Resume Bullet Examples",
+    bullets: [
+      "Designed differentiated lesson plans for 28 students, supporting varied learning needs and improving classroom participation.",
+      "Tracked student progress using formative assessments and adjusted instruction to address recurring skill gaps.",
+      "Improved parent communication by sending weekly updates on assignments, behavior trends, and classroom priorities.",
+      "Created project-based learning activities that strengthened collaboration, presentation skills, and subject understanding.",
+      "Maintained classroom routines and behavior expectations, improving transition time and student focus during lessons.",
+      "Integrated digital learning tools to support quizzes, assignments, feedback, and student engagement.",
+      "Collaborated with grade-level teachers to align curriculum pacing, assessment rubrics, and intervention plans.",
+      "Supported students one-on-one through targeted review sessions before exams and major assignments.",
+      "Organized classroom materials and documentation to improve lesson preparation and substitute teacher handoffs.",
+      "Contributed to school events, parent meetings, and student activities that strengthened community engagement.",
+    ],
+    tips: [
+      "Show student outcomes, classroom size, curriculum work, communication, and differentiated instruction.",
+      "Use education keywords such as assessment, lesson planning, classroom management, curriculum, and intervention.",
+      "Use honest metrics like student count, grade level, improvement percentages, or activities led.",
+      "Connect soft skills to classroom actions and outcomes.",
+    ],
+    actionVerbs: ["Designed", "Tracked", "Improved", "Created", "Integrated", "Collaborated"],
+    faqs: [
+      {
+        question: "What makes a teacher resume bullet strong?",
+        answer:
+          "A strong teacher bullet shows instructional action, student group or grade level, and a clear classroom or learning outcome.",
+      },
+      {
+        question: "Should teachers include student performance metrics?",
+        answer:
+          "Yes, when truthful and appropriate. You can use assessment improvement, participation gains, class size, or intervention outcomes.",
+      },
+      {
+        question: "What keywords help teacher resumes?",
+        answer:
+          "Keywords include curriculum, lesson planning, classroom management, assessment, differentiation, intervention, and parent communication.",
+      },
+      {
+        question: "Can tutoring experience count on a teacher resume?",
+        answer:
+          "Yes. Tutoring can show instruction, communication, student progress tracking, and individualized learning support.",
+      },
+    ],
+  },
+  {
+    slug: "project-manager-resume-bullets",
+    title: "Project Manager Resume Bullet Points (2026 Examples)",
+    intro:
+      "Project manager resume bullets should show delivery ownership, stakeholder alignment, risk management, timelines, budget visibility, and measurable operational impact.",
+    metaTitle: "Project Manager Resume Bullet Points | 2026 Examples",
+    metaDescription:
+      "Use project manager resume bullet examples with delivery metrics, stakeholder keywords, action verbs, and ATS-friendly wording.",
+    keywords: [
+      "project manager resume bullets",
+      "project management resume examples",
+      "PM resume bullet points",
+      "ATS project manager resume",
+    ],
+    audience: "Project managers and delivery professionals",
+    examplesTitle: "Project Manager Resume Bullet Examples",
+    bullets: [
+      "Managed a 12-week implementation plan across engineering, operations, and customer success, keeping milestones on schedule.",
+      "Built project dashboards tracking risks, owners, decisions, and due dates for weekly leadership reviews.",
+      "Reduced delivery delays by clarifying handoffs, escalation paths, and dependency ownership across multiple workstreams.",
+      "Coordinated stakeholder updates for a high-priority launch, translating blockers into clear decisions and next steps.",
+      "Maintained project documentation, meeting notes, and action registers to improve accountability and follow-through.",
+      "Partnered with finance and operations to monitor budget assumptions, vendor timelines, and resource constraints.",
+      "Facilitated sprint planning, retrospectives, and status reviews to improve team alignment and delivery predictability.",
+      "Identified scope risks early and negotiated timeline adjustments to protect critical launch requirements.",
+      "Created onboarding materials for project contributors, reducing ramp time and improving process consistency.",
+      "Presented executive-ready summaries that connected delivery progress, risks, and business impact.",
+    ],
+    tips: [
+      "Show scope through timelines, budgets, teams, workstreams, vendors, or stakeholder groups.",
+      "Mention project tools and methods when relevant, including Jira, Asana, Agile, Scrum, RAID logs, or dashboards.",
+      "Use metrics such as delivery time, budget size, delay reduction, teams coordinated, or milestones completed.",
+      "Balance coordination language with ownership and measurable outcomes.",
+    ],
+    actionVerbs: ["Managed", "Built", "Reduced", "Coordinated", "Facilitated", "Presented"],
+    faqs: [
+      {
+        question: "What should project manager resume bullets include?",
+        answer:
+          "Include project scope, stakeholders, timelines, tools, risks managed, and the result of your delivery work.",
+      },
+      {
+        question: "Should project manager bullets include tools?",
+        answer:
+          "Yes, if they match the role. Tools like Jira, Asana, Monday, Smartsheet, Excel, or Confluence can be useful keywords.",
+      },
+      {
+        question: "How do I quantify project management work?",
+        answer:
+          "Use project duration, budget, team size, workstreams, milestones, delay reduction, cost savings, or launch outcomes.",
+      },
+      {
+        question: "How many bullets should a project manager role have?",
+        answer:
+          "Use 4 to 6 bullets for recent project roles, prioritizing delivery impact, stakeholder complexity, and measurable outcomes.",
+      },
+    ],
+  },
 ];
 
 export function getSeoLandingPage(slug: string) {

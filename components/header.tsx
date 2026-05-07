@@ -1,14 +1,13 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { BrandMark } from "@/components/brand-mark";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/70 bg-white/[0.82] shadow-line backdrop-blur-xl">
       <div className="container-shell flex min-h-16 items-center justify-between gap-4 py-3">
         <Link href="/" className="flex items-center gap-3 font-semibold text-ink">
-          <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-ink via-slate-800 to-mint-700 text-white shadow-line">
-            <Sparkles className="h-4 w-4" aria-hidden="true" />
-          </span>
+          <BrandMark />
           <span className="text-base">SkillMint AI</span>
         </Link>
 

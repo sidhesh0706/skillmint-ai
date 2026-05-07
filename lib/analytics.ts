@@ -11,7 +11,14 @@ export type AnalyticsEventName =
   | "affiliate_click"
   | "score_generated"
   | "bullet_improved"
-  | "compare_viewed";
+  | "compare_viewed"
+  | "homepage_cta_click"
+  | "seo_page_cta_click"
+  | "tool_form_started"
+  | "generation_success"
+  | "export_used"
+  | "history_reopened"
+  | "share_click";
 
 type AnalyticsPayload = Record<string, string | number | boolean | undefined>;
 

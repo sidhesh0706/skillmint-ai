@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BarChart3, FileDown, History, ShieldCheck, Wand2 } from "lucide-react";
 import { ComingSoonTool } from "@/components/coming-soon-tool";
+import { JsonLd } from "@/components/json-ld";
 import { ToolWorkspace } from "@/components/tool-workspace";
 import { TrustPills } from "@/components/trust-pills";
 import { getToolBySlug, tools } from "@/data/tool-config";
+import { breadcrumbSchema, softwareApplicationSchema } from "@/lib/structured-data";
 
 type ToolPageProps = {
   params: Promise<{
@@ -62,11 +64,20 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
       description: tool.seo.description,
       url: `/tools/${tool.slug}`,
       type: "website",
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: `${tool.seo.title} | SkillMint AI`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${tool.seo.title} | SkillMint AI`,
       description: tool.seo.description,
+      images: ["/opengraph-image"],
     },
   };
 }
@@ -92,6 +103,16 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   return (
     <section className="relative overflow-hidden py-12 sm:py-16 lg:py-[4.5rem]">
+      <JsonLd
+        data={[
+          softwareApplicationSchema(),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Tools", path: "/tools" },
+            { name: tool.name, path: `/tools/${tool.slug}` },
+          ]),
+        ]}
+      />
       <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[30rem]" />
       <div className="container-shell">
         <div className="fade-in-up mx-auto max-w-4xl text-center">

@@ -19,10 +19,13 @@ import {
 import { SectionHeading } from "@/components/section-heading";
 import { AdSlot } from "@/components/ad-slot";
 import { EmailCapture } from "@/components/email-capture";
+import { JsonLd } from "@/components/json-ld";
 import { ToolGrid } from "@/components/tool-grid";
+import { TrackedLink } from "@/components/tracked-link";
 import { TrustPills } from "@/components/trust-pills";
 import { seoLandingPages } from "@/data/seo-landing-pages";
 import { featuredTools } from "@/data/tool-config";
+import { breadcrumbSchema, softwareApplicationSchema } from "@/lib/structured-data";
 
 const benefits = [
   {
@@ -94,6 +97,23 @@ const heroFeatures: Array<[string, LucideIcon]> = [
   ["Export", Download],
 ];
 
+const featuredSeoLandingPages = seoLandingPages.slice(0, 6);
+
+const workflowSteps = [
+  {
+    title: "Add your role",
+    description: "Choose the target job, experience level, tone, and output mode.",
+  },
+  {
+    title: "Describe real work",
+    description: "Paste a task, project, achievement, tools, and any truthful results.",
+  },
+  {
+    title: "Improve the draft",
+    description: "Review scores, strengthen weak bullets, compare versions, and export.",
+  },
+];
+
 export const metadata: Metadata = {
   title: "Free AI Tools to Build Your Career Faster",
   description:
@@ -107,18 +127,33 @@ export const metadata: Metadata = {
       "Create recruiter-ready resume bullets and career assets with free AI tools.",
     url: "/",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "SkillMint AI career tools",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "SkillMint AI | Free AI Career Tools",
     description:
       "Create recruiter-ready resume bullets and career assets with free AI tools.",
+    images: ["/opengraph-image"],
   },
 };
 
 export default function Home() {
   return (
     <>
+      <JsonLd
+        data={[
+          softwareApplicationSchema(),
+          breadcrumbSchema([{ name: "Home", path: "/" }]),
+        ]}
+      />
       <section className="relative overflow-hidden">
         <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[36rem]" />
         <div className="absolute inset-x-0 top-0 -z-10 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0))]" />
@@ -140,13 +175,23 @@ export default function Home() {
               <TrustPills />
             </div>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Link href="/tools" className="button-primary">
+              <TrackedLink
+                href="/tools"
+                className="button-primary"
+                eventName="homepage_cta_click"
+                eventPayload={{ cta: "explore_tools" }}
+              >
                 Explore Tools
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link href="/tools/resume-bullet-generator" className="button-secondary">
+              </TrackedLink>
+              <TrackedLink
+                href="/tools/resume-bullet-generator"
+                className="button-secondary"
+                eventName="homepage_cta_click"
+                eventPayload={{ cta: "try_resume_generator" }}
+              >
                 Try Resume Generator
-              </Link>
+              </TrackedLink>
             </div>
             <div className="mt-7 grid max-w-lg grid-cols-3 gap-2.5 sm:gap-3">
               {[
@@ -229,16 +274,40 @@ export default function Home() {
 
       <section className="pt-10 pb-16 sm:pt-12 sm:pb-20">
         <div className="container-shell">
+          <div className="grid gap-4 md:grid-cols-3">
+            {workflowSteps.map((step, index) => (
+              <article
+                key={step.title}
+                className="rounded-lg border border-white/80 bg-white/85 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-ink text-sm font-semibold text-white shadow-line">
+                  {index + 1}
+                </span>
+                <h2 className="mt-4 text-lg font-semibold text-ink">{step.title}</h2>
+                <p className="mt-2 leading-7 text-slate-600">{step.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pt-4 pb-16 sm:pt-6 sm:pb-20">
+        <div className="container-shell">
           <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
               eyebrow="Top features"
               title="More than a resume bullet generator."
               description="SkillMint AI gives every draft a scoring layer, rewrite workflow, keyword guidance, exports, and browser-only history so you can improve faster."
             />
-            <Link href="/tools/resume-bullet-generator" className="button-secondary self-start text-sm">
+            <TrackedLink
+              href="/tools/resume-bullet-generator"
+              className="button-secondary self-start text-sm"
+              eventName="homepage_cta_click"
+              eventPayload={{ cta: "open_live_tool_features" }}
+            >
               Open live tool
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </TrackedLink>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -270,14 +339,19 @@ export default function Home() {
               title="Explore resume bullet examples by role."
               description="Browse focused guides with ATS-friendly examples, writing tips, and action verbs, then generate your own bullets with SkillMint AI."
             />
-            <Link href="/resources" className="button-secondary self-start text-sm">
+            <TrackedLink
+              href="/resources"
+              className="button-secondary self-start text-sm"
+              eventName="homepage_cta_click"
+              eventPayload={{ cta: "view_resources" }}
+            >
               View resources
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </TrackedLink>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {seoLandingPages.map((page) => (
+            {featuredSeoLandingPages.map((page) => (
               <Link
                 key={page.slug}
                 href={`/${page.slug}`}
@@ -308,13 +382,15 @@ export default function Home() {
               title="Start with the career assets recruiters actually read."
               description="Use the first SkillMint AI tool today, with more focused generators already planned."
             />
-            <Link
+            <TrackedLink
               href="/tools"
               className="button-secondary self-start text-sm"
+              eventName="homepage_cta_click"
+              eventPayload={{ cta: "view_all_tools" }}
             >
               View all tools
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </TrackedLink>
           </div>
           <ToolGrid tools={featuredTools} />
         </div>
@@ -361,10 +437,15 @@ export default function Home() {
                 bullets through a secure, private AI workflow.
               </p>
             </div>
-            <Link href="/tools/resume-bullet-generator" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50">
+            <TrackedLink
+              href="/tools/resume-bullet-generator"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50"
+              eventName="homepage_cta_click"
+              eventPayload={{ cta: "bottom_generate_bullets" }}
+            >
               Generate bullets
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </section>

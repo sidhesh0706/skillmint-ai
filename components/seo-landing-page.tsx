@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
+import { TrackedLink } from "@/components/tracked-link";
 import type { SeoLandingPage as SeoLandingPageData } from "@/data/seo-landing-pages";
+import { breadcrumbSchema, faqSchema } from "@/lib/structured-data";
 
 type SeoLandingPageProps = {
   page: SeoLandingPageData;
@@ -9,6 +12,16 @@ type SeoLandingPageProps = {
 export function SeoLandingPage({ page }: SeoLandingPageProps) {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Resources", path: "/resources" },
+            { name: page.title, path: `/${page.slug}` },
+          ]),
+          faqSchema(page.faqs),
+        ]}
+      />
       <section className="relative overflow-hidden py-14 sm:py-20">
         <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[30rem]" />
         <div className="container-shell">
@@ -24,10 +37,15 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
               {page.intro}
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Link href="/tools/resume-bullet-generator" className="button-primary">
+              <TrackedLink
+                href="/tools/resume-bullet-generator"
+                className="button-primary"
+                eventName="seo_page_cta_click"
+                eventPayload={{ slug: page.slug, cta: "hero_generate" }}
+              >
                 Generate your own bullets
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
+              </TrackedLink>
               <Link href="/tools" className="button-secondary">
                 Explore AI tools
               </Link>
@@ -92,6 +110,34 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
         </div>
       </section>
 
+      <section className="pb-16 sm:pb-20">
+        <div className="container-shell">
+          <div className="card-surface overflow-hidden bg-ink p-6 text-white sm:p-8">
+            <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <p className="text-sm font-semibold uppercase text-mint-100">Create yours faster</p>
+                <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
+                  Paste one work note and get scored resume bullets.
+                </h2>
+                <p className="mt-4 max-w-2xl leading-7 text-slate-300">
+                  SkillMint AI can turn your real projects, tools, and results into recruiter-ready
+                  bullets with scores, rewrites, keyword suggestions, and exports.
+                </p>
+              </div>
+              <TrackedLink
+                href="/tools/resume-bullet-generator"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50"
+                eventName="seo_page_cta_click"
+                eventPayload={{ slug: page.slug, cta: "midpage_generate" }}
+              >
+                Generate with AI
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </TrackedLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="page-band py-16 sm:py-20">
         <div className="container-shell">
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
@@ -133,13 +179,15 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
                   five recruiter-ready resume bullets you can copy or export.
                 </p>
               </div>
-              <Link
+              <TrackedLink
                 href="/tools/resume-bullet-generator"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50"
+                eventName="seo_page_cta_click"
+                eventPayload={{ slug: page.slug, cta: "bottom_generate" }}
               >
                 Generate bullets
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
+              </TrackedLink>
             </div>
           </div>
         </div>

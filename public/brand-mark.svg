@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">SkillMint AI brand mark</title>
+  <desc id="desc">A dark rounded square with a mint sparkle mark.</desc>
+  <rect width="256" height="256" rx="52" fill="#172033"/>
+  <path d="M124.8 43.2c2-6.8 11.6-6.8 13.6 0l15.6 54c.8 2.8 3.2 5.2 6 6l52.8 15.2c7.2 2 7.2 12 0 14L160 147.6c-2.8.8-5.2 3.2-6 6l-15.6 55.2c-2 6.8-11.6 6.8-13.6 0l-15.6-55.2c-.8-2.8-3.2-5.2-6-6L50.4 132.4c-7.2-2-7.2-12 0-14l52.8-15.2c2.8-.8 5.2-3.2 6-6l15.6-54Z" fill="#1fc999"/>
+  <path d="M196 32v32M212 48h-32M52 192v20M62 202H42" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+</svg>
