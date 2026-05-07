@@ -254,7 +254,7 @@ function renderField(
   onChange: (name: string, value: string) => void,
 ) {
   const commonClasses =
-    "mt-2 min-h-12 w-full rounded-lg border border-slate-300 bg-white/90 px-4 py-3 text-ink outline-none transition duration-300 placeholder:text-slate-400 hover:border-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100";
+    "mt-2 min-h-11 w-full rounded-lg border border-slate-300 bg-white/90 px-3.5 py-2.5 text-sm text-ink outline-none transition duration-300 placeholder:text-slate-400 hover:border-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100";
 
   if (field.type === "textarea") {
     return (
@@ -957,15 +957,15 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+    <div className="grid gap-6 xl:grid-cols-[minmax(20rem,0.82fr)_minmax(0,1.18fr)] xl:items-start">
       <form
-        className="card-surface p-4 sm:p-6 lg:sticky lg:top-24"
+        className="card-surface p-4 sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {
           event.preventDefault();
           handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
         }}
       >
-        <div className="mb-6 flex items-start gap-4 sm:mb-7">
+        <div className="mb-5 flex items-start gap-4 sm:mb-6">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-mint-50 text-mint-700 shadow-line">
             <FileText className="h-5 w-5" aria-hidden="true" />
           </div>
@@ -977,7 +977,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-5">
           <div>
             <div className="mb-3 flex items-center justify-between gap-3">
               <p className="text-sm font-semibold uppercase text-mint-700">Try an example</p>
@@ -999,9 +999,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-4">
+          <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-3.5">
             <p className="text-sm font-semibold uppercase text-slate-500">Role context</p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {contextFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
                   <span className="text-sm font-semibold text-ink">{field.label}</span>
@@ -1011,9 +1011,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-line">
+          <div className="rounded-lg border border-slate-200 bg-white p-3.5 shadow-line">
             <p className="text-sm font-semibold uppercase text-slate-500">Work details</p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {detailFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
                   <span className="text-sm font-semibold text-ink">{field.label}</span>
@@ -1033,9 +1033,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-4">
+          <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-3.5">
             <p className="text-sm font-semibold uppercase text-slate-500">Proof points</p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {proofFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
                   <span className="text-sm font-semibold text-ink">{field.label}</span>
@@ -1116,7 +1116,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col p-4 sm:p-6">
+        <div className="flex flex-1 flex-col p-4 sm:p-5">
           <div className="mb-5 grid gap-3 sm:grid-cols-3">
             {contextChips.slice(0, 3).map((label) => (
               <div
@@ -1135,7 +1135,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           ) : null}
 
           {hasOutput ? (
-            <div className="flex flex-1 flex-col gap-6">
+            <div className="flex flex-1 flex-col gap-5">
               <section className="rounded-lg border border-mint-100 bg-[linear-gradient(135deg,#ffffff,#effdf8)] p-4 shadow-line">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
@@ -1161,7 +1161,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 </div>
 
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-lg border border-slate-200 bg-white/85 p-4">
+                  <div className="rounded-lg border border-slate-200 bg-white/85 p-3.5">
                     <p className="flex items-center gap-2 text-sm font-semibold text-ink">
                       <CheckCircle2 className="h-4 w-4 text-mint-700" aria-hidden="true" />
                       Strengths
@@ -1174,7 +1174,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                       ))}
                     </ul>
                   </div>
-                  <div className="rounded-lg border border-slate-200 bg-white/85 p-4">
+                  <div className="rounded-lg border border-slate-200 bg-white/85 p-3.5">
                     <p className="flex items-center gap-2 text-sm font-semibold text-ink">
                       <Target className="h-4 w-4 text-amber-600" aria-hidden="true" />
                       Weaknesses
@@ -1194,15 +1194,15 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <h3 className="text-sm font-semibold uppercase text-mint-700">Best 5 bullets</h3>
                 <div className="mt-3 space-y-3">
                   {generated.bullets.map((item, index) => (
-                    <div key={`${item}-${index}`} className="rounded-lg border border-slate-200 bg-white p-4 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100">
-                      <div className="flex flex-col gap-3 sm:flex-row">
-                        <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint-50 text-xs font-semibold text-mint-700">
+                    <div key={`${item}-${index}`} className="rounded-lg border border-slate-200 bg-white p-3.5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100">
+                      <div className="flex gap-3">
+                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint-50 text-xs font-semibold text-mint-700">
                           {index + 1}
                         </span>
                         <div className="min-w-0 flex-1">
-                          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                            <p className="leading-7 text-slate-700">{item}</p>
-                            <div className="shrink-0">
+                          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_6.5rem] md:items-start">
+                            <p className="text-sm leading-6 text-slate-700 sm:text-base sm:leading-7">{item}</p>
+                            <div className="shrink-0 md:text-right">
                               <span
                                 className={`inline-flex items-center justify-center rounded-full border px-3 py-1 text-xs font-semibold ${getScoreClasses(
                                   generated.scores[index]?.score || 0,
@@ -1210,7 +1210,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                               >
                                 {generated.scores[index]?.score || 0}/100
                               </span>
-                              <div className="mt-2 h-1.5 w-24 overflow-hidden rounded-full bg-slate-100">
+                              <div className="mt-2 h-1.5 w-24 overflow-hidden rounded-full bg-slate-100 md:ml-auto">
                                 <div
                                   className={`h-full rounded-full ${getScoreBarColor(
                                     generated.scores[index]?.score || 0,
@@ -1221,22 +1221,24 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                             </div>
                           </div>
 
-                          <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm leading-6 text-slate-600">
-                            <p>
-                              <span className="font-semibold text-ink">Why:</span>{" "}
-                              {generated.scores[index]?.reason}
-                            </p>
-                            <p className="mt-1">
-                              <span className="font-semibold text-ink">Improve:</span>{" "}
-                              {generated.scores[index]?.suggestion}
-                            </p>
-                            <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                          <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs leading-5 text-slate-600 sm:text-sm sm:leading-6">
+                            <div className="grid gap-2 lg:grid-cols-2">
+                              <p>
+                                <span className="font-semibold text-ink">Why:</span>{" "}
+                                {generated.scores[index]?.reason}
+                              </p>
+                              <p>
+                                <span className="font-semibold text-ink">Improve:</span>{" "}
+                                {generated.scores[index]?.suggestion}
+                              </p>
+                            </div>
+                            <div className="mt-3 grid gap-1.5 sm:grid-cols-3">
                               {breakdownLabels.map(([key, label]) => (
-                                <div key={key} className="rounded-lg bg-white px-3 py-2 shadow-line">
+                                <div key={key} className="rounded-md bg-white px-2.5 py-2 shadow-line">
                                   <span className="block text-[11px] font-semibold uppercase text-slate-500">
                                     {label}
                                   </span>
-                                  <span className="mt-1 block font-semibold text-ink">
+                                  <span className="mt-0.5 block font-semibold text-ink">
                                     {generated.scores[index]?.breakdown?.[key] || 0}/100
                                   </span>
                                 </div>
