@@ -17,6 +17,7 @@ import { EmailCapture } from "@/components/email-capture";
 import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
+  getToolBySlug,
   type ToolConfig,
   type ToolField,
   type ToolFormValues,
@@ -24,7 +25,7 @@ import {
 import { trackEvent } from "@/lib/analytics";
 
 type GenericToolWorkspaceProps = {
-  tool: ToolConfig;
+  slug: string;
 };
 
 type GenericToolResult = {
@@ -135,7 +136,8 @@ function getScoreColor(score: number) {
   return "text-red-700 bg-red-50 border-red-200";
 }
 
-export function GenericToolWorkspace({ tool }: GenericToolWorkspaceProps) {
+export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
+  const tool = getToolBySlug(slug) as ToolConfig;
   const [form, setForm] = useState<ToolFormValues>(() => getInitialToolValues(tool));
   const [result, setResult] = useState<GenericToolResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);

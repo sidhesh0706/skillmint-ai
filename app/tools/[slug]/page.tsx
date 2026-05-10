@@ -96,7 +96,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
       <section className="relative overflow-hidden py-12 sm:py-16 lg:py-[4.5rem]">
         <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[30rem]" />
         <div className="container-shell">
-          <ComingSoonTool tool={tool} />
+          <ComingSoonTool slug={tool.slug} />
         </div>
       </section>
     );
@@ -150,7 +150,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
           {tool.slug === "resume-bullet-generator" ? (
             <ToolWorkspace slug={tool.slug} />
           ) : (
-            <GenericToolWorkspace tool={tool} />
+            <GenericToolWorkspace slug={tool.slug} />
           )}
         </div>
       </div>

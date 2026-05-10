@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Clock3, Sparkles, ThumbsUp } from "lucide-react";
 import { EmailCapture } from "@/components/email-capture";
-import type { ToolConfig } from "@/data/tool-config";
+import { getToolBySlug, type ToolConfig } from "@/data/tool-config";
 import { trackEvent } from "@/lib/analytics";
 
 type ComingSoonToolProps = {
-  tool: ToolConfig;
+  slug: string;
 };
 
-export function ComingSoonTool({ tool }: ComingSoonToolProps) {
+export function ComingSoonTool({ slug }: ComingSoonToolProps) {
+  const tool = getToolBySlug(slug) as ToolConfig;
   const Icon = tool.icon;
 
   return (
