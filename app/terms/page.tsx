@@ -26,6 +26,11 @@ export default function TermsPage() {
             truthful, accurate, and appropriate for your background.
           </p>
           <p>
+            Generated content must be reviewed before submission. SkillMint can improve wording,
+            structure, and keyword coverage, but it cannot verify every claim or guarantee that an
+            employer will interpret your experience a certain way.
+          </p>
+          <p>
             The service is provided as-is. We do not guarantee job interviews,
             offers, recruiter responses, or application outcomes.
           </p>
@@ -34,8 +39,13 @@ export default function TermsPage() {
             another person, or submit false qualifications.
           </p>
           <p>
-            These terms may be updated as the product adds accounts, payments,
-            analytics, or additional integrations.
+            SkillMint may show recommended resources, affiliate links, or disabled ad placements
+            when configured. These should be treated as optional resources, not guarantees of
+            outcomes.
+          </p>
+          <p>
+            These terms may be updated as the product adds new tools, integrations, or monetization
+            options.
           </p>
         </div>
       </div>

@@ -55,7 +55,7 @@ export default function ToolsPage() {
           <SectionHeading
             eyebrow="Tools"
             title="Practical AI tools for every step of your career search."
-            description="Use the available resume bullet generator now, and keep an eye on the next tools coming to SkillMint AI."
+            description="Generate resume bullets, review weak sections, match job descriptions, convert projects, and draft application assets without creating an account."
           />
         </div>
       </section>

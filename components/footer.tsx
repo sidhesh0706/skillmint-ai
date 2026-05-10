@@ -37,7 +37,7 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="grid gap-8 text-sm text-slate-300 sm:grid-cols-3">
+          <div className="grid gap-8 text-sm text-slate-300 sm:grid-cols-3 lg:gap-10">
             <div>
               <p className="font-semibold uppercase text-white">SkillMint</p>
               <div className="mt-4 grid gap-2.5">
@@ -46,6 +46,12 @@ export function Footer() {
                 </Link>
                 <Link href="/tools" className="transition hover:text-white">
                   Tools
+                </Link>
+                <Link href="/tools/resume-roast" className="transition hover:text-white">
+                  Resume Roast
+                </Link>
+                <Link href="/tools/job-description-match" className="transition hover:text-white">
+                  JD Match
                 </Link>
                 <Link href="/tools/resume-bullet-generator" className="transition hover:text-white">
                   Resume Generator
@@ -58,7 +64,7 @@ export function Footer() {
 
             <div>
               <p className="font-semibold uppercase text-white">Resources</p>
-              <div className="mt-4 grid gap-2.5">
+              <div className="mt-4 grid max-w-xs gap-2.5">
                 <Link href="/resources" className="transition hover:text-white">
                   All resources
                 </Link>
@@ -73,6 +79,9 @@ export function Footer() {
             <div>
               <p className="font-semibold uppercase text-white">Company</p>
               <div className="mt-4 grid gap-2.5">
+                <Link href="/about" className="transition hover:text-white">
+                  About
+                </Link>
                 <Link href="/privacy" className="transition hover:text-white">
                   Privacy
                 </Link>

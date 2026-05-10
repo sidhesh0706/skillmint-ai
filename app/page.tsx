@@ -101,16 +101,24 @@ const featuredSeoLandingPages = seoLandingPages.slice(0, 6);
 
 const workflowSteps = [
   {
-    title: "Add your role",
-    description: "Choose the target job, experience level, tone, and output mode.",
+    title: "Resume bullets",
+    description: "Turn rough experience notes into scored, recruiter-ready bullets.",
   },
   {
-    title: "Describe real work",
-    description: "Paste a task, project, achievement, tools, and any truthful results.",
+    title: "JD match",
+    description: "Compare your wording against a target posting and find truthful keyword gaps.",
   },
   {
-    title: "Improve the draft",
-    description: "Review scores, strengthen weak bullets, compare versions, and export.",
+    title: "LinkedIn",
+    description: "Reuse your strongest positioning for cleaner profile headlines and summaries.",
+  },
+  {
+    title: "Cover letter",
+    description: "Connect your best proof points to the company and role without starting blank.",
+  },
+  {
+    title: "Apply",
+    description: "Export clean copy for resumes, editors, LinkedIn, and job applications.",
   },
 ];
 
@@ -124,14 +132,14 @@ const audienceSegments = [
 ];
 
 export const metadata: Metadata = {
-  title: "Free AI Tools to Build Your Career Faster",
+  title: "SkillMint AI | Recruiter-Ready Career Tools",
   description:
-    "Use SkillMint AI to create stronger resume bullets and discover career tools for resumes, LinkedIn, interviews, and professional productivity.",
+    "Turn real student, project, and work experience into recruiter-ready resume bullets, job match insights, cover letters, and LinkedIn assets.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "SkillMint AI | Free AI Tools to Build Your Career Faster",
+    title: "SkillMint AI | Recruiter-Ready Career Tools",
     description:
       "Create recruiter-ready resume bullets and career assets with free AI tools.",
     url: "/",
@@ -173,12 +181,12 @@ export default function Home() {
               Resume scoring, rewrites, and exports
             </div>
             <h1 className="max-w-4xl text-4xl font-semibold leading-[1.04] text-ink sm:text-5xl lg:text-6xl">
-              Free AI Tools to Build Your Career Faster
+              Turn real experience into recruiter-ready career assets.
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-              SkillMint AI helps you turn rough work notes into scored,
-              recruiter-ready resume bullets with stronger rewrites, keyword
-              guidance, and exports built for real applications.
+              SkillMint AI helps students, freshers, interns, and early-career professionals turn
+              honest student, project, and work experience into stronger resume bullets, job-match
+              insights, LinkedIn copy, and application drafts.
             </p>
             <div className="mt-5">
               <TrustPills />
@@ -281,7 +289,7 @@ export default function Home() {
 
       <section className="pt-10 pb-16 sm:pt-12 sm:pb-20">
         <div className="container-shell">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-5">
             {workflowSteps.map((step, index) => (
               <article
                 key={step.title}
@@ -320,6 +328,48 @@ export default function Home() {
                   {segment}
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-16 sm:pb-20">
+        <div className="container-shell">
+          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase text-mint-700">
+                Example transformation
+              </p>
+              <h2 className="mt-2 text-3xl font-semibold leading-tight text-ink">
+                From plain task to application-ready proof.
+              </h2>
+              <p className="mt-3 leading-7 text-slate-600">
+                SkillMint pushes every output toward clearer action verbs, truthful metrics,
+                role-relevant keywords, and wording that still sounds like a real person.
+              </p>
+            </div>
+            <div className="card-surface grid gap-4 p-5 sm:p-6">
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                <p className="text-xs font-semibold uppercase text-slate-500">Before</p>
+                <p className="mt-2 leading-7 text-slate-700">
+                  Helped with social media posts and looked at campaign results.
+                </p>
+              </div>
+              <div className="rounded-lg border border-mint-100 bg-mint-50/70 p-4">
+                <p className="text-xs font-semibold uppercase text-mint-700">After</p>
+                <p className="mt-2 leading-7 text-slate-700">
+                  Analyzed campaign performance across LinkedIn and email channels to identify
+                  content trends, improve weekly reporting, and support higher-quality marketing
+                  decisions.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["action verb", "ATS keywords", "clearer scope", "truth-first"].map((item) => (
+                  <span key={item} className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600">
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -413,8 +463,8 @@ export default function Home() {
           <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
               eyebrow="Featured tools"
-              title="Start with the career assets recruiters actually read."
-              description="Use the first SkillMint AI tool today, with more focused generators already planned."
+              title="Build your application kit."
+              description="Start with resume bullets, then check job fit, convert projects, create LinkedIn positioning, and draft cover letters."
             />
             <TrackedLink
               href="/tools"
@@ -436,7 +486,7 @@ export default function Home() {
             centered
             eyebrow="Benefits"
             title="A focused toolkit for faster, cleaner applications."
-            description="SkillMint AI keeps the experience lightweight: no accounts, no paywalls, and secure AI generation for the live resume tool."
+            description="SkillMint AI keeps the experience lightweight: no accounts, no paywalls, and privacy-first workflows for practical career writing."
           />
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {benefits.map((benefit) => {
@@ -478,7 +528,7 @@ export default function Home() {
             <TrackedLink
               href="/tools/resume-bullet-generator"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50"
-              eventName="homepage_cta_click"
+              eventName="application_kit_cta_clicked"
               eventPayload={{ cta: "bottom_generate_bullets" }}
             >
               Generate bullets

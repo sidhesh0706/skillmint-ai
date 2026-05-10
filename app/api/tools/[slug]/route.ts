@@ -73,6 +73,19 @@ type GroqChatResponse = {
   };
 };
 
+type GenericToolResult = {
+  title: string;
+  summary: string;
+  score?: number;
+  scores?: Array<{ label: string; score: number }>;
+  sections: Array<{
+    title: string;
+    items?: string[];
+    text?: string;
+  }>;
+  warnings?: string[];
+};
+
 const GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL = "llama-3.3-70b-versatile";
 const RATE_LIMIT_WINDOW_MS = 60_000;
@@ -260,6 +273,68 @@ function parseImprovedBullet(content: string): ImprovedBullet {
   };
 }
 
+function parseGenericToolResult(content: string): GenericToolResult {
+  const parsed = parseJsonObject(content) as {
+    title?: unknown;
+    summary?: unknown;
+    score?: unknown;
+    scores?: unknown;
+    sections?: unknown;
+    warnings?: unknown;
+  } | null;
+
+  const sections = Array.isArray(parsed?.sections)
+    ? parsed.sections
+        .map((section) => {
+          if (!section || typeof section !== "object") {
+            return null;
+          }
+
+          const typedSection = section as { title?: unknown; items?: unknown; text?: unknown };
+          const title = typeof typedSection.title === "string" ? typedSection.title.trim() : "";
+
+          if (!title) {
+            return null;
+          }
+
+          return {
+            title,
+            items: getStringArray(typedSection.items, 10),
+            text:
+              typeof typedSection.text === "string"
+                ? typedSection.text.trim().slice(0, 1_600)
+                : "",
+          };
+        })
+        .filter((section) => section !== null)
+    : [];
+
+  const scores = Array.isArray(parsed?.scores)
+    ? parsed.scores
+        .map((score) => {
+          if (!score || typeof score !== "object") {
+            return null;
+          }
+
+          const typedScore = score as { label?: unknown; score?: unknown };
+          const label = typeof typedScore.label === "string" ? typedScore.label.trim() : "";
+
+          return label ? { label, score: getScore(typedScore.score) } : null;
+        })
+        .filter((score): score is { label: string; score: number } => Boolean(score))
+        .slice(0, 8)
+    : [];
+
+  return {
+    title: typeof parsed?.title === "string" ? parsed.title.trim() : "SkillMint output",
+    summary: typeof parsed?.summary === "string" ? parsed.summary.trim().slice(0, 500) : "",
+    score: typeof parsed?.score === "number" ? getScore(parsed.score) : undefined,
+    scores,
+    sections,
+    warnings: getStringArray(parsed?.warnings, 6),
+  };
+}
+
 function getModeGuidance(outputMode: string) {
   if (outputMode === "ATS-optimized") {
     return "Prioritize role-relevant ATS keywords, standard resume phrasing, and searchable skills without keyword stuffing.";
@@ -424,12 +499,117 @@ function buildRewriteExistingPrompt(input: ReturnType<typeof getCleanBody>) {
   ].join("\n");
 }
 
+function cleanGenericBody(rawBody: Record<string, unknown>) {
+  return Object.fromEntries(
+    Object.entries(rawBody).map(([key, value]) => [key, sanitizeInput(value, 2_500)]),
+  );
+}
+
+function buildGenericToolPrompt(slug: string, input: Record<string, string>) {
+  const baseRules = [
+    "You are SkillMint AI, a practical career writing assistant.",
+    "Keep every suggestion truthful, conservative, and recruiter-friendly.",
+    "Warn users not to overclaim when relevant.",
+    "Do not mention any underlying AI provider.",
+    "Return only JSON in this exact shape:",
+    '{"title":"...","summary":"...","score":84,"scores":[{"label":"Clarity","score":82}],"sections":[{"title":"...","items":["..."],"text":"..."}],"warnings":["..."]}',
+  ];
+
+  if (slug === "resume-roast") {
+    return [
+      ...baseRules,
+      "Task: Review the pasted resume bullets or section like a direct but constructive recruiter.",
+      `Target role: ${input.targetRole || "Not specified"}`,
+      `Experience level: ${input.experienceLevel || "Not specified"}`,
+      `Job description: ${input.jobDescription || "Not provided"}`,
+      `Resume text: ${input.resumeText || ""}`,
+      "Include scores for Overall, Clarity, Impact, ATS keywords, Metrics, and Action verbs.",
+      "Sections must include: Recruiter-style critique, Weak phrases detected, Missing metrics suggestions, Improved bullet versions.",
+    ].join("\n");
+  }
+
+  if (slug === "job-description-match") {
+    return [
+      ...baseRules,
+      "Task: Compare the resume text against the job description.",
+      `Target role: ${input.targetRole || "Not specified"}`,
+      `Job description: ${input.jobDescription || ""}`,
+      `Resume / experience text: ${input.resumeText || ""}`,
+      "Include a match score and scores for Keyword fit, Skills alignment, Specificity, Metrics, and Truthfulness.",
+      "Sections must include: Matched keywords, Missing keywords, Skills to emphasize, Tailored bullet rewrites, Truthful improvement suggestions.",
+      "Warnings should flag anything the user should not claim unless true.",
+    ].join("\n");
+  }
+
+  if (slug === "project-to-resume") {
+    return [
+      ...baseRules,
+      "Task: Turn a project into career assets.",
+      `Project name: ${input.projectName || ""}`,
+      `Project description: ${input.projectDescription || ""}`,
+      `Tech stack / tools: ${input.techStack || ""}`,
+      `User contribution: ${input.contribution || ""}`,
+      `Metrics/results: ${input.metrics || "Not provided"}`,
+      `Target role: ${input.targetRole || "Not specified"}`,
+      "Sections must include: 5 resume bullets, Short project summary, LinkedIn project description, GitHub README description, ATS keywords.",
+    ].join("\n");
+  }
+
+  if (slug === "cover-letter-generator") {
+    return [
+      ...baseRules,
+      "Task: Write a concise, editable cover letter draft.",
+      `Target role: ${input.targetRole || ""}`,
+      `Company: ${input.company || ""}`,
+      `Job description: ${input.jobDescription || "Not provided"}`,
+      `Relevant background: ${input.background || ""}`,
+      "Sections must include: Cover letter draft, Why it works, Customization checklist.",
+      "Keep it under 260 words, specific, and not exaggerated.",
+    ].join("\n");
+  }
+
+  if (slug === "linkedin-headline-generator") {
+    return [
+      ...baseRules,
+      "Task: Generate credible LinkedIn headline options and short positioning copy.",
+      `Target role: ${input.targetRole || ""}`,
+      `Current role/background: ${input.currentRole || ""}`,
+      `Skills/specialty: ${input.specialty || ""}`,
+      `Tone: ${input.tone || "Professional"}`,
+      "Sections must include: Headline options, Best option, About section starter, Keywords to include.",
+      "Keep headlines credible and recruiter-friendly.",
+    ].join("\n");
+  }
+
+  return "";
+}
+
+function getRequiredFieldsForSlug(slug: string) {
+  if (slug === "resume-roast") {
+    return ["resumeText", "targetRole"];
+  }
+
+  if (slug === "job-description-match") {
+    return ["jobDescription", "resumeText"];
+  }
+
+  if (slug === "project-to-resume") {
+    return ["projectName", "projectDescription", "contribution", "targetRole"];
+  }
+
+  if (slug === "cover-letter-generator") {
+    return ["targetRole", "company", "background"];
+  }
+
+  if (slug === "linkedin-headline-generator") {
+    return ["targetRole", "specialty"];
+  }
+
+  return [];
+}
+
 export async function POST(request: NextRequest, { params }: RouteContext) {
   const { slug } = await params;
-
-  if (slug !== "resume-bullet-generator") {
-    return NextResponse.json({ error: "Tool is not available yet." }, { status: 404 });
-  }
 
   if (!checkRateLimit(getClientId(request))) {
     return NextResponse.json(
@@ -447,7 +627,57 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
     );
   }
 
-  const input = getCleanBody((await request.json()) as ResumeRequestBody);
+  const rawJson = (await request.json()) as Record<string, unknown>;
+  const genericSlugs = new Set([
+    "resume-roast",
+    "job-description-match",
+    "project-to-resume",
+    "cover-letter-generator",
+    "linkedin-headline-generator",
+  ]);
+
+  if (genericSlugs.has(slug)) {
+    const genericInput = cleanGenericBody(rawJson);
+    const missingField = getRequiredFieldsForSlug(slug).find((field) => !genericInput[field]);
+
+    if (missingField) {
+      return NextResponse.json(
+        { error: "Please fill in the required fields before generating." },
+        { status: 400 },
+      );
+    }
+
+    try {
+      const prompt = buildGenericToolPrompt(slug, genericInput);
+      const content = await callGroq(apiKey, prompt, 1_500);
+      const result = parseGenericToolResult(content);
+
+      if (!result.sections.length) {
+        return NextResponse.json(
+          { error: "AI response was incomplete. Please try generating again." },
+          { status: 502 },
+        );
+      }
+
+      return NextResponse.json(result);
+    } catch (error) {
+      return NextResponse.json(
+        {
+          error:
+            error instanceof Error
+              ? error.message
+              : "AI generation failed. Please try again in a moment.",
+        },
+        { status: 500 },
+      );
+    }
+  }
+
+  if (slug !== "resume-bullet-generator") {
+    return NextResponse.json({ error: "Tool is not available yet." }, { status: 404 });
+  }
+
+  const input = getCleanBody(rawJson as ResumeRequestBody);
 
   if (!input.targetRole || (input.action !== "rewrite-existing" && !input.achievement)) {
     return NextResponse.json(

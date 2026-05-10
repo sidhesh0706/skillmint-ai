@@ -28,7 +28,19 @@ export type AnalyticsEventName =
   | "export_markdown_clicked"
   | "email_signup_submitted"
   | "affiliate_card_clicked"
-  | "seo_cta_clicked";
+  | "seo_cta_clicked"
+  | "tool_started"
+  | "tool_completed"
+  | "resume_roast_completed"
+  | "jd_match_completed"
+  | "project_to_resume_completed"
+  | "copy_clicked"
+  | "export_clicked"
+  | "application_kit_cta_clicked"
+  | "email_capture_viewed"
+  | "affiliate_click"
+  | "ad_slot_rendered_placeholder"
+  | "coming_soon_vote_clicked";
 
 type AnalyticsPayload = Record<string, string | number | boolean | undefined>;
 

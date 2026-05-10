@@ -3,6 +3,8 @@ node_modules
 
 # Next.js
 .next
+.next-build
+.next-stale
 out
 
 # production
@@ -13,6 +15,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+build-output.log
+build-error.log
 
 # local env files
 .env*.local

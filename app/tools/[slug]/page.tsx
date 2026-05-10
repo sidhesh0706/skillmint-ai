@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BarChart3, FileDown, History, ShieldCheck, Wand2 } from "lucide-react";
+import { BarChart3, FileDown, ShieldCheck, Sparkles, Wand2 } from "lucide-react";
 import { ComingSoonTool } from "@/components/coming-soon-tool";
+import { GenericToolWorkspace } from "@/components/generic-tool-workspace";
 import { JsonLd } from "@/components/json-ld";
 import { ToolWorkspace } from "@/components/tool-workspace";
 import { TrustPills } from "@/components/trust-pills";
@@ -22,19 +23,19 @@ export function generateStaticParams() {
 
 const liveToolHighlights = [
   {
-    label: "Scored bullets",
+    label: "AI workspace",
+    icon: Sparkles,
+  },
+  {
+    label: "Score insights",
     icon: BarChart3,
   },
   {
-    label: "Stronger rewrites",
+    label: "Truth-first rewrites",
     icon: Wand2,
   },
   {
-    label: "Private history",
-    icon: History,
-  },
-  {
-    label: "Clean exports",
+    label: "Copy/export ready",
     icon: FileDown,
   },
   {
@@ -146,7 +147,11 @@ export default async function ToolPage({ params }: ToolPageProps) {
         </div>
 
         <div className="fade-in-up-delayed mt-9 sm:mt-10">
-          <ToolWorkspace slug={tool.slug} />
+          {tool.slug === "resume-bullet-generator" ? (
+            <ToolWorkspace slug={tool.slug} />
+          ) : (
+            <GenericToolWorkspace tool={tool} />
+          )}
         </div>
       </div>
     </section>

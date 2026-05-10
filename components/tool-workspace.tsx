@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
+  ArrowRight,
   BarChart3,
   CheckCircle2,
   Clipboard,
@@ -1073,16 +1075,26 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
             <div className="flex flex-wrap gap-2 sm:justify-end">
               {hasOutput ? (
-                <button
-                  type="button"
-                  onClick={() => handleGenerate("regenerate_click")}
-                  disabled={isGenerating}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
-                  aria-label="Regenerate output"
-                  title="Regenerate"
-                >
-                  <RefreshCw className="h-4 w-4" aria-hidden="true" />
-                </button>
+                <>
+                  <button
+                    type="button"
+                    onClick={() => handleGenerate("regenerate_click")}
+                    disabled={isGenerating}
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+                    aria-label="Tailor output to job description"
+                    title="Tailor to JD"
+                  >
+                    <RefreshCw className="h-4 w-4" aria-hidden="true" />
+                    Tailor to JD
+                  </button>
+                  <Link
+                    href="/tools/cover-letter-generator"
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-ink px-3 text-sm font-semibold text-white shadow-line transition duration-300 hover:-translate-y-0.5 hover:bg-slate-800"
+                  >
+                    Cover letter
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </>
               ) : null}
             </div>
           </div>
@@ -1134,7 +1146,28 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           ) : null}
 
-          {hasOutput ? (
+          {isGenerating && !hasOutput ? (
+            <div className="space-y-4">
+              {[0, 1, 2].map((item) => (
+                <div
+                  key={item}
+                  className="animate-pulse rounded-lg border border-slate-200 bg-white p-4 shadow-line"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="h-3 w-24 rounded-full bg-mint-100" />
+                    <div className="h-7 w-16 rounded-full bg-slate-100" />
+                  </div>
+                  <div className="mt-4 h-4 w-11/12 rounded-full bg-slate-100" />
+                  <div className="mt-3 h-4 w-2/3 rounded-full bg-slate-100" />
+                  <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                    <div className="h-12 rounded-lg bg-slate-50" />
+                    <div className="h-12 rounded-lg bg-slate-50" />
+                    <div className="h-12 rounded-lg bg-slate-50" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : hasOutput ? (
             <div className="flex flex-1 flex-col gap-5">
               <section className="rounded-lg border border-mint-100 bg-[linear-gradient(135deg,#ffffff,#effdf8)] p-4 shadow-line">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
