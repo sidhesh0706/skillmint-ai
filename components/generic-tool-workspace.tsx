@@ -13,7 +13,9 @@ import {
 } from "lucide-react";
 import { AdSlot } from "@/components/ad-slot";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
+import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { EmailCapture } from "@/components/email-capture";
+import { KeywordChip } from "@/components/keyword-chip";
 import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
@@ -234,8 +236,9 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
     <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
       <form
         onSubmit={handleSubmit}
-        className="card-surface p-4 sm:p-5 lg:sticky lg:top-24"
+        className="card-surface relative overflow-hidden p-4 sm:p-5 lg:sticky lg:top-24"
       >
+        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent" />
         <div className="rounded-lg border border-mint-100 bg-mint-50/70 p-4">
           <p className="text-sm font-semibold uppercase text-mint-700">AI workspace</p>
           <h2 className="mt-1 text-2xl font-semibold text-ink">Build the input</h2>
@@ -335,10 +338,11 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                     <p className="mt-2 leading-7 text-slate-600">{result.summary}</p>
                   </div>
                   {typeof result.score === "number" ? (
-                    <div className={`rounded-lg border px-4 py-3 text-center ${getScoreColor(result.score)}`}>
-                      <p className="text-3xl font-semibold">{result.score}</p>
-                      <p className="text-xs font-semibold uppercase">Score</p>
-                    </div>
+                    <AnimatedScoreBadge
+                      score={`${result.score}/100`}
+                      label="Score"
+                      className={`px-4 py-3 text-sm ${getScoreColor(result.score)}`}
+                    />
                   ) : null}
                 </div>
               </div>
@@ -375,7 +379,11 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                     <div className="mt-3 grid gap-2">
                       {section.items.map((item) => (
                         <div key={item} className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-700">
-                          {item}
+                          {section.title.toLowerCase().includes("keyword") ? (
+                            <KeywordChip>{item}</KeywordChip>
+                          ) : (
+                            item
+                          )}
                         </div>
                       ))}
                     </div>

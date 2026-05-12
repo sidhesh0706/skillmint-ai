@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, Search, Sparkles } from "lucide-react";
+import { CelestialBackground } from "@/components/celestial-background";
+import { KeywordChip } from "@/components/keyword-chip";
 import { SectionHeading } from "@/components/section-heading";
 import { seoLandingPages } from "@/data/seo-landing-pages";
 
@@ -101,22 +103,35 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <>
-      <section className="relative overflow-hidden py-14 sm:py-20">
-        <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[30rem]" />
+      <section className="cosmic-shell py-14 sm:py-20">
+        <CelestialBackground intensity="section" />
         <div className="container-shell">
           <div className="max-w-3xl">
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-4 py-2 text-sm font-semibold text-mint-700 shadow-line backdrop-blur">
-              <BookOpen className="h-4 w-4" aria-hidden="true" />
+            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-mint-100 shadow-celestial backdrop-blur">
+              <BookOpen className="h-4 w-4 text-mint-300" aria-hidden="true" />
               Resume resources
             </p>
-            <h1 className="text-4xl font-semibold leading-tight text-ink sm:text-5xl">
-              Resume bullet examples and writing guides
+            <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
+              A premium career library for sharper applications.
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
               Browse role-specific examples, action verbs, FAQs, and practical tips for
               writing stronger resume bullets. Each guide links back to the AI resume
               bullet generator when you are ready to create your own.
             </p>
+            <div className="mt-6 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.08] p-3 shadow-celestial backdrop-blur">
+              <div className="flex min-h-12 items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-4 text-slate-300">
+                <Search className="h-4 w-4 text-mint-300" aria-hidden="true" />
+                <span className="text-sm">Search by role, goal, project, metric, or ATS keyword</span>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {["Freshers", "Software", "Metrics", "Projects"].map((item) => (
+                  <KeywordChip key={item} dark>
+                    {item}
+                  </KeywordChip>
+                ))}
+              </div>
+            </div>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link href="/tools/resume-bullet-generator" className="button-primary">
                 Generate bullets
@@ -152,8 +167,9 @@ export default function ResourcesPage() {
                     <Link
                       key={page.slug}
                       href={`/${page.slug}`}
-                      className="group rounded-lg border border-slate-200 bg-white/90 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
+                      className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
                     >
+                      <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent opacity-0 transition group-hover:opacity-100" />
                       <p className="text-sm font-semibold uppercase text-mint-700">{page.audience}</p>
                       <h3 className="mt-3 text-xl font-semibold leading-snug text-ink">
                         {page.title}
@@ -186,3 +202,4 @@ export default function ResourcesPage() {
     </>
   );
 }
+

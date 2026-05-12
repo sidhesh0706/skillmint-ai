@@ -22,7 +22,9 @@ import {
 } from "lucide-react";
 import { AdSlot } from "@/components/ad-slot";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
+import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { EmailCapture } from "@/components/email-capture";
+import { KeywordChip } from "@/components/keyword-chip";
 import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
@@ -248,6 +250,13 @@ const exportActions = [
     icon: FileText,
     action: "docs" as const,
   },
+];
+
+const loadingSteps = [
+  "Scanning experience",
+  "Extracting impact",
+  "Matching ATS keywords",
+  "Rewriting for recruiters",
 ];
 
 function renderField(
@@ -961,12 +970,13 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(20rem,0.82fr)_minmax(0,1.18fr)] xl:items-start">
       <form
-        className="card-surface p-4 sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
+        className="card-surface relative overflow-hidden p-4 sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {
           event.preventDefault();
           handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
         }}
       >
+        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent" />
         <div className="mb-5 flex items-start gap-4 sm:mb-6">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-mint-50 text-mint-700 shadow-line">
             <FileText className="h-5 w-5" aria-hidden="true" />
@@ -1063,12 +1073,12 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
       </form>
 
       <section className="card-surface flex min-h-[34rem] flex-col overflow-hidden" aria-live="polite">
-        <div className="border-b border-slate-200/80 bg-[linear-gradient(120deg,#ffffff,#effdf8_58%,#ffffff)] p-4 sm:p-6">
+        <div className="border-b border-slate-200/80 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.16),transparent_30%),linear-gradient(120deg,#ffffff,#effdf8_58%,#ffffff)] p-4 sm:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase text-mint-700 shadow-line">
                 <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                AI output
+                AI output cockpit
               </p>
               <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.output.title}</h2>
               <p className="mt-2 leading-7 text-slate-600">{tool.output.description}</p>
@@ -1148,6 +1158,20 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
           {isGenerating && !hasOutput ? (
             <div className="space-y-4">
+              <div className="rounded-lg border border-mint-100 bg-mint-50/70 p-4">
+                <p className="text-sm font-semibold uppercase text-mint-700">Generating</p>
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {loadingSteps.map((step, index) => (
+                    <div
+                      key={step}
+                      className="section-reveal rounded-lg border border-white bg-white/80 px-3 py-2 text-sm font-semibold text-slate-700 shadow-line"
+                      style={{ animationDelay: `${index * 120}ms` }}
+                    >
+                      {step}
+                    </div>
+                  ))}
+                </div>
+              </div>
               {[0, 1, 2].map((item) => (
                 <div
                   key={item}
@@ -1184,13 +1208,11 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                         "Add truthful metrics and role-specific keywords to keep improving this draft."}
                     </p>
                   </div>
-                  <span
-                    className={`inline-flex shrink-0 items-center justify-center rounded-full border px-4 py-2 text-sm font-semibold ${getScoreClasses(
-                      generated.summary.overallScore,
-                    )}`}
-                  >
-                    Overall score
-                  </span>
+                  <AnimatedScoreBadge
+                    score={`${generated.summary.overallScore || 0}/100`}
+                    label="Overall"
+                    className={`shrink-0 ${getScoreClasses(generated.summary.overallScore)}`}
+                  />
                 </div>
 
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -1338,12 +1360,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   <h3 className="text-sm font-semibold uppercase text-mint-700">Keywords used</h3>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {generated.keywords.map((keyword) => (
-                      <span
-                        key={keyword}
-                        className="rounded-full border border-mint-100 bg-mint-50 px-3 py-1.5 text-sm font-semibold text-mint-700"
-                      >
+                      <KeywordChip key={keyword}>
                         {keyword}
-                      </span>
+                      </KeywordChip>
                     ))}
                   </div>
                 </section>
@@ -1359,12 +1378,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {generated.missingKeywords.map((keyword) => (
-                      <span
-                        key={keyword}
-                        className="rounded-full border border-amber-200 bg-white px-3 py-1.5 text-sm font-semibold text-amber-700"
-                      >
+                      <KeywordChip key={keyword} className="border-amber-200 bg-white text-amber-700">
                         {keyword}
-                      </span>
+                      </KeywordChip>
                     ))}
                   </div>
                 </section>

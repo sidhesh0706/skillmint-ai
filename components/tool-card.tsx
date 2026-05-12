@@ -13,10 +13,14 @@ export function ToolCard({ tool }: ToolCardProps) {
   const statusLabel = isLive ? "Live" : "Coming soon";
 
   return (
-    <article className="group card-surface relative flex h-full flex-col overflow-hidden p-5 transition duration-300 hover:-translate-y-1 hover:border-mint-100 hover:shadow-xl sm:p-6">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-mint-500 via-amber-300 to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
+    <article className="group card-surface relative flex h-full flex-col overflow-hidden p-5 transition duration-300 hover:-translate-y-1 hover:border-mint-100 hover:shadow-[0_22px_70px_rgba(15,118,110,0.16)] sm:p-6">
+      <div className={clsx(
+        "pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-mint-300 to-transparent transition duration-300",
+        isLive ? "opacity-100" : "opacity-40",
+      )} />
+      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-mint-300/10 blur-3xl transition duration-500 group-hover:bg-cyan-300/20" />
       <div className="flex items-start justify-between gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-mint-50 via-white to-amber-50 text-mint-700 shadow-line transition duration-300 group-hover:scale-105 group-hover:shadow-soft">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-ink via-slate-800 to-mint-700 text-white shadow-line transition duration-300 group-hover:scale-105 group-hover:shadow-[0_0_34px_rgba(31,201,153,0.22)]">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </div>
         <span
@@ -51,3 +55,4 @@ export function ToolCard({ tool }: ToolCardProps) {
     </article>
   );
 }
+

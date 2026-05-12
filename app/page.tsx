@@ -11,18 +11,22 @@ import {
   Layers3,
   LockKeyhole,
   ShieldCheck,
-  Sparkles,
   Target,
   Wand2,
   type LucideIcon,
 } from "lucide-react";
+import { AnimatedScoreBadge } from "@/components/animated-score-badge";
+import { CelestialBackground } from "@/components/celestial-background";
+import { FloatingPreviewCard } from "@/components/floating-preview-card";
+import { GlowCard } from "@/components/glow-card";
+import { KeywordChip } from "@/components/keyword-chip";
 import { SectionHeading } from "@/components/section-heading";
+import { SectionReveal } from "@/components/section-reveal";
 import { AdSlot } from "@/components/ad-slot";
 import { EmailCapture } from "@/components/email-capture";
 import { JsonLd } from "@/components/json-ld";
 import { ToolGrid } from "@/components/tool-grid";
 import { TrackedLink } from "@/components/tracked-link";
-import { TrustPills } from "@/components/trust-pills";
 import { seoLandingPages } from "@/data/seo-landing-pages";
 import { featuredTools } from "@/data/tool-config";
 import { breadcrumbSchema, softwareApplicationSchema } from "@/lib/structured-data";
@@ -95,6 +99,14 @@ const heroFeatures: Array<[string, LucideIcon]> = [
   ["Scored", BarChart3],
   ["Rewrite", Wand2],
   ["Export", Download],
+];
+
+const applicationKit = [
+  "Resume bullets",
+  "JD match",
+  "LinkedIn headline",
+  "Cover letter",
+  "Email follow-up",
 ];
 
 const featuredSeoLandingPages = seoLandingPages.slice(0, 6);
@@ -171,25 +183,33 @@ export default function Home() {
           breadcrumbSchema([{ name: "Home", path: "/" }]),
         ]}
       />
-      <section className="relative overflow-hidden">
-        <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[36rem]" />
-        <div className="absolute inset-x-0 top-0 -z-10 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0))]" />
-        <div className="container-shell grid gap-10 py-12 sm:py-16 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:py-18">
-          <div className="fade-in-up max-w-3xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/[0.78] px-4 py-2 text-sm font-semibold text-mint-700 shadow-line backdrop-blur">
-              <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-              Resume scoring, rewrites, and exports
+      <section className="cosmic-shell">
+        <CelestialBackground intensity="hero" />
+        <div className="container-shell grid gap-10 py-12 sm:py-16 lg:min-h-[720px] lg:grid-cols-[0.98fr_1.02fr] lg:items-center lg:py-20">
+          <SectionReveal className="max-w-3xl">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-mint-100 shadow-celestial backdrop-blur">
+              <CheckCircle2 className="h-4 w-4 text-mint-300" aria-hidden="true" />
+              AI career cockpit for early talent
             </div>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.04] text-ink sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.03] tracking-[-0.02em] text-white sm:text-5xl lg:text-7xl">
               Turn real experience into recruiter-ready career assets.
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
               SkillMint AI helps students, freshers, interns, and early-career professionals turn
-              honest student, project, and work experience into stronger resume bullets, job-match
+              rough project, internship, and work notes into scored resume bullets, JD-match
               insights, LinkedIn copy, and application drafts.
             </p>
-            <div className="mt-5">
-              <TrustPills />
+            <div className="mt-5 flex flex-wrap gap-2">
+              {["Free to use", "No signup required", "ATS-friendly outputs"].map((pill, index) => (
+                <span
+                  key={pill}
+                  className="floating-card inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3.5 py-2 text-sm font-semibold text-slate-100 backdrop-blur"
+                  style={{ animationDelay: `${index * 180}ms` }}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-mint-300 shadow-[0_0_12px_rgba(31,201,153,0.85)]" />
+                  {pill}
+                </span>
+              ))}
             </div>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <TrackedLink
@@ -203,7 +223,7 @@ export default function Home() {
               </TrackedLink>
               <TrackedLink
                 href="/resources"
-                className="button-secondary"
+                className="button-secondary border-white/20 bg-white/[0.08] text-white hover:bg-white/20"
                 eventName="homepage_cta_click"
                 eventPayload={{ cta: "browse_examples" }}
               >
@@ -216,86 +236,96 @@ export default function Home() {
                 ["100", "point score"],
                 ["0", "signup steps"],
               ].map(([value, label]) => (
-                <div key={label} className="rounded-lg border border-white/80 bg-white/75 p-3 shadow-line backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-soft">
-                  <p className="text-2xl font-semibold text-ink">{value}</p>
-                  <p className="mt-1 text-xs font-medium text-slate-500">{label}</p>
-                </div>
+                <GlowCard key={label} className="p-3">
+                  <p className="text-2xl font-semibold text-white">{value}</p>
+                  <p className="mt-1 text-xs font-medium text-slate-300">{label}</p>
+                </GlowCard>
               ))}
             </div>
-          </div>
+          </SectionReveal>
 
-          <div className="fade-in-up-delayed card-surface overflow-hidden ring-1 ring-white/70">
-            <div className="border-b border-slate-200/70 bg-[linear-gradient(120deg,#ffffff,#effdf8_52%,#fff7ed)] px-5 py-4">
-              <div className="flex items-center justify-between gap-3">
+          <SectionReveal delay="sm" className="relative">
+            <div className="absolute -right-10 top-6 hidden h-64 w-64 rounded-full border border-mint-200/10 lg:block" />
+            <GlowCard className="scan-line p-4 sm:p-5">
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div>
-                  <p className="text-sm font-semibold text-ink">AI Resume Intelligence</p>
-                  <p className="mt-1 text-xs font-medium text-slate-500">Score, rewrite, compare, export</p>
+                  <p className="text-sm font-semibold text-white">AI Resume Intelligence</p>
+                  <p className="mt-1 text-xs font-medium text-slate-400">
+                    Scoring, rewrites, keywords, exports
+                  </p>
                 </div>
-                <span className="rounded-full border border-mint-100 bg-white px-3 py-1 text-xs font-semibold text-mint-700">
-                  Live tool
-                </span>
+                <AnimatedScoreBadge score="Live" label="tool" />
               </div>
-            </div>
-            <div className="space-y-4 p-5 sm:p-6">
-              {[
-                ["92", "Improved onboarding workflows by documenting recurring support issues and reducing new hire ramp time by 28%."],
-                ["87", "Coordinated weekly product, operations, and customer success updates to remove blockers before launch."],
-                ["81", "Analyzed customer feedback trends to prioritize process improvements and improve support response quality."],
-              ].map(([score, bullet]) => (
-                <div
-                  key={bullet}
-                  className="rounded-lg border border-slate-200/80 bg-white p-4 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100"
-                >
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2">
-                      <div className="h-2 w-20 rounded-full bg-mint-100" />
-                      <span className="rounded-full border border-mint-100 bg-mint-50 px-2.5 py-1 text-xs font-semibold text-mint-700">
-                        {score}/100
-                      </span>
+              <div className="mt-5 space-y-4">
+                {[
+                  ["92", "Built an interactive sales dashboard using SQL and Excel to track weekly pipeline trends and identify underperforming regions faster."],
+                  ["87", "Coordinated weekly product, operations, and customer success updates to remove blockers before launch."],
+                  ["81", "Analyzed customer feedback trends to prioritize process improvements and improve support response quality."],
+                ].map(([score, bullet], index) => (
+                  <FloatingPreviewCard key={bullet} delay={index === 1 ? "sm" : index === 2 ? "md" : "none"}>
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <div className="h-2 w-28 overflow-hidden rounded-full bg-white/10">
+                        <div className="h-full rounded-full bg-gradient-to-r from-mint-300 to-cyan-300" style={{ width: `${score}%` }} />
+                      </div>
+                      <AnimatedScoreBadge score={`${score}/100`} label="" />
                     </div>
-                    <Sparkles className="h-4 w-4 text-mint-700" aria-hidden="true" />
+                    <p className="text-sm leading-6 text-slate-200">- {bullet}</p>
+                  </FloatingPreviewCard>
+                ))}
+                <FloatingPreviewCard className="border-amber-200/20 bg-amber-200/[0.06]" delay="md">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-amber-100">
+                    <Target className="h-4 w-4" aria-hidden="true" />
+                    AI insight panel
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {["stakeholder management", "process improvement", "customer insights"].map((keyword, index) => (
+                      <KeywordChip
+                        key={keyword}
+                        dark
+                        className="border-amber-100/20 text-amber-50"
+                        style={{ animationDelay: `${index * 120}ms` }}
+                      >
+                        {keyword}
+                      </KeywordChip>
+                    ))}
                   </div>
-                  <p className="text-sm leading-6 text-slate-700">- {bullet}</p>
-                </div>
-              ))}
-              <div className="rounded-lg border border-amber-200 bg-amber-50/80 p-4">
-                <p className="flex items-center gap-2 text-sm font-semibold text-amber-800">
-                  <Target className="h-4 w-4" aria-hidden="true" />
-                  Missing keywords to consider
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {["stakeholder management", "process improvement", "customer insights"].map((keyword) => (
-                    <span key={keyword} className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-amber-700 shadow-line">
-                      {keyword}
-                    </span>
-                  ))}
-                </div>
+                </FloatingPreviewCard>
               </div>
-              <div className="grid gap-3 sm:grid-cols-3">
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
                 {heroFeatures.map(([label, Icon]) => (
                   <div
                     key={label}
-                    className="flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-center text-sm font-semibold text-slate-700"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-3 text-center text-sm font-semibold text-slate-200"
                   >
-                    <Icon className="h-4 w-4 text-mint-700" aria-hidden="true" />
+                    <Icon className="h-4 w-4 text-mint-300" aria-hidden="true" />
                     {label}
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </GlowCard>
+          </SectionReveal>
         </div>
       </section>
 
-      <section className="pt-10 pb-16 sm:pt-12 sm:pb-20">
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        <CelestialBackground intensity="subtle" />
         <div className="container-shell">
-          <div className="grid gap-4 md:grid-cols-5">
+          <SectionHeading
+            centered
+            eyebrow="How SkillMint works"
+            title="A connected workflow from rough notes to applications."
+            description="Experience becomes scored output, job-match insight, profile copy, and cleaner application assets."
+          />
+          <div className="mt-10 grid gap-4 md:grid-cols-5">
             {workflowSteps.map((step, index) => (
               <article
                 key={step.title}
-                className="rounded-lg border border-white/80 bg-white/85 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
+                className="group relative rounded-2xl border border-white/80 bg-white/85 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-ink text-sm font-semibold text-white shadow-line">
+                {index < workflowSteps.length - 1 ? (
+                  <span className="absolute left-[calc(100%-0.4rem)] top-9 hidden h-px w-5 bg-gradient-to-r from-mint-300 to-transparent md:block" />
+                ) : null}
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink text-sm font-semibold text-white shadow-[0_0_24px_rgba(31,201,153,0.18)]">
                   {index + 1}
                 </span>
                 <h2 className="mt-4 text-lg font-semibold text-ink">{step.title}</h2>
@@ -352,15 +382,14 @@ export default function Home() {
               <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
                 <p className="text-xs font-semibold uppercase text-slate-500">Before</p>
                 <p className="mt-2 leading-7 text-slate-700">
-                  Helped with social media posts and looked at campaign results.
+                  Made dashboard for sales data.
                 </p>
               </div>
               <div className="rounded-lg border border-mint-100 bg-mint-50/70 p-4">
                 <p className="text-xs font-semibold uppercase text-mint-700">After</p>
                 <p className="mt-2 leading-7 text-slate-700">
-                  Analyzed campaign performance across LinkedIn and email channels to identify
-                  content trends, improve weekly reporting, and support higher-quality marketing
-                  decisions.
+                  Built an interactive sales dashboard using SQL and Excel to track weekly pipeline
+                  trends and identify underperforming regions faster.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -411,6 +440,52 @@ export default function Home() {
                 </article>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        <CelestialBackground intensity="section" />
+        <div className="container-shell">
+          <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+            <SectionReveal>
+              <p className="text-sm font-semibold uppercase text-mint-200">Application Kit</p>
+              <h2 className="mt-3 text-3xl font-semibold leading-tight text-white sm:text-4xl">
+                Build the full set of assets recruiters actually inspect.
+              </h2>
+              <p className="mt-4 max-w-2xl leading-7 text-slate-300">
+                SkillMint is becoming a career command center: one place to sharpen resume bullets,
+                compare job descriptions, convert projects, and draft follow-up assets without
+                creating an account.
+              </p>
+              <TrackedLink
+                href="/tools"
+                className="button-primary mt-6"
+                eventName="application_kit_cta_clicked"
+                eventPayload={{ cta: "application_kit_home" }}
+              >
+                Explore the kit
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </TrackedLink>
+            </SectionReveal>
+            <GlowCard className="p-5 sm:p-6">
+              <div className="grid gap-3 sm:grid-cols-5">
+                {applicationKit.map((item, index) => (
+                  <div
+                    key={item}
+                    className="relative rounded-xl border border-white/10 bg-white/[0.07] p-4 text-center text-sm font-semibold text-slate-100"
+                  >
+                    {index < applicationKit.length - 1 ? (
+                      <span className="absolute left-[calc(100%-0.2rem)] top-1/2 hidden h-px w-4 bg-gradient-to-r from-mint-300/80 to-transparent sm:block" />
+                    ) : null}
+                    <span className="mx-auto mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-mint-300/25 bg-mint-300/10 text-xs text-mint-100">
+                      {index + 1}
+                    </span>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </GlowCard>
           </div>
         </div>
       </section>
@@ -540,3 +615,4 @@ export default function Home() {
     </>
   );
 }
+
