@@ -15,7 +15,7 @@ export function FloatingPreviewCard({
   return (
     <div
       className={clsx(
-        "floating-card rounded-xl border border-white/10 bg-white/[0.08] p-4 shadow-celestial backdrop-blur-xl",
+        "floating-card rounded-2xl border border-slate-200/75 bg-white/[0.88] p-4 shadow-[0_18px_54px_rgba(23,32,51,0.08)] backdrop-blur-xl",
         delay === "sm" && "floating-card-delay-sm",
         delay === "md" && "floating-card-delay-md",
         className,

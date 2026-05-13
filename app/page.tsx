@@ -185,16 +185,16 @@ export default function Home() {
       />
       <section className="cosmic-shell">
         <CelestialBackground intensity="hero" />
-        <div className="container-shell grid gap-10 py-12 sm:py-16 lg:min-h-[720px] lg:grid-cols-[0.98fr_1.02fr] lg:items-center lg:py-20">
+        <div className="container-shell grid gap-10 py-12 sm:py-16 lg:min-h-[680px] lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:py-20">
           <SectionReveal className="max-w-3xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-mint-100 shadow-celestial backdrop-blur">
-              <CheckCircle2 className="h-4 w-4 text-mint-300" aria-hidden="true" />
-              AI career cockpit for early talent
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-4 py-2 text-sm font-semibold text-mint-700 shadow-line backdrop-blur">
+              <CheckCircle2 className="h-4 w-4 text-mint-700" aria-hidden="true" />
+              AI career workspace for early talent
             </div>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.03] tracking-[-0.02em] text-white sm:text-5xl lg:text-7xl">
-              Turn real experience into recruiter-ready career assets.
+            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.035em] text-ink sm:text-5xl lg:text-7xl">
+              Build recruiter-ready career assets from real experience.
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
               SkillMint AI helps students, freshers, interns, and early-career professionals turn
               rough project, internship, and work notes into scored resume bullets, JD-match
               insights, LinkedIn copy, and application drafts.
@@ -203,7 +203,7 @@ export default function Home() {
               {["Free to use", "No signup required", "ATS-friendly outputs"].map((pill, index) => (
                 <span
                   key={pill}
-                  className="floating-card inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3.5 py-2 text-sm font-semibold text-slate-100 backdrop-blur"
+                  className="floating-card inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/75 px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-line backdrop-blur"
                   style={{ animationDelay: `${index * 180}ms` }}
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-mint-300 shadow-[0_0_12px_rgba(31,201,153,0.85)]" />
@@ -223,7 +223,7 @@ export default function Home() {
               </TrackedLink>
               <TrackedLink
                 href="/resources"
-                className="button-secondary border-white/20 bg-white/[0.08] text-white hover:bg-white/20"
+                className="button-secondary"
                 eventName="homepage_cta_click"
                 eventPayload={{ cta: "browse_examples" }}
               >
@@ -237,43 +237,43 @@ export default function Home() {
                 ["0", "signup steps"],
               ].map(([value, label]) => (
                 <GlowCard key={label} className="p-3">
-                  <p className="text-2xl font-semibold text-white">{value}</p>
-                  <p className="mt-1 text-xs font-medium text-slate-300">{label}</p>
+                  <p className="text-2xl font-semibold text-ink">{value}</p>
+                  <p className="mt-1 text-xs font-medium text-slate-500">{label}</p>
                 </GlowCard>
               ))}
             </div>
           </SectionReveal>
 
           <SectionReveal delay="sm" className="relative">
-            <div className="absolute -right-10 top-6 hidden h-64 w-64 rounded-full border border-mint-200/10 lg:block" />
+            <div className="absolute -right-10 top-6 hidden h-64 w-64 rounded-full border border-mint-100/70 lg:block" />
             <GlowCard className="scan-line p-4 sm:p-5">
-              <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
+              <div className="flex items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
                 <div>
-                  <p className="text-sm font-semibold text-white">AI Resume Intelligence</p>
-                  <p className="mt-1 text-xs font-medium text-slate-400">
+                  <p className="text-sm font-semibold text-ink">Resume Intelligence</p>
+                  <p className="mt-1 text-xs font-medium text-slate-500">
                     Scoring, rewrites, keywords, exports
                   </p>
                 </div>
                 <AnimatedScoreBadge score="Live" label="tool" />
               </div>
               <div className="mt-5 space-y-4">
-                {[
+                {[                
                   ["92", "Built an interactive sales dashboard using SQL and Excel to track weekly pipeline trends and identify underperforming regions faster."],
                   ["87", "Coordinated weekly product, operations, and customer success updates to remove blockers before launch."],
                   ["81", "Analyzed customer feedback trends to prioritize process improvements and improve support response quality."],
                 ].map(([score, bullet], index) => (
                   <FloatingPreviewCard key={bullet} delay={index === 1 ? "sm" : index === 2 ? "md" : "none"}>
                     <div className="mb-3 flex items-center justify-between gap-3">
-                      <div className="h-2 w-28 overflow-hidden rounded-full bg-white/10">
+                      <div className="h-2 w-28 overflow-hidden rounded-full bg-slate-100">
                         <div className="h-full rounded-full bg-gradient-to-r from-mint-300 to-cyan-300" style={{ width: `${score}%` }} />
                       </div>
                       <AnimatedScoreBadge score={`${score}/100`} label="" />
                     </div>
-                    <p className="text-sm leading-6 text-slate-200">- {bullet}</p>
+                    <p className="text-sm leading-6 text-slate-700">- {bullet}</p>
                   </FloatingPreviewCard>
                 ))}
-                <FloatingPreviewCard className="border-amber-200/20 bg-amber-200/[0.06]" delay="md">
-                  <p className="flex items-center gap-2 text-sm font-semibold text-amber-100">
+                <FloatingPreviewCard className="border-amber-200 bg-amber-50/80" delay="md">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-amber-800">
                     <Target className="h-4 w-4" aria-hidden="true" />
                     AI insight panel
                   </p>
@@ -282,7 +282,7 @@ export default function Home() {
                       <KeywordChip
                         key={keyword}
                         dark
-                        className="border-amber-100/20 text-amber-50"
+                        className="border-amber-200 bg-white/80 text-amber-800"
                         style={{ animationDelay: `${index * 120}ms` }}
                       >
                         {keyword}
@@ -295,9 +295,9 @@ export default function Home() {
                 {heroFeatures.map(([label, Icon]) => (
                   <div
                     key={label}
-                    className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-3 text-center text-sm font-semibold text-slate-200"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center text-sm font-semibold text-slate-700"
                   >
-                    <Icon className="h-4 w-4 text-mint-300" aria-hidden="true" />
+                    <Icon className="h-4 w-4 text-mint-700" aria-hidden="true" />
                     {label}
                   </div>
                 ))}
@@ -449,11 +449,11 @@ export default function Home() {
         <div className="container-shell">
           <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
             <SectionReveal>
-              <p className="text-sm font-semibold uppercase text-mint-200">Application Kit</p>
-              <h2 className="mt-3 text-3xl font-semibold leading-tight text-white sm:text-4xl">
+              <p className="text-sm font-semibold uppercase text-mint-700">Application Kit</p>
+              <h2 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-4xl">
                 Build the full set of assets recruiters actually inspect.
               </h2>
-              <p className="mt-4 max-w-2xl leading-7 text-slate-300">
+              <p className="mt-4 max-w-2xl leading-7 text-slate-600">
                 SkillMint is becoming a career command center: one place to sharpen resume bullets,
                 compare job descriptions, convert projects, and draft follow-up assets without
                 creating an account.
@@ -473,12 +473,12 @@ export default function Home() {
                 {applicationKit.map((item, index) => (
                   <div
                     key={item}
-                    className="relative rounded-xl border border-white/10 bg-white/[0.07] p-4 text-center text-sm font-semibold text-slate-100"
+                    className="relative rounded-xl border border-slate-200 bg-white/80 p-4 text-center text-sm font-semibold text-slate-700"
                   >
                     {index < applicationKit.length - 1 ? (
                       <span className="absolute left-[calc(100%-0.2rem)] top-1/2 hidden h-px w-4 bg-gradient-to-r from-mint-300/80 to-transparent sm:block" />
                     ) : null}
-                    <span className="mx-auto mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-mint-300/25 bg-mint-300/10 text-xs text-mint-100">
+                    <span className="mx-auto mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-mint-100 bg-mint-50 text-xs text-mint-700">
                       {index + 1}
                     </span>
                     {item}
@@ -589,20 +589,20 @@ export default function Home() {
 
       <section className="py-16 sm:py-20">
         <div className="container-shell">
-          <div className="card-surface grid gap-8 overflow-hidden bg-ink p-6 text-white sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="card-surface grid gap-8 overflow-hidden bg-[linear-gradient(135deg,#ffffff,#effdf8)] p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="text-sm font-semibold uppercase text-mint-100">Start now</p>
-              <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
+              <p className="text-sm font-semibold uppercase text-mint-700">Start now</p>
+              <h2 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-4xl">
                 Turn rough work notes into stronger resume bullets.
               </h2>
-              <p className="mt-4 max-w-2xl leading-7 text-slate-300">
+              <p className="mt-4 max-w-2xl leading-7 text-slate-600">
                 Try the first SkillMint AI tool today. Generate sharper resume
                 bullets through a secure, private AI workflow.
               </p>
             </div>
             <TrackedLink
               href="/tools/resume-bullet-generator"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-mint-50"
+              className="button-primary"
               eventName="application_kit_cta_clicked"
               eventPayload={{ cta: "bottom_generate_bullets" }}
             >

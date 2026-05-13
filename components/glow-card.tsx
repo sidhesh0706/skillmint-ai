@@ -11,9 +11,9 @@ export function GlowCard({ children, className, as: Component = "div" }: GlowCar
   return (
     <Component
       className={clsx(
-        "group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.07] shadow-celestial backdrop-blur-xl",
-        "before:pointer-events-none before:absolute before:inset-x-6 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-mint-300/70 before:to-transparent",
-        "after:pointer-events-none after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.12),transparent_36%)]",
+        "group relative overflow-hidden rounded-[2rem] border border-slate-200/75 bg-white/[0.9] shadow-[0_30px_90px_rgba(23,32,51,0.09)] backdrop-blur-xl",
+        "before:pointer-events-none before:absolute before:inset-x-8 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-mint-300/70 before:to-transparent",
+        "after:pointer-events-none after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.08),transparent_36%)]",
         className,
       )}
     >

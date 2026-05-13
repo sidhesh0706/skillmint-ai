@@ -78,14 +78,13 @@ export default function ToolsPage() {
       <section className="cosmic-shell py-14 sm:py-20">
         <CelestialBackground intensity="section" />
         <div className="container-shell">
-          <div className="mb-6 [&_span]:border-white/10 [&_span]:bg-white/[0.08] [&_span]:text-slate-100">
+          <div className="mb-6">
             <TrustPills />
           </div>
           <SectionHeading
             eyebrow="Tools"
             title="Practical AI tools for every step of your career search."
             description="Generate resume bullets, review weak sections, match job descriptions, convert projects, and draft application assets without creating an account."
-            className="[&_h2]:text-white [&_p]:text-slate-300"
           />
         </div>
       </section>

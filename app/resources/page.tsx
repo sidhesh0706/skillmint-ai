@@ -107,21 +107,21 @@ export default function ResourcesPage() {
         <CelestialBackground intensity="section" />
         <div className="container-shell">
           <div className="max-w-3xl">
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-mint-100 shadow-celestial backdrop-blur">
-              <BookOpen className="h-4 w-4 text-mint-300" aria-hidden="true" />
+            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-4 py-2 text-sm font-semibold text-mint-700 shadow-line backdrop-blur">
+              <BookOpen className="h-4 w-4 text-mint-700" aria-hidden="true" />
               Resume resources
             </p>
-            <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
+            <h1 className="text-4xl font-semibold leading-tight tracking-[-0.025em] text-ink sm:text-5xl">
               A premium career library for sharper applications.
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
               Browse role-specific examples, action verbs, FAQs, and practical tips for
               writing stronger resume bullets. Each guide links back to the AI resume
               bullet generator when you are ready to create your own.
             </p>
-            <div className="mt-6 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.08] p-3 shadow-celestial backdrop-blur">
-              <div className="flex min-h-12 items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-4 text-slate-300">
-                <Search className="h-4 w-4 text-mint-300" aria-hidden="true" />
+            <div className="mt-6 max-w-2xl rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-soft backdrop-blur">
+              <div className="flex min-h-12 items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 text-slate-600">
+                <Search className="h-4 w-4 text-mint-700" aria-hidden="true" />
                 <span className="text-sm">Search by role, goal, project, metric, or ATS keyword</span>
               </div>
               <div className="mt-3 flex flex-wrap gap-2">

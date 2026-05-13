@@ -4,7 +4,7 @@
 
 :root {
   color-scheme: light;
-  background: #f7fafc;
+  background: #fbfaf7;
 }
 
 * {
@@ -18,11 +18,9 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 50% -10%, rgba(31, 201, 153, 0.18), transparent 30rem),
-    radial-gradient(circle at 90% 10%, rgba(56, 189, 248, 0.10), transparent 26rem),
-    linear-gradient(135deg, rgba(31, 201, 153, 0.10) 0%, transparent 34%),
-    linear-gradient(220deg, rgba(99, 102, 241, 0.09) 0%, transparent 28%),
-    linear-gradient(180deg, #ffffff 0%, #f7fafc 48%, #ffffff 100%);
+    radial-gradient(circle at 50% -14%, rgba(31, 201, 153, 0.20), transparent 31rem),
+    radial-gradient(circle at 88% 8%, rgba(56, 189, 248, 0.08), transparent 25rem),
+    linear-gradient(180deg, #fffdf8 0%, #f7faf8 48%, #ffffff 100%);
   color: #172033;
 }
 
@@ -43,15 +41,15 @@ body {
   }
 
   .card-surface {
-    @apply rounded-2xl border border-white/80 bg-white/[0.94] shadow-soft ring-1 ring-slate-900/[0.03] backdrop-blur;
+    @apply rounded-[1.5rem] border border-slate-200/70 bg-white/[0.92] shadow-soft ring-1 ring-slate-900/[0.03] backdrop-blur;
   }
 
   .page-band {
-    @apply border-y border-white/70 bg-white/[0.58] backdrop-blur;
+    @apply border-y border-slate-200/70 bg-white/[0.66] backdrop-blur;
   }
 
   .button-primary {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-ink via-slate-800 to-mint-700 px-6 py-3 font-semibold text-white shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_60px_rgba(31,201,153,0.28)] active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-mint-100;
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-white shadow-[0_16px_42px_rgba(23,32,51,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[0_22px_60px_rgba(15,132,102,0.18)] active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-mint-100;
   }
 
   .button-secondary {
@@ -74,22 +72,21 @@ body {
   }
 
   .cosmic-shell {
-    @apply relative overflow-hidden bg-[#07111f] text-white;
+    @apply relative overflow-hidden bg-[#fbfaf7] text-ink;
   }
 
   .celestial-hero {
     background:
-      radial-gradient(circle at 26% 12%, rgba(31, 201, 153, 0.30), transparent 26rem),
-      radial-gradient(circle at 78% 16%, rgba(56, 189, 248, 0.22), transparent 25rem),
-      radial-gradient(circle at 68% 72%, rgba(129, 140, 248, 0.18), transparent 28rem),
-      linear-gradient(180deg, #07111f 0%, #0c1728 54%, #f7fafc 100%);
+      radial-gradient(circle at 28% 8%, rgba(31, 201, 153, 0.22), transparent 27rem),
+      radial-gradient(circle at 78% 12%, rgba(56, 189, 248, 0.12), transparent 25rem),
+      linear-gradient(180deg, #fffdf8 0%, #f4fbf8 56%, #ffffff 100%);
   }
 
   .celestial-section {
     background:
-      radial-gradient(circle at 12% 20%, rgba(31, 201, 153, 0.16), transparent 24rem),
-      radial-gradient(circle at 88% 24%, rgba(56, 189, 248, 0.12), transparent 22rem),
-      linear-gradient(180deg, rgba(7, 17, 31, 0.98), rgba(12, 23, 40, 0.94));
+      radial-gradient(circle at 16% 16%, rgba(31, 201, 153, 0.14), transparent 24rem),
+      radial-gradient(circle at 88% 18%, rgba(56, 189, 248, 0.08), transparent 22rem),
+      linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(247, 250, 248, 0.92));
   }
 
   .celestial-subtle {
@@ -102,34 +99,34 @@ body {
     position: absolute;
     inset: 0;
     background-image:
-      radial-gradient(circle, rgba(255,255,255,0.65) 1px, transparent 1.5px),
-      radial-gradient(circle, rgba(125,211,252,0.55) 1px, transparent 1.4px);
+      radial-gradient(circle, rgba(15,23,42,0.10) 1px, transparent 1.5px),
+      radial-gradient(circle, rgba(31,201,153,0.16) 1px, transparent 1.4px);
     background-position: 0 0, 42px 56px;
     background-size: 120px 120px, 170px 170px;
-    opacity: 0.28;
+    opacity: 0.14;
     animation: star-drift 24s linear infinite;
   }
 
   .cosmic-noise {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(15,23,42,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,23,42,0.025) 1px, transparent 1px);
     background-size: 42px 42px;
     mask-image: radial-gradient(circle at 50% 15%, black, transparent 72%);
-    opacity: 0.38;
+    opacity: 0.24;
   }
 
   .orbital-ring {
     position: absolute;
-    border: 1px solid rgba(167, 243, 208, 0.13);
+    border: 1px solid rgba(15, 132, 102, 0.10);
     border-radius: 9999px;
     transform: rotate(-18deg);
-    box-shadow: inset 0 0 50px rgba(31, 201, 153, 0.05);
+    box-shadow: inset 0 0 50px rgba(31, 201, 153, 0.04);
   }
 
   .shadow-celestial {
-    box-shadow: 0 24px 90px rgba(2, 6, 23, 0.35), 0 0 48px rgba(31, 201, 153, 0.10);
+    box-shadow: 0 24px 80px rgba(23, 32, 51, 0.10), 0 0 42px rgba(31, 201, 153, 0.08);
   }
 
   .floating-card {

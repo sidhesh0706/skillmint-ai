@@ -968,7 +968,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[minmax(20rem,0.82fr)_minmax(0,1.18fr)] xl:items-start">
+    <div className="grid gap-6 xl:grid-cols-[minmax(22rem,0.9fr)_minmax(0,1.35fr)] xl:items-start">
       <form
         className="card-surface relative overflow-hidden p-4 sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {
@@ -1078,7 +1078,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             <div>
               <p className="inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase text-mint-700 shadow-line">
                 <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                AI output cockpit
+                Resume Intelligence
               </p>
               <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.output.title}</h2>
               <p className="mt-2 leading-7 text-slate-600">{tool.output.description}</p>
