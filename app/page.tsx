@@ -183,35 +183,39 @@ export default function Home() {
           breadcrumbSchema([{ name: "Home", path: "/" }]),
         ]}
       />
-      <section className="cosmic-shell">
-        <CelestialBackground intensity="hero" />
-        <div className="container-shell grid gap-10 py-12 sm:py-16 lg:min-h-[680px] lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:py-20">
+      <section className="hero-stage relative overflow-hidden">
+        <div className="pointer-events-none absolute left-1/2 top-20 -z-10 hidden -translate-x-1/2 select-none text-[12rem] font-semibold leading-none tracking-[-0.08em] hero-wordmark lg:block">
+          SkillMint
+        </div>
+        <div className="container-shell grid gap-10 py-12 sm:py-16 lg:min-h-[720px] lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:py-20">
           <SectionReveal className="max-w-3xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-4 py-2 text-sm font-semibold text-mint-700 shadow-line backdrop-blur">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/[0.82] px-4 py-2 text-sm font-semibold text-mint-700 shadow-[0_12px_36px_rgba(31,201,153,0.10)] backdrop-blur">
               <CheckCircle2 className="h-4 w-4 text-mint-700" aria-hidden="true" />
-              AI career workspace for early talent
+              Free AI career workspace
             </div>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.035em] text-ink sm:text-5xl lg:text-7xl">
-              Build recruiter-ready career assets from real experience.
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.055em] text-ink sm:text-6xl lg:text-8xl">
+              Turn rough experience into career assets that feel ready.
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-              SkillMint AI helps students, freshers, interns, and early-career professionals turn
-              rough project, internship, and work notes into scored resume bullets, JD-match
-              insights, LinkedIn copy, and application drafts.
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl sm:leading-9">
+              SkillMint helps students, freshers, interns, and early-career professionals transform
+              projects, internships, and work notes into scored resume bullets, JD-match insights,
+              LinkedIn copy, and cover-letter drafts.
             </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {["Free to use", "No signup required", "ATS-friendly outputs"].map((pill, index) => (
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["No signup", "Browser-only history", "Truth-first rewrites"].map((pill, index) => (
                 <span
                   key={pill}
-                  className="floating-card inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/75 px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-line backdrop-blur"
+                  className="floating-card inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/[0.78] px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-line backdrop-blur"
                   style={{ animationDelay: `${index * 180}ms` }}
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-mint-300 shadow-[0_0_12px_rgba(31,201,153,0.85)]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-mint-500 shadow-[0_0_14px_rgba(31,201,153,0.75)]" />
                   {pill}
                 </span>
               ))}
             </div>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <TrackedLink
                 href="/tools/resume-bullet-generator"
                 className="button-primary"
@@ -230,80 +234,135 @@ export default function Home() {
                 Browse examples
               </TrackedLink>
             </div>
-            <div className="mt-7 grid max-w-lg grid-cols-3 gap-2.5 sm:gap-3">
+
+            <div className="mt-8 grid max-w-xl grid-cols-3 gap-3">
               {[
-                ["5", "AI bullets"],
-                ["100", "point score"],
-                ["0", "signup steps"],
+                ["Score", "every bullet"],
+                ["Rewrite", "with context"],
+                ["Export", "clean formats"],
               ].map(([value, label]) => (
-                <GlowCard key={label} className="p-3">
-                  <p className="text-2xl font-semibold text-ink">{value}</p>
-                  <p className="mt-1 text-xs font-medium text-slate-500">{label}</p>
-                </GlowCard>
+                <div key={label} className="metric-tile">
+                  <p className="text-sm font-semibold uppercase text-mint-700">{value}</p>
+                  <p className="mt-1 text-sm text-slate-500">{label}</p>
+                </div>
               ))}
             </div>
           </SectionReveal>
 
           <SectionReveal delay="sm" className="relative">
-            <div className="absolute -right-10 top-6 hidden h-64 w-64 rounded-full border border-mint-100/70 lg:block" />
-            <GlowCard className="scan-line p-4 sm:p-5">
-              <div className="flex items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
-                <div>
-                  <p className="text-sm font-semibold text-ink">Resume Intelligence</p>
-                  <p className="mt-1 text-xs font-medium text-slate-500">
-                    Scoring, rewrites, keywords, exports
-                  </p>
+            <div className="absolute -right-8 top-8 hidden h-[34rem] w-[34rem] rounded-full border border-mint-100/80 lg:block" />
+            <div className="absolute -right-16 top-24 hidden h-52 w-52 rounded-full bg-mint-300/20 blur-3xl lg:block" />
+            <div className="product-shell relative overflow-hidden rounded-[2.25rem] border border-slate-200/80 p-3 shadow-[0_36px_120px_rgba(23,32,51,0.16)] backdrop-blur-xl">
+              <div className="rounded-[1.75rem] border border-slate-200 bg-white/[0.92] p-4 shadow-line">
+                <div className="flex items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                  <div>
+                    <p className="text-sm font-semibold text-ink">Resume Intelligence</p>
+                    <p className="mt-1 text-xs font-medium text-slate-500">
+                      Score, rewrite, match, export
+                    </p>
+                  </div>
+                  <AnimatedScoreBadge score="92/100" label="ready" />
                 </div>
-                <AnimatedScoreBadge score="Live" label="tool" />
-              </div>
-              <div className="mt-5 space-y-4">
-                {[                
-                  ["92", "Built an interactive sales dashboard using SQL and Excel to track weekly pipeline trends and identify underperforming regions faster."],
-                  ["87", "Coordinated weekly product, operations, and customer success updates to remove blockers before launch."],
-                  ["81", "Analyzed customer feedback trends to prioritize process improvements and improve support response quality."],
-                ].map(([score, bullet], index) => (
-                  <FloatingPreviewCard key={bullet} delay={index === 1 ? "sm" : index === 2 ? "md" : "none"}>
-                    <div className="mb-3 flex items-center justify-between gap-3">
-                      <div className="h-2 w-28 overflow-hidden rounded-full bg-slate-100">
-                        <div className="h-full rounded-full bg-gradient-to-r from-mint-300 to-cyan-300" style={{ width: `${score}%` }} />
-                      </div>
-                      <AnimatedScoreBadge score={`${score}/100`} label="" />
+
+                <div className="mt-5 grid gap-4 lg:grid-cols-[0.42fr_0.58fr]">
+                  <div className="rounded-2xl bg-ink p-4 text-white shadow-[0_22px_70px_rgba(23,32,51,0.22)]">
+                    <p className="text-xs font-semibold uppercase text-mint-100">Career kit</p>
+                    <div className="mt-4 space-y-3">
+                      {[
+                        ["Resume bullets", "ready"],
+                        ["JD match", "keyword gaps"],
+                        ["LinkedIn", "profile copy"],
+                        ["Cover letter", "draft"],
+                      ].map(([title, status]) => (
+                        <div key={title} className="rounded-xl border border-white/10 bg-white/[0.06] p-3">
+                          <p className="text-sm font-semibold">{title}</p>
+                          <p className="mt-1 text-xs text-slate-300">{status}</p>
+                        </div>
+                      ))}
                     </div>
-                    <p className="text-sm leading-6 text-slate-700">- {bullet}</p>
-                  </FloatingPreviewCard>
-                ))}
-                <FloatingPreviewCard className="border-amber-200 bg-amber-50/80" delay="md">
+                  </div>
+
+                  <div className="space-y-3">
+                    {[
+                      ["92", "Built an interactive sales dashboard using SQL and Excel to track weekly pipeline trends and identify underperforming regions faster."],
+                      ["87", "Coordinated product, operations, and customer success updates to remove blockers before launch."],
+                      ["81", "Analyzed customer feedback trends to prioritize process improvements and improve response quality."],
+                    ].map(([score, bullet], index) => (
+                      <FloatingPreviewCard
+                        key={bullet}
+                        delay={index === 1 ? "sm" : index === 2 ? "md" : "none"}
+                        className="p-4"
+                      >
+                        <div className="mb-3 flex items-center justify-between gap-3">
+                          <div className="h-2 w-24 overflow-hidden rounded-full bg-slate-100">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-mint-500 to-cyan-300"
+                              style={{ width: `${score}%` }}
+                            />
+                          </div>
+                          <AnimatedScoreBadge score={`${score}`} label="" />
+                        </div>
+                        <p className="text-sm leading-6 text-slate-700">- {bullet}</p>
+                      </FloatingPreviewCard>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50/75 p-4">
                   <p className="flex items-center gap-2 text-sm font-semibold text-amber-800">
                     <Target className="h-4 w-4" aria-hidden="true" />
-                    AI insight panel
+                    Missing keyword opportunities
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {["stakeholder management", "process improvement", "customer insights"].map((keyword, index) => (
                       <KeywordChip
                         key={keyword}
-                        dark
-                        className="border-amber-200 bg-white/80 text-amber-800"
+                        className="border-amber-200 bg-white/85 text-amber-800"
                         style={{ animationDelay: `${index * 120}ms` }}
                       >
                         {keyword}
                       </KeywordChip>
                     ))}
                   </div>
-                </FloatingPreviewCard>
+                </div>
+
+                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                  {heroFeatures.map(([label, Icon]) => (
+                    <div
+                      key={label}
+                      className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3 text-center text-sm font-semibold text-slate-700"
+                    >
+                      <Icon className="h-4 w-4 text-mint-700" aria-hidden="true" />
+                      {label}
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                {heroFeatures.map(([label, Icon]) => (
-                  <div
-                    key={label}
-                    className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center text-sm font-semibold text-slate-700"
-                  >
-                    <Icon className="h-4 w-4 text-mint-700" aria-hidden="true" />
-                    {label}
-                  </div>
-                ))}
-              </div>
-            </GlowCard>
+            </div>
           </SectionReveal>
+        </div>
+      </section>
+
+      <section className="-mt-4 pb-12 sm:pb-16">
+        <div className="container-shell">
+          <div className="overflow-hidden rounded-[1.75rem] bg-ink px-4 py-4 text-white shadow-[0_28px_90px_rgba(23,32,51,0.18)]">
+            <div className="flex min-w-max gap-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-200">
+              {[
+                "Resume scoring",
+                "JD match",
+                "Bullet rewrite",
+                "Keyword gaps",
+                "Project to resume",
+                "Cover letter draft",
+                "LinkedIn headline",
+              ].map((item) => (
+                <span key={item} className="inline-flex items-center gap-3">
+                  {item}
+                  <span className="h-1.5 w-1.5 rounded-full bg-mint-300" />
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
