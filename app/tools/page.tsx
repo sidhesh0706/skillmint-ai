@@ -38,34 +38,6 @@ export const metadata: Metadata = {
   },
 };
 
-const toolGroups = [
-  {
-    title: "Resume",
-    description: "Generate, score, roast, and improve resume proof points.",
-    tools: tools.filter((tool) => ["Resume", "Resume Review", "Projects"].includes(tool.category)),
-  },
-  {
-    title: "Job matching",
-    description: "Compare your experience against target postings and keyword gaps.",
-    tools: tools.filter((tool) => tool.category === "Resume Targeting"),
-  },
-  {
-    title: "LinkedIn",
-    description: "Turn resume positioning into profile-ready headline copy.",
-    tools: tools.filter((tool) => tool.category === "LinkedIn"),
-  },
-  {
-    title: "Applications",
-    description: "Draft assets that connect your background to roles and companies.",
-    tools: tools.filter((tool) => tool.category === "Applications" || tool.category === "Interview"),
-  },
-  {
-    title: "Communication",
-    description: "Professional replies and follow-up support for the search.",
-    tools: tools.filter((tool) => tool.category === "Productivity"),
-  },
-].filter((group) => group.tools.length);
-
 export default function ToolsPage() {
   return (
     <>
@@ -106,18 +78,20 @@ export default function ToolsPage() {
       </section>
 
       <section className="pb-16 sm:pb-20">
-        <div className="container-shell space-y-12">
-          {toolGroups.map((group) => (
-            <section key={group.title}>
-              <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <p className="text-sm font-semibold uppercase text-mint-700">{group.title}</p>
-                  <h2 className="mt-1 text-2xl font-semibold text-ink">{group.description}</h2>
-                </div>
-              </div>
-              <ToolGrid tools={group.tools} />
-            </section>
-          ))}
+        <div className="container-shell">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase text-mint-700">Product suite</p>
+              <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] text-ink">
+                All SkillMint tools in one place.
+              </h2>
+            </div>
+            <p className="max-w-xl leading-7 text-slate-600">
+              Live tools are ready to use today. Coming-soon tools collect interest and point you
+              toward the closest live workflow.
+            </p>
+          </div>
+          <ToolGrid tools={tools} />
         </div>
       </section>
     </>

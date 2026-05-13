@@ -381,16 +381,18 @@ export default function Home() {
             {workflowSteps.map((step, index) => (
               <article
                 key={step.title}
-                className="group relative rounded-2xl border border-white/80 bg-white/85 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
+                className="gloss-panel hover-gloss group p-5"
               >
-                {index < workflowSteps.length - 1 ? (
-                  <span className="absolute left-[calc(100%-0.4rem)] top-9 hidden h-px w-5 bg-gradient-to-r from-mint-300 to-transparent md:block" />
-                ) : null}
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink text-sm font-semibold text-white shadow-[0_0_24px_rgba(31,201,153,0.18)]">
-                  {index + 1}
-                </span>
-                <h2 className="mt-4 text-lg font-semibold text-ink">{step.title}</h2>
-                <p className="mt-2 leading-7 text-slate-600">{step.description}</p>
+                <div className="gloss-content">
+                  {index < workflowSteps.length - 1 ? (
+                    <span className="absolute left-[calc(100%-0.4rem)] top-9 hidden h-px w-5 bg-gradient-to-r from-mint-300 to-transparent md:block" />
+                  ) : null}
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink text-sm font-semibold text-white shadow-[0_0_24px_rgba(31,201,153,0.18)]">
+                    {index + 1}
+                  </span>
+                  <h2 className="mt-4 text-lg font-semibold text-ink">{step.title}</h2>
+                  <p className="mt-2 leading-7 text-slate-600">{step.description}</p>
+                </div>
               </article>
             ))}
           </div>
@@ -399,7 +401,7 @@ export default function Home() {
 
       <section className="pb-16 sm:pb-20">
         <div className="container-shell">
-          <div className="card-surface grid gap-6 p-6 sm:p-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+          <div className="gloss-panel grid gap-6 p-6 sm:p-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
             <div>
               <p className="text-sm font-semibold uppercase text-mint-700">Who this is for</p>
               <h2 className="mt-2 text-3xl font-semibold leading-tight text-ink">
@@ -414,7 +416,7 @@ export default function Home() {
               {audienceSegments.map((segment) => (
                 <div
                   key={segment}
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 shadow-line"
+                  className="hover-gloss rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-semibold text-slate-700 shadow-line"
                 >
                   {segment}
                 </div>
@@ -439,21 +441,21 @@ export default function Home() {
                 role-relevant keywords, and wording that still sounds like a real person.
               </p>
             </div>
-            <div className="card-surface grid gap-4 p-5 sm:p-6">
-              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <div className="gloss-panel grid gap-4 p-5 sm:p-6">
+              <div className="gloss-content rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <p className="text-xs font-semibold uppercase text-slate-500">Before</p>
                 <p className="mt-2 leading-7 text-slate-700">
                   Made dashboard for sales data.
                 </p>
               </div>
-              <div className="rounded-lg border border-mint-100 bg-mint-50/70 p-4">
+              <div className="gloss-content rounded-2xl border border-mint-100 bg-mint-50/70 p-4 shadow-[0_18px_54px_rgba(31,201,153,0.10)]">
                 <p className="text-xs font-semibold uppercase text-mint-700">After</p>
                 <p className="mt-2 leading-7 text-slate-700">
                   Built an interactive sales dashboard using SQL and Excel to track weekly pipeline
                   trends and identify underperforming regions faster.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="gloss-content flex flex-wrap gap-2">
                 {["action verb", "ATS keywords", "clearer scope", "truth-first"].map((item) => (
                   <span key={item} className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600">
                     {item}
@@ -491,13 +493,15 @@ export default function Home() {
               return (
                 <article
                   key={feature.title}
-                  className="group rounded-lg border border-slate-200 bg-white/85 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
+                  className="gloss-panel hover-gloss group p-5"
                 >
-                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-[linear-gradient(135deg,#effdf8,#ffffff)] text-mint-700 shadow-line transition duration-300 group-hover:scale-105">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  <div className="gloss-content">
+                    <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#effdf8,#ffffff)] text-mint-700 shadow-line transition duration-300 group-hover:scale-105">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-ink">{feature.title}</h3>
+                    <p className="mt-3 leading-7 text-slate-600">{feature.description}</p>
                   </div>
-                  <h3 className="text-lg font-semibold text-ink">{feature.title}</h3>
-                  <p className="mt-3 leading-7 text-slate-600">{feature.description}</p>
                 </article>
               );
             })}
@@ -575,19 +579,21 @@ export default function Home() {
               <Link
                 key={page.slug}
                 href={`/${page.slug}`}
-                className="group rounded-lg border border-slate-200 bg-white/85 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
+                className="gloss-panel hover-gloss group p-5"
               >
-                <p className="text-sm font-semibold uppercase text-mint-700">{page.audience}</p>
-                <h3 className="mt-3 text-lg font-semibold leading-snug text-ink">
-                  {page.title}
-                </h3>
-                <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
-                  {page.metaDescription}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-mint-700">
-                  Read examples
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
-                </span>
+                <div className="gloss-content">
+                  <p className="text-sm font-semibold uppercase text-mint-700">{page.audience}</p>
+                  <h3 className="mt-3 text-lg font-semibold leading-snug text-ink">
+                    {page.title}
+                  </h3>
+                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
+                    {page.metaDescription}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-mint-700">
+                    Read examples
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
@@ -629,12 +635,14 @@ export default function Home() {
               const Icon = benefit.icon;
 
               return (
-                <article key={benefit.title} className="group rounded-lg border border-slate-200 bg-cloud p-6 transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft">
-                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-white text-mint-700 shadow-line transition duration-300 group-hover:scale-105">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
+                <article key={benefit.title} className="gloss-panel hover-gloss group p-6">
+                  <div className="gloss-content">
+                    <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-mint-700 shadow-line transition duration-300 group-hover:scale-105">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-ink">{benefit.title}</h3>
+                    <p className="mt-3 leading-7 text-slate-600">{benefit.description}</p>
                   </div>
-                  <h3 className="text-lg font-semibold text-ink">{benefit.title}</h3>
-                  <p className="mt-3 leading-7 text-slate-600">{benefit.description}</p>
                 </article>
               );
             })}

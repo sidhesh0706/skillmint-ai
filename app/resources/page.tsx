@@ -169,30 +169,31 @@ export default function ResourcesPage() {
                     <Link
                       key={page.slug}
                       href={`/${page.slug}`}
-                      className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft"
+                      className="gloss-panel hover-gloss group p-5"
                     >
-                      <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent opacity-0 transition group-hover:opacity-100" />
-                      <p className="text-sm font-semibold uppercase text-mint-700">{page.audience}</p>
-                      <h3 className="mt-3 text-xl font-semibold leading-snug text-ink">
-                        {page.title}
-                      </h3>
-                      <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
-                        {page.metaDescription}
-                      </p>
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {page.actionVerbs.slice(0, 3).map((verb) => (
-                          <span
-                            key={verb}
-                            className="rounded-full border border-mint-100 bg-mint-50 px-3 py-1 text-xs font-semibold text-mint-700"
-                          >
-                            {verb}
-                          </span>
-                        ))}
+                      <div className="gloss-content">
+                        <p className="text-sm font-semibold uppercase text-mint-700">{page.audience}</p>
+                        <h3 className="mt-3 text-xl font-semibold leading-snug text-ink">
+                          {page.title}
+                        </h3>
+                        <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
+                          {page.metaDescription}
+                        </p>
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {page.actionVerbs.slice(0, 3).map((verb) => (
+                            <span
+                              key={verb}
+                              className="rounded-full border border-mint-100 bg-mint-50 px-3 py-1 text-xs font-semibold text-mint-700"
+                            >
+                              {verb}
+                            </span>
+                          ))}
+                        </div>
+                        <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-mint-700">
+                          Open guide
+                          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
+                        </span>
                       </div>
-                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-mint-700">
-                        Open guide
-                        <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
-                      </span>
                     </Link>
                   ))}
                 </div>

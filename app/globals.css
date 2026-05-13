@@ -78,6 +78,53 @@ body {
     @apply rounded-2xl border border-slate-200/75 bg-white/80 p-4 shadow-[0_18px_54px_rgba(23,32,51,0.08)] backdrop-blur;
   }
 
+  .gloss-panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.75rem;
+    border: 1px solid rgba(203, 213, 225, 0.72);
+    background:
+      radial-gradient(circle at 18% 0%, rgba(31, 201, 153, 0.10), transparent 18rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.70));
+    box-shadow: 0 26px 84px rgba(23, 32, 51, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(18px);
+  }
+
+  .gloss-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 2rem auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(31, 201, 153, 0.58), transparent);
+  }
+
+  .gloss-panel::after {
+    content: "";
+    position: absolute;
+    inset: auto -3rem -5rem auto;
+    height: 12rem;
+    width: 12rem;
+    border-radius: 9999px;
+    background: rgba(56, 189, 248, 0.10);
+    filter: blur(36px);
+    pointer-events: none;
+  }
+
+  .gloss-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hover-gloss {
+    transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease, background 300ms ease;
+  }
+
+  .hover-gloss:hover {
+    transform: translateY(-4px);
+    border-color: rgba(31, 201, 153, 0.35);
+    box-shadow: 0 34px 96px rgba(15, 118, 110, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  }
+
   .marquee-track {
     animation: marquee-slide 28s linear infinite;
   }
