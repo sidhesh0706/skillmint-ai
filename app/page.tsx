@@ -143,6 +143,16 @@ const audienceSegments = [
   "Career switchers",
 ];
 
+const capabilityStripItems = [
+  "Resume scoring",
+  "JD match",
+  "Bullet rewrite",
+  "Keyword gaps",
+  "Project to resume",
+  "Cover letter draft",
+  "LinkedIn headline",
+];
+
 export const metadata: Metadata = {
   title: "SkillMint AI | Recruiter-Ready Career Tools",
   description:
@@ -345,18 +355,10 @@ export default function Home() {
 
       <section className="-mt-4 pb-12 sm:pb-16">
         <div className="container-shell">
-          <div className="overflow-hidden rounded-[1.75rem] bg-ink px-4 py-4 text-white shadow-[0_28px_90px_rgba(23,32,51,0.18)]">
-            <div className="flex min-w-max gap-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-200">
-              {[
-                "Resume scoring",
-                "JD match",
-                "Bullet rewrite",
-                "Keyword gaps",
-                "Project to resume",
-                "Cover letter draft",
-                "LinkedIn headline",
-              ].map((item) => (
-                <span key={item} className="inline-flex items-center gap-3">
+          <div className="feature-marquee overflow-hidden rounded-[1.75rem] bg-ink px-4 py-4 text-white shadow-[0_28px_90px_rgba(23,32,51,0.18)]">
+            <div className="marquee-track flex w-max gap-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-200">
+              {[...capabilityStripItems, ...capabilityStripItems].map((item, index) => (
+                <span key={`${item}-${index}`} className="inline-flex items-center gap-3 whitespace-nowrap">
                   {item}
                   <span className="h-1.5 w-1.5 rounded-full bg-mint-300" />
                 </span>

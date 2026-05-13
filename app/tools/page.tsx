@@ -78,14 +78,30 @@ export default function ToolsPage() {
       <section className="cosmic-shell py-14 sm:py-20">
         <CelestialBackground intensity="section" />
         <div className="container-shell">
-          <div className="mb-6">
-            <TrustPills />
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <div className="mb-6">
+                <TrustPills />
+              </div>
+              <SectionHeading
+                eyebrow="Tools"
+                title="Your application kit, organized by workflow."
+                description="Generate resume bullets, review weak sections, match job descriptions, convert projects, and draft application assets without creating an account."
+              />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                ["Resume", "Score and rewrite proof points"],
+                ["Job match", "Find truthful keyword gaps"],
+                ["Applications", "Draft assets faster"],
+              ].map(([title, description]) => (
+                <div key={title} className="metric-tile">
+                  <p className="text-sm font-semibold uppercase text-mint-700">{title}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <SectionHeading
-            eyebrow="Tools"
-            title="Practical AI tools for every step of your career search."
-            description="Generate resume bullets, review weak sections, match job descriptions, convert projects, and draft application assets without creating an account."
-          />
         </div>
       </section>
 
