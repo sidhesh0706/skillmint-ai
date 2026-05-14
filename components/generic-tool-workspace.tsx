@@ -3,7 +3,6 @@
 import { useMemo, useState, type FormEvent } from "react";
 import {
   AlertTriangle,
-  BarChart3,
   CheckCircle2,
   Clipboard,
   Download,
@@ -15,7 +14,10 @@ import { AdSlot } from "@/components/ad-slot";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
 import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { EmailCapture } from "@/components/email-capture";
+import { EmptyStatePreview } from "@/components/empty-state-preview";
 import { KeywordChip } from "@/components/keyword-chip";
+import { LoadingIntelligenceState } from "@/components/loading-intelligence-state";
+import { ScoreMeter } from "@/components/score-meter";
 import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
@@ -321,6 +323,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
         <div className="space-y-5 p-4 sm:p-5">
           {isLoading ? (
             <div className="space-y-4">
+              <LoadingIntelligenceState />
               {[0, 1, 2].map((item) => (
                 <div key={item} className="animate-pulse rounded-lg border border-slate-200 bg-white p-4 shadow-line">
                   <div className="h-3 w-24 rounded-full bg-mint-100" />
@@ -345,6 +348,9 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                     />
                   ) : null}
                 </div>
+                {typeof result.score === "number" ? (
+                  <ScoreMeter value={result.score} label="Overall score" className="mt-5" />
+                ) : null}
               </div>
 
               {result.scores?.length ? (
@@ -432,22 +438,10 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               <AdSlot label={`${tool.name} resource placement`} />
             </>
           ) : (
-            <div className="flex min-h-[28rem] items-center justify-center rounded-lg border border-dashed border-slate-300 bg-[linear-gradient(135deg,#ffffff,#effdf8_48%,#f8fafc)] p-6 text-center">
-              <div className="max-w-md">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-white text-mint-700 shadow-soft">
-                  <BarChart3 className="h-5 w-5" aria-hidden="true" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-ink">{tool.output.emptyTitle}</h3>
-                <p className="mt-2 leading-7 text-slate-600">{tool.output.emptyDescription}</p>
-                <div className="mt-5 rounded-lg border border-slate-200 bg-white p-4 text-left shadow-line">
-                  <p className="text-xs font-semibold uppercase text-mint-700">Preview</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-700">
-                    Output will include scores, practical recommendations, copy-ready sections, and
-                    truthfulness notes before you export.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <EmptyStatePreview
+              title={tool.output.emptyTitle}
+              description={tool.output.emptyDescription}
+            />
           )}
         </div>
       </section>

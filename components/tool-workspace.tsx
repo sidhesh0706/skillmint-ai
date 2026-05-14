@@ -24,7 +24,11 @@ import { AdSlot } from "@/components/ad-slot";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
 import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { EmailCapture } from "@/components/email-capture";
+import { EmptyStatePreview } from "@/components/empty-state-preview";
 import { KeywordChip } from "@/components/keyword-chip";
+import { LoadingIntelligenceState } from "@/components/loading-intelligence-state";
+import { OutputActionBar } from "@/components/output-action-bar";
+import { ScoreMeter } from "@/components/score-meter";
 import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
@@ -1158,20 +1162,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
           {isGenerating && !hasOutput ? (
             <div className="space-y-4">
-              <div className="rounded-lg border border-mint-100 bg-mint-50/70 p-4">
-                <p className="text-sm font-semibold uppercase text-mint-700">Generating</p>
-                <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                  {loadingSteps.map((step, index) => (
-                    <div
-                      key={step}
-                      className="section-reveal rounded-lg border border-white bg-white/80 px-3 py-2 text-sm font-semibold text-slate-700 shadow-line"
-                      style={{ animationDelay: `${index * 120}ms` }}
-                    >
-                      {step}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <LoadingIntelligenceState steps={loadingSteps} />
               {[0, 1, 2].map((item) => (
                 <div
                   key={item}
@@ -1214,6 +1205,11 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                     className={`shrink-0 ${getScoreClasses(generated.summary.overallScore)}`}
                   />
                 </div>
+                <ScoreMeter
+                  value={generated.summary.overallScore || 0}
+                  label="Overall strength"
+                  className="mt-5"
+                />
 
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   <div className="rounded-lg border border-slate-200 bg-white/85 p-3.5">
@@ -1499,30 +1495,48 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               ) : null}
             </div>
           ) : (
-            <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-slate-300 bg-[linear-gradient(135deg,#ffffff,#effdf8_48%,#f8fafc)] p-5 text-center sm:p-6">
-              <div className="max-w-md">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white text-mint-700 shadow-soft">
-                  <Sparkles className="h-5 w-5" aria-hidden="true" />
-                </div>
-                <p className="text-lg font-semibold text-ink">{tool.output.emptyTitle}</p>
-                <p className="mt-2 leading-7 text-slate-600">{tool.output.emptyDescription}</p>
-                <div className="mt-5 rounded-lg border border-slate-200 bg-white p-4 text-left shadow-line">
-                  <p className="text-xs font-semibold uppercase text-mint-700">Preview example</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-700">
-                    - Improved onboarding documentation for a 12-person team, reducing repeated
-                    setup questions and helping new hires ramp faster.
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {["Score", "Keywords", "Rewrite", "Export"].map((item) => (
-                      <span key={item} className="rounded-full bg-mint-50 px-2.5 py-1 text-xs font-semibold text-mint-700">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <EmptyStatePreview
+              title={tool.output.emptyTitle}
+              description={tool.output.emptyDescription}
+            />
           )}
+
+          {hasOutput ? (
+            <div className="mt-6">
+              <OutputActionBar
+                actions={[
+                  {
+                    label: "Copy all",
+                    icon: Clipboard,
+                    onClick: () => handleExportAction("copy"),
+                  },
+                  {
+                    label: "TXT",
+                    icon: Download,
+                    onClick: () => handleExportAction("txt"),
+                  },
+                  {
+                    label: "Markdown",
+                    icon: FileDown,
+                    onClick: () => handleExportAction("markdown"),
+                  },
+                  {
+                    label: "Tailor to JD",
+                    icon: Target,
+                    onClick: () => handleGenerate("regenerate_click"),
+                    disabled: isGenerating,
+                  },
+                  {
+                    label: "Cover letter",
+                    icon: FileText,
+                    onClick: () => {
+                      window.location.href = "/tools/cover-letter-generator";
+                    },
+                  },
+                ]}
+              />
+            </div>
+          ) : null}
 
           <section className="mt-6 rounded-lg border border-slate-200 bg-white/90 p-4 shadow-line">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BarChart3, FileDown, ShieldCheck, Sparkles, Wand2 } from "lucide-react";
 import { ComingSoonTool } from "@/components/coming-soon-tool";
+import { CosmicGrid } from "@/components/cosmic-grid";
 import { GenericToolWorkspace } from "@/components/generic-tool-workspace";
 import { JsonLd } from "@/components/json-ld";
 import { ToolWorkspace } from "@/components/tool-workspace";
@@ -115,6 +116,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         ]}
       />
       <div className="hero-stage absolute inset-x-0 top-0 -z-10 h-[34rem]" />
+      <CosmicGrid />
       <div className="container-shell">
         <div className="fade-in-up grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
           <div>

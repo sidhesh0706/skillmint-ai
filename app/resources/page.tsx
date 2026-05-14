@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, BookOpen, Search, Sparkles } from "lucide-react";
 import { CelestialBackground } from "@/components/celestial-background";
+import { CosmicGrid } from "@/components/cosmic-grid";
 import { KeywordChip } from "@/components/keyword-chip";
 import { SectionHeading } from "@/components/section-heading";
 import { seoLandingPages } from "@/data/seo-landing-pages";
@@ -105,6 +106,7 @@ export default function ResourcesPage() {
     <>
       <section className="cosmic-shell py-14 sm:py-20">
         <CelestialBackground intensity="section" />
+        <CosmicGrid />
         <div className="container-shell">
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
             <div className="max-w-3xl">

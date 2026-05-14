@@ -17,11 +17,13 @@ import {
 } from "lucide-react";
 import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { CelestialBackground } from "@/components/celestial-background";
+import { CosmicGrid } from "@/components/cosmic-grid";
 import { FloatingPreviewCard } from "@/components/floating-preview-card";
 import { GlowCard } from "@/components/glow-card";
 import { KeywordChip } from "@/components/keyword-chip";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionReveal } from "@/components/section-reveal";
+import { WorkflowOrbit } from "@/components/workflow-orbit";
 import { AdSlot } from "@/components/ad-slot";
 import { EmailCapture } from "@/components/email-capture";
 import { JsonLd } from "@/components/json-ld";
@@ -194,6 +196,7 @@ export default function Home() {
         ]}
       />
       <section className="hero-stage relative overflow-hidden">
+        <CosmicGrid />
         <div className="pointer-events-none absolute left-1/2 top-20 -z-10 hidden -translate-x-1/2 select-none text-[12rem] font-semibold leading-none tracking-[-0.08em] hero-wordmark lg:block">
           SkillMint
         </div>
@@ -377,25 +380,7 @@ export default function Home() {
             title="A connected workflow from rough notes to applications."
             description="Experience becomes scored output, job-match insight, profile copy, and cleaner application assets."
           />
-          <div className="mt-10 grid gap-4 md:grid-cols-5">
-            {workflowSteps.map((step, index) => (
-              <article
-                key={step.title}
-                className="gloss-panel hover-gloss group p-5"
-              >
-                <div className="gloss-content">
-                  {index < workflowSteps.length - 1 ? (
-                    <span className="absolute left-[calc(100%-0.4rem)] top-9 hidden h-px w-5 bg-gradient-to-r from-mint-300 to-transparent md:block" />
-                  ) : null}
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink text-sm font-semibold text-white shadow-[0_0_24px_rgba(31,201,153,0.18)]">
-                    {index + 1}
-                  </span>
-                  <h2 className="mt-4 text-lg font-semibold text-ink">{step.title}</h2>
-                  <p className="mt-2 leading-7 text-slate-600">{step.description}</p>
-                </div>
-              </article>
-            ))}
-          </div>
+          <WorkflowOrbit steps={workflowSteps} />
         </div>
       </section>
 

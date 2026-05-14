@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CelestialBackground } from "@/components/celestial-background";
+import { CosmicGrid } from "@/components/cosmic-grid";
 import { JsonLd } from "@/components/json-ld";
 import { SectionHeading } from "@/components/section-heading";
 import { ToolGrid } from "@/components/tool-grid";
@@ -49,6 +50,7 @@ export default function ToolsPage() {
       />
       <section className="cosmic-shell py-14 sm:py-20">
         <CelestialBackground intensity="section" />
+        <CosmicGrid />
         <div className="container-shell">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
@@ -79,6 +81,23 @@ export default function ToolsPage() {
 
       <section className="pb-16 sm:pb-20">
         <div className="container-shell">
+          <div className="-mt-4 mb-10 overflow-hidden rounded-[1.75rem] bg-ink px-4 py-4 text-white shadow-[0_28px_90px_rgba(23,32,51,0.18)]">
+            <div className="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-[0.14em] text-slate-200">
+              {[
+                "Resume Bullet Generator",
+                "Resume Roast",
+                "JD Match",
+                "LinkedIn",
+                "Cover Letter",
+                "Apply",
+              ].map((item) => (
+                <span key={item} className="inline-flex items-center gap-3">
+                  {item}
+                  <span className="h-1.5 w-1.5 rounded-full bg-mint-300" />
+                </span>
+              ))}
+            </div>
+          </div>
           <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase text-mint-700">Product suite</p>
