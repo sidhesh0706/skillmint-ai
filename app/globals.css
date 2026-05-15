@@ -130,6 +130,52 @@ body {
     box-shadow: 0 34px 96px rgba(15, 118, 110, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.92);
   }
 
+  .tools-cockpit::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1.4px),
+      radial-gradient(circle, rgba(31,201,153,0.24) 1px, transparent 1.5px);
+    background-position: 0 0, 56px 82px;
+    background-size: 150px 150px, 210px 210px;
+    opacity: 0.16;
+    animation: star-drift 28s linear infinite;
+  }
+
+  .tool-card-animated {
+    animation: fade-in-up 620ms ease-out both;
+  }
+
+  .tool-card-animated:nth-child(2) {
+    animation-delay: 70ms;
+  }
+
+  .tool-card-animated:nth-child(3) {
+    animation-delay: 140ms;
+  }
+
+  .tool-card-animated:nth-child(4) {
+    animation-delay: 210ms;
+  }
+
+  .tool-card-animated:nth-child(5) {
+    animation-delay: 280ms;
+  }
+
+  .tool-card-animated:nth-child(6) {
+    animation-delay: 350ms;
+  }
+
+  .tool-card-animated:nth-child(7) {
+    animation-delay: 420ms;
+  }
+
+  .tool-card-animated:nth-child(8) {
+    animation-delay: 490ms;
+  }
+
   .marquee-track {
     animation: marquee-slide 28s linear infinite;
   }
@@ -342,6 +388,11 @@ body {
   .scan-line::after,
   .keyword-chip,
   .score-orb {
+    animation: none;
+  }
+
+  .tools-cockpit::before,
+  .tool-card-animated {
     animation: none;
   }
 }
