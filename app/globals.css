@@ -110,6 +110,11 @@ body {
     pointer-events: none;
   }
 
+  .gloss-panel > * {
+    position: relative;
+    z-index: 1;
+  }
+
   .gloss-content {
     position: relative;
     z-index: 1;

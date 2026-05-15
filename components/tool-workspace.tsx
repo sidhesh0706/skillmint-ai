@@ -25,6 +25,7 @@ import { AffiliateRecommendationCard } from "@/components/affiliate-recommendati
 import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { EmailCapture } from "@/components/email-capture";
 import { EmptyStatePreview } from "@/components/empty-state-preview";
+import { InsightPanel } from "@/components/insight-panel";
 import { KeywordChip } from "@/components/keyword-chip";
 import { LoadingIntelligenceState } from "@/components/loading-intelligence-state";
 import { OutputActionBar } from "@/components/output-action-bar";
@@ -974,7 +975,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(22rem,0.9fr)_minmax(0,1.35fr)] xl:items-start">
       <form
-        className="card-surface relative overflow-hidden p-4 sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
+        className="gloss-panel relative p-4 sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {
           event.preventDefault();
           handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
@@ -1015,7 +1016,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-3.5">
+          <div className="rounded-2xl border border-slate-200 bg-white/78 p-3.5 shadow-line">
             <p className="text-sm font-semibold uppercase text-slate-500">Role context</p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {contextFields.map((field) => (
@@ -1027,7 +1028,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-white p-3.5 shadow-line">
+          <div className="rounded-2xl border border-slate-200 bg-white/88 p-3.5 shadow-line">
             <p className="text-sm font-semibold uppercase text-slate-500">Work details</p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {detailFields.map((field) => (
@@ -1049,7 +1050,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-3.5">
+          <div className="rounded-2xl border border-slate-200 bg-white/78 p-3.5 shadow-line">
             <p className="text-sm font-semibold uppercase text-slate-500">Proof points</p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {proofFields.map((field) => (
@@ -1076,7 +1077,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         </div>
       </form>
 
-      <section className="card-surface flex min-h-[34rem] flex-col overflow-hidden" aria-live="polite">
+      <section className="gloss-panel flex min-h-[34rem] flex-col overflow-hidden" aria-live="polite">
         <div className="border-b border-slate-200/80 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.16),transparent_30%),linear-gradient(120deg,#ffffff,#effdf8_58%,#ffffff)] p-4 sm:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
@@ -1365,9 +1366,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               ) : null}
 
               {generated.missingKeywords.length ? (
-                <section className="rounded-lg border border-amber-200 bg-amber-50/70 p-4">
+                <InsightPanel title="Missing keywords from job description">
                   <h3 className="text-sm font-semibold uppercase text-amber-700">
-                    Missing keywords from job description
+                    Add only if truthful
                   </h3>
                   <p className="mt-2 text-sm leading-6 text-amber-800">
                     Add these only if they truthfully match your experience, tools, or role scope.
@@ -1379,7 +1380,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                       </KeywordChip>
                     ))}
                   </div>
-                </section>
+                </InsightPanel>
               ) : null}
 
               {generated.actionVerbs.length ? (
@@ -1414,13 +1415,15 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               ) : null}
 
               {generated.tips.length ? (
-                <section className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                <section className="gloss-panel p-4">
+                  <div className="gloss-content">
                   <h3 className="text-sm font-semibold uppercase text-slate-700">Improvement tips</h3>
                   <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
                     {generated.tips.map((tip) => (
                       <li key={tip}>- {tip}</li>
                     ))}
                   </ul>
+                  </div>
                 </section>
               ) : null}
 

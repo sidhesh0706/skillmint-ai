@@ -238,7 +238,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
     <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
       <form
         onSubmit={handleSubmit}
-        className="card-surface relative overflow-hidden p-4 sm:p-5 lg:sticky lg:top-24"
+        className="gloss-panel relative p-4 sm:p-5 lg:sticky lg:top-24"
       >
         <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent" />
         <div className="rounded-lg border border-mint-100 bg-mint-50/70 p-4">
@@ -286,7 +286,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
         </p>
       </form>
 
-      <section className="card-surface min-h-[34rem] overflow-hidden">
+      <section className="gloss-panel min-h-[34rem] overflow-hidden">
         <div className="sticky top-16 z-10 border-b border-slate-200/80 bg-white/90 px-4 py-3 backdrop-blur sm:px-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -375,7 +375,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               ) : null}
 
               {result.sections.map((section) => (
-                <article key={section.title} className="rounded-lg border border-slate-200 bg-white p-4 shadow-line">
+                <article key={section.title} className="rounded-2xl border border-slate-200 bg-white/86 p-4 shadow-line">
                   <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
                     <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                     {section.title}

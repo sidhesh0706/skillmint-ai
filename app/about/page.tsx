@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, LockKeyhole, Sparkles, Target } from "lucide-react";
+import { CelestialPageShell } from "@/components/celestial-page-shell";
+import { GlassPanel } from "@/components/glass-panel";
 
 export const metadata: Metadata = {
   title: "About SkillMint AI",
@@ -13,21 +15,14 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <section className="relative overflow-hidden py-14 sm:py-20">
-      <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[28rem]" />
+    <>
+      <CelestialPageShell
+        eyebrow="About"
+        title="A practical AI career workspace for real experience."
+        description="SkillMint AI helps students, freshers, interns, and early-career professionals turn honest experience into clearer resume bullets, job-match insights, LinkedIn copy, and application drafts."
+      />
+      <section className="relative overflow-hidden py-12 sm:py-16">
       <div className="container-shell">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase text-mint-700">About</p>
-          <h1 className="mt-3 text-4xl font-semibold leading-tight text-ink sm:text-5xl">
-            A practical AI career workspace for real experience.
-          </h1>
-          <p className="mt-5 text-lg leading-8 text-slate-600">
-            SkillMint AI helps students, freshers, interns, and early-career professionals turn
-            honest experience into clearer resume bullets, job-match insights, LinkedIn copy, and
-            application drafts.
-          </p>
-        </div>
-
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {[
             {
@@ -52,18 +47,18 @@ export default function AboutPage() {
             const Icon = item.icon;
 
             return (
-              <article key={item.title} className="card-surface p-5 sm:p-6">
+              <GlassPanel key={item.title} as="article" className="p-5 sm:p-6">
                 <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-mint-50 text-mint-700 shadow-line">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <h2 className="mt-5 text-xl font-semibold text-ink">{item.title}</h2>
                 <p className="mt-3 leading-7 text-slate-600">{item.description}</p>
-              </article>
+              </GlassPanel>
             );
           })}
         </div>
 
-        <div className="mx-auto mt-10 max-w-3xl rounded-lg border border-slate-200 bg-white/85 p-6 shadow-line sm:p-8">
+        <GlassPanel className="mx-auto mt-10 max-w-3xl p-6 sm:p-8">
           <h2 className="text-2xl font-semibold text-ink">Why SkillMint exists</h2>
           <p className="mt-3 leading-7 text-slate-600">
             Most early-career applicants have useful experience, but it often lives in messy notes,
@@ -80,8 +75,9 @@ export default function AboutPage() {
               Contact
             </Link>
           </div>
-        </div>
+        </GlassPanel>
       </div>
     </section>
+    </>
   );
 }

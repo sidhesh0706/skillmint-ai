@@ -95,7 +95,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
   if (tool.status === "coming-soon") {
     return (
       <section className="relative overflow-hidden py-12 sm:py-16 lg:py-[4.5rem]">
-        <div className="hero-glow absolute inset-x-0 top-0 -z-10 h-[30rem]" />
+        <div className="hero-stage absolute inset-x-0 top-0 -z-10 h-[34rem]" />
+        <CosmicGrid />
         <div className="container-shell">
           <ComingSoonTool slug={tool.slug} />
         </div>
