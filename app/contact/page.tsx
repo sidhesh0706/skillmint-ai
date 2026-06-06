@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Mail, MessageSquare, Sparkles } from "lucide-react";
-import { CelestialPageShell } from "@/components/celestial-page-shell";
 import { GlassPanel } from "@/components/glass-panel";
+import { PremiumPageShell } from "@/components/premium-page-shell";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -15,24 +15,25 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <CelestialPageShell
+      <PremiumPageShell
         eyebrow="Contact"
         title="Send feedback, tool ideas, or support notes."
         description="SkillMint is built around practical career workflows. Tell us what felt useful, confusing, or missing."
+        dark
         side={
-          <GlassPanel className="p-5">
-            <p className="text-sm font-semibold uppercase text-mint-700">Fastest path</p>
-            <p className="mt-3 leading-7 text-slate-600">
+          <div className="command-panel p-5">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">Fastest path</p>
+            <p className="mt-3 leading-7 text-slate-300">
               Include the page or tool you were using so feedback is easier to act on.
             </p>
-            <Link href="mailto:hello@skillmint.ai" className="button-primary mt-5">
+            <Link href="mailto:hello@skillmint.ai" className="button-primary mt-5 bg-white text-ink hover:bg-mint-50">
               <Mail className="h-4 w-4" aria-hidden="true" />
               Email hello@skillmint.ai
             </Link>
-          </GlassPanel>
+          </div>
         }
       />
-      <section className="py-12 sm:py-16">
+      <section className="premium-shell py-12 sm:py-16">
         <div className="container-shell grid gap-5 md:grid-cols-3">
           {[
             ["Product feedback", "Tell us what should feel faster, clearer, or more useful."],

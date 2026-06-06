@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { CelestialPageShell } from "@/components/celestial-page-shell";
 import { GlassPanel } from "@/components/glass-panel";
+import { PremiumPageShell } from "@/components/premium-page-shell";
 
 type StaticPageFrameProps = {
   eyebrow: string;
@@ -22,30 +22,31 @@ export function StaticPageFrame({
 }: StaticPageFrameProps) {
   return (
     <>
-      <CelestialPageShell
+      <PremiumPageShell
         eyebrow={eyebrow}
         title={title}
         description={description}
+        dark
         side={
           side || (
-            <GlassPanel className="p-5">
-              <p className="text-sm font-semibold uppercase text-mint-700">Quick scan</p>
+            <div className="command-panel p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">Quick scan</p>
               <div className="mt-4 grid gap-2">
                 {sections.map((section) => (
                   <a
                     key={section.title}
                     href={`#${section.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                    className="rounded-2xl border border-slate-200 bg-white/75 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                    className="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-sm font-semibold text-slate-200 transition hover:border-mint-300/40 hover:bg-white/[0.14] hover:text-white"
                   >
                     {section.title}
                   </a>
                 ))}
               </div>
-            </GlassPanel>
+            </div>
           )
         }
       />
-      <section className="py-12 sm:py-16">
+      <section className="premium-shell py-12 sm:py-16">
         <div className="container-shell grid gap-6 lg:grid-cols-[0.72fr_0.28fr] lg:items-start">
           <GlassPanel className="p-6 sm:p-8">
             <div className="space-y-8">

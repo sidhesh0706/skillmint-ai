@@ -52,8 +52,7 @@ function renderField(
   value: string,
   onChange: (name: string, value: string) => void,
 ) {
-  const baseClass =
-    "mt-2 w-full rounded-lg border border-slate-300 bg-white/95 px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-slate-400 hover:border-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100";
+  const baseClass = "premium-input";
 
   if (field.type === "textarea") {
     return (
@@ -238,13 +237,13 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
     <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
       <form
         onSubmit={handleSubmit}
-        className="gloss-panel relative p-4 sm:p-5 lg:sticky lg:top-24"
+        className="command-panel relative p-4 text-white sm:p-5 lg:sticky lg:top-24"
       >
         <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent" />
-        <div className="rounded-lg border border-mint-100 bg-mint-50/70 p-4">
-          <p className="text-sm font-semibold uppercase text-mint-700">AI workspace</p>
-          <h2 className="mt-1 text-2xl font-semibold text-ink">Build the input</h2>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.08] p-4">
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">AI workspace</p>
+          <h2 className="mt-1 text-2xl font-semibold text-white">Build the input</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-300">
             Add honest context. SkillMint will improve clarity and positioning without encouraging
             overclaiming.
           </p>
@@ -256,7 +255,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               key={field.name}
               className={field.layout === "half" ? "block" : "block sm:col-span-2"}
             >
-              <span className="text-sm font-semibold text-ink">{field.label}</span>
+              <span className="text-sm font-semibold text-white">{field.label}</span>
               {renderField(field, form[field.name] || "", updateForm)}
             </label>
           ))}
@@ -281,12 +280,12 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
           {isLoading ? "Generating..." : `Run ${tool.name}`}
         </button>
 
-        <p className="mt-3 rounded-lg border border-mint-100 bg-white px-3 py-2 text-xs font-semibold text-mint-700">
+        <p className="mt-3 rounded-2xl border border-mint-300/20 bg-mint-300/10 px-3 py-2 text-xs font-semibold text-mint-100">
           Privacy-first: no signup required. Review every generated claim before using it.
         </p>
       </form>
 
-      <section className="gloss-panel min-h-[34rem] overflow-hidden">
+      <section className="gloss-panel min-h-[34rem] overflow-hidden shadow-[0_34px_110px_rgba(23,32,51,0.14)]">
         <div className="sticky top-16 z-10 border-b border-slate-200/80 bg-white/90 px-4 py-3 backdrop-blur sm:px-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -325,7 +324,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
             <div className="space-y-4">
               <LoadingIntelligenceState />
               {[0, 1, 2].map((item) => (
-                <div key={item} className="animate-pulse rounded-lg border border-slate-200 bg-white p-4 shadow-line">
+                <div key={item} className="animate-pulse rounded-2xl border border-slate-200 bg-white p-4 shadow-line">
                   <div className="h-3 w-24 rounded-full bg-mint-100" />
                   <div className="mt-4 h-4 w-3/4 rounded-full bg-slate-100" />
                   <div className="mt-3 h-4 w-5/6 rounded-full bg-slate-100" />
@@ -334,7 +333,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
             </div>
           ) : result ? (
             <>
-              <div className="rounded-lg border border-slate-200 bg-[linear-gradient(135deg,#ffffff,#f0fdfa)] p-4 shadow-line">
+              <div className="output-card-pro p-4">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <h3 className="text-2xl font-semibold text-ink">{result.title}</h3>
@@ -356,7 +355,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               {result.scores?.length ? (
                 <div className="grid gap-3 sm:grid-cols-2">
                   {result.scores.map((score) => (
-                    <div key={score.label} className="rounded-lg border border-slate-200 bg-white p-3 shadow-line">
+                    <div key={score.label} className="output-card-pro p-3">
                       <div className="flex items-center justify-between gap-3">
                         <p className="text-sm font-semibold text-ink">{score.label}</p>
                         <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${getScoreColor(score.score)}`}>
@@ -375,7 +374,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               ) : null}
 
               {result.sections.map((section) => (
-                <article key={section.title} className="rounded-2xl border border-slate-200 bg-white/86 p-4 shadow-line">
+                <article key={section.title} className="output-card-pro p-4">
                   <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
                     <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                     {section.title}
@@ -384,7 +383,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                   {section.items?.length ? (
                     <div className="mt-3 grid gap-2">
                       {section.items.map((item) => (
-                        <div key={item} className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-700">
+                        <div key={item} className="rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-700">
                           {section.title.toLowerCase().includes("keyword") ? (
                             <KeywordChip>{item}</KeywordChip>
                           ) : (
@@ -398,7 +397,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               ))}
 
               {result.warnings?.length ? (
-                <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
                   <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-amber-700">
                     <AlertTriangle className="h-4 w-4" aria-hidden="true" />
                     Truthfulness checks

@@ -1,11 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, BookOpen, Search, Sparkles } from "lucide-react";
-import { CelestialBackground } from "@/components/celestial-background";
-import { CosmicGrid } from "@/components/cosmic-grid";
+import { GlowCard } from "@/components/glow-card";
 import { KeywordChip } from "@/components/keyword-chip";
+import { PremiumPageShell } from "@/components/premium-page-shell";
 import { ResourceCard } from "@/components/resource-card";
-import { SectionHeading } from "@/components/section-heading";
 import { seoLandingPages } from "@/data/seo-landing-pages";
 
 function pagesInCategory(category: "experience" | "role" | "goal" | "use-case") {
@@ -44,21 +43,25 @@ function pagesInCategory(category: "experience" | "role" | "goal" | "use-case") 
 const resourceCategories = [
   {
     title: "By experience level",
+    eyebrow: "Students and freshers",
     description: "Guides for students, freshers, interns, and entry-level candidates.",
     pages: pagesInCategory("experience"),
   },
   {
     title: "By job role",
+    eyebrow: "Role examples",
     description: "Role-specific examples for common career paths and job families.",
     pages: pagesInCategory("role"),
   },
   {
     title: "By resume goal",
+    eyebrow: "Improve the draft",
     description: "Improve ATS fit, rewrite achievements, add metrics, and optimize keywords.",
     pages: pagesInCategory("goal"),
   },
   {
     title: "By use case",
+    eyebrow: "Projects and internships",
     description: "Focused guides for projects, internships, and practical resume scenarios.",
     pages: pagesInCategory("use-case"),
   },
@@ -118,80 +121,80 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <>
-      <section className="cosmic-shell py-14 sm:py-20">
-        <CelestialBackground intensity="section" />
-        <CosmicGrid />
-        <div className="container-shell">
-          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-            <div className="max-w-3xl">
-              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-4 py-2 text-sm font-semibold text-mint-700 shadow-line backdrop-blur">
-                <BookOpen className="h-4 w-4 text-mint-700" aria-hidden="true" />
-                Resume resources
-              </p>
-              <h1 className="text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-ink sm:text-6xl">
-                A focused career library for sharper applications.
-              </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-                Browse role-specific examples, action verbs, FAQs, and practical tips for
-                writing stronger resume bullets. Each guide links back to the AI resume
-                bullet generator when you are ready to create your own.
-              </p>
+      <PremiumPageShell
+        eyebrow="Resume resources"
+        title="A premium career library for sharper applications."
+        description="Browse role-specific examples, action verbs, FAQs, and practical resume-writing guidance before turning the examples into your own tailored bullets."
+        side={
+          <div className="command-panel p-5">
+            <div className="flex min-h-12 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.08] px-4 text-slate-200">
+              <Search className="h-4 w-4 text-mint-300" aria-hidden="true" />
+              <span className="text-sm">Find guides by role, goal, project, metric, or ATS keyword</span>
             </div>
-            <div className="rounded-[1.75rem] border border-slate-200 bg-white/80 p-3 shadow-soft backdrop-blur">
-              <div className="flex min-h-12 items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 text-slate-600">
-                <Search className="h-4 w-4 text-mint-700" aria-hidden="true" />
-                <span className="text-sm">Search by role, goal, project, metric, or ATS keyword</span>
-              </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {["Students", "Freshers", "Software", "Data", "ATS", "Metrics", "Projects", "Internships"].map((item) => (
-                  <a key={item} href="#resource-library">
-                    <KeywordChip dark>{item}</KeywordChip>
-                  </a>
-                ))}
-              </div>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <Link href="/tools/resume-bullet-generator" className="button-primary">
-                  Generate bullets
-                  <Sparkles className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <Link href="/tools" className="button-secondary">
-                  Explore tools
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-16 sm:pb-20" id="resource-library">
-        <div className="container-shell">
-          <div className="mb-12">
-            <SectionHeading
-              eyebrow="Start here"
-              title="Choose the guide closest to your next application."
-              description="These are the fastest paths from example bullets to your own tailored output."
-            />
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {startHerePages.map((page) => (
-                <ResourceCard key={page.slug} page={page} />
+            <div className="mt-4 flex flex-wrap gap-2">
+              {["Students", "Freshers", "Software", "Data", "ATS", "Metrics", "Projects", "Internships", "Action verbs"].map((item) => (
+                <a key={item} href="#resource-library">
+                  <KeywordChip className="border-white/10 bg-white/[0.08] text-slate-100">{item}</KeywordChip>
+                </a>
               ))}
             </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <Link href="/tools/resume-bullet-generator" className="button-primary bg-white text-ink hover:bg-mint-50">
+                Generate bullets
+                <Sparkles className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link href="/tools" className="button-ghost">
+                Explore tools
+              </Link>
+            </div>
+          </div>
+        }
+        dark
+      >
+        <div className="flex flex-wrap gap-2 text-sm text-slate-300">
+          {["Guided examples", "ATS language", "Metrics", "Truth-first writing"].map((item) => (
+            <span key={item} className="rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 font-semibold">
+              {item}
+            </span>
+          ))}
+        </div>
+      </PremiumPageShell>
+
+      <section className="premium-shell py-14 sm:py-20" id="resource-library">
+        <div className="container-shell">
+          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
+                Start here
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-ink sm:text-5xl">
+                Choose the guide closest to your next application.
+              </h2>
+            </div>
+            <p className="max-w-xl leading-7 text-slate-600">
+              These are the fastest paths from example bullets to your own tailored output.
+            </p>
           </div>
 
-          <div className="mb-8">
-            <SectionHeading
-              eyebrow="Resource library"
-              title="Find the right resume guide faster"
-              description="Browse by experience level, role, resume goal, or use case. Each guide links back to the free resume bullet generator."
-            />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {startHerePages.map((page) => (
+              <ResourceCard key={page.slug} page={page} />
+            ))}
           </div>
 
-          <div className="space-y-12">
+          <div className="mt-14 space-y-8">
             {resourceCategories.map((category) => (
-              <section key={category.title}>
-                <div className="mb-5">
-                  <h2 className="text-2xl font-semibold text-ink">{category.title}</h2>
-                  <p className="mt-2 leading-7 text-slate-600">{category.description}</p>
+              <section key={category.title} className="resource-shelf p-5 sm:p-7">
+                <div className="mb-6 grid gap-3 lg:grid-cols-[0.35fr_0.65fr] lg:items-end">
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
+                      {category.eyebrow}
+                    </p>
+                    <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl">
+                      {category.title}
+                    </h2>
+                  </div>
+                  <p className="leading-7 text-slate-600">{category.description}</p>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {category.pages.map((page) => (
@@ -201,21 +204,26 @@ export default function ResourcesPage() {
               </section>
             ))}
           </div>
-          <div className="mt-12 rounded-[1.75rem] bg-ink p-6 text-white shadow-[0_28px_90px_rgba(23,32,51,0.18)] sm:p-8">
-            <p className="text-sm font-semibold uppercase text-mint-100">Turn examples into your own bullets</p>
-            <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-              <h2 className="max-w-2xl text-3xl font-semibold tracking-[-0.035em]">
-                Use a guide for direction, then generate bullets tailored to your role.
-              </h2>
+
+          <GlowCard className="mt-12 bg-ink p-6 text-white sm:p-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-mint-100">
+                  <BookOpen className="h-4 w-4" aria-hidden="true" />
+                  Turn examples into your own bullets
+                </p>
+                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em]">
+                  Use a guide for direction, then generate bullets tailored to your real role.
+                </h2>
+              </div>
               <Link href="/tools/resume-bullet-generator" className="button-primary bg-white text-ink hover:bg-mint-50">
                 Generate resume bullets
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
-          </div>
+          </GlowCard>
         </div>
       </section>
     </>
   );
 }
-

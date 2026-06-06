@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BarChart3, FileDown, ShieldCheck, Sparkles, Wand2 } from "lucide-react";
 import { ComingSoonTool } from "@/components/coming-soon-tool";
-import { CosmicGrid } from "@/components/cosmic-grid";
 import { GenericToolWorkspace } from "@/components/generic-tool-workspace";
 import { JsonLd } from "@/components/json-ld";
+import { PremiumPageShell } from "@/components/premium-page-shell";
 import { ToolWorkspace } from "@/components/tool-workspace";
 import { TrustPills } from "@/components/trust-pills";
 import { getToolBySlug, tools } from "@/data/tool-config";
@@ -94,9 +94,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   if (tool.status === "coming-soon") {
     return (
-      <section className="relative overflow-hidden py-12 sm:py-16 lg:py-[4.5rem]">
-        <div className="hero-stage absolute inset-x-0 top-0 -z-10 h-[34rem]" />
-        <CosmicGrid />
+      <section className="premium-dark-shell py-12 sm:py-16 lg:py-[4.5rem]">
         <div className="container-shell">
           <ComingSoonTool slug={tool.slug} />
         </div>
@@ -105,7 +103,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
   }
 
   return (
-    <section className="relative overflow-hidden py-12 sm:py-16 lg:py-[4.5rem]">
+    <>
       <JsonLd
         data={[
           softwareApplicationSchema(),
@@ -116,25 +114,16 @@ export default async function ToolPage({ params }: ToolPageProps) {
           ]),
         ]}
       />
-      <div className="hero-stage absolute inset-x-0 top-0 -z-10 h-[34rem]" />
-      <CosmicGrid />
-      <div className="container-shell">
-        <div className="fade-in-up grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
-          <div>
-            <p className="inline-flex items-center justify-center rounded-full border border-mint-100 bg-white/[0.82] px-4 py-2 text-sm font-semibold uppercase text-mint-700 shadow-line backdrop-blur">
-              {tool.category}
+      <PremiumPageShell
+        eyebrow={tool.category}
+        title={tool.name}
+        description={tool.longDescription}
+        dark
+        side={
+          <div className="command-panel p-4">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-mint-100">
+              Workspace signals
             </p>
-            <h1 className="mt-4 text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-ink sm:text-6xl">
-              {tool.name}
-            </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-              {tool.longDescription}
-            </p>
-            <div className="mt-5">
-              <TrustPills />
-            </div>
-          </div>
-          <div className="rounded-[1.75rem] border border-slate-200 bg-white/[0.84] p-4 shadow-[0_28px_90px_rgba(23,32,51,0.10)] backdrop-blur">
             <div className="grid gap-3 sm:grid-cols-2">
               {liveToolHighlights.map((highlight) => {
                 const Icon = highlight.icon;
@@ -142,25 +131,31 @@ export default async function ToolPage({ params }: ToolPageProps) {
                 return (
                   <span
                     key={highlight.label}
-                    className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/85 px-3.5 py-3 text-sm font-semibold text-slate-700 shadow-line backdrop-blur"
+                    className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.08] px-3.5 py-3 text-sm font-semibold text-slate-100 shadow-line backdrop-blur"
                   >
-                    <Icon className="h-4 w-4 text-mint-700" aria-hidden="true" />
+                    <Icon className="h-4 w-4 text-mint-300" aria-hidden="true" />
                     {highlight.label}
                   </span>
                 );
               })}
             </div>
           </div>
-        </div>
+        }
+      >
+        <TrustPills />
+      </PremiumPageShell>
 
-        <div className="fade-in-up-delayed mt-9 sm:mt-10">
+      <section className="premium-shell py-10 sm:py-12">
+        <div className="container-shell">
+        <div className="fade-in-up-delayed">
           {tool.slug === "resume-bullet-generator" ? (
             <ToolWorkspace slug={tool.slug} />
           ) : (
             <GenericToolWorkspace slug={tool.slug} />
           )}
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }

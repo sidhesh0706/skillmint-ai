@@ -12,9 +12,12 @@ type LoadingIntelligenceStateProps = {
 
 export function LoadingIntelligenceState({ steps = defaultSteps }: LoadingIntelligenceStateProps) {
   return (
-    <div className="gloss-panel p-4">
+    <div className="gloss-panel scan-line p-4">
       <div className="gloss-content">
-        <p className="text-sm font-semibold uppercase text-mint-700">AI process</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-semibold uppercase text-mint-700">AI process</p>
+          <span className="score-orb h-2.5 w-2.5 rounded-full bg-mint-500" />
+        </div>
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {steps.map((step, index) => (
             <div

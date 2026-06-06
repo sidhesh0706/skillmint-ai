@@ -269,8 +269,7 @@ function renderField(
   value: string,
   onChange: (name: string, value: string) => void,
 ) {
-  const commonClasses =
-    "mt-2 min-h-11 w-full rounded-lg border border-slate-300 bg-white/90 px-3.5 py-2.5 text-sm text-ink outline-none transition duration-300 placeholder:text-slate-400 hover:border-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100";
+  const commonClasses = "premium-input";
 
   if (field.type === "textarea") {
     return (
@@ -973,9 +972,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[minmax(22rem,0.9fr)_minmax(0,1.35fr)] xl:items-start">
+    <div className="grid gap-6 xl:grid-cols-[minmax(22rem,0.88fr)_minmax(0,1.42fr)] xl:items-start">
       <form
-        className="gloss-panel relative p-4 sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
+        className="command-panel relative p-4 text-white sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {
           event.preventDefault();
           handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
@@ -983,12 +982,12 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
       >
         <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent" />
         <div className="mb-5 flex items-start gap-4 sm:mb-6">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-mint-50 text-mint-700 shadow-line">
+          <div className="score-orb flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-mint-700 shadow-line">
             <FileText className="h-5 w-5" aria-hidden="true" />
           </div>
           <div>
-            <h2 className="text-2xl font-semibold text-ink">Build your draft</h2>
-            <p className="mt-2 leading-7 text-slate-600">
+            <h2 className="text-2xl font-semibold text-white">Build your draft</h2>
+            <p className="mt-2 leading-7 text-slate-300">
               Add context so SkillMint can generate specific, recruiter-ready bullets.
             </p>
           </div>
@@ -997,7 +996,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         <div className="space-y-5">
           <div>
             <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="text-sm font-semibold uppercase text-mint-700">Try an example</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">Try an example</p>
               <span className="hidden text-xs font-semibold text-slate-400 sm:inline">
                 Great for first-time users
               </span>
@@ -1008,7 +1007,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   key={preset.label}
                   type="button"
                   onClick={() => applyPreset(preset.values)}
-                  className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                  className="rounded-full border border-white/10 bg-white/[0.08] px-3 py-2 text-xs font-semibold text-slate-200 transition hover:-translate-y-0.5 hover:border-mint-300/40 hover:bg-white/[0.14] hover:text-white"
                 >
                   {preset.label}
                 </button>
@@ -1016,8 +1015,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white/78 p-3.5 shadow-line">
-            <p className="text-sm font-semibold uppercase text-slate-500">Role context</p>
+          <div className="control-card p-3.5">
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-mint-700">Role context</p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {contextFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
@@ -1028,8 +1027,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white/88 p-3.5 shadow-line">
-            <p className="text-sm font-semibold uppercase text-slate-500">Work details</p>
+          <div className="control-card p-3.5">
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-mint-700">Work details</p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {detailFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
@@ -1050,8 +1049,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white/78 p-3.5 shadow-line">
-            <p className="text-sm font-semibold uppercase text-slate-500">Proof points</p>
+          <div className="control-card p-3.5">
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-mint-700">Proof points</p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {proofFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
@@ -1071,14 +1070,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             {isGenerating ? "Generating..." : hasOutput ? "Regenerate" : "Generate"}
           </button>
 
-          <p className="rounded-lg border border-mint-100 bg-mint-50/80 px-4 py-3 text-sm font-semibold text-mint-800">
+          <p className="rounded-2xl border border-mint-300/20 bg-mint-300/10 px-4 py-3 text-sm font-semibold text-mint-100">
             Saved only in your browser. No account required.
           </p>
         </div>
       </form>
 
-      <section className="gloss-panel flex min-h-[34rem] flex-col overflow-hidden" aria-live="polite">
-        <div className="border-b border-slate-200/80 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.16),transparent_30%),linear-gradient(120deg,#ffffff,#effdf8_58%,#ffffff)] p-4 sm:p-6">
+      <section className="gloss-panel flex min-h-[34rem] flex-col overflow-hidden shadow-[0_34px_110px_rgba(23,32,51,0.14)]" aria-live="polite">
+        <div className="border-b border-slate-200/80 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.20),transparent_30%),linear-gradient(120deg,#ffffff,#effdf8_54%,#ffffff)] p-4 sm:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase text-mint-700 shadow-line">
@@ -1095,7 +1094,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                     type="button"
                     onClick={() => handleGenerate("regenerate_click")}
                     disabled={isGenerating}
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 text-sm font-semibold text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
                     aria-label="Tailor output to job description"
                     title="Tailor to JD"
                   >
@@ -1104,7 +1103,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   </button>
                   <Link
                     href="/tools/cover-letter-generator"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-ink px-3 text-sm font-semibold text-white shadow-line transition duration-300 hover:-translate-y-0.5 hover:bg-slate-800"
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white shadow-line transition duration-300 hover:-translate-y-0.5 hover:bg-slate-800"
                   >
                     Cover letter
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -1124,7 +1123,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   type="button"
                   onClick={() => handleExportAction(item.action)}
                   disabled={!hasOutput}
-                  className="group flex min-h-16 items-center gap-3 rounded-lg border border-slate-200 bg-white/85 px-3 py-2 text-left shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:shadow-line"
+                  className="group flex min-h-16 items-center gap-3 rounded-2xl border border-slate-200 bg-white/85 px-3 py-2 text-left shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-soft disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:shadow-line"
                   aria-label={item.label}
                   title={item.description}
                 >
@@ -1185,7 +1184,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           ) : hasOutput ? (
             <div className="flex flex-1 flex-col gap-5">
-              <section className="rounded-lg border border-mint-100 bg-[linear-gradient(135deg,#ffffff,#effdf8)] p-4 shadow-line">
+              <section className="output-card-pro p-4">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
@@ -1213,7 +1212,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 />
 
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-lg border border-slate-200 bg-white/85 p-3.5">
+                  <div className="rounded-2xl border border-slate-200 bg-white/85 p-3.5">
                     <p className="flex items-center gap-2 text-sm font-semibold text-ink">
                       <CheckCircle2 className="h-4 w-4 text-mint-700" aria-hidden="true" />
                       Strengths
@@ -1226,7 +1225,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                       ))}
                     </ul>
                   </div>
-                  <div className="rounded-lg border border-slate-200 bg-white/85 p-3.5">
+                  <div className="rounded-2xl border border-slate-200 bg-white/85 p-3.5">
                     <p className="flex items-center gap-2 text-sm font-semibold text-ink">
                       <Target className="h-4 w-4 text-amber-600" aria-hidden="true" />
                       Weaknesses
@@ -1246,7 +1245,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <h3 className="text-sm font-semibold uppercase text-mint-700">Best 5 bullets</h3>
                 <div className="mt-3 space-y-3">
                   {generated.bullets.map((item, index) => (
-                    <div key={`${item}-${index}`} className="rounded-lg border border-slate-200 bg-white p-3.5 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100">
+                    <div key={`${item}-${index}`} className="output-card-pro p-3.5" style={{ animationDelay: `${index * 80}ms` }}>
                       <div className="flex gap-3">
                         <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint-50 text-xs font-semibold text-mint-700">
                           {index + 1}
@@ -1273,7 +1272,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                             </div>
                           </div>
 
-                          <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs leading-5 text-slate-600 sm:text-sm sm:leading-6">
+                          <div className="mt-3 rounded-2xl border border-slate-200 bg-slate-50/90 p-3 text-xs leading-5 text-slate-600 sm:text-sm sm:leading-6">
                             <div className="grid gap-2 lg:grid-cols-2">
                               <p>
                                 <span className="font-semibold text-ink">Why:</span>{" "}
@@ -1286,7 +1285,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                             </div>
                             <div className="mt-3 grid gap-1.5 sm:grid-cols-3">
                               {breakdownLabels.map(([key, label]) => (
-                                <div key={key} className="rounded-md bg-white px-2.5 py-2 shadow-line">
+                                <div key={key} className="rounded-xl bg-white px-2.5 py-2 shadow-line">
                                   <span className="block text-[11px] font-semibold uppercase text-slate-500">
                                     {label}
                                   </span>
@@ -1322,7 +1321,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                           </div>
 
                           {generated.comparisons[index] && expandedComparisons[index] ? (
-                            <div className="mt-4 grid gap-3 rounded-lg border border-mint-100 bg-mint-50/50 p-3 text-sm sm:grid-cols-2">
+                            <div className="mt-4 grid gap-3 rounded-2xl border border-mint-100 bg-mint-50/50 p-3 text-sm sm:grid-cols-2">
                               <div>
                                 <p className="font-semibold uppercase text-slate-500">Original</p>
                                 <p className="mt-2 leading-6 text-slate-700">
@@ -1402,7 +1401,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               ) : null}
 
               {generated.whatToAdd.length ? (
-                <section className="rounded-lg border border-mint-100 bg-mint-50/60 p-4">
+                <section className="output-card-pro p-4">
                   <h3 className="text-sm font-semibold uppercase text-mint-700">
                     What to add if truthful
                   </h3>
@@ -1427,7 +1426,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 </section>
               ) : null}
 
-              <section className="rounded-lg border border-mint-100 bg-white p-4 shadow-line">
+              <section className="output-card-pro p-4">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
@@ -1541,7 +1540,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </div>
           ) : null}
 
-          <section className="mt-6 rounded-lg border border-slate-200 bg-white/90 p-4 shadow-line">
+          <section className="mt-6 output-card-pro p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase text-mint-700">Before vs After</p>
@@ -1566,10 +1565,10 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               onChange={(event) => setExistingBullet(event.target.value)}
               rows={3}
               placeholder="e.g. Responsible for creating weekly reports for sales team."
-              className="mt-4 min-h-24 w-full resize-none rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100"
+              className="premium-input mt-4 min-h-24 resize-none px-4 py-3"
             />
             {rewriteResult ? (
-              <div className="mt-4 grid gap-3 rounded-lg border border-mint-100 bg-mint-50/50 p-4 sm:grid-cols-2">
+              <div className="mt-4 grid gap-3 rounded-2xl border border-mint-100 bg-mint-50/50 p-4 sm:grid-cols-2">
                 <div>
                   <p className="text-xs font-semibold uppercase text-slate-500">Before</p>
                   <p className="mt-2 text-sm leading-6 text-slate-700">{rewriteResult.original}</p>
@@ -1593,7 +1592,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           </section>
 
           {history.length ? (
-            <section className="mt-6 rounded-lg border border-slate-200 bg-white/90 p-4 shadow-line">
+            <section className="mt-6 output-card-pro p-4">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
@@ -1620,7 +1619,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                     key={item.id}
                     type="button"
                     onClick={() => reopenHistoryItem(item)}
-                    className="block w-full rounded-lg border border-slate-200 bg-slate-50 p-4 text-left transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/60"
+                    className="block w-full rounded-2xl border border-slate-200 bg-slate-50 p-4 text-left transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/60"
                   >
                     <span className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                       <span className="font-semibold text-ink">{item.role}</span>

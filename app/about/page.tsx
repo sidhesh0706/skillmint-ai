@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, LockKeyhole, Sparkles, Target } from "lucide-react";
-import { CelestialPageShell } from "@/components/celestial-page-shell";
 import { GlassPanel } from "@/components/glass-panel";
+import { PremiumPageShell } from "@/components/premium-page-shell";
 
 export const metadata: Metadata = {
   title: "About SkillMint AI",
@@ -16,12 +16,13 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <CelestialPageShell
+      <PremiumPageShell
         eyebrow="About"
         title="A practical AI career workspace for real experience."
         description="SkillMint AI helps students, freshers, interns, and early-career professionals turn honest experience into clearer resume bullets, job-match insights, LinkedIn copy, and application drafts."
+        dark
       />
-      <section className="relative overflow-hidden py-12 sm:py-16">
+      <section className="premium-shell relative overflow-hidden py-12 sm:py-16">
       <div className="container-shell">
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {[
