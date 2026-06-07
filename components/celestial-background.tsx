@@ -20,9 +20,8 @@ export function CelestialBackground({
         className,
       )}
     >
-      <div className="starfield" />
-      <div className="orbital-ring left-[58%] top-16 h-80 w-80" />
-      <div className="orbital-ring -left-24 bottom-12 h-64 w-64 opacity-50" />
+      {intensity === "hero" ? <div className="starfield opacity-10" /> : null}
+      <div className="orbital-ring left-[62%] top-16 h-80 w-80 opacity-35" />
       <div className="cosmic-noise" />
     </div>
   );

@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
-import { CosmicGrid } from "@/components/cosmic-grid";
+import { CelestialBackdrop } from "@/components/celestial-backdrop";
 
 type PremiumPageShellProps = {
   eyebrow: string;
@@ -9,6 +9,7 @@ type PremiumPageShellProps = {
   children?: ReactNode;
   side?: ReactNode;
   dark?: boolean;
+  contained?: boolean;
   className?: string;
 };
 
@@ -19,6 +20,7 @@ export function PremiumPageShell({
   children,
   side,
   dark = false,
+  contained = true,
   className,
 }: PremiumPageShellProps) {
   return (
@@ -29,14 +31,13 @@ export function PremiumPageShell({
         className,
       )}
     >
-      <CosmicGrid className={dark ? "opacity-35" : "opacity-60"} />
-      <div aria-hidden="true" className={clsx("starfield", dark ? "opacity-20" : "opacity-10")} />
-      <div className="container-shell relative">
+      <CelestialBackdrop dark={dark} />
+      <div className={clsx(contained ? "container-command" : "container-shell", "relative")}>
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div className="fade-in-up max-w-3xl">
             <p
               className={clsx(
-                "inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-[0.16em] shadow-line backdrop-blur",
+                "inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] shadow-line backdrop-blur",
                 dark
                   ? "border-white/15 bg-white/[0.08] text-mint-100"
                   : "border-mint-100 bg-white/[0.82] text-mint-700",
@@ -46,7 +47,7 @@ export function PremiumPageShell({
             </p>
             <h1
               className={clsx(
-                "mt-5 text-4xl font-semibold leading-[1.02] tracking-[-0.055em] sm:text-6xl",
+                "mt-5 text-4xl font-semibold leading-[1.01] tracking-[-0.045em] sm:text-6xl",
                 dark ? "text-white" : "text-ink",
               )}
             >
