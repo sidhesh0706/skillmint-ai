@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { type LucideIcon } from "lucide-react";
+import type { CSSProperties } from "react";
 import { MotionButton } from "@/components/motion-button";
 
 type ProductCardProps = {
@@ -12,6 +13,7 @@ type ProductCardProps = {
   cta?: string;
   preview?: string[];
   className?: string;
+  style?: CSSProperties;
 };
 
 const statusLabels = {
@@ -30,17 +32,19 @@ export function ProductCard({
   cta = "Open",
   preview = [],
   className,
+  style,
 }: ProductCardProps) {
   const isLive = status === "live";
 
   return (
     <article
       className={clsx(
-        "group relative flex h-full min-h-[23rem] flex-col overflow-hidden rounded-3xl border bg-white p-5 shadow-[0_18px_54px_rgba(8,11,18,0.09)] transition duration-300",
+        "group relative flex h-full min-h-[20rem] flex-col overflow-hidden rounded-3xl border bg-white p-5 shadow-[0_18px_54px_rgba(8,11,18,0.09)] transition duration-300",
         "hover:-translate-y-1 hover:border-mint-100 hover:shadow-[0_28px_82px_rgba(8,11,18,0.13)]",
         isLive ? "border-slate-200" : "border-slate-200/80 bg-surface",
         className,
       )}
+      style={style}
     >
       <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-500/60 to-transparent" />
       <div className="flex items-start justify-between gap-4">

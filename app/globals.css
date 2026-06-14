@@ -50,6 +50,23 @@ body {
   body {
     @apply antialiased;
   }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--mint);
+    outline-offset: 3px;
+  }
 }
 
 @layer components {
@@ -498,6 +515,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .fade-in-up,
   .fade-in-up-delayed,
   .floating-card,
@@ -513,5 +534,30 @@ body {
   .tools-cockpit::before,
   .tool-card-animated {
     animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  body,
+  .premium-shell,
+  .premium-dark-shell {
+    background-size: 34px 34px, 34px 34px, auto, auto;
+  }
+
+  .command-panel,
+  .gloss-panel,
+  .resource-shelf {
+    border-radius: 1.25rem;
+  }
+
+  .button-primary,
+  .button-secondary,
+  .button-ghost {
+    width: 100%;
+  }
+
+  .output-card-pro:hover,
+  .hover-gloss:hover {
+    transform: none;
   }
 }

@@ -40,40 +40,14 @@ const workflowSteps = [
   },
 ];
 
-const workflowGroups = [
-  {
-    title: "Resume",
-    description: "Generate, score, roast, and convert proof points.",
-    categories: ["Resume", "Resume Review", "Projects"],
-  },
-  {
-    title: "Job matching",
-    description: "Compare your wording against a role without overclaiming.",
-    categories: ["Resume Targeting"],
-  },
-  {
-    title: "LinkedIn",
-    description: "Turn the same experience into profile-ready positioning.",
-    categories: ["LinkedIn"],
-  },
-  {
-    title: "Applications",
-    description: "Draft assets that connect your background to the company.",
-    categories: ["Applications", "Interview"],
-  },
-  {
-    title: "Communication",
-    description: "Handle professional follow-ups and replies faster.",
-    categories: ["Productivity"],
-  },
-];
-
 const liveTools = tools.filter((tool) => tool.status === "live");
-const upcomingTools = tools.filter((tool) => tool.status === "coming-soon");
+const suiteTools = [...tools].sort((a, b) => {
+  if (a.status === b.status) {
+    return a.name.localeCompare(b.name);
+  }
 
-function toolsForGroup(group: (typeof workflowGroups)[number]) {
-  return tools.filter((tool) => group.categories.includes(tool.category));
-}
+  return a.status === "live" ? -1 : 1;
+});
 
 function cardProps(tool: ToolConfig) {
   return {
@@ -194,16 +168,20 @@ export default function ToolsPage() {
 
       <section className="premium-shell py-14 sm:py-20">
         <div className="container-command">
-          <div className="mb-8 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div className="mb-8 grid gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-700">
-                Live tools
+                Product suite
               </p>
               <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-ink sm:text-5xl">
-                Start with the workflows ready to use today.
+                One connected toolkit, not scattered utilities.
               </h2>
+              <p className="mt-4 max-w-2xl leading-7 text-slate-600">
+                Live tools are ready now. Preview tools show what they will do and route you toward
+                the closest useful workflow.
+              </p>
             </div>
-            <div className="rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-soft">
+            <div className="rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-soft backdrop-blur">
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
                   [FileText, "Write", "Generate stronger proof"],
@@ -224,94 +202,37 @@ export default function ToolsPage() {
             </div>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {liveTools.map((tool) => (
-              <ProductCard key={tool.slug} {...cardProps(tool)} />
-            ))}
-          </div>
-
-          <div className="mt-14 grid gap-6 lg:grid-cols-[0.32fr_0.68fr] lg:items-start">
-            <CommandPanel
-              eyebrow="Workflow map"
-              title="Move through the suite by intent."
-              description="Pick the kind of application asset you need, then open the tool closest to that job."
-              status="Mapped"
-              className="lg:sticky lg:top-24"
-            >
-              <div className="grid gap-3">
-                {workflowGroups.map((group, index) => {
-                  const groupTools = toolsForGroup(group);
-
-                  return (
-                    <a
-                      key={group.title}
-                      href={`#${group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                      className="rounded-2xl border border-white/10 bg-white/[0.07] p-3 transition hover:bg-white/[0.11]"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="font-semibold text-white">
-                          {index + 1}. {group.title}
-                        </span>
-                        <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-xs font-semibold text-slate-300">
-                          {groupTools.length}
-                        </span>
-                      </div>
-                      <p className="mt-1 text-sm leading-6 text-slate-300">{group.description}</p>
-                    </a>
-                  );
-                })}
-              </div>
-            </CommandPanel>
-
-            <div className="space-y-8">
-              {workflowGroups.map((group) => {
-                const groupTools = toolsForGroup(group);
-
-                return (
-                  <section key={group.title} id={group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")} className="scroll-mt-28">
-                    <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-mint-700">
-                          {group.title}
-                        </p>
-                        <h3 className="mt-1 text-2xl font-semibold tracking-[-0.03em] text-ink">
-                          {group.description}
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="grid gap-5 md:grid-cols-2">
-                      {groupTools.map((tool) => (
-                        <ProductCard key={tool.slug} {...cardProps(tool)} />
-                      ))}
-                    </div>
-                  </section>
-                );
-              })}
+          <div className="mb-7 overflow-hidden rounded-[2rem] border border-slate-200 bg-white/88 p-3 shadow-soft">
+            <div className="grid gap-2 md:grid-cols-6">
+              {workflowSteps.map((step, index) => (
+                <div
+                  key={step.title}
+                  className="rounded-[1.15rem] border border-slate-200 bg-slate-50 px-3 py-3 transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/70"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-semibold text-white">
+                      {index + 1}
+                    </span>
+                    <p className="truncate text-sm font-semibold text-ink">{step.title}</p>
+                  </div>
+                  <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {upcomingTools.length ? (
-            <section className="mt-14 rounded-[2rem] border border-slate-200 bg-white/90 p-5 shadow-soft sm:p-7">
-              <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-700">
-                    Upcoming tools
-                  </p>
-                  <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-ink">
-                    Preview what is coming next.
-                  </h2>
-                </div>
-                <p className="max-w-xl leading-7 text-slate-600">
-                  Coming-soon tools still show expected inputs, outputs, and a related live tool to try.
-                </p>
-              </div>
-              <div className="grid gap-5 md:grid-cols-2">
-                {upcomingTools.map((tool) => (
-                  <ProductCard key={tool.slug} {...cardProps(tool)} />
-                ))}
-              </div>
-            </section>
-          ) : null}
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {suiteTools.map((tool, index) => (
+              <ProductCard
+                key={tool.slug}
+                {...cardProps(tool)}
+                className="tool-card-animated"
+                style={{ animationDelay: `${Math.min(index * 55, 420)}ms` }}
+              />
+            ))}
+          </div>
 
           <section className="mt-14 overflow-hidden rounded-[2rem] bg-ink p-6 text-white shadow-command sm:p-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
