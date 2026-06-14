@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BookOpen, Search, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, Gauge, Layers3, Search, Sparkles, Target } from "lucide-react";
 import { GlowCard } from "@/components/glow-card";
 import { KeywordChip } from "@/components/keyword-chip";
 import { PremiumPageShell } from "@/components/premium-page-shell";
@@ -119,17 +119,49 @@ export const metadata: Metadata = {
 };
 
 export default function ResourcesPage() {
+  const libraryStats = [
+    { label: "Guides", value: `${seoLandingPages.length}+` },
+    { label: "Paths", value: `${resourceCategories.length}` },
+    { label: "Focus", value: "ATS" },
+  ];
+
   return (
     <>
       <PremiumPageShell
         eyebrow="Resume resources"
-        title="A premium career library for sharper applications."
-        description="Browse role-specific examples, action verbs, FAQs, and practical resume-writing guidance before turning the examples into your own tailored bullets."
+        title="A career library that turns examples into application momentum."
+        description="Start with high-intent resume guides, scan action verbs and ATS language, then turn the closest example into your own tailored bullets."
         side={
-          <div className="command-panel p-5">
-            <div className="flex min-h-12 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.08] px-4 text-slate-200">
+          <div className="command-panel p-5 text-white">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">
+                  Library console
+                </p>
+                <p className="mt-3 leading-7 text-slate-300">
+                  Pick a guide by role, experience level, resume goal, or the kind of proof you
+                  need to show.
+                </p>
+              </div>
+              <span className="score-orb flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-mint-700 shadow-line">
+                <BookOpen className="h-5 w-5" aria-hidden="true" />
+              </span>
+            </div>
+
+            <div className="mt-5 grid gap-2 sm:grid-cols-3">
+              {libraryStats.map((stat) => (
+                <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/[0.08] px-3 py-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                    {stat.label}
+                  </p>
+                  <p className="mt-1 text-lg font-semibold text-white">{stat.value}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 flex min-h-12 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.08] px-4 text-slate-200">
               <Search className="h-4 w-4 text-mint-300" aria-hidden="true" />
-              <span className="text-sm">Find guides by role, goal, project, metric, or ATS keyword</span>
+              <span className="text-sm">Jump by topic: role, metrics, ATS, project, internship</span>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {["Students", "Freshers", "Software", "Data", "ATS", "Metrics", "Projects", "Internships", "Action verbs"].map((item) => (
@@ -162,18 +194,34 @@ export default function ResourcesPage() {
 
       <section className="premium-shell py-14 sm:py-20" id="resource-library">
         <div className="container-shell">
-          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-10 grid gap-5 lg:grid-cols-[0.66fr_0.34fr] lg:items-end">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
                 Start here
               </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-ink sm:text-5xl">
-                Choose the guide closest to your next application.
+                Choose the closest path, then generate your own version.
               </h2>
+              <p className="mt-4 leading-7 text-slate-600">
+                These are the highest-leverage guides for turning rough experience into clear
+                application language.
+              </p>
             </div>
-            <p className="max-w-xl leading-7 text-slate-600">
-              These are the fastest paths from example bullets to your own tailored output.
-            </p>
+            <GlowCard className="p-5">
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ink text-white shadow-line">
+                  <Target className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-700">
+                    Best workflow
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    Open a guide, borrow the structure, then use the generator with your real proof.
+                  </p>
+                </div>
+              </div>
+            </GlowCard>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -182,14 +230,51 @@ export default function ResourcesPage() {
             ))}
           </div>
 
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            {[
+              {
+                title: "Find the role language",
+                description: "Use role-specific examples to understand what recruiters expect.",
+                icon: Search,
+              },
+              {
+                title: "Add proof and metrics",
+                description: "Turn tasks into impact without inventing claims.",
+                icon: Gauge,
+              },
+              {
+                title: "Build the application kit",
+                description: "Move from bullets to job match, LinkedIn, and cover-letter drafts.",
+                icon: Layers3,
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <GlowCard key={item.title} as="article" className="p-5">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-mint-50 text-mint-700 shadow-line">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
+                </GlowCard>
+              );
+            })}
+          </div>
+
           <div className="mt-14 space-y-8">
             {resourceCategories.map((category) => (
-              <section key={category.title} className="resource-shelf p-5 sm:p-7">
+              <section key={category.title} className="resource-shelf section-reveal p-5 sm:p-7">
                 <div className="mb-6 grid gap-3 lg:grid-cols-[0.35fr_0.65fr] lg:items-end">
                   <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
-                      {category.eyebrow}
-                    </p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
+                        {category.eyebrow}
+                      </p>
+                      <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 shadow-line">
+                        {category.pages.length} guides
+                      </span>
+                    </div>
                     <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl">
                       {category.title}
                     </h2>
