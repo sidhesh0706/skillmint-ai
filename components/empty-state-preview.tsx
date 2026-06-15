@@ -7,27 +7,44 @@ type EmptyStatePreviewProps = {
 
 export function EmptyStatePreview({ title, description }: EmptyStatePreviewProps) {
   return (
-    <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-[1.75rem] border border-dashed border-slate-300 bg-[linear-gradient(135deg,#ffffff,#f8faf7_52%,#eef4ef)] p-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] sm:p-6">
-      <div className="relative z-10 max-w-md">
-        <div className="score-orb mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-mint-700 shadow-soft">
+    <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-[1.75rem] border border-slate-200 bg-[linear-gradient(135deg,#ffffff,#fbfcfb_48%,#eef8f4)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.96)] sm:p-6">
+      <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/80 to-transparent" />
+      <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-mint-100/50 blur-3xl" />
+      <div className="relative z-10 w-full max-w-2xl">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-mint-700 shadow-soft">
           <Sparkles className="h-5 w-5" aria-hidden="true" />
         </div>
-        <p className="text-lg font-semibold text-ink">{title}</p>
-        <p className="mt-2 leading-7 text-slate-600">{description}</p>
-        <div className="scan-line mt-5 rounded-2xl border border-slate-200 bg-white/92 p-4 text-left shadow-[0_20px_64px_rgba(8,11,18,0.10)] backdrop-blur">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-mint-700">Preview transformation</p>
-          <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_auto_1.35fr] sm:items-center">
-            <p className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold leading-5 text-slate-500">
-              Made dashboard for sales data
+        <div className="mx-auto max-w-xl text-center">
+          <p className="text-xl font-semibold tracking-[-0.02em] text-ink">{title}</p>
+          <p className="mt-2 leading-7 text-slate-600">{description}</p>
+        </div>
+        <div className="mt-5 rounded-[1.35rem] border border-slate-200 bg-white/95 p-4 text-left shadow-[0_20px_64px_rgba(8,11,18,0.09)] backdrop-blur">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-mint-700">
+              Preview transformation
             </p>
-            <ArrowRight className="mx-auto hidden h-4 w-4 text-mint-700 sm:block" aria-hidden="true" />
-            <p className="rounded-xl border border-mint-100 bg-mint-50 px-3 py-2 text-xs font-semibold leading-5 text-slate-700">
-              Built a sales dashboard to track weekly pipeline trends and identify underperforming regions faster.
-            </p>
+            <span className="inline-flex w-max items-center rounded-full border border-mint-100 bg-mint-50 px-3 py-1 text-xs font-semibold text-mint-700">
+              68 to 91 score
+            </span>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto_1.25fr] sm:items-stretch">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">Rough note</p>
+              <p className="mt-2 text-sm font-semibold leading-6 text-slate-600">Made dashboard for sales data.</p>
+            </div>
+            <div className="hidden items-center justify-center sm:flex">
+              <ArrowRight className="h-4 w-4 text-mint-700" aria-hidden="true" />
+            </div>
+            <div className="rounded-2xl border border-mint-100 bg-mint-50/70 p-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-mint-700">Recruiter-ready</p>
+              <p className="mt-2 text-sm font-semibold leading-6 text-slate-800">
+                Built a sales dashboard using SQL and Excel to track weekly pipeline trends and identify underperforming regions faster.
+              </p>
+            </div>
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
-            {["Score +24", "ATS keywords", "Truth-first rewrite", "Export"].map((item) => (
-              <span key={item} className="rounded-full bg-mint-50 px-2.5 py-1 text-xs font-semibold text-mint-700">
+            {["Action verb", "Tools included", "Clearer scope", "Export-ready"].map((item) => (
+              <span key={item} className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-600">
                 {item}
               </span>
             ))}

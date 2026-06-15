@@ -233,22 +233,22 @@ export default function ToolsPage() {
             ))}
           </div>
 
-          <section className="mt-14 overflow-hidden rounded-[2rem] bg-ink p-6 text-white shadow-command sm:p-8">
+          <section className="mt-14 overflow-hidden rounded-[2rem] border border-mint-100 bg-[linear-gradient(135deg,#ffffff,#eefaf5)] p-6 shadow-soft sm:p-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
-                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">
+                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-mint-700">
                   <Route className="h-4 w-4" aria-hidden="true" />
                   Build your first application kit
                 </p>
-                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em]">
+                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-ink">
                   Start with one honest work note, then reuse the strongest proof everywhere.
                 </h2>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <MotionButton href="/tools/resume-bullet-generator" variant="secondary" showArrow>
+                <MotionButton href="/tools/resume-bullet-generator" showArrow>
                   Generate bullets
                 </MotionButton>
-                <MotionButton href="/resources" variant="ghost">
+                <MotionButton href="/resources" variant="secondary">
                   Browse resources
                 </MotionButton>
               </div>

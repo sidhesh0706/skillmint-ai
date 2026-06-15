@@ -174,7 +174,7 @@ export default function Home() {
               <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
               Free AI career workspace
             </div>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-slate-950 sm:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-6xl lg:text-6xl xl:text-7xl">
               Turn rough experience into job-ready career assets.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">

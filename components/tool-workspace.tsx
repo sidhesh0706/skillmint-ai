@@ -1032,7 +1032,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             </p>
             <h2 className="mt-1 text-2xl font-semibold text-slate-950">Build your draft</h2>
             <p className="mt-2 leading-7 text-slate-600">
-              Add truthful role context, proof, and targeting so the output cockpit has enough signal.
+              Add truthful role context, proof, and targeting so the result panel has enough signal.
             </p>
           </div>
         </div>
@@ -1136,7 +1136,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             icon={Sparkles}
             className="sticky bottom-3 z-10 w-full sm:static"
           >
-            {hasOutput ? "Regenerate cockpit output" : "Generate resume bullets"}
+            {hasOutput ? "Regenerate resume bullets" : "Generate resume bullets"}
           </MotionButton>
 
           <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
@@ -1145,19 +1145,18 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         </div>
       </form>
 
-      <section className="gloss-panel flex min-h-[34rem] flex-col overflow-hidden shadow-[0_34px_110px_rgba(23,32,51,0.14)]" aria-live="polite">
-        <div className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.26),transparent_32%),radial-gradient(circle_at_95%_15%,rgba(125,211,252,0.18),transparent_34%),linear-gradient(135deg,#080b12,#172033_58%,#0d1f1d)] p-4 text-white sm:p-6">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/80 to-transparent" />
-          <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full border border-mint-200/10" />
-          <div className="pointer-events-none absolute -right-8 top-10 h-36 w-36 rounded-full border border-cyan-200/10" />
+      <section className="gloss-panel flex min-h-[34rem] flex-col overflow-hidden shadow-[0_30px_90px_rgba(23,32,51,0.12)]" aria-live="polite">
+        <div className="relative overflow-hidden border-b border-slate-200 bg-[linear-gradient(135deg,#ffffff,#f3fbf7)] p-4 text-slate-950 sm:p-6">
+          <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/90 to-transparent" />
+          <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-mint-100/45 blur-3xl" />
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="relative z-10">
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-mint-100 shadow-line backdrop-blur">
+              <p className="inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-mint-700 shadow-line">
                 <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 Resume Intelligence
               </p>
-              <h2 className="mt-2 text-2xl font-semibold text-white">{tool.output.title}</h2>
-              <p className="mt-2 max-w-2xl leading-7 text-slate-300">{tool.output.description}</p>
+              <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.output.title}</h2>
+              <p className="mt-2 max-w-2xl leading-7 text-slate-600">{tool.output.description}</p>
             </div>
             <div className="relative z-10 flex flex-wrap gap-2 sm:justify-end">
               {hasOutput ? (
@@ -1166,7 +1165,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                     type="button"
                     onClick={() => handleGenerate("regenerate_click")}
                     disabled={isGenerating}
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-4 text-sm font-semibold text-white shadow-line backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
                     aria-label="Tailor output to job description"
                     title="Tailor to JD"
                   >
@@ -1175,7 +1174,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   </button>
                   <Link
                     href="/tools/cover-letter-generator"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-white px-4 text-sm font-semibold text-ink shadow-line transition duration-300 hover:-translate-y-0.5 hover:bg-mint-50"
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white shadow-line transition duration-300 hover:-translate-y-0.5 hover:bg-slate-800"
                   >
                     Cover letter
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -1195,16 +1194,16 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   type="button"
                   onClick={() => handleExportAction(item.action)}
                   disabled={!hasOutput}
-                  className="group flex min-h-16 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.08] px-3 py-2 text-left shadow-line backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-mint-300/40 hover:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:shadow-line"
+                  className="group flex min-h-16 items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-left shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/70 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:shadow-line"
                   aria-label={item.label}
                   title={item.description}
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.12] text-mint-100 transition group-hover:bg-mint-300/15 group-hover:text-white">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-mint-700 transition group-hover:bg-white">
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-sm font-semibold text-white">{item.label}</span>
-                    <span className="hidden truncate text-xs text-slate-300 sm:block">
+                    <span className="block text-sm font-semibold text-ink">{item.label}</span>
+                    <span className="hidden truncate text-xs text-slate-500 sm:block">
                       {item.description}
                     </span>
                   </span>
@@ -1377,6 +1376,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                           </div>
 
                           <div className="mt-3 flex flex-wrap gap-2">
+                            <button
+                              type="button"
+                              onClick={() => copyText(item, "Bullet copied.")}
+                              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-line transition hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                            >
+                              <Clipboard className="h-3.5 w-3.5" aria-hidden="true" />
+                              Copy bullet
+                            </button>
                             <button
                               type="button"
                               onClick={() => handleImproveBullet(index)}

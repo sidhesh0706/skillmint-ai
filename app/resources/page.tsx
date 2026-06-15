@@ -289,18 +289,18 @@ export default function ResourcesPage() {
             ))}
           </div>
 
-          <GlowCard className="mt-12 bg-ink p-6 text-white sm:p-8">
+          <GlowCard className="mt-12 border-mint-100 bg-[linear-gradient(135deg,#ffffff,#eefaf5)] p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-mint-100">
+                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
                   <BookOpen className="h-4 w-4" aria-hidden="true" />
                   Turn examples into your own bullets
                 </p>
-                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em]">
+                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-ink">
                   Use a guide for direction, then generate bullets tailored to your real role.
                 </h2>
               </div>
-              <Link href="/tools/resume-bullet-generator" className="button-primary bg-white text-ink hover:bg-mint-50">
+              <Link href="/tools/resume-bullet-generator" className="button-primary">
                 Generate resume bullets
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
