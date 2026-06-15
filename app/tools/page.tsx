@@ -6,7 +6,6 @@ import {
   Route,
   Target,
 } from "lucide-react";
-import { CommandPanel } from "@/components/command-panel";
 import { JsonLd } from "@/components/json-ld";
 import { MotionButton } from "@/components/motion-button";
 import { ProductCard } from "@/components/product-card";
@@ -103,65 +102,65 @@ export default function ToolsPage() {
         ])}
       />
 
-      <section className="premium-dark-shell py-14 text-white sm:py-20">
+      <section className="bg-[#FAFAF8] py-12 sm:py-16">
         <div className="container-command relative">
-          <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
             <div className="fade-in-up">
-              <p className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-mint-100">
-                AI career command center
+              <p className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
+                AI career toolkit
               </p>
-              <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-                Your AI career toolkit.
+              <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-slate-950 sm:text-6xl">
+                Build your application kit.
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-                Build a resume, LinkedIn headline, cover letter, and job-match plan from the
-                same real experience, without fake claims or account setup.
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+                Start with your real experience, then turn it into resume bullets, recruiter
+                critique, job-match insights, LinkedIn copy, and cover letters.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <MotionButton href="/tools/resume-bullet-generator" variant="secondary" showArrow>
+                <MotionButton href="/tools/resume-bullet-generator" showArrow>
                   Start with resume bullets
                 </MotionButton>
-                <MotionButton href="/resources" variant="ghost">
+                <MotionButton href="/resources" variant="secondary">
                   Browse examples
                 </MotionButton>
               </div>
-              <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-300">
+              <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-700">
                 {["No signup", "Truth-first rewrites", "Browser-only history", "Clean exports"].map((item) => (
-                  <span key={item} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-3 py-1.5 font-semibold">
-                    <CheckCircle2 className="h-4 w-4 text-mint-300" aria-hidden="true" />
+                  <span key={item} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold shadow-line">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" aria-hidden="true" />
                     {item}
                   </span>
                 ))}
               </div>
             </div>
 
-            <CommandPanel
-              eyebrow="Recommended path"
-              title="Build the application kit in order."
-              description="Start with proof, score it, match the role, then reuse the best wording across profile and application assets."
-              status={`${liveTools.length} live`}
-              scanLine
-              footer="Each step routes to a real tool or a useful preview."
-            >
-              <div className="grid gap-3">
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-soft">
+              <div className="flex items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                <div>
+                  <p className="text-sm font-semibold text-slate-950">Recommended workflow</p>
+                  <p className="mt-1 text-sm text-slate-500">{liveTools.length} live tools ready</p>
+                </div>
+                <Route className="h-5 w-5 text-emerald-600" aria-hidden="true" />
+              </div>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {workflowSteps.map((step, index) => (
                   <div
                     key={step.title}
-                    className="rounded-2xl border border-white/10 bg-white/[0.07] p-4 transition duration-300 hover:-translate-y-0.5 hover:bg-white/[0.10]"
+                    className="rounded-2xl border border-slate-200 bg-[#FAFAF8] p-4 transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-line"
                   >
                     <div className="flex items-start gap-3">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-sm font-semibold text-ink">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-950 text-sm font-semibold text-white">
                         {index + 1}
                       </span>
                       <div className="min-w-0">
-                        <p className="font-semibold text-white">{step.title}</p>
-                        <p className="mt-1 text-sm leading-6 text-slate-300">{step.description}</p>
+                        <p className="font-semibold text-slate-950">{step.title}</p>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">{step.description}</p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </CommandPanel>
+            </div>
           </div>
         </div>
       </section>

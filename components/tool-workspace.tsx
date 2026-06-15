@@ -982,18 +982,18 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
   return (
     <div className="relative space-y-5">
-      <div className="command-panel overflow-hidden p-4 text-white sm:p-5">
-        <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/80 to-transparent" />
+      <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 text-slate-950 shadow-soft sm:p-5">
+        <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/80 to-transparent" />
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-mint-100">
+            <p className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700">
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              AI resume cockpit
+              Resume workspace
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
               Build, score, rewrite, and export one focused resume draft.
             </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base sm:leading-7">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
               Your inputs stay in this browser unless you generate. The output workspace turns rough notes into scored bullets, keyword guidance, and clean export formats.
             </p>
           </div>
@@ -1001,12 +1001,12 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             {cockpitStats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 shadow-line backdrop-blur"
+                className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-4 py-3 shadow-line"
               >
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
                   {stat.label}
                 </p>
-                <p className="mt-1 truncate text-sm font-semibold text-white">{stat.value}</p>
+                <p className="mt-1 truncate text-sm font-semibold text-slate-950">{stat.value}</p>
               </div>
             ))}
           </div>
@@ -1015,23 +1015,23 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
       <div className="grid gap-6 xl:grid-cols-[minmax(22rem,0.88fr)_minmax(0,1.42fr)] xl:items-start">
       <form
-        className="command-panel relative overflow-hidden p-4 text-white sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
+        className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 text-slate-950 shadow-soft sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {
           event.preventDefault();
           handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
         }}
       >
-        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/70 to-transparent" />
         <div className="mb-5 flex items-start gap-4 sm:mb-6">
-          <div className="score-orb flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-mint-700 shadow-line">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 shadow-line">
             <FileText className="h-5 w-5" aria-hidden="true" />
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-mint-100">
-              Control panel
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              Input
             </p>
-            <h2 className="mt-1 text-2xl font-semibold text-white">Command input</h2>
-            <p className="mt-2 leading-7 text-slate-300">
+            <h2 className="mt-1 text-2xl font-semibold text-slate-950">Build your draft</h2>
+            <p className="mt-2 leading-7 text-slate-600">
               Add truthful role context, proof, and targeting so the output cockpit has enough signal.
             </p>
           </div>
@@ -1040,8 +1040,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         <div className="space-y-5">
           <div>
             <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">Try an example</p>
-              <span className="hidden text-xs font-semibold text-slate-400 sm:inline">
+              <p className="text-sm font-semibold text-emerald-700">Try a sample</p>
+              <span className="hidden text-xs font-semibold text-slate-500 sm:inline">
                 Great for first-time users
               </span>
             </div>
@@ -1051,7 +1051,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   key={preset.label}
                   type="button"
                   onClick={() => applyPreset(preset.values)}
-                  className="rounded-full border border-white/10 bg-white/[0.08] px-3 py-2 text-xs font-semibold text-slate-200 transition hover:-translate-y-0.5 hover:border-mint-300/40 hover:bg-white/[0.14] hover:text-white"
+                  className="rounded-full border border-slate-200 bg-[#FAFAF8] px-3 py-2 text-xs font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
                 >
                   {preset.label}
                 </button>
@@ -1139,7 +1139,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             {hasOutput ? "Regenerate cockpit output" : "Generate resume bullets"}
           </MotionButton>
 
-          <p className="rounded-2xl border border-mint-300/20 bg-mint-300/10 px-4 py-3 text-sm font-semibold text-mint-100">
+          <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
             Saved only in your browser. No account required.
           </p>
         </div>

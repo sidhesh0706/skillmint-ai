@@ -4,8 +4,8 @@ import { BrandMark } from "@/components/brand-mark";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-transparent bg-transparent px-3 py-3">
-      <div className="container-shell flex min-h-16 items-center justify-between gap-4 rounded-full border border-slate-200/80 bg-white/[0.84] px-4 py-2 shadow-[0_18px_60px_rgba(23,32,51,0.08)] backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl">
+      <div className="container-shell flex min-h-16 items-center justify-between gap-4 py-3">
         <Link href="/" className="flex items-center gap-3 font-semibold text-ink">
           <BrandMark />
           <span className="text-base">SkillMint AI</span>
@@ -14,13 +14,13 @@ export function Header() {
         <nav aria-label="Main navigation" className="flex items-center gap-2 text-sm font-medium">
           <Link
             href="/resources"
-            className="hidden rounded-full px-4 py-2.5 text-slate-700 transition hover:bg-white hover:text-ink hover:shadow-line sm:inline-flex"
+            className="hidden rounded-full px-4 py-2.5 text-slate-700 transition hover:bg-slate-100 hover:text-ink sm:inline-flex"
           >
             Resources
           </Link>
           <Link
             href="/tools"
-            className="rounded-full px-4 py-2.5 text-slate-700 transition hover:bg-white hover:text-ink hover:shadow-line"
+            className="rounded-full px-4 py-2.5 text-slate-700 transition hover:bg-slate-100 hover:text-ink"
           >
             Tools
           </Link>

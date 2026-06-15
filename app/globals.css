@@ -32,12 +32,7 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    linear-gradient(rgba(8, 11, 18, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(8, 11, 18, 0.028) 1px, transparent 1px),
-    radial-gradient(circle at 50% -8%, rgba(56, 217, 169, 0.12), transparent 34rem),
-    linear-gradient(180deg, #f8faf7 0%, #ffffff 48%, #f8faf7 100%);
-  background-size: 48px 48px, 48px 48px, auto, auto;
+  background: #fafaf8;
   color: var(--text-main);
 }
 
@@ -134,24 +129,13 @@ body {
   .premium-shell {
     position: relative;
     overflow: hidden;
-    background:
-      linear-gradient(rgba(8, 11, 18, 0.032) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(8, 11, 18, 0.026) 1px, transparent 1px),
-      radial-gradient(circle at 18% 0%, rgba(56, 217, 169, 0.10), transparent 28rem),
-      linear-gradient(180deg, #f8faf7 0%, #ffffff 44%, #f8faf7 100%);
-    background-size: 48px 48px, 48px 48px, auto, auto;
+    background: linear-gradient(180deg, #fafaf8 0%, #ffffff 52%, #fafaf8 100%);
   }
 
   .premium-dark-shell {
     position: relative;
     overflow: hidden;
-    background:
-      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      radial-gradient(circle at 18% 0%, rgba(56, 217, 169, 0.16), transparent 28rem),
-      radial-gradient(circle at 88% 10%, rgba(34, 211, 238, 0.10), transparent 30rem),
-      linear-gradient(180deg, #080b12 0%, #0e1624 68%, #f8faf7 100%);
-    background-size: 56px 56px, 56px 56px, auto, auto, auto;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
   }
 
   .command-panel {

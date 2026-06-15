@@ -132,60 +132,59 @@ export default function ResourcesPage() {
         title="A career library that turns examples into application momentum."
         description="Start with high-intent resume guides, scan action verbs and ATS language, then turn the closest example into your own tailored bullets."
         side={
-          <div className="command-panel p-5 text-white">
+          <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-soft">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">
+                <p className="text-sm font-semibold text-emerald-700">
                   Library console
                 </p>
-                <p className="mt-3 leading-7 text-slate-300">
+                <p className="mt-3 leading-7 text-slate-600">
                   Pick a guide by role, experience level, resume goal, or the kind of proof you
                   need to show.
                 </p>
               </div>
-              <span className="score-orb flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-mint-700 shadow-line">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 shadow-line">
                 <BookOpen className="h-5 w-5" aria-hidden="true" />
               </span>
             </div>
 
             <div className="mt-5 grid gap-2 sm:grid-cols-3">
               {libraryStats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/[0.08] px-3 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                <div key={stat.label} className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-3 py-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
                     {stat.label}
                   </p>
-                  <p className="mt-1 text-lg font-semibold text-white">{stat.value}</p>
+                  <p className="mt-1 text-lg font-semibold text-slate-950">{stat.value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-5 flex min-h-12 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.08] px-4 text-slate-200">
-              <Search className="h-4 w-4 text-mint-300" aria-hidden="true" />
+            <div className="mt-5 flex min-h-12 items-center gap-3 rounded-2xl border border-slate-200 bg-[#FAFAF8] px-4 text-slate-600">
+              <Search className="h-4 w-4 text-emerald-600" aria-hidden="true" />
               <span className="text-sm">Jump by topic: role, metrics, ATS, project, internship</span>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {["Students", "Freshers", "Software", "Data", "ATS", "Metrics", "Projects", "Internships", "Action verbs"].map((item) => (
                 <a key={item} href="#resource-library">
-                  <KeywordChip className="border-white/10 bg-white/[0.08] text-slate-100">{item}</KeywordChip>
+                  <KeywordChip className="border-slate-200 bg-white text-slate-700">{item}</KeywordChip>
                 </a>
               ))}
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <Link href="/tools/resume-bullet-generator" className="button-primary bg-white text-ink hover:bg-mint-50">
+              <Link href="/tools/resume-bullet-generator" className="button-primary">
                 Generate bullets
                 <Sparkles className="h-4 w-4" aria-hidden="true" />
               </Link>
-              <Link href="/tools" className="button-ghost">
+              <Link href="/tools" className="button-secondary">
                 Explore tools
               </Link>
             </div>
           </div>
         }
-        dark
       >
-        <div className="flex flex-wrap gap-2 text-sm text-slate-300">
+        <div className="flex flex-wrap gap-2 text-sm text-slate-700">
           {["Guided examples", "ATS language", "Metrics", "Truth-first writing"].map((item) => (
-            <span key={item} className="rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 font-semibold">
+            <span key={item} className="rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold shadow-line">
               {item}
             </span>
           ))}
