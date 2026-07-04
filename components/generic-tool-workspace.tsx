@@ -237,13 +237,12 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
     <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
       <form
         onSubmit={handleSubmit}
-        className="command-panel relative p-4 text-white sm:p-5 lg:sticky lg:top-24"
+        className="relative rounded-[1.75rem] border border-slate-200 bg-white p-4 text-slate-950 shadow-soft sm:p-5 lg:sticky lg:top-24"
       >
-        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent" />
-        <div className="rounded-2xl border border-white/10 bg-white/[0.08] p-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">AI workspace</p>
-          <h2 className="mt-1 text-2xl font-semibold text-white">Build the input</h2>
-          <p className="mt-2 text-sm leading-6 text-slate-300">
+        <div className="rounded-2xl border border-slate-200 bg-[#FAFAF8] p-4">
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">AI workspace</p>
+          <h2 className="mt-1 text-2xl font-semibold text-slate-950">Build the input</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
             Add honest context. SkillMint will improve clarity and positioning without encouraging
             overclaiming.
           </p>
@@ -255,7 +254,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               key={field.name}
               className={field.layout === "half" ? "block" : "block sm:col-span-2"}
             >
-              <span className="text-sm font-semibold text-white">{field.label}</span>
+              <span className="text-sm font-semibold text-slate-950">{field.label}</span>
               {renderField(field, form[field.name] || "", updateForm)}
             </label>
           ))}
@@ -270,7 +269,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
         <button
           type="submit"
           disabled={isLoading}
-          className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(135deg,#142033,#0f766e)] px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -280,12 +279,12 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
           {isLoading ? "Generating..." : `Run ${tool.name}`}
         </button>
 
-        <p className="mt-3 rounded-2xl border border-mint-300/20 bg-mint-300/10 px-3 py-2 text-xs font-semibold text-mint-100">
+        <p className="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">
           Privacy-first: no signup required. Review every generated claim before using it.
         </p>
       </form>
 
-      <section className="gloss-panel min-h-[34rem] overflow-hidden shadow-[0_34px_110px_rgba(23,32,51,0.14)]">
+      <section className="min-h-[34rem] overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-soft">
         <div className="sticky top-16 z-10 border-b border-slate-200/80 bg-white/90 px-4 py-3 backdrop-blur sm:px-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>

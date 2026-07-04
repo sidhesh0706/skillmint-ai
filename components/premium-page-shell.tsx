@@ -1,6 +1,5 @@
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
-import { CelestialBackdrop } from "@/components/celestial-backdrop";
 
 type PremiumPageShellProps = {
   eyebrow: string;
@@ -26,12 +25,12 @@ export function PremiumPageShell({
   return (
     <section
       className={clsx(
-        dark ? "premium-dark-shell text-white" : "premium-shell text-ink",
-        "relative isolate py-14 sm:py-20",
+        dark ? "bg-slate-950 text-white" : "bg-[#FAFAF8] text-ink",
+        "relative isolate overflow-hidden py-14 sm:py-20",
         className,
       )}
     >
-      <CelestialBackdrop dark={dark} />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
       <div className={clsx(contained ? "container-command" : "container-shell", "relative")}>
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div className="fade-in-up max-w-3xl">
@@ -40,7 +39,7 @@ export function PremiumPageShell({
                 "inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] shadow-line backdrop-blur",
                 dark
                   ? "border-white/15 bg-white/[0.08] text-mint-100"
-                  : "border-mint-100 bg-white/[0.82] text-mint-700",
+                  : "border-emerald-200 bg-emerald-50 text-emerald-700",
               )}
             >
               {eyebrow}
@@ -48,7 +47,7 @@ export function PremiumPageShell({
             <h1
               className={clsx(
                 "mt-5 text-4xl font-semibold leading-[1.01] tracking-[-0.045em] sm:text-6xl",
-                dark ? "text-white" : "text-ink",
+                dark ? "text-white" : "text-slate-950",
               )}
             >
               {title}

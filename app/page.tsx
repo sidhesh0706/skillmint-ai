@@ -8,12 +8,12 @@ import {
   Layers3,
   LockKeyhole,
   Search,
-  Target,
   Wand2,
   type LucideIcon,
 } from "lucide-react";
 import { EmailCapture } from "@/components/email-capture";
 import { JsonLd } from "@/components/json-ld";
+import { ProductWindow } from "@/components/product-window";
 import { ToolGrid } from "@/components/tool-grid";
 import { TrackedLink } from "@/components/tracked-link";
 import { seoLandingPages } from "@/data/seo-landing-pages";
@@ -96,70 +96,7 @@ export const metadata: Metadata = {
 };
 
 function PreviewPanel() {
-  const bullets = [
-    ["92", "Built an interactive sales dashboard using SQL and Excel to track weekly pipeline trends and identify underperforming regions faster."],
-    ["87", "Coordinated product, operations, and customer success updates to remove launch blockers before release."],
-    ["81", "Analyzed customer feedback trends to prioritize process improvements and improve response quality."],
-  ];
-
-  return (
-    <div className="rounded-[2rem] border border-slate-200 bg-white p-3 shadow-[0_28px_80px_rgba(15,23,42,0.12)]">
-      <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-4 sm:p-5">
-        <div className="flex flex-col gap-3 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold text-slate-950">Resume workspace</p>
-            <p className="mt-1 text-sm text-slate-500">Resume / JD Match / LinkedIn / Cover Letter</p>
-          </div>
-          <span className="inline-flex w-max items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-700">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            92/100 ready
-          </span>
-        </div>
-
-        <div className="mt-4 grid gap-4 lg:grid-cols-[0.34fr_0.66fr]">
-          <div className="rounded-2xl bg-slate-950 p-4 text-white">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200">Workflow</p>
-            <div className="mt-4 space-y-2">
-              {["Resume bullets", "JD match", "LinkedIn", "Cover letter"].map((item) => (
-                <div key={item} className="rounded-xl border border-white/10 bg-white/[0.06] p-3">
-                  <p className="text-sm font-semibold">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="space-y-3">
-            {bullets.map(([score, text]) => (
-              <div key={text} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-line">
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <div className="h-2 w-28 overflow-hidden rounded-full bg-slate-100">
-                    <div className="h-full rounded-full bg-emerald-500" style={{ width: `${score}%` }} />
-                  </div>
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-                    {score}
-                  </span>
-                </div>
-                <p className="text-sm leading-6 text-slate-700">- {text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4">
-          <p className="flex items-center gap-2 text-sm font-semibold text-amber-800">
-            <Target className="h-4 w-4" aria-hidden="true" />
-            Missing keyword opportunities
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {["stakeholder management", "process improvement", "customer insights"].map((keyword) => (
-              <span key={keyword} className="rounded-full border border-amber-200 bg-white px-3 py-1 text-xs font-semibold text-amber-800">
-                {keyword}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <ProductWindow />;
 }
 
 export default function Home() {
@@ -167,7 +104,8 @@ export default function Home() {
     <>
       <JsonLd data={[softwareApplicationSchema(), breadcrumbSchema([{ name: "Home", path: "/" }])]} />
 
-      <section className="bg-[#FAFAF8] py-12 sm:py-16 lg:py-20">
+      <section className="relative overflow-hidden bg-[#FAFAF8] py-12 sm:py-16 lg:py-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
         <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">

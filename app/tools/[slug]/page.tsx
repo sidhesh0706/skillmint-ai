@@ -94,7 +94,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   if (tool.status === "coming-soon") {
     return (
-      <section className="premium-dark-shell py-12 sm:py-16 lg:py-[4.5rem]">
+      <section className="bg-[#FAFAF8] py-12 sm:py-16 lg:py-[4.5rem]">
         <div className="container-shell">
           <ComingSoonTool slug={tool.slug} />
         </div>
@@ -118,10 +118,9 @@ export default async function ToolPage({ params }: ToolPageProps) {
         eyebrow={tool.category}
         title={tool.name}
         description={tool.longDescription}
-        dark
         side={
-          <div className="command-panel p-4">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-mint-100">
+          <div className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-soft">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
               Workspace signals
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -131,9 +130,9 @@ export default async function ToolPage({ params }: ToolPageProps) {
                 return (
                   <span
                     key={highlight.label}
-                    className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.08] px-3.5 py-3 text-sm font-semibold text-slate-100 shadow-line backdrop-blur"
+                    className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-700 shadow-line"
                   >
-                    <Icon className="h-4 w-4 text-mint-300" aria-hidden="true" />
+                    <Icon className="h-4 w-4 text-emerald-600" aria-hidden="true" />
                     {highlight.label}
                   </span>
                 );

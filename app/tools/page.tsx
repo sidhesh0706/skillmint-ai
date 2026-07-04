@@ -9,6 +9,7 @@ import {
 import { JsonLd } from "@/components/json-ld";
 import { MotionButton } from "@/components/motion-button";
 import { ProductCard } from "@/components/product-card";
+import { ProductWindow } from "@/components/product-window";
 import { tools, getToolHref, type ToolConfig } from "@/data/tool-config";
 import { breadcrumbSchema } from "@/lib/structured-data";
 
@@ -102,7 +103,8 @@ export default function ToolsPage() {
         ])}
       />
 
-      <section className="bg-[#FAFAF8] py-12 sm:py-16">
+      <section className="relative overflow-hidden bg-[#FAFAF8] py-12 sm:py-16">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
         <div className="container-command relative">
           <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
             <div className="fade-in-up">
@@ -134,33 +136,17 @@ export default function ToolsPage() {
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-soft">
-              <div className="flex items-center justify-between gap-3 border-b border-slate-200 pb-4">
-                <div>
-                  <p className="text-sm font-semibold text-slate-950">Recommended workflow</p>
-                  <p className="mt-1 text-sm text-slate-500">{liveTools.length} live tools ready</p>
-                </div>
-                <Route className="h-5 w-5 text-emerald-600" aria-hidden="true" />
-              </div>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                {workflowSteps.map((step, index) => (
-                  <div
-                    key={step.title}
-                    className="rounded-2xl border border-slate-200 bg-[#FAFAF8] p-4 transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-line"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-950 text-sm font-semibold text-white">
-                        {index + 1}
-                      </span>
-                      <div className="min-w-0">
-                        <p className="font-semibold text-slate-950">{step.title}</p>
-                        <p className="mt-1 text-sm leading-6 text-slate-600">{step.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ProductWindow
+              title="Application kit preview"
+              subtitle={`${liveTools.length} live tools ready`}
+              tabs={["Resume", "Review", "JD Match", "Project", "Apply"]}
+              bullets={[
+                { score: 94, text: "Generate proof-driven bullets from rough experience notes." },
+                { score: 89, text: "Review weak sections before sending applications." },
+                { score: 86, text: "Match wording against the role without overclaiming." },
+              ]}
+              keywords={["resume scoring", "JD match", "export-ready copy"]}
+            />
           </div>
         </div>
       </section>
@@ -201,12 +187,12 @@ export default function ToolsPage() {
             </div>
           </div>
 
-          <div className="mb-7 overflow-hidden rounded-[2rem] border border-slate-200 bg-white/88 p-3 shadow-soft">
+          <div className="mb-7 overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white p-2 shadow-soft">
             <div className="grid gap-2 md:grid-cols-6">
               {workflowSteps.map((step, index) => (
                 <div
                   key={step.title}
-                  className="rounded-[1.15rem] border border-slate-200 bg-slate-50 px-3 py-3 transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/70"
+                  className="rounded-[1.15rem] border border-slate-200 bg-slate-50 px-3 py-3 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-white hover:shadow-line"
                 >
                   <div className="flex items-center gap-2">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-semibold text-white">

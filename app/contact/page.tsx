@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Bug, Lightbulb, Mail, MessageSquare, Sparkles, Wrench } from "lucide-react";
-import { GlassPanel } from "@/components/glass-panel";
 import { PremiumPageShell } from "@/components/premium-page-shell";
 
 export const metadata: Metadata = {
@@ -19,21 +18,20 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Send feedback, tool ideas, or support notes."
         description="SkillMint is built around practical career workflows. Tell us what felt useful, confusing, or missing."
-        dark
         side={
-          <div className="command-panel p-5 text-white">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">Fastest path</p>
-            <p className="mt-3 leading-7 text-slate-300">
+          <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-soft">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">Fastest path</p>
+            <p className="mt-3 leading-7 text-slate-600">
               Include the page or tool you were using so feedback is easier to act on.
             </p>
             <div className="mt-4 grid gap-2">
               {["Bug report", "Tool idea", "Content feedback"].map((item) => (
-                <span key={item} className="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-sm font-semibold text-slate-200">
+                <span key={item} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
                   {item}
                 </span>
               ))}
             </div>
-            <Link href="mailto:hello@skillmint.ai" className="button-primary mt-5 bg-white text-ink hover:bg-mint-50">
+            <Link href="mailto:hello@skillmint.ai" className="button-primary mt-5">
               <Mail className="h-4 w-4" aria-hidden="true" />
               Email hello@skillmint.ai
             </Link>
@@ -62,18 +60,18 @@ export default function ContactPage() {
             const Icon = item.icon;
 
             return (
-              <GlassPanel key={item.title} className="p-5">
-                <div className="score-orb flex h-11 w-11 items-center justify-center rounded-xl bg-mint-50 text-mint-700 shadow-line">
+              <article key={item.title} className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-line">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 shadow-line">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <h2 className="mt-4 text-xl font-semibold text-ink">{item.title}</h2>
                 <p className="mt-3 leading-7 text-slate-600">{item.description}</p>
-              </GlassPanel>
+              </article>
             );
           })}
         </div>
         <div className="container-shell mt-8">
-          <GlassPanel className="overflow-hidden p-0">
+          <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-soft">
             <div className="grid gap-0 lg:grid-cols-[0.68fr_0.32fr]">
               <div className="p-6 sm:p-8">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -92,17 +90,17 @@ export default function ContactPage() {
                   </Link>
                 </div>
               </div>
-              <div className="bg-[linear-gradient(180deg,#172033,#0d1f1d)] p-6 text-white sm:p-8">
-                <Wrench className="h-5 w-5 text-mint-100" aria-hidden="true" />
-                <p className="mt-4 text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">
+              <div className="border-t border-slate-200 bg-[#FAFAF8] p-6 sm:p-8 lg:border-l lg:border-t-0">
+                <Wrench className="h-5 w-5 text-emerald-700" aria-hidden="true" />
+                <p className="mt-4 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
                   Helpful context
                 </p>
-                <p className="mt-3 text-sm leading-6 text-slate-300">
+                <p className="mt-3 text-sm leading-6 text-slate-600">
                   Share the page URL, what you expected, and what actually happened.
                 </p>
               </div>
             </div>
-          </GlassPanel>
+          </div>
         </div>
       </section>
     </>

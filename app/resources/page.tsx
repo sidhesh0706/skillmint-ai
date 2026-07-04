@@ -1,9 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BookOpen, Gauge, Layers3, Search, Sparkles, Target } from "lucide-react";
-import { GlowCard } from "@/components/glow-card";
-import { KeywordChip } from "@/components/keyword-chip";
-import { PremiumPageShell } from "@/components/premium-page-shell";
+import { ArrowRight, BookOpen, Gauge, Layers3, Search, Target } from "lucide-react";
 import { ResourceCard } from "@/components/resource-card";
 import { seoLandingPages } from "@/data/seo-landing-pages";
 
@@ -119,108 +116,80 @@ export const metadata: Metadata = {
 };
 
 export default function ResourcesPage() {
-  const libraryStats = [
-    { label: "Guides", value: `${seoLandingPages.length}+` },
-    { label: "Paths", value: `${resourceCategories.length}` },
-    { label: "Focus", value: "ATS" },
-  ];
+  const filters = ["Students", "Freshers", "Software", "Data", "ATS", "Metrics", "Projects", "Internships"];
 
   return (
     <>
-      <PremiumPageShell
-        eyebrow="Resume resources"
-        title="A career library that turns examples into application momentum."
-        description="Start with high-intent resume guides, scan action verbs and ATS language, then turn the closest example into your own tailored bullets."
-        side={
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-soft">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-sm font-semibold text-emerald-700">
-                  Library console
-                </p>
-                <p className="mt-3 leading-7 text-slate-600">
-                  Pick a guide by role, experience level, resume goal, or the kind of proof you
-                  need to show.
-                </p>
-              </div>
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 shadow-line">
-                <BookOpen className="h-5 w-5" aria-hidden="true" />
-              </span>
-            </div>
+      <section className="relative overflow-hidden bg-[#FAFAF8] py-12 sm:py-16 lg:py-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
+        <div className="container-shell relative grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
+          <div>
+            <p className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
+              Resume resources
+            </p>
+            <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-6xl">
+              Resume resources that turn examples into application-ready proof.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+              Browse examples by role, experience level, metrics, ATS keywords, and project type,
+              then turn the closest example into your own bullet.
+            </p>
+          </div>
 
-            <div className="mt-5 grid gap-2 sm:grid-cols-3">
-              {libraryStats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-3 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                    {stat.label}
-                  </p>
-                  <p className="mt-1 text-lg font-semibold text-slate-950">{stat.value}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-5 flex min-h-12 items-center gap-3 rounded-2xl border border-slate-200 bg-[#FAFAF8] px-4 text-slate-600">
+          <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-soft">
+            <div className="flex min-h-12 items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-slate-600">
               <Search className="h-4 w-4 text-emerald-600" aria-hidden="true" />
-              <span className="text-sm">Jump by topic: role, metrics, ATS, project, internship</span>
+              <span className="text-sm">Find guides by role, goal, project, metric, or ATS keyword</span>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
-              {["Students", "Freshers", "Software", "Data", "ATS", "Metrics", "Projects", "Internships", "Action verbs"].map((item) => (
-                <a key={item} href="#resource-library">
-                  <KeywordChip className="border-slate-200 bg-white text-slate-700">{item}</KeywordChip>
+              {filters.map((item) => (
+                <a
+                  key={item}
+                  href="#resource-library"
+                  className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
+                >
+                  {item}
                 </a>
               ))}
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <Link href="/tools/resume-bullet-generator" className="button-primary">
                 Generate bullets
-                <Sparkles className="h-4 w-4" aria-hidden="true" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <Link href="/tools" className="button-secondary">
                 Explore tools
               </Link>
             </div>
           </div>
-        }
-      >
-        <div className="flex flex-wrap gap-2 text-sm text-slate-700">
-          {["Guided examples", "ATS language", "Metrics", "Truth-first writing"].map((item) => (
-            <span key={item} className="rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold shadow-line">
-              {item}
-            </span>
-          ))}
         </div>
-      </PremiumPageShell>
+      </section>
 
-      <section className="premium-shell py-14 sm:py-20" id="resource-library">
+      <section className="bg-white py-14 sm:py-20" id="resource-library">
         <div className="container-shell">
           <div className="mb-10 grid gap-5 lg:grid-cols-[0.66fr_0.34fr] lg:items-end">
             <div className="max-w-2xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
                 Start here
               </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-ink sm:text-5xl">
-                Choose the closest path, then generate your own version.
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl">
+                Choose the guide closest to your situation.
               </h2>
               <p className="mt-4 leading-7 text-slate-600">
                 These are the highest-leverage guides for turning rough experience into clear
                 application language.
               </p>
             </div>
-            <GlowCard className="p-5">
+            <div className="rounded-3xl border border-slate-200 bg-[#FAFAF8] p-5 shadow-line">
               <div className="flex items-start gap-3">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ink text-white shadow-line">
                   <Target className="h-5 w-5" aria-hidden="true" />
                 </span>
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-700">
-                    Best workflow
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    Open a guide, borrow the structure, then use the generator with your real proof.
-                  </p>
-                </div>
+                <p className="text-sm leading-6 text-slate-600">
+                  Best workflow: open a guide, borrow the structure, then use the generator with your real proof.
+                </p>
               </div>
-            </GlowCard>
+            </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -250,31 +219,31 @@ export default function ResourcesPage() {
               const Icon = item.icon;
 
               return (
-                <GlowCard key={item.title} as="article" className="p-5">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-mint-50 text-mint-700 shadow-line">
+                <article key={item.title} className="rounded-3xl border border-slate-200 bg-[#FAFAF8] p-5 shadow-line">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <h3 className="mt-4 text-xl font-semibold text-ink">{item.title}</h3>
+                  <h3 className="mt-4 text-xl font-semibold text-slate-950">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
-                </GlowCard>
+                </article>
               );
             })}
           </div>
 
           <div className="mt-14 space-y-8">
             {resourceCategories.map((category) => (
-              <section key={category.title} className="resource-shelf section-reveal p-5 sm:p-7">
+              <section key={category.title} className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-line sm:p-7">
                 <div className="mb-6 grid gap-3 lg:grid-cols-[0.35fr_0.65fr] lg:items-end">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
+                      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
                         {category.eyebrow}
                       </p>
                       <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 shadow-line">
                         {category.pages.length} guides
                       </span>
                     </div>
-                    <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl">
+                    <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl">
                       {category.title}
                     </h2>
                   </div>
@@ -289,14 +258,14 @@ export default function ResourcesPage() {
             ))}
           </div>
 
-          <GlowCard className="mt-12 border-mint-100 bg-[linear-gradient(135deg,#ffffff,#eefaf5)] p-6 sm:p-8">
+          <section className="mt-12 rounded-[2rem] border border-emerald-200 bg-emerald-50 p-6 shadow-line sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-mint-700">
+                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
                   <BookOpen className="h-4 w-4" aria-hidden="true" />
                   Turn examples into your own bullets
                 </p>
-                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-ink">
+                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-slate-950">
                   Use a guide for direction, then generate bullets tailored to your real role.
                 </h2>
               </div>
@@ -305,7 +274,7 @@ export default function ResourcesPage() {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
-          </GlowCard>
+          </section>
         </div>
       </section>
     </>

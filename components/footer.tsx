@@ -17,11 +17,9 @@ const featuredResources = featuredResourceSlugs
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(239,253,248,0.72))] text-ink backdrop-blur">
-      <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/70 to-transparent" />
-      <div className="pointer-events-none absolute -right-24 top-8 h-56 w-56 rounded-full bg-cyan-300/10 blur-3xl" />
+    <footer className="border-t border-slate-200 bg-white text-ink">
       <div className="container-shell py-10 sm:py-12">
-        <div className="gloss-panel grid gap-10 p-6 sm:p-8 lg:grid-cols-[1.05fr_2.1fr] lg:items-start">
+        <div className="grid gap-10 rounded-[1.75rem] border border-slate-200 bg-[#FAFAF8] p-6 shadow-line sm:p-8 lg:grid-cols-[1.05fr_2.1fr] lg:items-start">
           <div className="max-w-md">
             <Link href="/" className="flex items-center gap-3 font-semibold">
               <BrandMark />
@@ -39,7 +37,7 @@ export function Footer() {
             </Link>
           </div>
 
-          <div className="gloss-content grid gap-8 text-sm text-slate-600 sm:grid-cols-3 lg:gap-10">
+          <div className="grid gap-8 text-sm text-slate-600 sm:grid-cols-3 lg:gap-10">
             <div>
               <p className="font-semibold uppercase tracking-wide text-ink">SkillMint</p>
               <div className="mt-4 grid gap-2.5">

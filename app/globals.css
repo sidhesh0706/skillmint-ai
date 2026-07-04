@@ -93,24 +93,6 @@ body {
     @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-5 py-2.5 font-semibold text-white shadow-line backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/[0.14] active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-white/20;
   }
 
-  .hero-stage {
-    background:
-      radial-gradient(circle at 18% 18%, rgba(31, 201, 153, 0.18), transparent 25rem),
-      radial-gradient(circle at 86% 26%, rgba(56, 189, 248, 0.14), transparent 28rem),
-      linear-gradient(180deg, #fffdf8 0%, #f7faf8 58%, #ffffff 100%);
-  }
-
-  .hero-wordmark {
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(23, 32, 51, 0.055);
-  }
-
-  .product-shell {
-    background:
-      radial-gradient(circle at 18% 0%, rgba(31, 201, 153, 0.18), transparent 22rem),
-      linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.82));
-  }
-
   .metric-tile {
     @apply rounded-2xl border border-slate-200/75 bg-white/80 p-4 shadow-[0_18px_54px_rgba(23,32,51,0.08)] backdrop-blur;
   }
@@ -119,11 +101,9 @@ body {
     position: relative;
     overflow: hidden;
     border-radius: 1.5rem;
-    border: 1px solid var(--glass-border);
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 247, 0.86));
-    box-shadow: 0 18px 50px rgba(8, 11, 18, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(14px);
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
   }
 
   .premium-shell {
@@ -132,21 +112,13 @@ body {
     background: linear-gradient(180deg, #fafaf8 0%, #ffffff 52%, #fafaf8 100%);
   }
 
-  .premium-dark-shell {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-  }
-
   .command-panel {
     position: relative;
     overflow: hidden;
     border-radius: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background:
-      linear-gradient(180deg, rgba(23, 32, 51, 0.96), rgba(8, 11, 18, 0.96));
-    box-shadow: 0 28px 90px rgba(8, 11, 18, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(16px);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    background: #0f172a;
+    box-shadow: 0 22px 56px rgba(15, 23, 42, 0.20);
   }
 
   .command-panel::before {
@@ -163,9 +135,9 @@ body {
     position: relative;
     overflow: hidden;
     border-radius: 1.25rem;
-    border: 1px solid rgba(203, 213, 225, 0.72);
-    background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.78));
-    box-shadow: 0 16px 44px rgba(8, 11, 18, 0.08), inset 0 1px 0 rgba(255,255,255,0.90);
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
   }
 
   .control-card::before {
@@ -173,8 +145,8 @@ body {
     position: absolute;
     inset: 0 auto 0 0;
     width: 3px;
-    background: linear-gradient(180deg, rgba(31,201,153,0.0), rgba(31,201,153,0.85), rgba(56,189,248,0.0));
-    opacity: 0.65;
+    background: #10b981;
+    opacity: 0.55;
   }
 
   .premium-input {
@@ -185,49 +157,16 @@ body {
     position: relative;
     overflow: hidden;
     border-radius: 1.25rem;
-    border: 1px solid rgba(203, 213, 225, 0.82);
-    background:
-      radial-gradient(circle at 88% 0%, rgba(31, 201, 153, 0.10), transparent 18rem),
-      linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.92));
-    box-shadow: 0 20px 56px rgba(8, 11, 18, 0.09);
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    box-shadow: 0 16px 42px rgba(15, 23, 42, 0.07);
     animation: fade-in-up 560ms ease-out both;
   }
 
   .output-card-pro:hover {
-    border-color: rgba(31, 201, 153, 0.34);
-    box-shadow: 0 26px 78px rgba(15, 132, 102, 0.12);
+    border-color: rgba(16, 185, 129, 0.36);
+    box-shadow: 0 22px 64px rgba(15, 23, 42, 0.10);
     transform: translateY(-2px);
-  }
-
-  .resource-shelf {
-    position: relative;
-    overflow: hidden;
-    border-radius: 2rem;
-    border: 1px solid rgba(203, 213, 225, 0.72);
-    background:
-      radial-gradient(circle at 4% 0%, rgba(31,201,153,0.12), transparent 24rem),
-      linear-gradient(180deg, rgba(255,255,255,0.84), rgba(247,251,250,0.72));
-    box-shadow: 0 28px 90px rgba(23, 32, 51, 0.08);
-  }
-
-  .gloss-panel::before {
-    content: "";
-    position: absolute;
-    inset: 0 2rem auto;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(31, 201, 153, 0.58), transparent);
-  }
-
-  .gloss-panel::after {
-    content: "";
-    position: absolute;
-    inset: auto -3rem -5rem auto;
-    height: 12rem;
-    width: 12rem;
-    border-radius: 9999px;
-    background: rgba(56, 189, 248, 0.10);
-    filter: blur(36px);
-    pointer-events: none;
   }
 
   .gloss-panel > * {
@@ -248,20 +187,6 @@ body {
     transform: translateY(-4px);
     border-color: rgba(31, 201, 153, 0.35);
     box-shadow: 0 34px 96px rgba(15, 118, 110, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.92);
-  }
-
-  .tools-cockpit::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1.4px),
-      radial-gradient(circle, rgba(31,201,153,0.24) 1px, transparent 1.5px);
-    background-position: 0 0, 56px 82px;
-    background-size: 150px 150px, 210px 210px;
-    opacity: 0.16;
-    animation: star-drift 28s linear infinite;
   }
 
   .tool-card-animated {
@@ -319,76 +244,6 @@ body {
     filter: blur(8px);
   }
 
-  .cosmic-shell {
-    @apply relative overflow-hidden bg-[#fbfaf7] text-ink;
-  }
-
-  .celestial-hero {
-    background:
-      radial-gradient(circle at 28% 8%, rgba(31, 201, 153, 0.22), transparent 27rem),
-      radial-gradient(circle at 78% 12%, rgba(56, 189, 248, 0.12), transparent 25rem),
-      linear-gradient(180deg, #fffdf8 0%, #f4fbf8 56%, #ffffff 100%);
-  }
-
-  .celestial-section {
-    background:
-      radial-gradient(circle at 16% 16%, rgba(31, 201, 153, 0.14), transparent 24rem),
-      radial-gradient(circle at 88% 18%, rgba(56, 189, 248, 0.08), transparent 22rem),
-      linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(247, 250, 248, 0.92));
-  }
-
-  .celestial-subtle {
-    background:
-      radial-gradient(circle at 88% 10%, rgba(31, 201, 153, 0.12), transparent 22rem),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 250, 252, 0.84));
-  }
-
-  .starfield {
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle, rgba(15,23,42,0.10) 1px, transparent 1.5px),
-      radial-gradient(circle, rgba(31,201,153,0.16) 1px, transparent 1.4px);
-    background-position: 0 0, 42px 56px;
-    background-size: 120px 120px, 170px 170px;
-    opacity: 0.14;
-    animation: star-drift 24s linear infinite;
-  }
-
-  .cosmic-noise {
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(rgba(15,23,42,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(15,23,42,0.025) 1px, transparent 1px);
-    background-size: 42px 42px;
-    mask-image: radial-gradient(circle at 50% 15%, black, transparent 72%);
-    opacity: 0.24;
-  }
-
-  .orbital-ring {
-    position: absolute;
-    border: 1px solid rgba(15, 132, 102, 0.10);
-    border-radius: 9999px;
-    transform: rotate(-18deg);
-    box-shadow: inset 0 0 50px rgba(31, 201, 153, 0.04);
-  }
-
-  .shadow-celestial {
-    box-shadow: 0 24px 80px rgba(23, 32, 51, 0.10), 0 0 42px rgba(31, 201, 153, 0.08);
-  }
-
-  .floating-card {
-    animation: float-card 7s ease-in-out infinite;
-  }
-
-  .floating-card-delay-sm {
-    animation-delay: 900ms;
-  }
-
-  .floating-card-delay-md {
-    animation-delay: 1700ms;
-  }
-
   .section-reveal {
     animation: fade-in-up 700ms ease-out both;
   }
@@ -419,9 +274,6 @@ body {
     animation: chip-reveal 520ms ease-out both;
   }
 
-  .score-orb {
-    animation: soft-pulse 3.8s ease-in-out infinite;
-  }
 }
 
 @keyframes fade-in-up {
@@ -433,26 +285,6 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes float-card {
-  0%, 100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes star-drift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(-60px, 40px, 0);
   }
 }
 
@@ -478,16 +310,6 @@ body {
   }
 }
 
-@keyframes soft-pulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(31, 201, 153, 0.18);
-  }
-
-  50% {
-    box-shadow: 0 0 34px rgba(31, 201, 153, 0.32);
-  }
-}
-
 @keyframes marquee-slide {
   from {
     transform: translateX(0);
@@ -505,17 +327,13 @@ body {
 
   .fade-in-up,
   .fade-in-up-delayed,
-  .floating-card,
   .marquee-track,
   .section-reveal,
-  .starfield,
   .scan-line::after,
-  .keyword-chip,
-  .score-orb {
+  .keyword-chip {
     animation: none;
   }
 
-  .tools-cockpit::before,
   .tool-card-animated {
     animation: none;
   }
@@ -523,14 +341,12 @@ body {
 
 @media (max-width: 640px) {
   body,
-  .premium-shell,
-  .premium-dark-shell {
+  .premium-shell {
     background-size: 34px 34px, 34px 34px, auto, auto;
   }
 
   .command-panel,
-  .gloss-panel,
-  .resource-shelf {
+  .gloss-panel {
     border-radius: 1.25rem;
   }
 

@@ -10,7 +10,7 @@ export function AnimatedScoreBadge({ score, label = "Score", className }: Animat
   return (
     <div
       className={clsx(
-        "score-orb inline-flex items-center gap-2 rounded-full border border-mint-100 bg-mint-50 px-3 py-1.5 text-xs font-semibold text-mint-700 shadow-[0_12px_30px_rgba(31,201,153,0.12)]",
+        "inline-flex items-center gap-2 rounded-full border border-mint-100 bg-mint-50 px-3 py-1.5 text-xs font-semibold text-mint-700 shadow-[0_12px_30px_rgba(31,201,153,0.12)]",
         className,
       )}
     >

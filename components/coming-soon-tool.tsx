@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Bell, ThumbsUp } from "lucide-react";
 import { EmailCapture } from "@/components/email-capture";
-import { GlassPanel } from "@/components/glass-panel";
 import { ToolStatusBadge } from "@/components/tool-status-badge";
 import { getToolBySlug, type ToolConfig } from "@/data/tool-config";
 import { trackEvent } from "@/lib/analytics";
@@ -18,33 +17,33 @@ export function ComingSoonTool({ slug }: ComingSoonToolProps) {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <GlassPanel className="overflow-hidden p-0">
-        <div className="grid gap-6 border-b border-white/10 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.22),transparent_28rem),linear-gradient(135deg,#0b1220,#172033)] p-6 text-white sm:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-soft">
+        <div className="grid gap-6 border-b border-slate-200 bg-[#FAFAF8] p-6 sm:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-mint-700 shadow-line">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950 text-white shadow-line">
               <Icon className="h-6 w-6" aria-hidden="true" />
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
               <ToolStatusBadge status={tool.status} />
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3 py-1 text-xs font-semibold text-slate-200">
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
                 <Bell className="h-3.5 w-3.5 text-mint-700" aria-hidden="true" />
                 Notify when ready
               </span>
             </div>
-            <h1 className="mt-5 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-5xl">
+            <h1 className="mt-5 text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-slate-950 sm:text-5xl">
               {tool.name}
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
               {tool.longDescription}
             </p>
           </div>
-          <div className="command-panel p-5 text-white">
-            <p className="text-sm font-semibold uppercase text-mint-100">Preview output</p>
+          <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-line">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">Preview output</p>
             <div className="mt-4 space-y-3">
               {tool.quickFacts.map((fact) => (
-                <div key={fact} className="scan-line rounded-2xl border border-white/10 bg-white/[0.07] p-4">
+                <div key={fact} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <p className="text-sm font-semibold">{fact}</p>
-                  <p className="mt-1 text-xs leading-5 text-slate-300">
+                  <p className="mt-1 text-xs leading-5 text-slate-500">
                     Designed to turn rough context into cleaner, review-ready application copy.
                   </p>
                 </div>
@@ -54,8 +53,8 @@ export function ComingSoonTool({ slug }: ComingSoonToolProps) {
         </div>
 
         <div className="grid gap-5 p-5 sm:p-8 lg:grid-cols-[1fr_0.9fr]">
-          <div className="gloss-panel p-5">
-            <div className="gloss-content">
+          <div className="rounded-[1.5rem] border border-slate-200 bg-[#FAFAF8] p-5">
+            <div>
               <h2 className="text-xl font-semibold text-ink">What it will help with</h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-4">
@@ -106,7 +105,7 @@ export function ComingSoonTool({ slug }: ComingSoonToolProps) {
             Back to tools
           </Link>
         </div>
-      </GlassPanel>
+      </div>
     </div>
   );
 }

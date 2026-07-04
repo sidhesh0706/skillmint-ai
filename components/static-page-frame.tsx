@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, FileText, ShieldCheck, Sparkles } from "lucide-react";
-import { GlassPanel } from "@/components/glass-panel";
 import { PremiumPageShell } from "@/components/premium-page-shell";
 
 type StaticPageFrameProps = {
@@ -28,19 +27,18 @@ export function StaticPageFrame({
         eyebrow={eyebrow}
         title={title}
         description={description}
-        dark
         side={
           side || (
-            <div className="command-panel p-5 text-white">
+            <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-soft">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-100">
+                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
                   Trust briefing
                 </p>
-                <span className="score-orb flex h-9 w-9 items-center justify-center rounded-xl bg-white text-mint-700 shadow-line">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 shadow-line">
                   <ShieldCheck className="h-4 w-4" aria-hidden="true" />
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-6 text-slate-300">
+              <p className="mt-3 text-sm leading-6 text-slate-600">
                 Quick links for scanning the policy without leaving the page.
               </p>
               <div className="mt-4 grid gap-2">
@@ -48,7 +46,7 @@ export function StaticPageFrame({
                   <a
                     key={section.title}
                     href={`#${section.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                    className="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-sm font-semibold text-slate-200 transition hover:border-mint-300/40 hover:bg-white/[0.14] hover:text-white"
+                    className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
                   >
                     {section.title}
                   </a>
@@ -60,7 +58,7 @@ export function StaticPageFrame({
       />
       <section className="premium-shell relative overflow-hidden py-12 sm:py-16">
         <div className="container-shell grid gap-6 lg:grid-cols-[0.72fr_0.28fr] lg:items-start">
-          <GlassPanel className="p-5 sm:p-8">
+          <div className="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-soft sm:p-8">
             <div className="mb-7 rounded-[1.5rem] border border-mint-100 bg-[linear-gradient(135deg,rgba(236,253,245,0.92),rgba(255,255,255,0.74))] p-4 shadow-line">
               <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-mint-700">
                 <Sparkles className="h-4 w-4" aria-hidden="true" />
@@ -91,8 +89,8 @@ export function StaticPageFrame({
                 </section>
               ))}
             </div>
-          </GlassPanel>
-          <GlassPanel className="hidden p-5 lg:sticky lg:top-24 lg:block">
+          </div>
+          <div className="hidden rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-line lg:sticky lg:top-24 lg:block">
             <p className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
               <FileText className="h-4 w-4" aria-hidden="true" />
               On this page
@@ -121,7 +119,7 @@ export function StaticPageFrame({
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
-          </GlassPanel>
+          </div>
         </div>
       </section>
     </>

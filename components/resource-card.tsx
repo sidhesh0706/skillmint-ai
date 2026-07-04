@@ -8,13 +8,13 @@ type ResourceCardProps = {
 
 export function ResourceCard({ page }: ResourceCardProps) {
   return (
-    <article className="gloss-panel hover-gloss group flex h-full min-h-[21rem] flex-col p-5">
-      <div className="gloss-content flex flex-1 flex-col">
+    <article className="group flex h-full min-h-[20rem] flex-col rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-line transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-soft">
+      <div className="flex flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">
           <p className="rounded-full border border-mint-100 bg-mint-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-mint-700 shadow-line">
             {page.category || "guide"}
           </p>
-          <span className="score-orb flex h-8 w-8 items-center justify-center rounded-full border border-mint-100 bg-white text-mint-700 shadow-line">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-mint-100 bg-white text-mint-700 shadow-line transition duration-300 group-hover:scale-105">
             <Sparkles className="h-4 w-4" aria-hidden="true" />
           </span>
         </div>
