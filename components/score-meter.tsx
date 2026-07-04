@@ -27,7 +27,7 @@ export function ScoreMeter({ value, label, status, compact = false, className }:
       </div>
       <div className={clsx("overflow-hidden rounded-full bg-slate-100", compact ? "mt-2 h-1.5" : "mt-3 h-2")}>
         <div
-          className="h-full rounded-full bg-gradient-to-r from-mint-500 via-emerald to-cyan transition-[width] duration-700"
+          className="score-fill h-full rounded-full bg-gradient-to-r from-mint-500 via-emerald to-cyan transition-[width] duration-700"
           style={{ width: `${safeValue}%` }}
         />
       </div>

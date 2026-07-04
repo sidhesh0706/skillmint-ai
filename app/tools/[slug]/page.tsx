@@ -114,39 +114,77 @@ export default async function ToolPage({ params }: ToolPageProps) {
           ]),
         ]}
       />
-      <PremiumPageShell
-        eyebrow={tool.category}
-        title={tool.name}
-        description={tool.longDescription}
-        side={
-          <div className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-soft">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
-              Workspace signals
-            </p>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {liveToolHighlights.map((highlight) => {
-                const Icon = highlight.icon;
+      {tool.slug === "resume-bullet-generator" ? (
+        <section className="bg-[#FAFAF8] py-6 sm:py-8">
+          <div className="container-shell">
+            <div className="app-panel grid min-w-0 gap-5 p-5 sm:p-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+              <div className="min-w-0">
+                <p className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">
+                  {tool.category}
+                </p>
+                <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-5xl">
+                  {tool.name}
+                </h1>
+                <p className="mt-3 max-w-2xl break-words text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
+                  {tool.longDescription}
+                </p>
+                <div className="mt-4">
+                  <TrustPills />
+                </div>
+              </div>
+              <div className="grid min-w-0 gap-2 sm:grid-cols-2">
+                {liveToolHighlights.map((highlight) => {
+                  const Icon = highlight.icon;
 
-                return (
-                  <span
-                    key={highlight.label}
-                    className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-700 shadow-line"
-                  >
-                    <Icon className="h-4 w-4 text-emerald-600" aria-hidden="true" />
-                    {highlight.label}
-                  </span>
-                );
-              })}
+                  return (
+                    <span
+                      key={highlight.label}
+                      className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-700 shadow-line"
+                    >
+                      <Icon className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                      {highlight.label}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        }
-      >
-        <TrustPills />
-      </PremiumPageShell>
+        </section>
+      ) : (
+        <PremiumPageShell
+          eyebrow={tool.category}
+          title={tool.name}
+          description={tool.longDescription}
+          side={
+            <div className="app-panel p-4">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
+                Workspace signals
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {liveToolHighlights.map((highlight) => {
+                  const Icon = highlight.icon;
 
-      <section className="premium-shell py-10 sm:py-12">
+                  return (
+                    <span
+                      key={highlight.label}
+                      className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-700 shadow-line"
+                    >
+                      <Icon className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                      {highlight.label}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          }
+        >
+          <TrustPills />
+        </PremiumPageShell>
+      )}
+
+      <section className="premium-shell py-5 sm:py-7">
         <div className="container-shell">
-        <div className="fade-in-up-delayed">
+        <div>
           {tool.slug === "resume-bullet-generator" ? (
             <ToolWorkspace slug={tool.slug} />
           ) : (

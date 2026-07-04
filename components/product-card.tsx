@@ -35,12 +35,13 @@ export function ProductCard({
   style,
 }: ProductCardProps) {
   const isLive = status === "live";
+  const nextStep = isLive ? "Use this in your application kit" : "Join the waitlist preview";
 
   return (
     <article
       className={clsx(
         "group relative flex h-full min-h-[19rem] flex-col overflow-hidden rounded-[1.65rem] border bg-white p-5 shadow-[0_18px_54px_rgba(8,11,18,0.08)] transition duration-300",
-        "hover:-translate-y-1 hover:shadow-[0_28px_82px_rgba(8,11,18,0.12)]",
+        "hover:-translate-y-1 hover:shadow-[0_30px_90px_rgba(8,11,18,0.14)]",
         isLive
           ? "border-emerald-200/80"
           : "border-slate-200/90 bg-[linear-gradient(180deg,#ffffff,#fafafa)]",
@@ -83,12 +84,19 @@ export function ProductCard({
       <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-ink">{title}</h3>
       <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{description}</p>
 
+      <div className="mt-4 rounded-2xl border border-slate-200 bg-white px-3 py-2 shadow-line">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+          Related next step
+        </p>
+        <p className="mt-1 text-sm font-semibold text-slate-800">{nextStep}</p>
+      </div>
+
       <div className="mt-5 rounded-2xl border border-slate-200 bg-[#FAFAF8] p-3 shadow-line">
         <div className="flex items-center gap-2">
           <span className="h-2 w-24 overflow-hidden rounded-full bg-white">
             <span
               className={clsx(
-                "block h-full rounded-full bg-gradient-to-r",
+                "score-fill block h-full rounded-full bg-gradient-to-r",
                 isLive ? "w-4/5 from-mint-500 to-cyan" : "w-2/3 from-slate-300 to-slate-200",
               )}
             />

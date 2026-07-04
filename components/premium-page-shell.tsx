@@ -9,6 +9,7 @@ type PremiumPageShellProps = {
   side?: ReactNode;
   dark?: boolean;
   contained?: boolean;
+  compact?: boolean;
   className?: string;
 };
 
@@ -20,13 +21,15 @@ export function PremiumPageShell({
   side,
   dark = false,
   contained = true,
+  compact = false,
   className,
 }: PremiumPageShellProps) {
   return (
     <section
       className={clsx(
         dark ? "bg-slate-950 text-white" : "bg-[#FAFAF8] text-ink",
-        "relative isolate overflow-hidden py-14 sm:py-20",
+        "relative isolate overflow-hidden",
+        compact ? "py-10 sm:py-12" : "py-14 sm:py-20",
         className,
       )}
     >
@@ -46,16 +49,17 @@ export function PremiumPageShell({
             </p>
             <h1
               className={clsx(
-                "mt-5 text-4xl font-semibold leading-[1.01] tracking-[-0.045em] sm:text-6xl",
+                "font-semibold leading-[1.01] tracking-[-0.045em]",
+                compact ? "mt-4 text-4xl sm:text-5xl" : "mt-5 text-4xl sm:text-6xl",
                 dark ? "text-white" : "text-slate-950",
               )}
             >
               {title}
             </h1>
-            <p className={clsx("mt-5 max-w-2xl text-lg leading-8", dark ? "text-slate-300" : "text-slate-600")}>
+            <p className={clsx(compact ? "mt-4 max-w-2xl text-base leading-7" : "mt-5 max-w-2xl text-lg leading-8", dark ? "text-slate-300" : "text-slate-600")}>
               {description}
             </p>
-            {children ? <div className="mt-7">{children}</div> : null}
+            {children ? <div className={compact ? "mt-5" : "mt-7"}>{children}</div> : null}
           </div>
           {side ? <div className="fade-in-up-delayed">{side}</div> : null}
         </div>

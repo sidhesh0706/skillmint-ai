@@ -519,6 +519,12 @@ function getScoreBarColor(score: number) {
   return "bg-red-400";
 }
 
+function getPresetDescription(values: ToolFormValues) {
+  const role = values.targetRole || "Target role";
+  const tools = values.tools ? values.tools.split(",").slice(0, 2).join(", ") : "real tools";
+  return `${role} - ${tools}`;
+}
+
 export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   const tool = getToolBySlug(slug)!;
   const formStorageKey = `skillmint:${tool.slug}:form`;
@@ -982,26 +988,26 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
   return (
     <div className="relative space-y-5">
-      <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 text-slate-950 shadow-soft sm:p-5">
+      <div className="app-panel relative min-w-0 overflow-hidden p-4 text-slate-950 sm:p-5">
         <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/80 to-transparent" />
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div>
+          <div className="min-w-0">
             <p className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700">
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
               Resume workspace
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
-              Build, score, rewrite, and export one focused resume draft.
+            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-3xl">
+              Build one focused resume studio.
             </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
-              Your inputs stay in this browser unless you generate. The output workspace turns rough notes into scored bullets, keyword guidance, and clean export formats.
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
+              Add role context on the left. Review scored bullets, keywords, rewrites, and exports on the right.
             </p>
           </div>
-          <div className="grid gap-2 sm:grid-cols-3 lg:min-w-[28rem]">
+          <div className="grid min-w-0 gap-2 sm:grid-cols-3 lg:min-w-[30rem]">
             {cockpitStats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-4 py-3 shadow-line"
+                className="app-panel-muted px-4 py-3"
               >
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
                   {stat.label}
@@ -1013,9 +1019,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         </div>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(22rem,0.88fr)_minmax(0,1.42fr)] xl:items-start">
+      <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(22rem,0.88fr)_minmax(0,1.42fr)] xl:items-start">
       <form
-        className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 text-slate-950 shadow-soft sm:p-6 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
+        className="app-panel relative min-w-0 overflow-hidden p-4 text-slate-950 sm:p-5 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {
           event.preventDefault();
           handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
@@ -1023,37 +1029,40 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
       >
         <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/70 to-transparent" />
         <div className="mb-5 flex items-start gap-4 sm:mb-6">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 shadow-line">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 shadow-line">
             <FileText className="h-5 w-5" aria-hidden="true" />
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
-              Input
+              Composer
             </p>
-            <h2 className="mt-1 text-2xl font-semibold text-slate-950">Build your draft</h2>
-            <p className="mt-2 leading-7 text-slate-600">
-              Add truthful role context, proof, and targeting so the result panel has enough signal.
+            <h2 className="mt-1 text-2xl font-semibold tracking-[-0.03em] text-slate-950">Build the signal</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              Use the shortest truthful proof you have. SkillMint will shape it into recruiter-ready language.
             </p>
           </div>
         </div>
 
-        <div className="space-y-5">
-          <div>
+        <div className="space-y-4">
+          <div className="app-panel-muted p-3">
             <div className="mb-3 flex items-center justify-between gap-3">
               <p className="text-sm font-semibold text-emerald-700">Try a sample</p>
               <span className="hidden text-xs font-semibold text-slate-500 sm:inline">
                 Great for first-time users
               </span>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid gap-2 sm:grid-cols-2">
               {examplePresets.map((preset) => (
                 <button
                   key={preset.label}
                   type="button"
                   onClick={() => applyPreset(preset.values)}
-                  className="rounded-full border border-slate-200 bg-[#FAFAF8] px-3 py-2 text-xs font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
+                  className="preset-card"
                 >
-                  {preset.label}
+                  <span className="block text-xs font-semibold text-slate-950">{preset.label}</span>
+                  <span className="mt-1 block truncate text-[11px] font-medium text-slate-500">
+                    {getPresetDescription(preset.values)}
+                  </span>
                 </button>
               ))}
             </div>
@@ -1061,7 +1070,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
           <div className="control-card p-4">
             <div className="flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">
+              <span className="composer-step">
                 1
               </span>
               <div>
@@ -1069,7 +1078,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <p className="mt-1 text-xs leading-5 text-slate-500">Who the bullets should sound tailored for.</p>
               </div>
             </div>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {contextFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
                   <span className="text-sm font-semibold text-ink">{field.label}</span>
@@ -1081,7 +1090,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
           <div className="control-card p-4">
             <div className="flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">
+              <span className="composer-step">
                 2
               </span>
               <div>
@@ -1089,7 +1098,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <p className="mt-1 text-xs leading-5 text-slate-500">Describe the work, target posting, and the raw material.</p>
               </div>
             </div>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {detailFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
                   <span className="text-sm font-semibold text-ink">{field.label}</span>
@@ -1111,7 +1120,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
           <div className="control-card p-4">
             <div className="flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">
+              <span className="composer-step">
                 3
               </span>
               <div>
@@ -1119,7 +1128,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <p className="mt-1 text-xs leading-5 text-slate-500">Tools, numbers, and scope help the output feel specific.</p>
               </div>
             </div>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {proofFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
                   <span className="text-sm font-semibold text-ink">{field.label}</span>
@@ -1127,6 +1136,21 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 </label>
               ))}
             </div>
+          </div>
+
+          <div className="grid gap-2 sm:grid-cols-3">
+            {[
+              ["Role", form.targetRole ? "set" : "needed"],
+              ["Proof", form.achievement ? "ready" : "needed"],
+              ["Metrics", form.metrics ? "added" : "optional"],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-3 py-2 shadow-line">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                  {label}
+                </p>
+                <p className="mt-0.5 text-sm font-semibold capitalize text-slate-950">{value}</p>
+              </div>
+            ))}
           </div>
 
           <MotionButton
@@ -1145,7 +1169,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         </div>
       </form>
 
-      <section className="gloss-panel flex min-h-[34rem] flex-col overflow-hidden shadow-[0_30px_90px_rgba(23,32,51,0.12)]" aria-live="polite">
+      <section className="app-panel flex min-h-[34rem] min-w-0 flex-col overflow-hidden" aria-live="polite">
         <div className="relative overflow-hidden border-b border-slate-200 bg-[linear-gradient(135deg,#ffffff,#f3fbf7)] p-4 text-slate-950 sm:p-6">
           <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/90 to-transparent" />
           <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-mint-100/45 blur-3xl" />
@@ -1155,8 +1179,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 Resume Intelligence
               </p>
-              <h2 className="mt-2 text-2xl font-semibold text-ink">{tool.output.title}</h2>
-              <p className="mt-2 max-w-2xl leading-7 text-slate-600">{tool.output.description}</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink">{tool.output.title}</h2>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">{tool.output.description}</p>
             </div>
             <div className="relative z-10 flex flex-wrap gap-2 sm:justify-end">
               {hasOutput ? (
@@ -1194,11 +1218,11 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   type="button"
                   onClick={() => handleExportAction(item.action)}
                   disabled={!hasOutput}
-                  className="group flex min-h-16 items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-left shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/70 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:shadow-line"
+                  className="group flex min-h-16 items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-left shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/70 hover:shadow-soft disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:shadow-line"
                   aria-label={item.label}
                   title={item.description}
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-mint-700 transition group-hover:bg-white">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-mint-700 transition group-hover:bg-white">
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <span className="min-w-0">
@@ -1218,7 +1242,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             {cockpitStats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-slate-200 bg-white/86 px-3 py-3 text-center shadow-line"
+                className="app-panel-muted px-3 py-3 text-center"
               >
                 <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
                   {stat.label}
@@ -1285,6 +1309,22 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   className="mt-5"
                 />
 
+                <div className="mt-4 grid gap-2 sm:grid-cols-4">
+                  {[
+                    ["Overall score", `${generated.summary.overallScore || 0}/100`],
+                    ["Bullet drafts", `${generated.bullets.length}/5`],
+                    ["Keywords", `${generated.keywords.length} used`],
+                    ["Exports", "5 formats"],
+                  ].map(([label, value]) => (
+                    <div key={label} className="rounded-2xl border border-slate-200 bg-white px-3 py-3 shadow-line">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                        {label}
+                      </p>
+                      <p className="mt-1 text-sm font-semibold text-ink">{value}</p>
+                    </div>
+                  ))}
+                </div>
+
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   <div className="rounded-2xl border border-slate-200 bg-white/85 p-3.5">
                     <p className="flex items-center gap-2 text-sm font-semibold text-ink">
@@ -1321,16 +1361,21 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   {generated.bullets.map((item, index) => (
                     <div
                       key={`${item}-${index}`}
-                      className="output-card-pro scan-line p-3.5"
+                      className="output-card-pro scan-line p-4"
                       style={{ animationDelay: `${index * 80}ms` }}
                     >
                       <div className="flex gap-3">
-                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint-50 text-xs font-semibold text-mint-700">
+                        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-mint-50 text-xs font-semibold text-mint-700 ring-1 ring-mint-100">
                           {index + 1}
                         </span>
                         <div className="min-w-0 flex-1">
-                          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_6.5rem] md:items-start">
-                            <p className="text-sm leading-6 text-slate-700 sm:text-base sm:leading-7">{item}</p>
+                          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_7rem] md:items-start">
+                            <div>
+                              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+                                Recruiter-ready bullet
+                              </p>
+                              <p className="mt-2 text-sm leading-6 text-slate-800 sm:text-base sm:leading-7">{item}</p>
+                            </div>
                             <div className="shrink-0 md:text-right">
                               <span
                                 className={`inline-flex items-center justify-center rounded-full border px-3 py-1 text-xs font-semibold ${getScoreClasses(
@@ -1341,7 +1386,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                               </span>
                               <div className="mt-2 h-1.5 w-24 overflow-hidden rounded-full bg-slate-100 md:ml-auto">
                                 <div
-                                  className={`h-full rounded-full ${getScoreBarColor(
+                                  className={`score-fill h-full rounded-full ${getScoreBarColor(
                                     generated.scores[index]?.score || 0,
                                   )}`}
                                   style={{ width: `${generated.scores[index]?.score || 0}%` }}
@@ -1350,7 +1395,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                             </div>
                           </div>
 
-                          <div className="mt-3 rounded-2xl border border-slate-200 bg-white/76 p-3 text-xs leading-5 text-slate-600 shadow-line sm:text-sm sm:leading-6">
+                          <div className="mt-4 rounded-2xl border border-slate-200 bg-[#FAFAF8] p-3 text-xs leading-5 text-slate-600 shadow-line sm:text-sm sm:leading-6">
                             <div className="grid gap-2 lg:grid-cols-2">
                               <p>
                                 <span className="font-semibold text-ink">Why:</span>{" "}
@@ -1363,7 +1408,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                             </div>
                             <div className="mt-3 grid gap-1.5 sm:grid-cols-3">
                               {breakdownLabels.map(([key, label]) => (
-                                <div key={key} className="rounded-xl bg-white px-2.5 py-2 shadow-line">
+                                <div key={key} className="rounded-xl border border-slate-100 bg-white px-2.5 py-2 shadow-line">
                                   <span className="block text-[11px] font-semibold uppercase text-slate-500">
                                     {label}
                                   </span>
@@ -1375,7 +1420,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                             </div>
                           </div>
 
-                          <div className="mt-3 flex flex-wrap gap-2">
+                          <div className="mt-4 flex flex-wrap gap-2">
                             <button
                               type="button"
                               onClick={() => copyText(item, "Bullet copied.")}
@@ -1441,8 +1486,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 <section>
                   <h3 className="text-sm font-semibold uppercase text-mint-700">Keywords used</h3>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {generated.keywords.map((keyword) => (
-                      <KeywordChip key={keyword}>
+                    {generated.keywords.map((keyword, index) => (
+                      <KeywordChip key={keyword} style={{ animationDelay: `${index * 55}ms` }}>
                         {keyword}
                       </KeywordChip>
                     ))}
@@ -1459,8 +1504,12 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                     Add these only if they truthfully match your experience, tools, or role scope.
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {generated.missingKeywords.map((keyword) => (
-                      <KeywordChip key={keyword} className="border-amber-200 bg-white text-amber-700">
+                    {generated.missingKeywords.map((keyword, index) => (
+                      <KeywordChip
+                        key={keyword}
+                        className="border-amber-200 bg-white text-amber-700"
+                        style={{ animationDelay: `${index * 55}ms` }}
+                      >
                         {keyword}
                       </KeywordChip>
                     ))}
@@ -1735,7 +1784,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
       </div>
 
       {toast ? (
-        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-full border border-mint-100 bg-ink px-5 py-3 text-center text-sm font-semibold text-white shadow-soft">
+        <div className="success-pulse fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-full border border-mint-100 bg-ink px-5 py-3 text-center text-sm font-semibold text-white shadow-soft">
           {toast}
         </div>
       ) : null}

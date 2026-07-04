@@ -89,6 +89,7 @@ export function ProductWindow({
               <div
                 key={`${bullet.text}-${index}`}
                 className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-soft"
+                style={{ animationDelay: `${index * 80}ms` }}
               >
                 <div className="mb-3 flex items-center justify-between gap-3">
                   <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
@@ -97,6 +98,12 @@ export function ProductWindow({
                   <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
                     {bullet.score}/100
                   </span>
+                </div>
+                <div className="mb-3 h-1.5 w-24 overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className="score-fill h-full rounded-full bg-gradient-to-r from-mint-500 to-cyan"
+                    style={{ width: `${bullet.score}%` }}
+                  />
                 </div>
                 <p className="text-sm leading-6 text-slate-700">- {bullet.text}</p>
               </div>
@@ -109,10 +116,11 @@ export function ProductWindow({
               Keyword opportunities
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
-              {keywords.map((keyword) => (
+              {keywords.map((keyword, index) => (
                 <span
                   key={keyword}
-                  className="rounded-full border border-amber-200 bg-white px-3 py-1 text-xs font-semibold text-amber-800"
+                  className="keyword-chip rounded-full border border-amber-200 bg-white px-3 py-1 text-xs font-semibold text-amber-800"
+                  style={{ animationDelay: `${index * 80}ms` }}
                 >
                   {keyword}
                 </span>

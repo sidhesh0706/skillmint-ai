@@ -161,6 +161,16 @@ export default function ResourcesPage() {
                 Explore tools
               </Link>
             </div>
+            <div className="mt-4 grid gap-2 sm:grid-cols-3">
+              {["Pick a guide", "Borrow structure", "Generate your version"].map((item, index) => (
+                <div key={item} className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-3 py-2 shadow-line">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                    Step {index + 1}
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-slate-800">{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

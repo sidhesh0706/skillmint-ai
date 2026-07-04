@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 
 type EmptyStatePreviewProps = {
   title: string;
@@ -6,12 +6,14 @@ type EmptyStatePreviewProps = {
 };
 
 export function EmptyStatePreview({ title, description }: EmptyStatePreviewProps) {
+  const checks = ["Clarity", "Impact", "Metrics", "ATS keywords", "Truthfulness"];
+
   return (
     <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-[1.75rem] border border-slate-200 bg-[linear-gradient(135deg,#ffffff,#fbfcfb_48%,#eef8f4)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.96)] sm:p-6">
       <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/80 to-transparent" />
       <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-mint-100/50 blur-3xl" />
       <div className="relative z-10 w-full max-w-2xl">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-mint-700 shadow-soft">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-mint-700 shadow-soft success-pulse">
           <Sparkles className="h-5 w-5" aria-hidden="true" />
         </div>
         <div className="mx-auto max-w-xl text-center">
@@ -36,11 +38,28 @@ export function EmptyStatePreview({ title, description }: EmptyStatePreviewProps
               <ArrowRight className="h-4 w-4 text-mint-700" aria-hidden="true" />
             </div>
             <div className="rounded-2xl border border-mint-100 bg-mint-50/70 p-3">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-mint-700">Recruiter-ready</p>
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-mint-700">Recruiter-ready</p>
+                <span className="rounded-full border border-mint-100 bg-white px-2.5 py-1 text-[11px] font-semibold text-mint-700">
+                  91/100
+                </span>
+              </div>
               <p className="mt-2 text-sm font-semibold leading-6 text-slate-800">
                 Built a sales dashboard using SQL and Excel to track weekly pipeline trends and identify underperforming regions faster.
               </p>
             </div>
+          </div>
+          <div className="mt-4 grid gap-2 sm:grid-cols-5">
+            {checks.map((item, index) => (
+              <div
+                key={item}
+                className="keyword-chip flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-xs font-semibold text-slate-600"
+                style={{ animationDelay: `${index * 70}ms` }}
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-mint-700" aria-hidden="true" />
+                {item}
+              </div>
+            ))}
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
             {["Action verb", "Tools included", "Clearer scope", "Export-ready"].map((item) => (
