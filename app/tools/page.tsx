@@ -103,7 +103,7 @@ export default function ToolsPage() {
         ])}
       />
 
-      <section className="relative overflow-hidden bg-[#FAFAF8] py-12 sm:py-16">
+      <section className="premium-hero py-12 sm:py-16">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
         <div className="container-command relative">
           <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
@@ -128,7 +128,7 @@ export default function ToolsPage() {
               </div>
               <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-700">
                 {["No signup", "Truth-first rewrites", "Browser-only history", "Clean exports"].map((item) => (
-                  <span key={item} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 font-semibold shadow-line">
+                  <span key={item} className="trust-pill inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-semibold">
                     <CheckCircle2 className="h-4 w-4 text-emerald-600" aria-hidden="true" />
                     {item}
                   </span>
@@ -166,7 +166,7 @@ export default function ToolsPage() {
                 the closest useful workflow.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-soft backdrop-blur">
+            <div className="app-panel p-5">
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
                   [FileText, "Write", "Generate stronger proof"],
@@ -176,8 +176,10 @@ export default function ToolsPage() {
                   const TypedIcon = Icon as typeof FileText;
 
                   return (
-                    <div key={title as string} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                      <TypedIcon className="h-5 w-5 text-mint-700" aria-hidden="true" />
+                    <div key={title as string} className="interactive-card rounded-2xl p-4">
+                      <span className="feature-icon flex h-9 w-9 items-center justify-center rounded-xl text-mint-700">
+                        <TypedIcon className="h-5 w-5" aria-hidden="true" />
+                      </span>
                       <p className="mt-3 font-semibold text-ink">{title as string}</p>
                       <p className="mt-1 text-sm leading-6 text-slate-600">{text as string}</p>
                     </div>
@@ -187,12 +189,12 @@ export default function ToolsPage() {
             </div>
           </div>
 
-          <div className="mb-7 overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white p-2 shadow-soft">
+          <div className="app-panel mb-7 overflow-hidden p-2">
             <div className="grid gap-2 md:grid-cols-6">
               {workflowSteps.map((step, index) => (
                 <div
                   key={step.title}
-                  className="rounded-[1.15rem] border border-slate-200 bg-slate-50 px-3 py-3 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-white hover:shadow-line"
+                  className="workflow-card rounded-[1.15rem] px-3 py-3"
                 >
                   <div className="flex items-center gap-2">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-semibold text-white">
@@ -219,14 +221,14 @@ export default function ToolsPage() {
             ))}
           </div>
 
-          <section className="mt-14 overflow-hidden rounded-[2rem] border border-mint-100 bg-[linear-gradient(135deg,#ffffff,#eefaf5)] p-6 shadow-soft sm:p-8">
+          <section className="cta-panel-premium mt-14 rounded-[2rem] p-6 sm:p-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
-                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-mint-700">
+                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-200">
                   <Route className="h-4 w-4" aria-hidden="true" />
                   Build your first application kit
                 </p>
-                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-ink">
+                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-white">
                   Start with one honest work note, then reuse the strongest proof everywhere.
                 </h2>
               </div>
@@ -234,7 +236,7 @@ export default function ToolsPage() {
                 <MotionButton href="/tools/resume-bullet-generator" showArrow>
                   Generate bullets
                 </MotionButton>
-                <MotionButton href="/resources" variant="secondary">
+                <MotionButton href="/resources" variant="secondary" className="border-white/20 bg-white/10 text-white hover:bg-white/15">
                   Browse resources
                 </MotionButton>
               </div>

@@ -40,10 +40,9 @@ export function ProductCard({
   return (
     <article
       className={clsx(
-        "group relative flex h-full min-h-[19rem] flex-col overflow-hidden rounded-[1.65rem] border bg-white p-5 shadow-[0_18px_54px_rgba(8,11,18,0.08)] transition duration-300",
-        "hover:-translate-y-1 hover:shadow-[0_30px_90px_rgba(8,11,18,0.14)]",
+        "group interactive-card relative flex h-full min-h-[19rem] flex-col rounded-[1.65rem] p-5",
         isLive
-          ? "border-emerald-200/80"
+          ? "border-emerald-200/80 bg-[linear-gradient(145deg,#ffffff,#f1fbf7)]"
           : "border-slate-200/90 bg-[linear-gradient(180deg,#ffffff,#fafafa)]",
         className,
       )}
@@ -91,7 +90,7 @@ export function ProductCard({
         <p className="mt-1 text-sm font-semibold text-slate-800">{nextStep}</p>
       </div>
 
-      <div className="mt-5 rounded-2xl border border-slate-200 bg-[#FAFAF8] p-3 shadow-line">
+      <div className="mt-5 rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
         <div className="flex items-center gap-2">
           <span className="h-2 w-24 overflow-hidden rounded-full bg-white">
             <span

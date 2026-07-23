@@ -104,11 +104,11 @@ export default function Home() {
     <>
       <JsonLd data={[softwareApplicationSchema(), breadcrumbSchema([{ name: "Home", path: "/" }])]} />
 
-      <section className="relative overflow-hidden bg-[#FAFAF8] py-12 sm:py-16 lg:py-20">
+      <section className="premium-hero py-12 sm:py-16 lg:py-20">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
-        <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
+        <div className="container-shell relative z-10 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="fade-in-up">
+            <div className="hero-badge mb-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-emerald-700">
               <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
               Free AI career workspace
             </div>
@@ -130,7 +130,7 @@ export default function Home() {
             </div>
             <div className="mt-7 flex flex-wrap gap-2">
               {trustPills.map((pill) => (
-                <span key={pill} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-line">
+                <span key={pill} className="trust-pill inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold text-slate-700">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                   {pill}
                 </span>
@@ -141,7 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-white py-12 sm:py-16">
+      <section className="surface-band py-12 sm:py-16">
         <div className="container-shell">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">Workflow</p>
@@ -151,7 +151,7 @@ export default function Home() {
           </div>
           <div className="mt-10 grid gap-3 md:grid-cols-3 xl:grid-cols-6">
             {workflowSteps.map(([title, text], index) => (
-              <div key={title} className="rounded-3xl border border-slate-200 bg-[#FAFAF8] p-4 shadow-line transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
+              <div key={title} className="workflow-card rounded-3xl p-4">
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-950 text-sm font-semibold text-white">{index + 1}</span>
                 <h3 className="mt-4 font-semibold text-slate-950">{title}</h3>
                 <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
@@ -161,7 +161,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#FAFAF8] py-14 sm:py-20">
+      <section className="soft-stage py-14 sm:py-20">
         <div className="container-shell">
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -179,8 +179,8 @@ export default function Home() {
             {features.map((feature) => {
               const Icon = feature.icon;
               return (
-                <article key={feature.title} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-line transition duration-300 hover:-translate-y-1 hover:shadow-soft">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+                <article key={feature.title} className="feature-card rounded-3xl p-6">
+                  <div className="feature-icon flex h-11 w-11 items-center justify-center rounded-2xl text-emerald-700">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <h3 className="mt-5 text-lg font-semibold text-slate-950">{feature.title}</h3>
@@ -192,7 +192,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-white py-14 sm:py-20">
+      <section className="surface-band py-14 sm:py-20">
         <div className="container-shell grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">Example transformation</p>
@@ -204,7 +204,7 @@ export default function Home() {
               to overclaim.
             </p>
           </div>
-          <div className="rounded-[2rem] border border-slate-200 bg-[#FAFAF8] p-5 shadow-soft">
+          <div className="transformation-panel rounded-[2rem] border border-slate-200 p-5">
             <div className="rounded-2xl border border-slate-200 bg-white p-4">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Before</p>
               <p className="mt-2 text-lg text-slate-700">Made dashboard for sales data.</p>
@@ -227,7 +227,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#FAFAF8] py-14 sm:py-20">
+      <section className="soft-stage py-14 sm:py-20">
         <div className="container-shell">
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -244,7 +244,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-white py-14 sm:py-20">
+      <section className="surface-band py-14 sm:py-20">
         <div className="container-shell">
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -260,13 +260,13 @@ export default function Home() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {featuredSeoLandingPages.map((page) => (
-              <Link key={page.slug} href={`/${page.slug}`} className="rounded-3xl border border-slate-200 bg-[#FAFAF8] p-5 shadow-line transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
+              <Link key={page.slug} href={`/${page.slug}`} className="interactive-card group rounded-3xl p-5">
                 <p className="text-sm font-semibold uppercase tracking-[0.12em] text-emerald-700">{page.audience}</p>
                 <h3 className="mt-3 text-lg font-semibold leading-snug text-slate-950">{page.title}</h3>
                 <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{page.metaDescription}</p>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700">
                   Open guide
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
                 </span>
               </Link>
             ))}
@@ -276,23 +276,23 @@ export default function Home() {
 
       <EmailCapture />
 
-      <section className="bg-[#FAFAF8] py-14 sm:py-20">
+      <section className="soft-stage py-14 sm:py-20">
         <div className="container-shell">
-          <div className="rounded-[2rem] border border-emerald-200 bg-emerald-50 p-6 shadow-line sm:p-8 lg:flex lg:items-center lg:justify-between">
+          <div className="cta-panel-premium rounded-[2rem] p-6 sm:p-8 lg:flex lg:items-center lg:justify-between">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">Start now</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950">
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-200">Start now</p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-white">
                 Build your first application kit.
               </h2>
-              <p className="mt-3 max-w-2xl leading-7 text-slate-600">
+              <p className="mt-3 max-w-2xl leading-7 text-slate-300">
                 Start with one honest note and turn it into resume-ready proof.
               </p>
             </div>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:mt-0">
-              <Link href="/tools/resume-bullet-generator" className="button-primary">
+              <Link href="/tools/resume-bullet-generator" className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 font-semibold text-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-emerald-50">
                 Generate resume bullets
               </Link>
-              <Link href="/resources" className="button-secondary bg-white">
+              <Link href="/resources" className="button-ghost">
                 Browse resources
               </Link>
             </div>

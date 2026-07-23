@@ -115,31 +115,33 @@ export default async function ToolPage({ params }: ToolPageProps) {
         ]}
       />
       {tool.slug === "resume-bullet-generator" ? (
-        <section className="bg-[#FAFAF8] py-6 sm:py-8">
+        <section className="premium-hero py-3 sm:py-4">
           <div className="container-shell">
-            <div className="app-panel grid min-w-0 gap-5 p-5 sm:p-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div className="app-panel grid min-w-0 gap-4 p-4 sm:p-5 lg:grid-cols-2 lg:items-center">
               <div className="min-w-0">
                 <p className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">
                   {tool.category}
                 </p>
-                <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-5xl">
+                <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-4xl">
                   {tool.name}
                 </h1>
-                <p className="mt-3 max-w-2xl break-words text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
+                <p className="mt-2 max-w-2xl break-words text-sm leading-6 text-slate-600">
                   {tool.longDescription}
                 </p>
-                <div className="mt-4">
-                  <TrustPills />
+                <div className="mt-3">
+                  <TrustPills compact />
                 </div>
               </div>
-              <div className="grid min-w-0 gap-2 sm:grid-cols-2">
-                {liveToolHighlights.map((highlight) => {
+              <div className="grid min-w-0 grid-cols-2 gap-2 lg:grid-cols-3">
+                {liveToolHighlights.map((highlight, index) => {
                   const Icon = highlight.icon;
 
                   return (
                     <span
                       key={highlight.label}
-                      className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-700 shadow-line"
+                      className={`interactive-card inline-flex min-h-11 items-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold text-slate-700 ${
+                        index === liveToolHighlights.length - 1 ? "col-span-2 lg:col-span-1" : ""
+                      }`}
                     >
                       <Icon className="h-4 w-4 text-emerald-600" aria-hidden="true" />
                       {highlight.label}
@@ -182,7 +184,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         </PremiumPageShell>
       )}
 
-      <section className="premium-shell py-5 sm:py-7">
+      <section className="workspace-shell py-4 sm:py-5">
         <div className="container-shell">
         <div>
           {tool.slug === "resume-bullet-generator" ? (

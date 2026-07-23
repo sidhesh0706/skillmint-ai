@@ -987,7 +987,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   ];
 
   return (
-    <div className="relative space-y-5">
+    <div className="relative z-10 space-y-5">
       <div className="app-panel relative min-w-0 overflow-hidden p-4 text-slate-950 sm:p-5">
         <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/80 to-transparent" />
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -1021,7 +1021,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
 
       <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(22rem,0.88fr)_minmax(0,1.42fr)] xl:items-start">
       <form
-        className="app-panel relative min-w-0 overflow-hidden p-4 text-slate-950 sm:p-5 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
+        className="app-panel relative min-w-0 overflow-hidden border-emerald-100/80 p-4 text-slate-950 sm:p-5 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {
           event.preventDefault();
           handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
@@ -1169,7 +1169,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         </div>
       </form>
 
-      <section className="app-panel flex min-h-[34rem] min-w-0 flex-col overflow-hidden" aria-live="polite">
+      <section className="app-panel flex min-h-[34rem] min-w-0 flex-col overflow-hidden border-emerald-100/80 shadow-[0_34px_100px_rgba(15,23,42,0.13)]" aria-live="polite">
         <div className="relative overflow-hidden border-b border-slate-200 bg-[linear-gradient(135deg,#ffffff,#f3fbf7)] p-4 text-slate-950 sm:p-6">
           <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/90 to-transparent" />
           <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-mint-100/45 blur-3xl" />

@@ -38,7 +38,7 @@ export function ProductWindow({
   return (
     <div
       className={clsx(
-        "overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_28px_80px_rgba(15,23,42,0.12)]",
+        "premium-window overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white",
         className,
       )}
     >
@@ -88,7 +88,7 @@ export function ProductWindow({
             {bullets.map((bullet, index) => (
               <div
                 key={`${bullet.text}-${index}`}
-                className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-soft"
+                className="output-card-pro group p-4"
                 style={{ animationDelay: `${index * 80}ms` }}
               >
                 <div className="mb-3 flex items-center justify-between gap-3">
@@ -132,10 +132,10 @@ export function ProductWindow({
             {["Scored", "Rewrite", "Export"].map((action) => (
               <div
                 key={action}
-                className="flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700"
+                className="group flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-white hover:shadow-soft"
               >
                 {action}
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden="true" />
               </div>
             ))}
           </div>

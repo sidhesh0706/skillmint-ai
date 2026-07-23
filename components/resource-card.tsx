@@ -8,7 +8,7 @@ type ResourceCardProps = {
 
 export function ResourceCard({ page }: ResourceCardProps) {
   return (
-    <article className="group relative flex h-full min-h-[20rem] flex-col overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-line transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-soft">
+    <article className="group interactive-card relative flex h-full min-h-[20rem] flex-col rounded-[1.5rem] p-5">
       <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/0 to-transparent transition duration-300 group-hover:via-mint-300/80" />
       <div className="pointer-events-none absolute -right-16 -top-20 h-40 w-40 rounded-full bg-mint-100/0 blur-3xl transition duration-500 group-hover:bg-mint-100/55" />
       <div className="flex flex-1 flex-col">

@@ -120,7 +120,7 @@ export default function ResourcesPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-[#FAFAF8] py-12 sm:py-16 lg:py-20">
+      <section className="premium-hero py-12 sm:py-16 lg:py-20">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
         <div className="container-shell relative grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
           <div>
@@ -136,7 +136,7 @@ export default function ResourcesPage() {
             </p>
           </div>
 
-          <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-soft">
+          <div className="app-panel p-4">
             <div className="flex min-h-12 items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-slate-600">
               <Search className="h-4 w-4 text-emerald-600" aria-hidden="true" />
               <span className="text-sm">Find guides by role, goal, project, metric, or ATS keyword</span>
@@ -146,7 +146,7 @@ export default function ResourcesPage() {
                 <a
                   key={item}
                   href="#resource-library"
-                  className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
+                  className="trust-pill rounded-full px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
                 >
                   {item}
                 </a>
@@ -175,7 +175,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="bg-white py-14 sm:py-20" id="resource-library">
+      <section className="surface-band py-14 sm:py-20" id="resource-library">
         <div className="container-shell">
           <div className="mb-10 grid gap-5 lg:grid-cols-[0.66fr_0.34fr] lg:items-end">
             <div className="max-w-2xl">
@@ -190,7 +190,7 @@ export default function ResourcesPage() {
                 application language.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-200 bg-[#FAFAF8] p-5 shadow-line">
+            <div className="interactive-card rounded-3xl p-5">
               <div className="flex items-start gap-3">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ink text-white shadow-line">
                   <Target className="h-5 w-5" aria-hidden="true" />
@@ -229,8 +229,8 @@ export default function ResourcesPage() {
               const Icon = item.icon;
 
               return (
-                <article key={item.title} className="rounded-3xl border border-slate-200 bg-[#FAFAF8] p-5 shadow-line">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+                <article key={item.title} className="feature-card rounded-3xl p-5">
+                  <div className="feature-icon flex h-11 w-11 items-center justify-center rounded-2xl text-emerald-700">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <h3 className="mt-4 text-xl font-semibold text-slate-950">{item.title}</h3>
@@ -242,7 +242,7 @@ export default function ResourcesPage() {
 
           <div className="mt-14 space-y-8">
             {resourceCategories.map((category) => (
-              <section key={category.title} className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-line sm:p-7">
+              <section key={category.title} className="resource-shelf rounded-[2rem] border border-slate-200 p-5 sm:p-7">
                 <div className="mb-6 grid gap-3 lg:grid-cols-[0.35fr_0.65fr] lg:items-end">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
@@ -268,14 +268,14 @@ export default function ResourcesPage() {
             ))}
           </div>
 
-          <section className="mt-12 rounded-[2rem] border border-emerald-200 bg-emerald-50 p-6 shadow-line sm:p-8">
+          <section className="cta-panel-premium mt-12 rounded-[2rem] p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
+                <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-200">
                   <BookOpen className="h-4 w-4" aria-hidden="true" />
                   Turn examples into your own bullets
                 </p>
-                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-slate-950">
+                <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-white">
                   Use a guide for direction, then generate bullets tailored to your real role.
                 </h2>
               </div>
