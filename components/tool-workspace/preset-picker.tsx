@@ -8,7 +8,8 @@ type Preset = {
 
 type PresetPickerProps = {
   presets: Preset[];
-  onApply: (values: ToolFormValues) => void;
+  selectedLabel?: string;
+  onApply: (values: ToolFormValues, label: string) => void;
   getDescription: (values: ToolFormValues) => string;
 };
 
@@ -16,6 +17,7 @@ const presetIcons = [Blocks, ChartNoAxesCombined, Headphones, Users];
 
 export function PresetPicker({
   presets,
+  selectedLabel,
   onApply,
   getDescription,
 }: PresetPickerProps) {
@@ -32,7 +34,7 @@ export function PresetPicker({
           Fully editable
         </span>
       </div>
-      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+      <div className="mt-3 grid grid-cols-2 gap-2">
         {presets.map((preset, index) => {
           const Icon = presetIcons[index % presetIcons.length];
 
@@ -40,8 +42,11 @@ export function PresetPicker({
             <button
               key={preset.label}
               type="button"
-              onClick={() => onApply(preset.values)}
-              className="preset-card group"
+              onClick={() => onApply(preset.values, preset.label)}
+              className={`preset-card group ${
+                selectedLabel === preset.label ? "is-selected" : ""
+              }`}
+              aria-pressed={selectedLabel === preset.label}
             >
               <span className="flex items-center justify-between gap-2">
                 <span className="preset-icon">
@@ -52,8 +57,11 @@ export function PresetPicker({
                   aria-hidden="true"
                 />
               </span>
-              <span className="mt-3 block text-xs font-semibold text-slate-950">
+              <span className="mt-3 flex items-center justify-between gap-2 text-xs font-semibold text-slate-950">
                 {preset.label}
+                {selectedLabel === preset.label ? (
+                  <span className="preset-selected-label">Applied</span>
+                ) : null}
               </span>
               <span className="mt-1 block truncate text-[11px] font-medium text-slate-500">
                 {getDescription(preset.values)}

@@ -1,4 +1,10 @@
-import { BarChart3, CircleCheck, KeyRound, Layers3 } from "lucide-react";
+import {
+  BarChart3,
+  CircleCheck,
+  Download,
+  KeyRound,
+  ScanSearch,
+} from "lucide-react";
 import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { ScoreMeter } from "@/components/score-meter";
 import type { ResumeStrengthSummary } from "@/components/tool-workspace/types";
@@ -6,13 +12,15 @@ import type { ResumeStrengthSummary } from "@/components/tool-workspace/types";
 type OutputSummaryProps = {
   summary: ResumeStrengthSummary;
   bulletCount: number;
-  keywordCount: number;
+  atsReadiness: number;
+  missingKeywordCount: number;
 };
 
 export function OutputSummary({
   summary,
   bulletCount,
-  keywordCount,
+  atsReadiness,
+  missingKeywordCount,
 }: OutputSummaryProps) {
   const score = summary.overallScore || 0;
   const metrics = [
@@ -21,8 +29,21 @@ export function OutputSummary({
       label: "Overall score",
       value: `${score}/100`,
     },
-    { icon: Layers3, label: "Bullet drafts", value: `${bulletCount}/5` },
-    { icon: KeyRound, label: "Keywords", value: `${keywordCount} used` },
+    {
+      icon: ScanSearch,
+      label: "ATS readiness",
+      value: `${atsReadiness}/100`,
+    },
+    {
+      icon: KeyRound,
+      label: "Missing keywords",
+      value: missingKeywordCount ? `${missingKeywordCount} found` : "No gaps",
+    },
+    {
+      icon: Download,
+      label: "Export status",
+      value: bulletCount ? "Ready" : "Pending",
+    },
   ];
 
   return (
@@ -48,7 +69,7 @@ export function OutputSummary({
         />
       </div>
       <ScoreMeter value={score} label="Overall strength" className="mt-5" />
-      <dl className="mt-5 grid gap-2 sm:grid-cols-3">
+      <dl className="mt-5 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric) => {
           const Icon = metric.icon;
           return (

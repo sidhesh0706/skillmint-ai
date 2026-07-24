@@ -16,11 +16,11 @@ export function ComposerPanel({ children, onSubmit }: ComposerPanelProps) {
         <div>
           <p className="workspace-label">Input composer</p>
           <h2 className="mt-1 text-2xl font-semibold tracking-[-0.03em] text-slate-950">
-            Build the signal
+            Build your draft
           </h2>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            Start with honest context. The workspace handles structure,
-            keywords, and recruiter-ready phrasing.
+            Add the shortest truthful version of your work. SkillMint handles
+            structure, keywords, and recruiter-ready phrasing.
           </p>
         </div>
       </div>

@@ -113,11 +113,40 @@ main * {
   }
 
   .workspace-product {
-    @apply space-y-4;
+    @apply space-y-3;
+  }
+
+  .resume-tool-intro {
+    @apply border-b border-slate-200/80 bg-white py-2.5 sm:py-3;
+  }
+
+  .resume-tool-intro-inner {
+    @apply flex min-w-0 flex-col gap-3 rounded-[1.2rem] border border-slate-200 bg-white px-4 py-3 shadow-[0_12px_34px_rgba(15,23,42,0.06)] sm:flex-row sm:items-center sm:justify-between;
+  }
+
+  .resume-tool-mark {
+    @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-950 text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)];
+  }
+
+  .resume-live-status {
+    @apply inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700;
+  }
+
+  .resume-live-status::before {
+    content: "";
+    @apply h-1.5 w-1.5 rounded-full bg-emerald-500;
+  }
+
+  .resume-tool-signals {
+    @apply hidden shrink-0 items-center gap-1.5 2xl:flex;
+  }
+
+  .resume-tool-signal {
+    @apply inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50/80 px-3 text-xs font-semibold text-slate-600;
   }
 
   .workspace-toolbar {
-    @apply grid gap-5 rounded-[1.6rem] border border-slate-200 bg-white p-4 shadow-[0_18px_54px_rgba(15,23,42,0.075)] sm:p-5 lg:grid-cols-[minmax(0,1fr)_minmax(28rem,0.75fr)] lg:items-end;
+    @apply grid gap-4 rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-[0_14px_40px_rgba(15,23,42,0.065)] lg:grid-cols-[minmax(0,1fr)_minmax(25rem,0.72fr)] lg:items-center;
     background:
       linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 252, 250, 0.98)),
       #fff;
@@ -136,7 +165,7 @@ main * {
   }
 
   .workspace-stat {
-    @apply min-w-0 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)];
+    @apply min-w-0 rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)];
   }
 
   .workspace-stat dt {
@@ -148,7 +177,7 @@ main * {
   }
 
   .workspace-columns {
-    @apply grid min-w-0 gap-5 xl:grid-cols-[minmax(22rem,0.82fr)_minmax(0,1.48fr)] xl:items-start;
+    @apply grid min-w-0 gap-4 xl:grid-cols-[minmax(22rem,0.62fr)_minmax(0,1fr)] xl:items-start;
   }
 
   .workspace-composer-column,
@@ -157,13 +186,13 @@ main * {
   }
 
   .workspace-composer-column {
-    @apply xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto;
+    @apply xl:sticky xl:top-20 xl:max-h-[calc(100vh-5.75rem)] xl:overflow-y-auto xl:pb-2;
     scrollbar-width: thin;
     scrollbar-color: #cbd5e1 transparent;
   }
 
   .composer-panel {
-    @apply relative min-w-0 overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white p-4 text-slate-950 shadow-[0_24px_72px_rgba(15,23,42,0.095)] sm:p-5;
+    @apply relative min-w-0 overflow-hidden rounded-[1.45rem] border border-slate-200 bg-white p-4 text-slate-950 shadow-[0_20px_56px_rgba(15,23,42,0.085)] sm:p-5;
   }
 
   .composer-panel::before,
@@ -174,7 +203,7 @@ main * {
   }
 
   .composer-heading {
-    @apply flex items-start gap-4 border-b border-slate-200 pb-5;
+    @apply flex items-start gap-3 border-b border-slate-200 pb-4;
   }
 
   .composer-heading-icon {
@@ -182,7 +211,7 @@ main * {
   }
 
   .preset-picker {
-    @apply rounded-[1.3rem] border border-slate-200 bg-slate-50/75 p-3.5;
+    @apply rounded-[1.2rem] border border-slate-200 bg-slate-50/75 p-3.5;
   }
 
   .preset-icon {
@@ -190,7 +219,7 @@ main * {
   }
 
   .composer-module {
-    @apply relative overflow-hidden rounded-[1.3rem] border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,0.055)] transition duration-300 hover:border-emerald-200 hover:shadow-[0_18px_44px_rgba(15,23,42,0.075)];
+    @apply relative overflow-hidden rounded-[1.2rem] border border-slate-200 bg-white p-4 shadow-[0_8px_24px_rgba(15,23,42,0.045)] transition duration-300 hover:border-emerald-200 hover:shadow-[0_16px_38px_rgba(15,23,42,0.07)];
   }
 
   .composer-module::after {
@@ -198,8 +227,20 @@ main * {
     @apply absolute inset-y-4 left-0 w-0.5 rounded-full bg-emerald-400 opacity-70;
   }
 
+  .composer-module.is-complete {
+    @apply border-emerald-200/80 bg-[linear-gradient(145deg,#ffffff,#fbfffd)];
+  }
+
   .composer-step.is-complete {
     @apply bg-emerald-600 text-white shadow-[0_10px_24px_rgba(16,185,129,0.22)];
+  }
+
+  .composer-step-status {
+    @apply rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-slate-400;
+  }
+
+  .composer-step-status.is-complete {
+    @apply border-emerald-200 bg-emerald-50 text-emerald-700;
   }
 
   .composer-progress {
@@ -218,8 +259,12 @@ main * {
     @apply mt-4 flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs font-semibold text-emerald-700;
   }
 
+  .composer-submit-dock {
+    @apply sticky bottom-2 z-20 -mx-1 flex items-center justify-between gap-3 rounded-[1.15rem] border border-slate-200 bg-white/95 p-2.5 shadow-[0_18px_46px_rgba(15,23,42,0.14)] backdrop-blur-xl;
+  }
+
   .output-studio {
-    @apply relative flex min-h-[40rem] min-w-0 flex-col overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_28px_82px_rgba(15,23,42,0.12)];
+    @apply relative flex min-h-[43rem] min-w-0 flex-col overflow-hidden rounded-[1.45rem] border border-slate-200 bg-white shadow-[0_24px_68px_rgba(15,23,42,0.105)];
   }
 
   .output-studio-header {
@@ -230,11 +275,15 @@ main * {
   }
 
   .output-export-strip {
-    @apply relative z-10 mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 2xl:grid-cols-5;
+    @apply relative z-10 mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5;
   }
 
   .output-export-action {
-    @apply flex min-h-16 items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-left shadow-[0_7px_20px_rgba(15,23,42,0.055)] transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/50 hover:shadow-[0_12px_28px_rgba(16,185,129,0.1)] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0;
+    @apply flex min-h-14 items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-left shadow-[0_7px_20px_rgba(15,23,42,0.055)] transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/50 hover:shadow-[0_12px_28px_rgba(16,185,129,0.1)] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0;
+  }
+
+  .output-export-action > span:last-child > span:first-child {
+    @apply whitespace-nowrap text-xs 2xl:text-sm;
   }
 
   .workspace-action {
@@ -274,20 +323,36 @@ main * {
   }
 
   .result-card {
-    @apply relative flex gap-3 overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-[0_14px_42px_rgba(15,23,42,0.07)] transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_22px_56px_rgba(15,23,42,0.095)];
+    @apply relative overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-[0_14px_42px_rgba(15,23,42,0.07)] transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_22px_56px_rgba(15,23,42,0.095)];
     animation: fade-in-up 520ms ease-out both;
   }
 
-  .result-card-rail {
-    @apply flex w-14 shrink-0 flex-col items-center gap-3 border-r border-slate-200 pr-3;
+  .result-card-header {
+    @apply flex flex-col gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center sm:justify-between;
   }
 
-  .result-card-rail > span {
-    @apply flex h-8 w-8 items-center justify-center rounded-full bg-slate-950 text-xs font-semibold text-white;
+  .result-index {
+    @apply flex h-9 w-9 items-center justify-center rounded-xl bg-slate-950 text-xs font-semibold text-white shadow-[0_8px_20px_rgba(15,23,42,0.18)];
   }
 
-  .result-card-rail .rounded-2xl {
-    @apply w-full border-0 bg-transparent p-0 shadow-none;
+  .result-score-block {
+    @apply flex items-center gap-2;
+  }
+
+  .result-score-block .rounded-2xl {
+    @apply w-24 border-0 bg-transparent p-0 shadow-none;
+  }
+
+  .result-score-block .rounded-2xl p {
+    @apply hidden;
+  }
+
+  .result-copy {
+    @apply mt-4 rounded-2xl border border-slate-200 bg-[linear-gradient(145deg,#ffffff,#f8fbfa)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)];
+  }
+
+  .result-copy p {
+    @apply text-[15px] font-medium leading-7 text-slate-900;
   }
 
   .score-chip {
@@ -327,7 +392,7 @@ main * {
   }
 
   .rewrite-comparison {
-    @apply mt-4 grid gap-3 rounded-2xl border border-emerald-200 bg-emerald-50/45 p-4 sm:grid-cols-2;
+    @apply mt-4 grid gap-3 rounded-2xl border border-emerald-200 bg-emerald-50/45 p-4 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-stretch;
     animation: fade-in-up 360ms ease-out both;
   }
 
@@ -338,6 +403,10 @@ main * {
 
   .rewrite-after {
     @apply border-emerald-200;
+  }
+
+  .rewrite-direction {
+    @apply hidden items-center justify-center text-emerald-600 sm:flex;
   }
 
   .keyword-intelligence {
@@ -360,6 +429,10 @@ main * {
     @apply bg-amber-50/55;
   }
 
+  .keyword-truth-note {
+    @apply flex items-start gap-2 border-t border-amber-200 bg-amber-50 px-4 py-3 text-xs font-semibold leading-5 text-amber-800;
+  }
+
   .action-verb-chip {
     @apply rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700;
   }
@@ -374,6 +447,180 @@ main * {
 
   .history-item {
     @apply rounded-2xl border border-slate-200 bg-slate-50/75 p-3 text-left transition duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:bg-emerald-50/50 hover:shadow-[0_10px_24px_rgba(16,185,129,0.08)];
+  }
+
+  .empty-report {
+    @apply relative flex flex-1 flex-col justify-center overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-[0_16px_46px_rgba(15,23,42,0.07)] sm:p-5;
+  }
+
+  .empty-report::before {
+    content: "";
+    @apply pointer-events-none absolute inset-x-0 top-0 h-1 bg-emerald-500;
+  }
+
+  .empty-report-heading {
+    @apply flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between;
+  }
+
+  .empty-sample-action {
+    @apply shrink-0;
+  }
+
+  .empty-transformation {
+    @apply mt-5 grid gap-3 lg:grid-cols-[minmax(0,0.78fr)_auto_minmax(0,1.22fr)] lg:items-center;
+  }
+
+  .empty-note {
+    @apply rounded-[1.15rem] border border-slate-200 bg-slate-50 p-4;
+  }
+
+  .empty-note > span,
+  .empty-note > div:first-child > span:first-child {
+    @apply text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400;
+  }
+
+  .empty-note p {
+    @apply mt-3 text-sm font-semibold leading-6 text-slate-600;
+  }
+
+  .empty-note.is-improved {
+    @apply border-emerald-200 bg-emerald-50/55 shadow-[0_16px_36px_rgba(16,185,129,0.09)];
+  }
+
+  .empty-note.is-improved p {
+    @apply text-slate-900;
+  }
+
+  .empty-ready-badge {
+    @apply inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-white px-2 py-1 text-[10px] font-semibold text-emerald-700;
+  }
+
+  .empty-score {
+    @apply mt-4 flex items-center gap-3;
+  }
+
+  .empty-score > span {
+    @apply text-lg font-semibold tracking-[-0.03em] text-slate-700;
+  }
+
+  .empty-score > div {
+    @apply h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200;
+  }
+
+  .empty-score > div > span {
+    @apply block h-full rounded-full bg-slate-400;
+    animation: score-fill 700ms ease-out both;
+    transform-origin: left;
+  }
+
+  .empty-score.is-after > span {
+    @apply text-emerald-700;
+  }
+
+  .empty-score.is-after > div {
+    @apply bg-emerald-100;
+  }
+
+  .empty-score.is-after > div > span {
+    @apply bg-emerald-500;
+  }
+
+  .empty-transform-arrow {
+    @apply hidden h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-emerald-600 shadow-line lg:flex;
+  }
+
+  .empty-insight-row {
+    @apply mt-4 grid gap-4 rounded-[1.15rem] border border-slate-200 bg-slate-50/70 p-4 xl:grid-cols-[0.8fr_1.2fr] xl:items-center;
+  }
+
+  .empty-keyword {
+    @apply inline-flex rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-xs font-semibold text-emerald-700;
+  }
+
+  .empty-checklist {
+    @apply grid gap-2 sm:grid-cols-2 xl:grid-cols-3;
+  }
+
+  .empty-checklist > span {
+    @apply flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-xs font-semibold text-slate-600;
+  }
+
+  .loading-report {
+    @apply relative overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-[0_18px_52px_rgba(15,23,42,0.08)] sm:p-5;
+  }
+
+  .loading-report::before {
+    content: "";
+    @apply pointer-events-none absolute inset-x-0 top-0 h-1 bg-emerald-500;
+  }
+
+  .loading-report-heading {
+    @apply flex items-start justify-between gap-4;
+  }
+
+  .loading-percent {
+    @apply rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700;
+  }
+
+  .loading-progress {
+    @apply mt-5 h-1.5 overflow-hidden rounded-full bg-slate-100;
+  }
+
+  .loading-progress > span {
+    @apply block h-full rounded-full bg-emerald-500 transition-[width] duration-500;
+  }
+
+  .loading-steps {
+    @apply mt-5 grid gap-2 sm:grid-cols-2;
+  }
+
+  .loading-steps li {
+    @apply flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-slate-400 transition duration-300;
+  }
+
+  .loading-steps li.is-active {
+    @apply border-emerald-200 bg-emerald-50/70 text-slate-900 shadow-[0_10px_24px_rgba(16,185,129,0.08)];
+  }
+
+  .loading-steps li.is-complete {
+    @apply border-emerald-100 bg-white text-slate-700;
+  }
+
+  .loading-step-icon {
+    @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-[10px] font-semibold;
+  }
+
+  .is-active .loading-step-icon,
+  .is-complete .loading-step-icon {
+    @apply border-emerald-200 bg-emerald-50 text-emerald-700;
+  }
+
+  .loading-steps strong {
+    @apply block text-xs font-semibold;
+  }
+
+  .loading-steps small {
+    @apply mt-0.5 block text-[10px] font-medium text-slate-400;
+  }
+
+  .loading-skeletons {
+    @apply mt-5 grid gap-3 lg:grid-cols-2;
+  }
+
+  .loading-result-skeleton {
+    @apply animate-pulse rounded-[1.1rem] border border-slate-200 bg-white p-4;
+  }
+
+  .skeleton-line {
+    @apply block h-2.5 rounded-full bg-slate-100;
+  }
+
+  .skeleton-pill {
+    @apply block h-7 w-14 rounded-full bg-emerald-50;
+  }
+
+  .skeleton-box {
+    @apply block h-10 rounded-xl bg-slate-50;
   }
 
   .page-band {
@@ -475,7 +722,15 @@ main * {
   }
 
   .premium-input {
-    @apply mt-2 min-h-12 w-full rounded-2xl border border-slate-300 bg-white/95 px-4 py-3 text-sm text-text-main outline-none shadow-[inset_0_1px_2px_rgba(15,23,42,0.035),0_1px_0_rgba(255,255,255,0.9)] transition duration-300 placeholder:text-slate-400 hover:border-slate-400 hover:bg-white focus:border-mint-500 focus:bg-white focus:shadow-[0_12px_30px_rgba(16,185,129,0.10)] focus:ring-4 focus:ring-mint-100;
+    @apply mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-text-main outline-none shadow-[inset_0_1px_2px_rgba(15,23,42,0.025),0_1px_0_rgba(255,255,255,0.9)] transition duration-200 placeholder:text-slate-400 hover:border-slate-400 focus:border-emerald-500 focus:shadow-[0_8px_22px_rgba(16,185,129,0.09)] focus:ring-4 focus:ring-emerald-100;
+  }
+
+  textarea.premium-input {
+    @apply min-h-28 leading-6;
+  }
+
+  select.premium-input {
+    @apply cursor-pointer pr-9;
   }
 
   .output-card-pro {
@@ -500,6 +755,15 @@ main * {
 
   .preset-card {
     @apply rounded-2xl border border-slate-200 bg-white px-3.5 py-3 text-left shadow-[0_8px_22px_rgba(15,23,42,0.055)] transition duration-300 hover:-translate-y-1 hover:border-mint-100 hover:bg-mint-50/70 hover:shadow-[0_16px_34px_rgba(16,185,129,0.12)] focus:outline-none focus:ring-4 focus:ring-mint-100;
+  }
+
+  .preset-card.is-selected {
+    @apply border-emerald-300 bg-emerald-50/80 shadow-[0_14px_32px_rgba(16,185,129,0.13)] ring-1 ring-emerald-200;
+    animation: preset-applied 360ms ease-out both;
+  }
+
+  .preset-selected-label {
+    @apply rounded-full border border-emerald-200 bg-white px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-emerald-700;
   }
 
   .result-surface {
@@ -1051,6 +1315,16 @@ main * {
   }
 }
 
+@keyframes preset-applied {
+  0% {
+    transform: scale(0.985);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1064,7 +1338,10 @@ main * {
   .score-fill,
   .success-pulse,
   .premium-window,
-  .launch-preview::before {
+  .launch-preview::before,
+  .preset-card.is-selected,
+  .loading-result-skeleton,
+  .empty-score > div > span {
     animation: none;
   }
 
@@ -1104,24 +1381,45 @@ main * {
     font-size: 0.75rem;
   }
 
-  .result-card {
-    display: block;
+  .resume-tool-intro-inner {
+    padding: 0.75rem;
   }
 
-  .result-card-rail {
-    width: 100%;
-    flex-direction: row;
+  .workspace-columns {
+    gap: 0.85rem;
+  }
+
+  .composer-panel,
+  .output-studio {
+    border-radius: 1.2rem;
+  }
+
+  .output-studio {
+    min-height: 36rem;
+  }
+
+  .composer-submit-dock {
+    bottom: 0.5rem;
+  }
+
+  .result-card-header {
+    align-items: stretch;
+  }
+
+  .result-score-block {
     justify-content: space-between;
-    border-right: 0;
-    border-bottom: 1px solid rgb(226 232 240);
-    padding-right: 0;
-    padding-bottom: 0.75rem;
-    margin-bottom: 0.9rem;
   }
 
-  .result-card-rail .rounded-2xl {
-    width: auto;
-    min-width: 5rem;
+  .result-score-block .rounded-2xl {
+    width: min(8rem, 58vw);
+  }
+
+  .empty-sample-action {
+    width: 100%;
+  }
+
+  .empty-insight-row {
+    padding: 0.85rem;
   }
 
   .output-export-action {

@@ -82,6 +82,11 @@ export function KeywordIntelligence({
           </div>
         </div>
       </div>
+      <div className="keyword-truth-note">
+        <AlertTriangle className="h-4 w-4" aria-hidden="true" />
+        Only add skills or metrics that are truthful and supported by your real
+        experience.
+      </div>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Clipboard,
   Download,
@@ -15,14 +15,14 @@ import {
 import { AdSlot } from "@/components/ad-slot";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
 import { EmailCapture } from "@/components/email-capture";
-import { EmptyStatePreview } from "@/components/empty-state-preview";
-import { LoadingIntelligenceState } from "@/components/loading-intelligence-state";
 import { MotionButton } from "@/components/motion-button";
 import { OutputActionBar } from "@/components/output-action-bar";
 import { ComposerPanel } from "@/components/tool-workspace/composer-panel";
 import { ComposerStep } from "@/components/tool-workspace/composer-step";
+import { EmptyPreview } from "@/components/tool-workspace/empty-preview";
 import { HistoryPanel } from "@/components/tool-workspace/history-panel";
 import { KeywordIntelligence } from "@/components/tool-workspace/keyword-intelligence";
+import { LoadingSequence } from "@/components/tool-workspace/loading-sequence";
 import { OutputStudio } from "@/components/tool-workspace/output-studio";
 import { OutputSummary } from "@/components/tool-workspace/output-summary";
 import { PresetPicker } from "@/components/tool-workspace/preset-picker";
@@ -200,10 +200,11 @@ const exportActions = [
 ];
 
 const loadingSteps = [
-  "Scanning experience",
-  "Extracting impact",
-  "Matching ATS keywords",
-  "Rewriting for recruiters",
+  "Reading your notes",
+  "Finding measurable impact",
+  "Matching job keywords",
+  "Rewriting for recruiter clarity",
+  "Preparing export formats",
 ];
 
 function renderField(
@@ -516,6 +517,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     null,
   );
   const [isRewriting, setIsRewriting] = useState(false);
+  const [selectedPreset, setSelectedPreset] = useState("");
+  const studioRef = useRef<HTMLDivElement>(null);
 
   const hasOutput = generated.bullets.length > 0;
   const outputText = useMemo(() => formatOutputText(generated), [generated]);
@@ -546,6 +549,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     Boolean(form.outputMode && form.tone),
   ];
   const completedSectionCount = completedSections.filter(Boolean).length;
+  const atsReadiness = generated.scores.length
+    ? Math.round(
+        generated.scores.reduce(
+          (total, score) => total + score.breakdown.atsKeywordFit,
+          0,
+        ) / generated.scores.length,
+      )
+    : 0;
 
   useEffect(() => {
     try {
@@ -623,8 +634,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
-  function applyPreset(values: ToolFormValues) {
+  function applyPreset(values: ToolFormValues, label = "Sample") {
     setForm((current) => ({ ...current, ...values }));
+    setSelectedPreset(label);
     trackEvent("tool_form_started", { tool: tool.slug, field: "preset" });
     setHasTrackedFormStart(true);
     showToast("Example fields added. Adjust anything before generating.");
@@ -736,6 +748,16 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setError("");
     setCopied(false);
     setIsGenerating(true);
+    if (window.matchMedia("(max-width: 1279px)").matches) {
+      window.requestAnimationFrame(() => {
+        studioRef.current?.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+          block: "start",
+        });
+      });
+    }
     trackEvent(eventName, { tool: tool.slug, outputMode: form.outputMode });
     trackEvent("tool_generate_clicked", {
       tool: tool.slug,
@@ -1023,8 +1045,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   return (
     <div className="relative z-10">
       <WorkspaceShell
-        title="Build one focused resume studio."
-        description="Add role context in the composer. Review scored bullets, keyword intelligence, rewrites, and clean exports in the studio."
+        title="Your resume workspace"
+        description="Compose on the left. Review scored bullets, keyword intelligence, rewrites, and exports on the right."
         stats={cockpitStats}
         composer={
           <ComposerPanel
@@ -1037,6 +1059,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           >
             <PresetPicker
               presets={examplePresets}
+              selectedLabel={selectedPreset}
               onApply={applyPreset}
               getDescription={getPresetDescription}
             />
@@ -1099,6 +1122,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               title="Proof and metrics"
               description="Tools, numbers, and scope make the output specific."
               complete={completedSections[2]}
+              optional
             >
               {proofFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
@@ -1115,6 +1139,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               title="Job match"
               description="Paste the target posting to surface truthful keyword gaps."
               complete={completedSections[3]}
+              optional
             >
               {jobMatchFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
@@ -1146,75 +1171,70 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               ))}
             </ComposerStep>
 
-            <MotionButton
-              type="submit"
-              loading={isGenerating}
-              disabled={isGenerating}
-              icon={Sparkles}
-              className="sticky bottom-3 z-10 w-full sm:static"
-            >
-              {hasOutput
-                ? "Regenerate resume bullets"
-                : "Generate resume bullets"}
-            </MotionButton>
+            <div className="composer-submit-dock">
+              <div className="hidden min-w-0 sm:block">
+                <p className="text-xs font-semibold text-slate-900">
+                  {completedSectionCount >= 2
+                    ? "Ready to generate"
+                    : "Add role and experience"}
+                </p>
+                <p className="mt-0.5 text-[11px] text-slate-500">
+                  {completedSectionCount}/5 sections prepared
+                </p>
+              </div>
+              <MotionButton
+                type="submit"
+                loading={isGenerating}
+                disabled={isGenerating}
+                icon={Sparkles}
+                className="min-w-0 flex-1 sm:flex-none"
+              >
+                {hasOutput ? "Regenerate bullets" : "Generate bullets"}
+              </MotionButton>
+            </div>
 
           </ComposerPanel>
         }
         studio={
-          <OutputStudio
-            title={tool.output.title}
-            description={tool.output.description}
-            hasOutput={hasOutput}
-            isGenerating={isGenerating}
-            onRegenerate={() => handleGenerate("regenerate_click")}
-            actions={
-              <>
-                {exportActions.map((item) => {
-                  const Icon = item.icon;
+          <div ref={studioRef} className="scroll-mt-20">
+            <OutputStudio
+              title={tool.output.title}
+              description={tool.output.description}
+              hasOutput={hasOutput}
+              isGenerating={isGenerating}
+              onRegenerate={() => handleGenerate("regenerate_click")}
+              actions={
+                <>
+                  {exportActions.map((item) => {
+                    const Icon = item.icon;
 
-                  return (
-                    <button
-                      key={item.action}
-                      type="button"
-                      onClick={() => handleExportAction(item.action)}
-                      disabled={!hasOutput}
-                      className="output-export-action group"
-                      aria-label={item.label}
-                      title={item.description}
-                    >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-mint-700 transition group-hover:bg-white">
-                        <Icon className="h-4 w-4" aria-hidden="true" />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block text-sm font-semibold text-ink">
-                          {item.label}
+                    return (
+                      <button
+                        key={item.action}
+                        type="button"
+                        onClick={() => handleExportAction(item.action)}
+                        disabled={!hasOutput}
+                        className="output-export-action group"
+                        aria-label={item.label}
+                        title={item.description}
+                      >
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-mint-700 transition group-hover:bg-white">
+                          <Icon className="h-4 w-4" aria-hidden="true" />
                         </span>
-                        <span className="hidden truncate text-xs text-slate-500 sm:block">
-                          {item.description}
+                        <span className="min-w-0">
+                          <span className="block text-sm font-semibold text-ink">
+                            {item.label}
+                          </span>
+                          <span className="hidden truncate text-[11px] text-slate-500 2xl:block">
+                            {item.description}
+                          </span>
                         </span>
-                      </span>
-                    </button>
-                  );
-                })}
-              </>
-            }
-          >
-            <div className="mb-5 grid gap-3 sm:grid-cols-3">
-              {cockpitStats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="app-panel-muted px-3 py-3 text-center"
-                >
-                  <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                    {stat.label}
-                  </span>
-                  <span className="mt-1 block truncate text-sm font-semibold text-ink">
-                    {stat.value}
-                  </span>
-                </div>
-              ))}
-            </div>
-
+                      </button>
+                    );
+                  })}
+                </>
+              }
+            >
             {error ? (
               <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
                 {error}
@@ -1222,33 +1242,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             ) : null}
 
             {isGenerating && !hasOutput ? (
-              <div className="space-y-4">
-                <LoadingIntelligenceState steps={loadingSteps} />
-                {[0, 1, 2].map((item) => (
-                  <div
-                    key={item}
-                    className="animate-pulse rounded-lg border border-slate-200 bg-white p-4 shadow-line"
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="h-3 w-24 rounded-full bg-mint-100" />
-                      <div className="h-7 w-16 rounded-full bg-slate-100" />
-                    </div>
-                    <div className="mt-4 h-4 w-11/12 rounded-full bg-slate-100" />
-                    <div className="mt-3 h-4 w-2/3 rounded-full bg-slate-100" />
-                    <div className="mt-4 grid gap-2 sm:grid-cols-3">
-                      <div className="h-12 rounded-lg bg-slate-50" />
-                      <div className="h-12 rounded-lg bg-slate-50" />
-                      <div className="h-12 rounded-lg bg-slate-50" />
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <LoadingSequence steps={loadingSteps} />
             ) : hasOutput ? (
               <div className="flex flex-1 flex-col gap-5">
                 <OutputSummary
                   summary={generated.summary}
                   bulletCount={generated.bullets.length}
-                  keywordCount={generated.keywords.length}
+                  atsReadiness={atsReadiness}
+                  missingKeywordCount={generated.missingKeywords.length}
                 />
 
                 <section>
@@ -1397,9 +1398,15 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 ) : null}
               </div>
             ) : (
-              <EmptyStatePreview
+              <EmptyPreview
                 title={tool.output.emptyTitle}
                 description={tool.output.emptyDescription}
+                onTrySample={() =>
+                  applyPreset(
+                    examplePresets[0].values,
+                    examplePresets[0].label,
+                  )
+                }
               />
             )}
 
@@ -1493,7 +1500,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               onOpen={reopenHistoryItem}
               onClear={clearHistory}
             />
-          </OutputStudio>
+            </OutputStudio>
+          </div>
         }
       />
 

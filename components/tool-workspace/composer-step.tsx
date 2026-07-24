@@ -7,6 +7,7 @@ type ComposerStepProps = {
   description: string;
   children: ReactNode;
   complete?: boolean;
+  optional?: boolean;
 };
 
 export function ComposerStep({
@@ -15,9 +16,13 @@ export function ComposerStep({
   description,
   children,
   complete = false,
+  optional = false,
 }: ComposerStepProps) {
   return (
-    <section className="composer-module">
+    <section
+      className={`composer-module ${complete ? "is-complete" : ""}`}
+      aria-label={`Step ${step}: ${title}`}
+    >
       <div className="flex items-start gap-3">
         <span className={`composer-step ${complete ? "is-complete" : ""}`}>
           {complete ? (
@@ -26,8 +31,17 @@ export function ComposerStep({
             step
           )}
         </span>
-        <div>
-          <h3 className="text-sm font-semibold text-slate-950">{title}</h3>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h3 className="text-sm font-semibold text-slate-950">{title}</h3>
+            <span
+              className={`composer-step-status ${
+                complete ? "is-complete" : ""
+              }`}
+            >
+              {complete ? "Complete" : optional ? "Optional" : "Required"}
+            </span>
+          </div>
           <p className="mt-1 text-xs leading-5 text-slate-500">
             {description}
           </p>

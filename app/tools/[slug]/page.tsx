@@ -126,38 +126,42 @@ export default async function ToolPage({ params }: ToolPageProps) {
         ]}
       />
       {tool.slug === "resume-bullet-generator" ? (
-        <section className="premium-hero py-3 sm:py-4">
+        <section className="resume-tool-intro">
           <div className="container-shell">
-            <div className="app-panel grid min-w-0 gap-4 p-4 sm:p-5 lg:grid-cols-2 lg:items-center">
-              <div className="min-w-0">
-                <p className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">
-                  {tool.category}
-                </p>
-                <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] text-slate-950 sm:text-4xl">
-                  {tool.name}
-                </h1>
-                <p className="mt-2 max-w-2xl break-words text-sm leading-6 text-slate-600">
-                  {tool.longDescription}
-                </p>
-                <div className="mt-3">
-                  <TrustPills compact />
+            <div className="resume-tool-intro-inner">
+              <div className="flex min-w-[15rem] shrink-0 items-center gap-3">
+                <span className="resume-tool-mark">
+                  <Sparkles className="h-4 w-4" aria-hidden="true" />
+                </span>
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                      {tool.category}
+                    </p>
+                    <span className="resume-live-status">Live</span>
+                  </div>
+                  <h1 className="mt-0.5 text-lg font-semibold leading-tight tracking-[-0.035em] text-slate-950 sm:whitespace-nowrap sm:text-2xl">
+                    {tool.name}
+                  </h1>
                 </div>
               </div>
-              <div className="grid min-w-0 grid-cols-2 gap-2 lg:grid-cols-3">
-                {liveToolHighlights.map((highlight, index) => {
+
+              <p className="hidden max-w-xl text-sm leading-6 text-slate-600 lg:block">
+                Turn honest work notes into five scored, recruiter-ready
+                bullets with keyword and rewrite guidance.
+              </p>
+
+              <div className="resume-tool-signals">
+                {liveToolHighlights.slice(0, 3).map((highlight) => {
                   const Icon = highlight.icon;
 
                   return (
                     <span
                       key={highlight.label}
-                      className={`interactive-card inline-flex min-h-11 items-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold text-slate-700 ${
-                        index === liveToolHighlights.length - 1
-                          ? "col-span-2 lg:col-span-1"
-                          : ""
-                      }`}
+                      className="resume-tool-signal"
                     >
                       <Icon
-                        className="h-4 w-4 text-emerald-600"
+                        className="h-3.5 w-3.5 text-emerald-600"
                         aria-hidden="true"
                       />
                       {highlight.label}

@@ -1,3 +1,4 @@
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import type { BulletComparison } from "@/components/tool-workspace/types";
 
 type RewriteComparisonProps = {
@@ -13,8 +14,14 @@ export function RewriteComparison({ comparison }: RewriteComparisonProps) {
           {comparison.original}
         </p>
       </div>
+      <div className="rewrite-direction" aria-hidden="true">
+        <ArrowRight className="h-4 w-4" />
+      </div>
       <div className="rewrite-after">
-        <p className="comparison-label text-emerald-700">Improved</p>
+        <p className="comparison-label flex items-center gap-2 text-emerald-700">
+          <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+          Improved
+        </p>
         <p className="mt-2 text-sm leading-6 text-slate-800">
           {comparison.improved}
         </p>

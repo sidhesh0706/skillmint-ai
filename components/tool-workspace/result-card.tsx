@@ -45,16 +45,25 @@ export function ResultCard({
       className="result-card"
       style={{ animationDelay: `${Math.min(index * 70, 280)}ms` }}
     >
-      <div className="result-card-rail">
-        <span>{index + 1}</span>
-        <ScoreMeter value={score.score} compact />
-      </div>
       <div className="min-w-0 flex-1">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <p className="text-[15px] font-medium leading-7 text-slate-900">
-            {bullet}
-          </p>
-          <span className="score-chip">{score.score}/100</span>
+        <div className="result-card-header">
+          <div className="flex items-center gap-3">
+            <span className="result-index">{String(index + 1).padStart(2, "0")}</span>
+            <div>
+              <p className="comparison-label">Resume bullet</p>
+              <p className="mt-0.5 text-xs font-medium text-slate-500">
+                Recruiter-ready draft
+              </p>
+            </div>
+          </div>
+          <div className="result-score-block">
+            <ScoreMeter value={score.score} compact />
+            <span className="score-chip">{score.score}/100</span>
+          </div>
+        </div>
+
+        <div className="result-copy">
+          <p>{bullet}</p>
         </div>
 
         <div className="result-rationale">
