@@ -15,7 +15,9 @@ export function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: SeoRouteProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: SeoRouteProps): Promise<Metadata> {
   const { slug } = await params;
   const page = getSeoLandingPage(slug);
 

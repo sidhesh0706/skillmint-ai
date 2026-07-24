@@ -8,7 +8,12 @@ type KeywordChipProps = {
   style?: CSSProperties;
 };
 
-export function KeywordChip({ children, className, dark = false, style }: KeywordChipProps) {
+export function KeywordChip({
+  children,
+  className,
+  dark = false,
+  style,
+}: KeywordChipProps) {
   return (
     <span
       style={style}
@@ -24,4 +29,3 @@ export function KeywordChip({ children, className, dark = false, style }: Keywor
     </span>
   );
 }
-

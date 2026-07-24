@@ -16,8 +16,9 @@ export default function PrivacyPage() {
       title: "Privacy-first defaults",
       body: (
         <p>
-          SkillMint AI is designed to help users create career assets with minimal data
-          collection, no required account, and clear privacy-first defaults.
+          SkillMint AI is designed to help users create career assets with
+          minimal data collection, no required account, and clear privacy-first
+          defaults.
         </p>
       ),
     },
@@ -25,9 +26,10 @@ export default function PrivacyPage() {
       title: "AI generation",
       body: (
         <p>
-          Tool inputs are sent through secure server-side API routes so an AI provider can
-          generate or improve outputs. API keys are never exposed in the browser. Avoid entering
-          sensitive personal data that is not needed for resume, LinkedIn, or application content.
+          Tool inputs are sent through secure server-side API routes so an AI
+          provider can generate or improve outputs. API keys are never exposed
+          in the browser. Avoid entering sensitive personal data that is not
+          needed for resume, LinkedIn, or application content.
         </p>
       ),
     },
@@ -35,9 +37,10 @@ export default function PrivacyPage() {
       title: "Browser storage",
       body: (
         <p>
-          SkillMint uses browser local storage for convenience features such as saved form inputs,
-          recent generations, email prompt suppression, and local email capture fallback. You can
-          clear this data from your browser settings.
+          SkillMint uses browser local storage for convenience features such as
+          saved form inputs, recent generations, email prompt suppression, and
+          local email capture fallback. You can clear this data from your
+          browser settings.
         </p>
       ),
     },
@@ -46,13 +49,14 @@ export default function PrivacyPage() {
       body: (
         <>
           <p>
-            Analytics may be used to understand page views and product actions. Analytics wrappers
-            are designed so they do not interrupt the app if a provider is unavailable.
+            Analytics may be used to understand page views and product actions.
+            Analytics wrappers are designed so they do not interrupt the app if
+            a provider is unavailable.
           </p>
           <p>
-            SkillMint may show recommended resources or affiliate links. Ads and ad cookies are only
-            intended to run when explicitly enabled through configuration; ads are disabled by
-            default.
+            SkillMint may show recommended resources or affiliate links. Ads and
+            ad cookies are only intended to run when explicitly enabled through
+            configuration; ads are disabled by default.
           </p>
         </>
       ),

@@ -30,7 +30,12 @@ export function GradientButton({
   }
 
   return (
-    <button type={type} disabled={disabled} onClick={onClick} className={classes}>
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+      className={classes}
+    >
       {children}
     </button>
   );

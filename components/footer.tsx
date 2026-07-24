@@ -26,8 +26,8 @@ export function Footer() {
               <span>SkillMint AI</span>
             </Link>
             <p className="mt-4 text-sm leading-6 text-slate-300">
-              Free AI career tools for resumes, cover letters, LinkedIn profiles,
-              and professional productivity.
+              Free AI career tools for resumes, cover letters, LinkedIn
+              profiles, and professional productivity.
             </p>
             <Link
               href="/tools/resume-bullet-generator"
@@ -39,56 +39,98 @@ export function Footer() {
 
           <div className="grid gap-8 text-sm text-slate-300 sm:grid-cols-3 lg:gap-10">
             <div>
-              <p className="font-semibold uppercase tracking-wide text-white">SkillMint</p>
+              <p className="font-semibold uppercase tracking-wide text-white">
+                SkillMint
+              </p>
               <div className="mt-4 grid gap-2.5">
                 <Link href="/" className="transition hover:text-emerald-200">
                   Home
                 </Link>
-                <Link href="/tools" className="transition hover:text-emerald-200">
+                <Link
+                  href="/tools"
+                  className="transition hover:text-emerald-200"
+                >
                   Tools
                 </Link>
-                <Link href="/tools/resume-roast" className="transition hover:text-emerald-200">
+                <Link
+                  href="/tools/resume-roast"
+                  className="transition hover:text-emerald-200"
+                >
                   Resume Roast
                 </Link>
-                <Link href="/tools/job-description-match" className="transition hover:text-emerald-200">
+                <Link
+                  href="/tools/job-description-match"
+                  className="transition hover:text-emerald-200"
+                >
                   JD Match
                 </Link>
-                <Link href="/tools/resume-bullet-generator" className="transition hover:text-emerald-200">
+                <Link
+                  href="/tools/resume-bullet-generator"
+                  className="transition hover:text-emerald-200"
+                >
                   Resume Generator
                 </Link>
-                <Link href="/resources" className="transition hover:text-emerald-200">
+                <Link
+                  href="/resources"
+                  className="transition hover:text-emerald-200"
+                >
                   Resources
                 </Link>
               </div>
             </div>
 
             <div>
-              <p className="font-semibold uppercase tracking-wide text-white">Resources</p>
+              <p className="font-semibold uppercase tracking-wide text-white">
+                Resources
+              </p>
               <div className="mt-4 grid max-w-xs gap-2.5">
-                <Link href="/resources" className="transition hover:text-emerald-200">
+                <Link
+                  href="/resources"
+                  className="transition hover:text-emerald-200"
+                >
                   All resources
                 </Link>
                 {featuredResources.map((page) => (
-                  <Link key={page.slug} href={`/${page.slug}`} className="line-clamp-2 transition hover:text-emerald-200">
-                    {page.title.replace(" (2026 Guide)", "").replace(" (2026 Examples)", "")}
+                  <Link
+                    key={page.slug}
+                    href={`/${page.slug}`}
+                    className="line-clamp-2 transition hover:text-emerald-200"
+                  >
+                    {page.title
+                      .replace(" (2026 Guide)", "")
+                      .replace(" (2026 Examples)", "")}
                   </Link>
                 ))}
               </div>
             </div>
 
             <div>
-              <p className="font-semibold uppercase tracking-wide text-white">Company</p>
+              <p className="font-semibold uppercase tracking-wide text-white">
+                Company
+              </p>
               <div className="mt-4 grid gap-2.5">
-                <Link href="/about" className="transition hover:text-emerald-200">
+                <Link
+                  href="/about"
+                  className="transition hover:text-emerald-200"
+                >
                   About
                 </Link>
-                <Link href="/privacy" className="transition hover:text-emerald-200">
+                <Link
+                  href="/privacy"
+                  className="transition hover:text-emerald-200"
+                >
                   Privacy
                 </Link>
-                <Link href="/terms" className="transition hover:text-emerald-200">
+                <Link
+                  href="/terms"
+                  className="transition hover:text-emerald-200"
+                >
                   Terms
                 </Link>
-                <Link href="/contact" className="transition hover:text-emerald-200">
+                <Link
+                  href="/contact"
+                  className="transition hover:text-emerald-200"
+                >
                   Contact
                 </Link>
               </div>

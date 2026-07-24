@@ -86,7 +86,8 @@ type GenericToolResult = {
   warnings?: string[];
 };
 
-const GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions";
+const GROQ_CHAT_COMPLETIONS_URL =
+  "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL = "llama-3.3-70b-versatile";
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 8;
@@ -141,7 +142,9 @@ function getScore(value: unknown) {
 }
 
 function getScoreBreakdown(value: unknown): BulletScoreBreakdown {
-  const breakdown = value as Partial<Record<keyof BulletScoreBreakdown, unknown>>;
+  const breakdown = value as Partial<
+    Record<keyof BulletScoreBreakdown, unknown>
+  >;
 
   return {
     clarity: getScore(breakdown?.clarity),
@@ -269,7 +272,8 @@ function parseImprovedBullet(content: string): ImprovedBullet {
       suggestion: "",
     },
     changes: getStringArray(parsed?.changes, 3),
-    original: typeof parsed?.original === "string" ? parsed.original.trim() : "",
+    original:
+      typeof parsed?.original === "string" ? parsed.original.trim() : "",
   };
 }
 
@@ -290,8 +294,15 @@ function parseGenericToolResult(content: string): GenericToolResult {
             return null;
           }
 
-          const typedSection = section as { title?: unknown; items?: unknown; text?: unknown };
-          const title = typeof typedSection.title === "string" ? typedSection.title.trim() : "";
+          const typedSection = section as {
+            title?: unknown;
+            items?: unknown;
+            text?: unknown;
+          };
+          const title =
+            typeof typedSection.title === "string"
+              ? typedSection.title.trim()
+              : "";
 
           if (!title) {
             return null;
@@ -317,18 +328,28 @@ function parseGenericToolResult(content: string): GenericToolResult {
           }
 
           const typedScore = score as { label?: unknown; score?: unknown };
-          const label = typeof typedScore.label === "string" ? typedScore.label.trim() : "";
+          const label =
+            typeof typedScore.label === "string" ? typedScore.label.trim() : "";
 
           return label ? { label, score: getScore(typedScore.score) } : null;
         })
-        .filter((score): score is { label: string; score: number } => Boolean(score))
+        .filter((score): score is { label: string; score: number } =>
+          Boolean(score),
+        )
         .slice(0, 8)
     : [];
 
   return {
-    title: typeof parsed?.title === "string" ? parsed.title.trim() : "SkillMint output",
-    summary: typeof parsed?.summary === "string" ? parsed.summary.trim().slice(0, 500) : "",
-    score: typeof parsed?.score === "number" ? getScore(parsed.score) : undefined,
+    title:
+      typeof parsed?.title === "string"
+        ? parsed.title.trim()
+        : "SkillMint output",
+    summary:
+      typeof parsed?.summary === "string"
+        ? parsed.summary.trim().slice(0, 500)
+        : "",
+    score:
+      typeof parsed?.score === "number" ? getScore(parsed.score) : undefined,
     scores,
     sections,
     warnings: getStringArray(parsed?.warnings, 6),
@@ -359,7 +380,11 @@ function getToneGuidance(tone: string) {
   return "Use confident action verbs and sharper impact language while staying believable.";
 }
 
-async function callGroq(apiKey: string, prompt: string, maxCompletionTokens: number) {
+async function callGroq(
+  apiKey: string,
+  prompt: string,
+  maxCompletionTokens: number,
+) {
   const groqResponse = await fetch(GROQ_CHAT_COMPLETIONS_URL, {
     method: "POST",
     headers: {
@@ -389,7 +414,8 @@ async function callGroq(apiKey: string, prompt: string, maxCompletionTokens: num
 
   if (!groqResponse.ok) {
     throw new Error(
-      data.error?.message || "AI generation failed. Please try again in a moment.",
+      data.error?.message ||
+        "AI generation failed. Please try again in a moment.",
     );
   }
 
@@ -501,7 +527,10 @@ function buildRewriteExistingPrompt(input: ReturnType<typeof getCleanBody>) {
 
 function cleanGenericBody(rawBody: Record<string, unknown>) {
   return Object.fromEntries(
-    Object.entries(rawBody).map(([key, value]) => [key, sanitizeInput(value, 2_500)]),
+    Object.entries(rawBody).map(([key, value]) => [
+      key,
+      sanitizeInput(value, 2_500),
+    ]),
   );
 }
 
@@ -613,7 +642,10 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
 
   if (!checkRateLimit(getClientId(request))) {
     return NextResponse.json(
-      { error: "Too many requests. Please wait a minute before generating again." },
+      {
+        error:
+          "Too many requests. Please wait a minute before generating again.",
+      },
       { status: 429 },
     );
   }
@@ -622,7 +654,10 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
 
   if (!apiKey) {
     return NextResponse.json(
-      { error: "AI generation is not configured yet. Add GROQ_API_KEY to enable it." },
+      {
+        error:
+          "AI generation is not configured yet. Add GROQ_API_KEY to enable it.",
+      },
       { status: 500 },
     );
   }
@@ -638,7 +673,9 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
 
   if (genericSlugs.has(slug)) {
     const genericInput = cleanGenericBody(rawJson);
-    const missingField = getRequiredFieldsForSlug(slug).find((field) => !genericInput[field]);
+    const missingField = getRequiredFieldsForSlug(slug).find(
+      (field) => !genericInput[field],
+    );
 
     if (missingField) {
       return NextResponse.json(
@@ -674,14 +711,23 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
   }
 
   if (slug !== "resume-bullet-generator") {
-    return NextResponse.json({ error: "Tool is not available yet." }, { status: 404 });
+    return NextResponse.json(
+      { error: "Tool is not available yet." },
+      { status: 404 },
+    );
   }
 
   const input = getCleanBody(rawJson as ResumeRequestBody);
 
-  if (!input.targetRole || (input.action !== "rewrite-existing" && !input.achievement)) {
+  if (
+    !input.targetRole ||
+    (input.action !== "rewrite-existing" && !input.achievement)
+  ) {
     return NextResponse.json(
-      { error: "Please enter a target role and the work details before generating." },
+      {
+        error:
+          "Please enter a target role and the work details before generating.",
+      },
       { status: 400 },
     );
   }
@@ -695,12 +741,19 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
         );
       }
 
-      const content = await callGroq(apiKey, buildRewriteExistingPrompt(input), 460);
+      const content = await callGroq(
+        apiKey,
+        buildRewriteExistingPrompt(input),
+        460,
+      );
       const result = parseImprovedBullet(content);
 
       if (!result.bullet) {
         return NextResponse.json(
-          { error: "AI response was incomplete. Please try rewriting the bullet again." },
+          {
+            error:
+              "AI response was incomplete. Please try rewriting the bullet again.",
+          },
           { status: 502 },
         );
       }
@@ -721,7 +774,10 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
 
       if (!result.bullet) {
         return NextResponse.json(
-          { error: "AI response was incomplete. Please try improving the bullet again." },
+          {
+            error:
+              "AI response was incomplete. Please try improving the bullet again.",
+          },
           { status: 502 },
         );
       }
@@ -742,8 +798,12 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
     if (result.scores.length !== 5) {
       result.scores = result.bullets.map((bullet) => ({
         score: 72,
-        reason: bullet.match(/\d/) ? "Clear bullet with some measurable evidence." : "Clear wording, but impact could be more specific.",
-        suggestion: bullet.match(/\d/) ? "Keep the metric tied to the outcome." : "Add a truthful metric, scope, or result if available.",
+        reason: bullet.match(/\d/)
+          ? "Clear bullet with some measurable evidence."
+          : "Clear wording, but impact could be more specific.",
+        suggestion: bullet.match(/\d/)
+          ? "Keep the metric tied to the outcome."
+          : "Add a truthful metric, scope, or result if available.",
         breakdown: {
           clarity: 76,
           impact: 70,
@@ -758,16 +818,27 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
     if (!result.summary.overallScore) {
       result.summary = {
         overallScore: Math.round(
-          result.scores.reduce((total, score) => total + score.score, 0) / result.scores.length,
+          result.scores.reduce((total, score) => total + score.score, 0) /
+            result.scores.length,
         ),
-        strengths: ["Uses action-oriented resume language.", "Includes role-relevant phrasing."],
+        strengths: [
+          "Uses action-oriented resume language.",
+          "Includes role-relevant phrasing.",
+        ],
         weaknesses: ["Some bullets may need more proof or context."],
-        nextAction: "Add truthful metrics, tools, and business outcomes where possible.",
+        nextAction:
+          "Add truthful metrics, tools, and business outcomes where possible.",
       };
     }
 
     if (!result.actionVerbs.length) {
-      result.actionVerbs = ["Improved", "Built", "Analyzed", "Coordinated", "Optimized"];
+      result.actionVerbs = [
+        "Improved",
+        "Built",
+        "Analyzed",
+        "Coordinated",
+        "Optimized",
+      ];
     }
 
     if (!result.whatToAdd.length) {

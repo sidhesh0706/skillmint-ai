@@ -35,7 +35,9 @@ export function ProductCard({
   style,
 }: ProductCardProps) {
   const isLive = status === "live";
-  const nextStep = isLive ? "Use this in your application kit" : "Join the waitlist preview";
+  const nextStep = isLive
+    ? "Use this in your application kit"
+    : "Join the waitlist preview";
 
   return (
     <article
@@ -72,7 +74,12 @@ export function ProductCard({
               : "border-slate-200 bg-white text-slate-600",
           )}
         >
-          <span className={clsx("h-1.5 w-1.5 rounded-full", isLive ? "bg-mint-500" : "bg-slate-400")} />
+          <span
+            className={clsx(
+              "h-1.5 w-1.5 rounded-full",
+              isLive ? "bg-mint-500" : "bg-slate-400",
+            )}
+          />
           {statusLabels[status]}
         </span>
       </div>
@@ -80,8 +87,12 @@ export function ProductCard({
       <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-mint-700">
         {outcome}
       </p>
-      <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-ink">{title}</h3>
-      <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{description}</p>
+      <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-ink">
+        {title}
+      </h3>
+      <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">
+        {description}
+      </p>
 
       <div className="mt-4 rounded-2xl border border-slate-200 bg-white px-3 py-2 shadow-line">
         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
@@ -96,7 +107,9 @@ export function ProductCard({
             <span
               className={clsx(
                 "score-fill block h-full rounded-full bg-gradient-to-r",
-                isLive ? "w-4/5 from-mint-500 to-cyan" : "w-2/3 from-slate-300 to-slate-200",
+                isLive
+                  ? "w-4/5 from-mint-500 to-cyan"
+                  : "w-2/3 from-slate-300 to-slate-200",
               )}
             />
           </span>
@@ -107,7 +120,10 @@ export function ProductCard({
         {preview.length ? (
           <div className="mt-3 flex flex-wrap gap-1.5">
             {preview.slice(0, 3).map((item) => (
-              <span key={item} className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600">
+              <span
+                key={item}
+                className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600"
+              >
                 {item}
               </span>
             ))}

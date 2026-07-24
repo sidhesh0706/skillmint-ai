@@ -7,7 +7,11 @@ type SectionRevealProps = {
   delay?: "none" | "sm" | "md";
 };
 
-export function SectionReveal({ children, className, delay = "none" }: SectionRevealProps) {
+export function SectionReveal({
+  children,
+  className,
+  delay = "none",
+}: SectionRevealProps) {
   return (
     <div
       className={clsx(

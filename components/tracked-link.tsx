@@ -4,7 +4,10 @@ import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { trackEvent, type AnalyticsEventName } from "@/lib/analytics";
 
-type TrackedLinkProps = Omit<ComponentPropsWithoutRef<typeof Link>, "onClick"> & {
+type TrackedLinkProps = Omit<
+  ComponentPropsWithoutRef<typeof Link>,
+  "onClick"
+> & {
   children: ReactNode;
   eventName: AnalyticsEventName;
   eventPayload?: Record<string, string | number | boolean | undefined>;

@@ -39,9 +39,13 @@ export function EmailCapture({
     let existing: string[] = [];
 
     try {
-      const storedEmails = JSON.parse(localStorage.getItem("skillmint_emails") || "[]") as unknown;
+      const storedEmails = JSON.parse(
+        localStorage.getItem("skillmint_emails") || "[]",
+      ) as unknown;
       existing = Array.isArray(storedEmails)
-        ? storedEmails.filter((item): item is string => typeof item === "string")
+        ? storedEmails.filter(
+            (item): item is string => typeof item === "string",
+          )
         : [];
     } catch {
       existing = [];
@@ -52,7 +56,9 @@ export function EmailCapture({
     trackEvent("email_signup_click", { location });
     trackEvent("email_signup_submitted", { location });
     setEmail("");
-    setMessage("You're on the list. New tools and resume tips will land here first.");
+    setMessage(
+      "You're on the list. New tools and resume tips will land here first.",
+    );
     window.setTimeout(() => setIsSuppressed(true), 1800);
   }
 
@@ -69,7 +75,8 @@ export function EmailCapture({
               Want more resume tools and templates?
             </h3>
             <p className="mt-1 text-sm leading-6 text-slate-600">
-              Join the free SkillMint list for resume tips, new tools, and the {leadMagnet}.
+              Join the free SkillMint list for resume tips, new tools, and the{" "}
+              {leadMagnet}.
             </p>
           </div>
           <form onSubmit={handleSubmit} className="min-w-0 flex-1 sm:max-w-md">
@@ -81,11 +88,18 @@ export function EmailCapture({
                 placeholder="you@example.com"
                 className="min-h-11 flex-1 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100"
               />
-              <button type="submit" className="button-primary min-h-11 px-4 py-2 text-sm">
+              <button
+                type="submit"
+                className="button-primary min-h-11 px-4 py-2 text-sm"
+              >
                 Join free
               </button>
             </div>
-            {message ? <p className="mt-2 text-sm font-semibold text-mint-700">{message}</p> : null}
+            {message ? (
+              <p className="mt-2 text-sm font-semibold text-mint-700">
+                {message}
+              </p>
+            ) : null}
           </form>
         </div>
       </div>
@@ -104,8 +118,8 @@ export function EmailCapture({
               Get smarter resume tips + new AI tools
             </h2>
             <p className="mt-3 max-w-2xl leading-7 text-slate-600">
-              Join the early list for practical resume guidance, product updates,
-              weekly internship tips, and the {leadMagnet}.
+              Join the early list for practical resume guidance, product
+              updates, weekly internship tips, and the {leadMagnet}.
             </p>
           </div>
 
@@ -122,7 +136,9 @@ export function EmailCapture({
                 Sign up
               </button>
             </div>
-            {message ? <p className="text-sm font-semibold text-mint-700">{message}</p> : null}
+            {message ? (
+              <p className="text-sm font-semibold text-mint-700">{message}</p>
+            ) : null}
           </form>
         </div>
       </div>

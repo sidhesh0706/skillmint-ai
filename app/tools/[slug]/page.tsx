@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BarChart3, FileDown, ShieldCheck, Sparkles, Wand2 } from "lucide-react";
+import {
+  BarChart3,
+  FileDown,
+  ShieldCheck,
+  Sparkles,
+  Wand2,
+} from "lucide-react";
 import { ComingSoonTool } from "@/components/coming-soon-tool";
 import { GenericToolWorkspace } from "@/components/generic-tool-workspace";
 import { JsonLd } from "@/components/json-ld";
@@ -8,7 +14,10 @@ import { PremiumPageShell } from "@/components/premium-page-shell";
 import { ToolWorkspace } from "@/components/tool-workspace";
 import { TrustPills } from "@/components/trust-pills";
 import { getToolBySlug, tools } from "@/data/tool-config";
-import { breadcrumbSchema, softwareApplicationSchema } from "@/lib/structured-data";
+import {
+  breadcrumbSchema,
+  softwareApplicationSchema,
+} from "@/lib/structured-data";
 
 type ToolPageProps = {
   params: Promise<{
@@ -45,7 +54,9 @@ const liveToolHighlights = [
   },
 ];
 
-export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ToolPageProps): Promise<Metadata> {
   const { slug } = await params;
   const tool = getToolBySlug(slug);
 
@@ -94,7 +105,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   if (tool.status === "coming-soon") {
     return (
-      <section className="bg-[#FAFAF8] py-12 sm:py-16 lg:py-[4.5rem]">
+      <section className="premium-shell relative overflow-hidden py-12 sm:py-16 lg:py-[4.5rem]">
         <div className="container-shell">
           <ComingSoonTool slug={tool.slug} />
         </div>
@@ -140,10 +151,15 @@ export default async function ToolPage({ params }: ToolPageProps) {
                     <span
                       key={highlight.label}
                       className={`interactive-card inline-flex min-h-11 items-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold text-slate-700 ${
-                        index === liveToolHighlights.length - 1 ? "col-span-2 lg:col-span-1" : ""
+                        index === liveToolHighlights.length - 1
+                          ? "col-span-2 lg:col-span-1"
+                          : ""
                       }`}
                     >
-                      <Icon className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                      <Icon
+                        className="h-4 w-4 text-emerald-600"
+                        aria-hidden="true"
+                      />
                       {highlight.label}
                     </span>
                   );
@@ -171,7 +187,10 @@ export default async function ToolPage({ params }: ToolPageProps) {
                       key={highlight.label}
                       className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-700 shadow-line"
                     >
-                      <Icon className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                      <Icon
+                        className="h-4 w-4 text-emerald-600"
+                        aria-hidden="true"
+                      />
                       {highlight.label}
                     </span>
                   );
@@ -186,13 +205,13 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
       <section className="workspace-shell py-4 sm:py-5">
         <div className="container-shell">
-        <div>
-          {tool.slug === "resume-bullet-generator" ? (
-            <ToolWorkspace slug={tool.slug} />
-          ) : (
-            <GenericToolWorkspace slug={tool.slug} />
-          )}
-        </div>
+          <div>
+            {tool.slug === "resume-bullet-generator" ? (
+              <ToolWorkspace slug={tool.slug} />
+            ) : (
+              <GenericToolWorkspace slug={tool.slug} />
+            )}
+          </div>
         </div>
       </section>
     </>

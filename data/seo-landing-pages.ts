@@ -59,7 +59,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Add realistic metrics such as project size, time saved, users supported, events managed, or datasets analyzed.",
       "Avoid vague phrases like helped with or worked on; show what you delivered.",
     ],
-    actionVerbs: ["Built", "Analyzed", "Coordinated", "Developed", "Improved", "Designed"],
+    actionVerbs: [
+      "Built",
+      "Analyzed",
+      "Coordinated",
+      "Developed",
+      "Improved",
+      "Designed",
+    ],
     faqs: [
       {
         question: "What should freshers write in resume bullet points?",
@@ -119,7 +126,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use metrics for performance, scale, uptime, test coverage, and user adoption where possible.",
       "Avoid listing responsibilities; describe shipped systems, fixes, and measurable improvements.",
     ],
-    actionVerbs: ["Built", "Optimized", "Designed", "Implemented", "Refactored", "Migrated"],
+    actionVerbs: [
+      "Built",
+      "Optimized",
+      "Designed",
+      "Implemented",
+      "Refactored",
+      "Migrated",
+    ],
     faqs: [
       {
         question: "What makes a software engineer resume bullet strong?",
@@ -137,7 +151,8 @@ export const seoLandingPages: SeoLandingPage[] = [
           "Aim for one concise line when possible. A good bullet is usually 18 to 28 words and focused on one clear result.",
       },
       {
-        question: "Can I use project work if I do not have professional experience?",
+        question:
+          "Can I use project work if I do not have professional experience?",
         answer:
           "Yes. Side projects, open-source work, internships, and academic projects can work well when framed around scope, technical choices, and results.",
       },
@@ -179,7 +194,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use metrics such as records analyzed, hours saved, accuracy improved, revenue tracked, or teams supported.",
       "Make stakeholder communication visible; analysts are hired for decision support, not just data pulls.",
     ],
-    actionVerbs: ["Analyzed", "Built", "Automated", "Segmented", "Presented", "Validated"],
+    actionVerbs: [
+      "Analyzed",
+      "Built",
+      "Automated",
+      "Segmented",
+      "Presented",
+      "Validated",
+    ],
     faqs: [
       {
         question: "What should a data analyst resume bullet include?",
@@ -239,7 +261,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use product keywords such as roadmap, discovery, requirements, experiments, activation, retention, and adoption.",
       "Quantify outcomes from launches, tests, support reduction, user research, or funnel improvements.",
     ],
-    actionVerbs: ["Led", "Launched", "Prioritized", "Defined", "Synthesized", "Presented"],
+    actionVerbs: [
+      "Led",
+      "Launched",
+      "Prioritized",
+      "Defined",
+      "Synthesized",
+      "Presented",
+    ],
     faqs: [
       {
         question: "What should product manager resume bullets focus on?",
@@ -299,7 +328,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Show both creative execution and analytical decision-making.",
       "Avoid generic campaign language; clarify audience, channel, scale, and outcome.",
     ],
-    actionVerbs: ["Managed", "Created", "Analyzed", "Coordinated", "Developed", "Optimized"],
+    actionVerbs: [
+      "Managed",
+      "Created",
+      "Analyzed",
+      "Coordinated",
+      "Developed",
+      "Optimized",
+    ],
     faqs: [
       {
         question: "What makes a marketing resume bullet effective?",
@@ -357,7 +393,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Include role keywords naturally, especially tools, workflows, and business outcomes.",
       "Keep each bullet concise enough for a recruiter to scan in a few seconds.",
     ],
-    actionVerbs: ["Improved", "Analyzed", "Coordinated", "Created", "Managed", "Presented"],
+    actionVerbs: [
+      "Improved",
+      "Analyzed",
+      "Coordinated",
+      "Created",
+      "Managed",
+      "Presented",
+    ],
     faqs: [
       {
         question: "What does an AI resume bullet generator do?",
@@ -415,7 +458,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Avoid tables, unusual symbols, and overly complex formatting in the resume file.",
       "Balance ATS language with readable impact so recruiters still understand the result.",
     ],
-    actionVerbs: ["Optimized", "Built", "Managed", "Documented", "Analyzed", "Implemented"],
+    actionVerbs: [
+      "Optimized",
+      "Built",
+      "Managed",
+      "Documented",
+      "Analyzed",
+      "Implemented",
+    ],
     faqs: [
       {
         question: "What makes a resume bullet ATS-friendly?",
@@ -473,7 +523,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use numbers where you can support them honestly.",
       "Match the language to the target job without exaggerating your work.",
     ],
-    actionVerbs: ["Reduced", "Improved", "Led", "Analyzed", "Created", "Partnered"],
+    actionVerbs: [
+      "Reduced",
+      "Improved",
+      "Led",
+      "Analyzed",
+      "Created",
+      "Partnered",
+    ],
     faqs: [
       {
         question: "What are good resume bullet examples?",
@@ -531,7 +588,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Mention tools and project scope when they match the target role.",
       "Use honest metrics such as event size, team size, records analyzed, or hours saved.",
     ],
-    actionVerbs: ["Completed", "Built", "Analyzed", "Coordinated", "Created", "Researched"],
+    actionVerbs: [
+      "Completed",
+      "Built",
+      "Analyzed",
+      "Coordinated",
+      "Created",
+      "Researched",
+    ],
     faqs: [
       {
         question: "How do I write resume bullets with little experience?",
@@ -589,7 +653,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use metrics carefully, including tickets per day, CSAT, response time, or repeat contact reduction.",
       "Highlight calm communication and escalation judgment through concrete examples.",
     ],
-    actionVerbs: ["Resolved", "Improved", "Reduced", "Escalated", "Tracked", "Onboarded"],
+    actionVerbs: [
+      "Resolved",
+      "Improved",
+      "Reduced",
+      "Escalated",
+      "Tracked",
+      "Onboarded",
+    ],
     faqs: [
       {
         question: "What should customer service resume bullets include?",
@@ -647,7 +718,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Show both activity quality and business outcomes.",
       "Avoid vague claims like strong communicator without proof.",
     ],
-    actionVerbs: ["Managed", "Generated", "Exceeded", "Partnered", "Negotiated", "Tracked"],
+    actionVerbs: [
+      "Managed",
+      "Generated",
+      "Exceeded",
+      "Partnered",
+      "Negotiated",
+      "Tracked",
+    ],
     faqs: [
       {
         question: "What metrics should sales resumes include?",
@@ -705,7 +783,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use metrics such as budget size, time saved, variance reduced, or reports delivered.",
       "Avoid disclosing confidential financial details; use ranges or percentages when needed.",
     ],
-    actionVerbs: ["Built", "Prepared", "Automated", "Analyzed", "Partnered", "Reviewed"],
+    actionVerbs: [
+      "Built",
+      "Prepared",
+      "Automated",
+      "Analyzed",
+      "Partnered",
+      "Reviewed",
+    ],
     faqs: [
       {
         question: "What should finance resume bullets focus on?",
@@ -718,12 +803,14 @@ export const seoLandingPages: SeoLandingPage[] = [
           "Yes, when Excel was central to the achievement. Mention models, dashboards, reconciliations, forecasts, or automation work.",
       },
       {
-        question: "How do I quantify finance work without confidential numbers?",
+        question:
+          "How do I quantify finance work without confidential numbers?",
         answer:
           "Use percentages, time saved, report frequency, business units supported, or broad ranges instead of sensitive amounts.",
       },
       {
-        question: "Are finance resume bullets different from accounting bullets?",
+        question:
+          "Are finance resume bullets different from accounting bullets?",
         answer:
           "They overlap, but finance bullets often emphasize forecasting and decision support, while accounting bullets emphasize accuracy, close, controls, and compliance.",
       },
@@ -763,7 +850,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use metrics such as hires supported, employees served, time saved, or survey improvements.",
       "Demonstrate judgment and trust without sharing sensitive employee details.",
     ],
-    actionVerbs: ["Coordinated", "Maintained", "Supported", "Updated", "Analyzed", "Audited"],
+    actionVerbs: [
+      "Coordinated",
+      "Maintained",
+      "Supported",
+      "Updated",
+      "Analyzed",
+      "Audited",
+    ],
     faqs: [
       {
         question: "What should HR resume bullets include?",
@@ -821,7 +915,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use honest metrics like student count, grade level, improvement percentages, or activities led.",
       "Connect soft skills to classroom actions and outcomes.",
     ],
-    actionVerbs: ["Designed", "Tracked", "Improved", "Created", "Integrated", "Collaborated"],
+    actionVerbs: [
+      "Designed",
+      "Tracked",
+      "Improved",
+      "Created",
+      "Integrated",
+      "Collaborated",
+    ],
     faqs: [
       {
         question: "What makes a teacher resume bullet strong?",
@@ -879,7 +980,14 @@ export const seoLandingPages: SeoLandingPage[] = [
       "Use metrics such as delivery time, budget size, delay reduction, teams coordinated, or milestones completed.",
       "Balance coordination language with ownership and measurable outcomes.",
     ],
-    actionVerbs: ["Managed", "Built", "Reduced", "Coordinated", "Facilitated", "Presented"],
+    actionVerbs: [
+      "Managed",
+      "Built",
+      "Reduced",
+      "Coordinated",
+      "Facilitated",
+      "Presented",
+    ],
     faqs: [
       {
         question: "What should project manager resume bullets include?",
@@ -916,7 +1024,11 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       metaTitle: "Resume Bullet Generator for Freshers | Free AI Tool",
       metaDescription:
         "Generate fresher resume bullets with examples, action verbs, ATS keywords, common mistakes, FAQs, and a free AI resume bullet generator.",
-      keywords: ["resume bullet generator for freshers", "fresher resume bullets", "AI resume bullets for freshers"],
+      keywords: [
+        "resume bullet generator for freshers",
+        "fresher resume bullets",
+        "AI resume bullets for freshers",
+      ],
       audience: "Freshers and first-time job seekers",
       category: "experience",
       examplesTitle: "Fresher Resume Bullet Examples",
@@ -930,15 +1042,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Researched 15 competitor products and summarized pricing, positioning, and feature gaps for a marketing assignment.",
         "Supported student club content planning, improving posting consistency and event registration visibility.",
       ],
-      tips: ["Use projects and internships as experience.", "Add honest scope such as records, users, teammates, or deadlines.", "Name tools that match the target job."],
-      actionVerbs: ["Built", "Analyzed", "Coordinated", "Created", "Presented", "Documented"],
-      atsKeywords: ["project work", "internship", "Excel", "communication", "teamwork", "research"],
-      commonMistakes: ["Writing only responsibilities", "Leaving out tools", "Using vague student-project wording"],
-      relatedSlugs: ["entry-level-resume-bullets", "resume-bullets-for-freshers", "resume-bullet-examples-for-projects"],
+      tips: [
+        "Use projects and internships as experience.",
+        "Add honest scope such as records, users, teammates, or deadlines.",
+        "Name tools that match the target job.",
+      ],
+      actionVerbs: [
+        "Built",
+        "Analyzed",
+        "Coordinated",
+        "Created",
+        "Presented",
+        "Documented",
+      ],
+      atsKeywords: [
+        "project work",
+        "internship",
+        "Excel",
+        "communication",
+        "teamwork",
+        "research",
+      ],
+      commonMistakes: [
+        "Writing only responsibilities",
+        "Leaving out tools",
+        "Using vague student-project wording",
+      ],
+      relatedSlugs: [
+        "entry-level-resume-bullets",
+        "resume-bullets-for-freshers",
+        "resume-bullet-examples-for-projects",
+      ],
       faqs: [
-        { question: "Can freshers use AI resume bullets?", answer: "Yes, but every bullet should be reviewed and kept truthful to your real projects, internships, and results." },
-        { question: "What should freshers include?", answer: "Include projects, internships, coursework, volunteering, certifications, tools, and measurable outcomes." },
-        { question: "Should fresher bullets include metrics?", answer: "Yes. Use honest metrics such as team size, records analyzed, events supported, or time saved." },
+        {
+          question: "Can freshers use AI resume bullets?",
+          answer:
+            "Yes, but every bullet should be reviewed and kept truthful to your real projects, internships, and results.",
+        },
+        {
+          question: "What should freshers include?",
+          answer:
+            "Include projects, internships, coursework, volunteering, certifications, tools, and measurable outcomes.",
+        },
+        {
+          question: "Should fresher bullets include metrics?",
+          answer:
+            "Yes. Use honest metrics such as team size, records analyzed, events supported, or time saved.",
+        },
       ],
     },
     {
@@ -946,10 +1096,15 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       title: "Resume Bullet Generator for Students",
       intro:
         "Students can use academic projects, research, volunteering, part-time work, and leadership activities to create job-ready resume bullets.",
-      metaTitle: "Resume Bullet Generator for Students | Project & Internship Bullets",
+      metaTitle:
+        "Resume Bullet Generator for Students | Project & Internship Bullets",
       metaDescription:
         "Create student resume bullets from projects, internships, coursework, leadership, and campus experience with AI.",
-      keywords: ["resume bullet generator for students", "student resume bullets", "AI resume generator for students"],
+      keywords: [
+        "resume bullet generator for students",
+        "student resume bullets",
+        "AI resume generator for students",
+      ],
       audience: "Students preparing resumes",
       category: "experience",
       examplesTitle: "Student Resume Bullet Examples",
@@ -963,15 +1118,54 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Volunteered with a nonprofit team to update donor records, improving accuracy across recurring outreach lists.",
         "Designed social media graphics and content calendars to increase awareness for a campus initiative.",
       ],
-      tips: ["Turn school work into proof of skills.", "Include tools, class projects, and leadership scope.", "Keep bullets practical and outcome-focused."],
-      actionVerbs: ["Led", "Built", "Tutored", "Organized", "Created", "Managed"],
-      atsKeywords: ["coursework", "leadership", "research", "presentation", "Google Sheets", "team collaboration"],
-      commonMistakes: ["Saying no experience instead of using projects", "Over-explaining coursework", "Not naming tools"],
-      relatedSlugs: ["resume-bullet-examples-for-internships", "entry-level-resume-bullets", "resume-bullet-generator-for-freshers"],
+      tips: [
+        "Turn school work into proof of skills.",
+        "Include tools, class projects, and leadership scope.",
+        "Keep bullets practical and outcome-focused.",
+      ],
+      actionVerbs: [
+        "Led",
+        "Built",
+        "Tutored",
+        "Organized",
+        "Created",
+        "Managed",
+      ],
+      atsKeywords: [
+        "coursework",
+        "leadership",
+        "research",
+        "presentation",
+        "Google Sheets",
+        "team collaboration",
+      ],
+      commonMistakes: [
+        "Saying no experience instead of using projects",
+        "Over-explaining coursework",
+        "Not naming tools",
+      ],
+      relatedSlugs: [
+        "resume-bullet-examples-for-internships",
+        "entry-level-resume-bullets",
+        "resume-bullet-generator-for-freshers",
+      ],
       faqs: [
-        { question: "Can students write resume bullets without work experience?", answer: "Yes. Academic projects, volunteering, leadership, and part-time work can all become strong bullets." },
-        { question: "How many student resume bullets should I use?", answer: "Use 3 to 5 bullets under your strongest projects, internships, or roles." },
-        { question: "Should student bullets mention coursework?", answer: "Yes, when coursework proves skills relevant to the target job." },
+        {
+          question:
+            "Can students write resume bullets without work experience?",
+          answer:
+            "Yes. Academic projects, volunteering, leadership, and part-time work can all become strong bullets.",
+        },
+        {
+          question: "How many student resume bullets should I use?",
+          answer:
+            "Use 3 to 5 bullets under your strongest projects, internships, or roles.",
+        },
+        {
+          question: "Should student bullets mention coursework?",
+          answer:
+            "Yes, when coursework proves skills relevant to the target job.",
+        },
       ],
     },
     {
@@ -979,10 +1173,15 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       title: "Resume Bullet Generator for Software Engineers",
       intro:
         "Software engineer bullets should connect technical work to reliability, performance, user experience, developer velocity, and product outcomes.",
-      metaTitle: "Resume Bullet Generator for Software Engineers | AI Engineering Bullets",
+      metaTitle:
+        "Resume Bullet Generator for Software Engineers | AI Engineering Bullets",
       metaDescription:
         "Generate software engineer resume bullets with technical keywords, metrics, examples, mistakes, FAQs, and AI rewrites.",
-      keywords: ["resume bullet generator for software engineers", "software engineer resume bullets", "developer resume bullet generator"],
+      keywords: [
+        "resume bullet generator for software engineers",
+        "software engineer resume bullets",
+        "developer resume bullet generator",
+      ],
       audience: "Software engineers and developers",
       category: "role",
       examplesTitle: "Software Engineer Resume Bullet Examples",
@@ -996,15 +1195,54 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Migrated background jobs to a queue workflow, reducing average processing time from 14 minutes to 8 minutes.",
         "Partnered with product and design to ship mobile-responsive features that improved task completion rates.",
       ],
-      tips: ["Tie code to product or system impact.", "Mention tools only when they support the achievement.", "Use performance, scale, quality, or delivery metrics."],
-      actionVerbs: ["Built", "Optimized", "Implemented", "Stabilized", "Refactored", "Integrated"],
-      atsKeywords: ["React", "TypeScript", "API", "CI/CD", "testing", "monitoring", "performance"],
-      commonMistakes: ["Listing technologies without impact", "Ignoring scale or reliability", "Using vague shipped feature wording"],
-      relatedSlugs: ["software-engineer-resume-bullets", "resume-bullet-keyword-optimizer", "resume-bullet-examples-with-metrics"],
+      tips: [
+        "Tie code to product or system impact.",
+        "Mention tools only when they support the achievement.",
+        "Use performance, scale, quality, or delivery metrics.",
+      ],
+      actionVerbs: [
+        "Built",
+        "Optimized",
+        "Implemented",
+        "Stabilized",
+        "Refactored",
+        "Integrated",
+      ],
+      atsKeywords: [
+        "React",
+        "TypeScript",
+        "API",
+        "CI/CD",
+        "testing",
+        "monitoring",
+        "performance",
+      ],
+      commonMistakes: [
+        "Listing technologies without impact",
+        "Ignoring scale or reliability",
+        "Using vague shipped feature wording",
+      ],
+      relatedSlugs: [
+        "software-engineer-resume-bullets",
+        "resume-bullet-keyword-optimizer",
+        "resume-bullet-examples-with-metrics",
+      ],
       faqs: [
-        { question: "What makes a software engineering bullet strong?", answer: "It shows what you built or improved, the technology involved, and the impact on users, systems, or teams." },
-        { question: "Should engineer bullets include metrics?", answer: "Yes. Latency, uptime, coverage, build stability, adoption, and processing time are useful metrics." },
-        { question: "Can project work count?", answer: "Yes, especially when it shows technical decisions, scope, and measurable outcomes." },
+        {
+          question: "What makes a software engineering bullet strong?",
+          answer:
+            "It shows what you built or improved, the technology involved, and the impact on users, systems, or teams.",
+        },
+        {
+          question: "Should engineer bullets include metrics?",
+          answer:
+            "Yes. Latency, uptime, coverage, build stability, adoption, and processing time are useful metrics.",
+        },
+        {
+          question: "Can project work count?",
+          answer:
+            "Yes, especially when it shows technical decisions, scope, and measurable outcomes.",
+        },
       ],
     },
     {
@@ -1012,10 +1250,15 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       title: "Resume Bullet Generator for Data Analysts",
       intro:
         "Data analyst bullets should show how you cleaned data, built dashboards, analyzed trends, and helped stakeholders make decisions.",
-      metaTitle: "Resume Bullet Generator for Data Analysts | SQL & Dashboard Bullets",
+      metaTitle:
+        "Resume Bullet Generator for Data Analysts | SQL & Dashboard Bullets",
       metaDescription:
         "Generate data analyst resume bullets with SQL, dashboard, reporting, stakeholder, and metrics-focused examples.",
-      keywords: ["resume bullet generator for data analysts", "data analyst resume bullets", "SQL resume bullet generator"],
+      keywords: [
+        "resume bullet generator for data analysts",
+        "data analyst resume bullets",
+        "SQL resume bullet generator",
+      ],
       audience: "Data analysts and analytics professionals",
       category: "role",
       examplesTitle: "Data Analyst Resume Bullet Examples",
@@ -1029,15 +1272,54 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Segmented customers by usage behavior and revenue potential to support customer success prioritization.",
         "Documented metric definitions and dashboard logic, improving reporting consistency across teams.",
       ],
-      tips: ["Connect analysis to decisions.", "Name data tools naturally.", "Quantify records, hours saved, accuracy, or stakeholders supported."],
-      actionVerbs: ["Analyzed", "Built", "Automated", "Cleaned", "Presented", "Segmented"],
-      atsKeywords: ["SQL", "Excel", "Tableau", "Power BI", "dashboards", "reporting", "data cleaning"],
-      commonMistakes: ["Only saying pulled reports", "Not naming business impact", "Skipping stakeholder communication"],
-      relatedSlugs: ["data-analyst-resume-bullets", "resume-bullet-examples-with-metrics", "resume-bullet-keyword-optimizer"],
+      tips: [
+        "Connect analysis to decisions.",
+        "Name data tools naturally.",
+        "Quantify records, hours saved, accuracy, or stakeholders supported.",
+      ],
+      actionVerbs: [
+        "Analyzed",
+        "Built",
+        "Automated",
+        "Cleaned",
+        "Presented",
+        "Segmented",
+      ],
+      atsKeywords: [
+        "SQL",
+        "Excel",
+        "Tableau",
+        "Power BI",
+        "dashboards",
+        "reporting",
+        "data cleaning",
+      ],
+      commonMistakes: [
+        "Only saying pulled reports",
+        "Not naming business impact",
+        "Skipping stakeholder communication",
+      ],
+      relatedSlugs: [
+        "data-analyst-resume-bullets",
+        "resume-bullet-examples-with-metrics",
+        "resume-bullet-keyword-optimizer",
+      ],
       faqs: [
-        { question: "What keywords matter for data analyst bullets?", answer: "SQL, Excel, dashboards, reporting, data cleaning, visualization, KPI, and stakeholder insights are common keywords." },
-        { question: "Should data bullets mention dashboards?", answer: "Yes, when dashboards improved reporting, decisions, visibility, or stakeholder workflows." },
-        { question: "How do analysts quantify work?", answer: "Use records analyzed, reports automated, hours saved, accuracy improved, or stakeholders supported." },
+        {
+          question: "What keywords matter for data analyst bullets?",
+          answer:
+            "SQL, Excel, dashboards, reporting, data cleaning, visualization, KPI, and stakeholder insights are common keywords.",
+        },
+        {
+          question: "Should data bullets mention dashboards?",
+          answer:
+            "Yes, when dashboards improved reporting, decisions, visibility, or stakeholder workflows.",
+        },
+        {
+          question: "How do analysts quantify work?",
+          answer:
+            "Use records analyzed, reports automated, hours saved, accuracy improved, or stakeholders supported.",
+        },
       ],
     },
     {
@@ -1045,10 +1327,15 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       title: "Resume Bullet Generator for Product Managers",
       intro:
         "Product manager bullets should show discovery, prioritization, roadmap decisions, launch execution, adoption, and measurable customer impact.",
-      metaTitle: "Resume Bullet Generator for Product Managers | PM Resume Bullets",
+      metaTitle:
+        "Resume Bullet Generator for Product Managers | PM Resume Bullets",
       metaDescription:
         "Generate product manager resume bullets with roadmap, discovery, adoption, experimentation, and launch examples.",
-      keywords: ["resume bullet generator for product managers", "product manager resume bullets", "PM resume bullet generator"],
+      keywords: [
+        "resume bullet generator for product managers",
+        "product manager resume bullets",
+        "PM resume bullet generator",
+      ],
       audience: "Product managers and aspiring PMs",
       category: "role",
       examplesTitle: "Product Manager Resume Bullet Examples",
@@ -1062,15 +1349,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Maintained a prioritized backlog with clear acceptance criteria, improving engineering handoff quality.",
         "Presented product performance updates connecting user behavior, business goals, and roadmap tradeoffs.",
       ],
-      tips: ["Show customer insight and business impact.", "Include product keywords without jargon overload.", "Tie launches to adoption or retention when possible."],
-      actionVerbs: ["Led", "Launched", "Defined", "Reduced", "Synthesized", "Presented"],
-      atsKeywords: ["roadmap", "user research", "requirements", "backlog", "adoption", "experimentation"],
-      commonMistakes: ["Sounding like a project coordinator only", "Leaving out customer evidence", "Not clarifying ownership"],
-      relatedSlugs: ["product-manager-resume-bullets", "project-manager-resume-bullets", "resume-achievement-rewriter"],
+      tips: [
+        "Show customer insight and business impact.",
+        "Include product keywords without jargon overload.",
+        "Tie launches to adoption or retention when possible.",
+      ],
+      actionVerbs: [
+        "Led",
+        "Launched",
+        "Defined",
+        "Reduced",
+        "Synthesized",
+        "Presented",
+      ],
+      atsKeywords: [
+        "roadmap",
+        "user research",
+        "requirements",
+        "backlog",
+        "adoption",
+        "experimentation",
+      ],
+      commonMistakes: [
+        "Sounding like a project coordinator only",
+        "Leaving out customer evidence",
+        "Not clarifying ownership",
+      ],
+      relatedSlugs: [
+        "product-manager-resume-bullets",
+        "project-manager-resume-bullets",
+        "resume-achievement-rewriter",
+      ],
       faqs: [
-        { question: "What should PM bullets focus on?", answer: "Focus on product outcomes, discovery, prioritization, cross-functional execution, and measurable customer or business impact." },
-        { question: "Should PM bullets include metrics?", answer: "Yes. Adoption, activation, retention, support reduction, revenue, and experiment lift are useful." },
-        { question: "Can aspiring PMs use project experience?", answer: "Yes, if it shows problem framing, prioritization, execution, and stakeholder alignment." },
+        {
+          question: "What should PM bullets focus on?",
+          answer:
+            "Focus on product outcomes, discovery, prioritization, cross-functional execution, and measurable customer or business impact.",
+        },
+        {
+          question: "Should PM bullets include metrics?",
+          answer:
+            "Yes. Adoption, activation, retention, support reduction, revenue, and experiment lift are useful.",
+        },
+        {
+          question: "Can aspiring PMs use project experience?",
+          answer:
+            "Yes, if it shows problem framing, prioritization, execution, and stakeholder alignment.",
+        },
       ],
     },
     {
@@ -1078,10 +1403,15 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       title: "Resume Bullet Generator for Marketing",
       intro:
         "Marketing bullets should show channel ownership, campaign performance, content quality, customer understanding, and measurable growth.",
-      metaTitle: "Resume Bullet Generator for Marketing | Campaign Resume Bullets",
+      metaTitle:
+        "Resume Bullet Generator for Marketing | Campaign Resume Bullets",
       metaDescription:
         "Generate marketing resume bullets with campaign metrics, SEO, email, paid social, CRM, and content examples.",
-      keywords: ["resume bullet generator for marketing", "marketing resume bullets", "digital marketing resume bullet generator"],
+      keywords: [
+        "resume bullet generator for marketing",
+        "marketing resume bullets",
+        "digital marketing resume bullet generator",
+      ],
       audience: "Marketing professionals",
       category: "role",
       examplesTitle: "Marketing Resume Bullet Examples",
@@ -1095,15 +1425,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Produced customer case study assets that strengthened sales enablement and prospect education.",
         "Segmented audience lists by lifecycle stage to deliver more relevant email campaigns.",
       ],
-      tips: ["Connect marketing work to pipeline, leads, conversion, or engagement.", "Name channels and tools.", "Show both creative execution and analysis."],
-      actionVerbs: ["Managed", "Created", "Built", "Analyzed", "Coordinated", "Segmented"],
-      atsKeywords: ["SEO", "paid social", "CRM", "Google Analytics", "email marketing", "conversion"],
-      commonMistakes: ["Only listing channels", "Leaving out campaign results", "Using vague growth language"],
-      relatedSlugs: ["marketing-resume-bullets", "resume-bullet-examples-with-metrics", "resume-bullet-keyword-optimizer"],
+      tips: [
+        "Connect marketing work to pipeline, leads, conversion, or engagement.",
+        "Name channels and tools.",
+        "Show both creative execution and analysis.",
+      ],
+      actionVerbs: [
+        "Managed",
+        "Created",
+        "Built",
+        "Analyzed",
+        "Coordinated",
+        "Segmented",
+      ],
+      atsKeywords: [
+        "SEO",
+        "paid social",
+        "CRM",
+        "Google Analytics",
+        "email marketing",
+        "conversion",
+      ],
+      commonMistakes: [
+        "Only listing channels",
+        "Leaving out campaign results",
+        "Using vague growth language",
+      ],
+      relatedSlugs: [
+        "marketing-resume-bullets",
+        "resume-bullet-examples-with-metrics",
+        "resume-bullet-keyword-optimizer",
+      ],
       faqs: [
-        { question: "What metrics should marketing bullets include?", answer: "Use conversion rate, leads, CTR, impressions, engagement, pipeline, or revenue influenced when truthful." },
-        { question: "Should marketers mention tools?", answer: "Yes. Mention relevant tools like Google Analytics, HubSpot, Salesforce, Meta Ads, LinkedIn Ads, or email platforms." },
-        { question: "How many marketing bullets per role?", answer: "Use 3 to 6 bullets for recent roles, prioritizing measurable campaign outcomes." },
+        {
+          question: "What metrics should marketing bullets include?",
+          answer:
+            "Use conversion rate, leads, CTR, impressions, engagement, pipeline, or revenue influenced when truthful.",
+        },
+        {
+          question: "Should marketers mention tools?",
+          answer:
+            "Yes. Mention relevant tools like Google Analytics, HubSpot, Salesforce, Meta Ads, LinkedIn Ads, or email platforms.",
+        },
+        {
+          question: "How many marketing bullets per role?",
+          answer:
+            "Use 3 to 6 bullets for recent roles, prioritizing measurable campaign outcomes.",
+        },
       ],
     },
     {
@@ -1114,7 +1482,11 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       metaTitle: "Resume Bullet Generator for Sales | SDR, BDR & AE Bullets",
       metaDescription:
         "Generate sales resume bullets with pipeline, quota, CRM, outreach, negotiation, and revenue-focused examples.",
-      keywords: ["resume bullet generator for sales", "sales resume bullets", "SDR resume bullet generator"],
+      keywords: [
+        "resume bullet generator for sales",
+        "sales resume bullets",
+        "SDR resume bullet generator",
+      ],
       audience: "Sales, SDR, BDR, and account professionals",
       category: "role",
       examplesTitle: "Sales Resume Bullet Examples",
@@ -1128,15 +1500,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Built account research briefs for enterprise prospects, tailoring discovery questions and value propositions.",
         "Coordinated demos with solutions consultants to address buyer requirements more effectively.",
       ],
-      tips: ["Use quota, pipeline, meetings, reply rate, conversion, or revenue metrics.", "Mention CRM tools.", "Show quality as well as volume."],
-      actionVerbs: ["Managed", "Generated", "Exceeded", "Created", "Tracked", "Coordinated"],
-      atsKeywords: ["pipeline", "quota", "Salesforce", "prospecting", "discovery calls", "forecasting"],
-      commonMistakes: ["Only showing activity volume", "Leaving out CRM discipline", "Not connecting work to pipeline or revenue"],
-      relatedSlugs: ["sales-resume-bullets", "resume-bullet-examples-with-metrics", "resume-achievement-rewriter"],
+      tips: [
+        "Use quota, pipeline, meetings, reply rate, conversion, or revenue metrics.",
+        "Mention CRM tools.",
+        "Show quality as well as volume.",
+      ],
+      actionVerbs: [
+        "Managed",
+        "Generated",
+        "Exceeded",
+        "Created",
+        "Tracked",
+        "Coordinated",
+      ],
+      atsKeywords: [
+        "pipeline",
+        "quota",
+        "Salesforce",
+        "prospecting",
+        "discovery calls",
+        "forecasting",
+      ],
+      commonMistakes: [
+        "Only showing activity volume",
+        "Leaving out CRM discipline",
+        "Not connecting work to pipeline or revenue",
+      ],
+      relatedSlugs: [
+        "sales-resume-bullets",
+        "resume-bullet-examples-with-metrics",
+        "resume-achievement-rewriter",
+      ],
       faqs: [
-        { question: "What sales metrics should I include?", answer: "Use quota attainment, pipeline value, meetings booked, conversion rate, renewals, or revenue when truthful." },
-        { question: "Should SDR bullets mention outreach tools?", answer: "Yes, if relevant. Mention CRM, sequencing, LinkedIn, email, or sales engagement tools." },
-        { question: "How do I avoid sounding generic?", answer: "Show account type, buyer segment, outreach method, and business result." },
+        {
+          question: "What sales metrics should I include?",
+          answer:
+            "Use quota attainment, pipeline value, meetings booked, conversion rate, renewals, or revenue when truthful.",
+        },
+        {
+          question: "Should SDR bullets mention outreach tools?",
+          answer:
+            "Yes, if relevant. Mention CRM, sequencing, LinkedIn, email, or sales engagement tools.",
+        },
+        {
+          question: "How do I avoid sounding generic?",
+          answer:
+            "Show account type, buyer segment, outreach method, and business result.",
+        },
       ],
     },
     {
@@ -1147,7 +1557,11 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       metaTitle: "Resume Bullet Generator for Finance | Analyst Resume Bullets",
       metaDescription:
         "Generate finance resume bullets with Excel, forecasting, reporting, reconciliation, variance, and stakeholder examples.",
-      keywords: ["resume bullet generator for finance", "finance resume bullets", "financial analyst resume bullet generator"],
+      keywords: [
+        "resume bullet generator for finance",
+        "finance resume bullets",
+        "financial analyst resume bullet generator",
+      ],
       audience: "Finance and accounting professionals",
       category: "role",
       examplesTitle: "Finance Resume Bullet Examples",
@@ -1161,15 +1575,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Improved forecast templates by standardizing assumptions, formulas, and version control.",
         "Reviewed vendor spend categories to identify savings opportunities and support procurement negotiations.",
       ],
-      tips: ["Show accuracy and decision support.", "Mention Excel, ERP, Power BI, SQL, or FP&A tools.", "Avoid confidential numbers; use percentages or ranges."],
-      actionVerbs: ["Built", "Prepared", "Automated", "Analyzed", "Partnered", "Reviewed"],
-      atsKeywords: ["Excel", "forecasting", "variance analysis", "reconciliation", "budgeting", "financial reporting"],
-      commonMistakes: ["Sharing sensitive details", "Only listing reports", "Not showing business impact"],
-      relatedSlugs: ["finance-resume-bullets", "resume-bullet-examples-with-metrics", "ats-resume-bullet-generator"],
+      tips: [
+        "Show accuracy and decision support.",
+        "Mention Excel, ERP, Power BI, SQL, or FP&A tools.",
+        "Avoid confidential numbers; use percentages or ranges.",
+      ],
+      actionVerbs: [
+        "Built",
+        "Prepared",
+        "Automated",
+        "Analyzed",
+        "Partnered",
+        "Reviewed",
+      ],
+      atsKeywords: [
+        "Excel",
+        "forecasting",
+        "variance analysis",
+        "reconciliation",
+        "budgeting",
+        "financial reporting",
+      ],
+      commonMistakes: [
+        "Sharing sensitive details",
+        "Only listing reports",
+        "Not showing business impact",
+      ],
+      relatedSlugs: [
+        "finance-resume-bullets",
+        "resume-bullet-examples-with-metrics",
+        "ats-resume-bullet-generator",
+      ],
       faqs: [
-        { question: "How do finance resumes quantify impact?", answer: "Use time saved, accuracy improved, report frequency, variance reduction, budget size ranges, or stakeholders supported." },
-        { question: "Should I mention Excel?", answer: "Yes, especially for models, dashboards, reconciliations, forecasts, or automation." },
-        { question: "How do I keep finance bullets confidential?", answer: "Use percentages, ranges, and process outcomes instead of sensitive exact values." },
+        {
+          question: "How do finance resumes quantify impact?",
+          answer:
+            "Use time saved, accuracy improved, report frequency, variance reduction, budget size ranges, or stakeholders supported.",
+        },
+        {
+          question: "Should I mention Excel?",
+          answer:
+            "Yes, especially for models, dashboards, reconciliations, forecasts, or automation.",
+        },
+        {
+          question: "How do I keep finance bullets confidential?",
+          answer:
+            "Use percentages, ranges, and process outcomes instead of sensitive exact values.",
+        },
       ],
     },
     {
@@ -1180,7 +1632,11 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       metaTitle: "Resume Bullet Generator for HR | Human Resources Bullets",
       metaDescription:
         "Generate HR resume bullets with recruiting, onboarding, HRIS, employee relations, policy, and compliance examples.",
-      keywords: ["resume bullet generator for HR", "HR resume bullets", "human resources resume bullet generator"],
+      keywords: [
+        "resume bullet generator for HR",
+        "HR resume bullets",
+        "human resources resume bullet generator",
+      ],
       audience: "HR, recruiting, and people operations professionals",
       category: "role",
       examplesTitle: "HR Resume Bullet Examples",
@@ -1194,15 +1650,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Partnered with managers to coordinate performance review timelines, reminders, and documentation.",
         "Audited employee files for missing documents, improving compliance readiness before internal review.",
       ],
-      tips: ["Show confidentiality, process reliability, and employee impact.", "Mention HRIS, ATS, onboarding, benefits, or compliance.", "Use scope without sharing sensitive details."],
-      actionVerbs: ["Coordinated", "Maintained", "Supported", "Updated", "Analyzed", "Audited"],
-      atsKeywords: ["HRIS", "ATS", "onboarding", "recruiting", "benefits", "compliance"],
-      commonMistakes: ["Using vague people-person language", "Ignoring systems and process scope", "Including sensitive details"],
-      relatedSlugs: ["hr-resume-bullets", "resume-bullet-examples-for-internships", "ats-resume-bullet-generator"],
+      tips: [
+        "Show confidentiality, process reliability, and employee impact.",
+        "Mention HRIS, ATS, onboarding, benefits, or compliance.",
+        "Use scope without sharing sensitive details.",
+      ],
+      actionVerbs: [
+        "Coordinated",
+        "Maintained",
+        "Supported",
+        "Updated",
+        "Analyzed",
+        "Audited",
+      ],
+      atsKeywords: [
+        "HRIS",
+        "ATS",
+        "onboarding",
+        "recruiting",
+        "benefits",
+        "compliance",
+      ],
+      commonMistakes: [
+        "Using vague people-person language",
+        "Ignoring systems and process scope",
+        "Including sensitive details",
+      ],
+      relatedSlugs: [
+        "hr-resume-bullets",
+        "resume-bullet-examples-for-internships",
+        "ats-resume-bullet-generator",
+      ],
       faqs: [
-        { question: "What should HR bullets include?", answer: "Include HR processes, tools, employee population, recruiting support, onboarding outcomes, and compliance improvements." },
-        { question: "Can HR bullets include confidential work?", answer: "Keep bullets anonymized and focus on process, scope, and impact rather than sensitive details." },
-        { question: "What HR keywords matter?", answer: "HRIS, ATS, onboarding, recruiting, benefits, employee relations, payroll, compliance, and performance reviews are useful." },
+        {
+          question: "What should HR bullets include?",
+          answer:
+            "Include HR processes, tools, employee population, recruiting support, onboarding outcomes, and compliance improvements.",
+        },
+        {
+          question: "Can HR bullets include confidential work?",
+          answer:
+            "Keep bullets anonymized and focus on process, scope, and impact rather than sensitive details.",
+        },
+        {
+          question: "What HR keywords matter?",
+          answer:
+            "HRIS, ATS, onboarding, recruiting, benefits, employee relations, payroll, compliance, and performance reviews are useful.",
+        },
       ],
     },
     {
@@ -1213,7 +1707,11 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       metaTitle: "ATS Resume Bullet Checker | Improve Resume Keywords",
       metaDescription:
         "Check resume bullets for ATS keyword fit, clarity, action verbs, metrics, and common mistakes before applying.",
-      keywords: ["ATS resume bullet checker", "resume bullet checker", "ATS keyword checker"],
+      keywords: [
+        "ATS resume bullet checker",
+        "resume bullet checker",
+        "ATS keyword checker",
+      ],
       audience: "Job seekers checking ATS readiness",
       category: "goal",
       examplesTitle: "ATS-Friendly Bullet Examples",
@@ -1227,15 +1725,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Automated Excel reconciliations, reducing manual finance reporting work by approximately 30%.",
         "Resolved customer support tickets in Zendesk while documenting recurring product issues for escalation.",
       ],
-      tips: ["Use job-description keywords naturally.", "Keep formatting simple.", "Avoid stuffing the same keyword repeatedly."],
-      actionVerbs: ["Built", "Managed", "Optimized", "Created", "Analyzed", "Resolved"],
-      atsKeywords: ["ATS keywords", "job description", "tools", "metrics", "action verbs", "resume formatting"],
-      commonMistakes: ["Keyword stuffing", "Using vague verbs", "Skipping tools from the posting"],
-      relatedSlugs: ["ats-resume-bullet-generator", "resume-bullet-keyword-optimizer", "resume-bullet-examples-with-metrics"],
+      tips: [
+        "Use job-description keywords naturally.",
+        "Keep formatting simple.",
+        "Avoid stuffing the same keyword repeatedly.",
+      ],
+      actionVerbs: [
+        "Built",
+        "Managed",
+        "Optimized",
+        "Created",
+        "Analyzed",
+        "Resolved",
+      ],
+      atsKeywords: [
+        "ATS keywords",
+        "job description",
+        "tools",
+        "metrics",
+        "action verbs",
+        "resume formatting",
+      ],
+      commonMistakes: [
+        "Keyword stuffing",
+        "Using vague verbs",
+        "Skipping tools from the posting",
+      ],
+      relatedSlugs: [
+        "ats-resume-bullet-generator",
+        "resume-bullet-keyword-optimizer",
+        "resume-bullet-examples-with-metrics",
+      ],
       faqs: [
-        { question: "What does an ATS resume bullet checker look for?", answer: "It checks whether bullets use relevant keywords, simple formatting, strong verbs, metrics, and readable achievement language." },
-        { question: "Can I over-optimize for ATS?", answer: "Yes. Keyword stuffing can make your resume less credible. Use keywords naturally." },
-        { question: "Should every bullet include a keyword?", answer: "Not every bullet, but the overall resume should reflect the target role's most important keywords." },
+        {
+          question: "What does an ATS resume bullet checker look for?",
+          answer:
+            "It checks whether bullets use relevant keywords, simple formatting, strong verbs, metrics, and readable achievement language.",
+        },
+        {
+          question: "Can I over-optimize for ATS?",
+          answer:
+            "Yes. Keyword stuffing can make your resume less credible. Use keywords naturally.",
+        },
+        {
+          question: "Should every bullet include a keyword?",
+          answer:
+            "Not every bullet, but the overall resume should reflect the target role's most important keywords.",
+        },
       ],
     },
     {
@@ -1246,7 +1782,11 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       metaTitle: "Resume Achievement Rewriter | Turn Tasks Into Resume Wins",
       metaDescription:
         "Rewrite resume achievements with stronger action verbs, metrics, ATS keywords, and recruiter-friendly phrasing.",
-      keywords: ["resume achievement rewriter", "rewrite resume bullets", "resume bullet rewriter"],
+      keywords: [
+        "resume achievement rewriter",
+        "rewrite resume bullets",
+        "resume bullet rewriter",
+      ],
       audience: "Professionals rewriting task-based resumes",
       category: "goal",
       examplesTitle: "Before-Style Tasks Turned Into Achievements",
@@ -1260,15 +1800,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Refined campaign messaging based on performance data, improving conversion quality across priority segments.",
         "Documented recurring finance processes, improving handoff consistency during month-end reporting.",
       ],
-      tips: ["Replace tasks with outcomes.", "Add scope and tools.", "Avoid exaggeration and keep every claim truthful."],
-      actionVerbs: ["Improved", "Reduced", "Coordinated", "Built", "Analyzed", "Created"],
-      atsKeywords: ["achievement", "impact", "metrics", "scope", "action verbs", "results"],
-      commonMistakes: ["Starting with responsible for", "Missing outcome language", "Making claims too broad"],
-      relatedSlugs: ["resume-bullet-examples", "resume-bullet-examples-with-metrics", "resume-bullet-generator"],
+      tips: [
+        "Replace tasks with outcomes.",
+        "Add scope and tools.",
+        "Avoid exaggeration and keep every claim truthful.",
+      ],
+      actionVerbs: [
+        "Improved",
+        "Reduced",
+        "Coordinated",
+        "Built",
+        "Analyzed",
+        "Created",
+      ],
+      atsKeywords: [
+        "achievement",
+        "impact",
+        "metrics",
+        "scope",
+        "action verbs",
+        "results",
+      ],
+      commonMistakes: [
+        "Starting with responsible for",
+        "Missing outcome language",
+        "Making claims too broad",
+      ],
+      relatedSlugs: [
+        "resume-bullet-examples",
+        "resume-bullet-examples-with-metrics",
+        "resume-bullet-generator",
+      ],
       faqs: [
-        { question: "How do I rewrite a task as an achievement?", answer: "Add what changed, who benefited, what tool or process you used, and what result followed." },
-        { question: "Can I rewrite bullets without numbers?", answer: "Yes. You can use scope, quality, speed, stakeholders, or business context when exact numbers are unavailable." },
-        { question: "Should rewritten bullets be shorter?", answer: "Usually yes. Strong bullets are concise and focused on one clear achievement." },
+        {
+          question: "How do I rewrite a task as an achievement?",
+          answer:
+            "Add what changed, who benefited, what tool or process you used, and what result followed.",
+        },
+        {
+          question: "Can I rewrite bullets without numbers?",
+          answer:
+            "Yes. You can use scope, quality, speed, stakeholders, or business context when exact numbers are unavailable.",
+        },
+        {
+          question: "Should rewritten bullets be shorter?",
+          answer:
+            "Usually yes. Strong bullets are concise and focused on one clear achievement.",
+        },
       ],
     },
     {
@@ -1279,7 +1857,11 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       metaTitle: "Resume Bullet Keyword Optimizer | ATS Resume Keywords",
       metaDescription:
         "Optimize resume bullets with relevant ATS keywords from job descriptions while keeping the writing truthful and recruiter-friendly.",
-      keywords: ["resume bullet keyword optimizer", "resume keyword optimizer", "ATS resume keywords"],
+      keywords: [
+        "resume bullet keyword optimizer",
+        "resume keyword optimizer",
+        "ATS resume keywords",
+      ],
       audience: "Job seekers tailoring resumes to postings",
       category: "goal",
       examplesTitle: "Keyword-Optimized Resume Bullet Examples",
@@ -1293,15 +1875,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Resolved Zendesk tickets while documenting recurring product issues and escalation themes for product teams.",
         "Coordinated Jira sprint updates, dependency tracking, and stakeholder communication across delivery workstreams.",
       ],
-      tips: ["Paste the job description into the generator.", "Use exact tool names when truthful.", "Avoid adding keywords you cannot defend in an interview."],
-      actionVerbs: ["Analyzed", "Managed", "Optimized", "Created", "Maintained", "Resolved"],
-      atsKeywords: ["job description", "skills", "tools", "ATS", "keywords", "tailored resume"],
-      commonMistakes: ["Adding skills you do not have", "Repeating keywords unnaturally", "Forgetting human readability"],
-      relatedSlugs: ["ats-resume-bullet-checker", "ats-resume-bullet-generator", "resume-bullet-examples-with-metrics"],
+      tips: [
+        "Paste the job description into the generator.",
+        "Use exact tool names when truthful.",
+        "Avoid adding keywords you cannot defend in an interview.",
+      ],
+      actionVerbs: [
+        "Analyzed",
+        "Managed",
+        "Optimized",
+        "Created",
+        "Maintained",
+        "Resolved",
+      ],
+      atsKeywords: [
+        "job description",
+        "skills",
+        "tools",
+        "ATS",
+        "keywords",
+        "tailored resume",
+      ],
+      commonMistakes: [
+        "Adding skills you do not have",
+        "Repeating keywords unnaturally",
+        "Forgetting human readability",
+      ],
+      relatedSlugs: [
+        "ats-resume-bullet-checker",
+        "ats-resume-bullet-generator",
+        "resume-bullet-examples-with-metrics",
+      ],
       faqs: [
-        { question: "How do I optimize resume bullets for keywords?", answer: "Identify the most relevant tools, skills, and responsibilities from the job posting, then add them naturally to truthful achievements." },
-        { question: "Is keyword stuffing bad?", answer: "Yes. It can make your resume sound unnatural and may weaken recruiter trust." },
-        { question: "Should keywords go in every bullet?", answer: "No. Prioritize natural fit and ensure the resume overall reflects the role." },
+        {
+          question: "How do I optimize resume bullets for keywords?",
+          answer:
+            "Identify the most relevant tools, skills, and responsibilities from the job posting, then add them naturally to truthful achievements.",
+        },
+        {
+          question: "Is keyword stuffing bad?",
+          answer:
+            "Yes. It can make your resume sound unnatural and may weaken recruiter trust.",
+        },
+        {
+          question: "Should keywords go in every bullet?",
+          answer:
+            "No. Prioritize natural fit and ensure the resume overall reflects the role.",
+        },
       ],
     },
     {
@@ -1309,10 +1929,15 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       title: "Resume Bullet Examples for Internships",
       intro:
         "Internship bullets should show learning speed, practical contribution, tools used, communication, and measurable support for the team.",
-      metaTitle: "Resume Bullet Examples for Internships | Student Resume Guide",
+      metaTitle:
+        "Resume Bullet Examples for Internships | Student Resume Guide",
       metaDescription:
         "Browse internship resume bullet examples with projects, tools, metrics, action verbs, mistakes, FAQs, and AI generation tips.",
-      keywords: ["resume bullet examples for internships", "internship resume bullets", "intern resume bullet examples"],
+      keywords: [
+        "resume bullet examples for internships",
+        "internship resume bullets",
+        "intern resume bullet examples",
+      ],
       audience: "Interns and internship applicants",
       category: "use-case",
       examplesTitle: "Internship Resume Bullet Examples",
@@ -1326,15 +1951,53 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Analyzed survey responses and summarized 5 customer themes for product feedback discussions.",
         "Prepared meeting notes and follow-up trackers, improving visibility into decisions and action items.",
       ],
-      tips: ["Show what you contributed, not just what you observed.", "Include tools and team context.", "Use internship scope honestly."],
-      actionVerbs: ["Supported", "Researched", "Updated", "Created", "Built", "Analyzed"],
-      atsKeywords: ["internship", "research", "reporting", "CRM", "analysis", "documentation"],
-      commonMistakes: ["Writing shadowed the team", "Leaving out tools", "Not showing deliverables"],
-      relatedSlugs: ["resume-bullet-generator-for-students", "entry-level-resume-bullets", "resume-bullet-generator-for-freshers"],
+      tips: [
+        "Show what you contributed, not just what you observed.",
+        "Include tools and team context.",
+        "Use internship scope honestly.",
+      ],
+      actionVerbs: [
+        "Supported",
+        "Researched",
+        "Updated",
+        "Created",
+        "Built",
+        "Analyzed",
+      ],
+      atsKeywords: [
+        "internship",
+        "research",
+        "reporting",
+        "CRM",
+        "analysis",
+        "documentation",
+      ],
+      commonMistakes: [
+        "Writing shadowed the team",
+        "Leaving out tools",
+        "Not showing deliverables",
+      ],
+      relatedSlugs: [
+        "resume-bullet-generator-for-students",
+        "entry-level-resume-bullets",
+        "resume-bullet-generator-for-freshers",
+      ],
       faqs: [
-        { question: "What should internship bullets include?", answer: "Include projects, tools, deliverables, team support, and measurable contribution." },
-        { question: "Can internships use metrics?", answer: "Yes. Use research count, reports delivered, records updated, campaigns supported, or time saved." },
-        { question: "How many internship bullets should I write?", answer: "Use 3 to 5 bullets focused on the most relevant contributions." },
+        {
+          question: "What should internship bullets include?",
+          answer:
+            "Include projects, tools, deliverables, team support, and measurable contribution.",
+        },
+        {
+          question: "Can internships use metrics?",
+          answer:
+            "Yes. Use research count, reports delivered, records updated, campaigns supported, or time saved.",
+        },
+        {
+          question: "How many internship bullets should I write?",
+          answer:
+            "Use 3 to 5 bullets focused on the most relevant contributions.",
+        },
       ],
     },
     {
@@ -1345,7 +2008,11 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       metaTitle: "Resume Bullet Examples for Projects | Project Resume Guide",
       metaDescription:
         "Turn academic, portfolio, technical, and volunteer projects into stronger resume bullets with examples and AI guidance.",
-      keywords: ["resume bullet examples for projects", "project resume bullets", "portfolio project resume examples"],
+      keywords: [
+        "resume bullet examples for projects",
+        "project resume bullets",
+        "portfolio project resume examples",
+      ],
       audience: "Students, freshers, and project-based candidates",
       category: "use-case",
       examplesTitle: "Project Resume Bullet Examples",
@@ -1359,15 +2026,54 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Documented API setup, deployment steps, and troubleshooting notes to improve project reproducibility.",
         "Presented project outcomes to reviewers, connecting user needs, implementation choices, and next improvements.",
       ],
-      tips: ["Name the problem and tools.", "Show the finished deliverable.", "Add users, records, features, or performance results when truthful."],
-      actionVerbs: ["Built", "Analyzed", "Created", "Developed", "Led", "Designed"],
-      atsKeywords: ["project", "portfolio", "React", "SQL", "Python", "dashboard", "documentation"],
-      commonMistakes: ["Only naming the project title", "Skipping technical decisions", "Not explaining outcome"],
-      relatedSlugs: ["resume-bullet-generator-for-students", "software-engineer-resume-bullets", "resume-bullet-examples-with-metrics"],
+      tips: [
+        "Name the problem and tools.",
+        "Show the finished deliverable.",
+        "Add users, records, features, or performance results when truthful.",
+      ],
+      actionVerbs: [
+        "Built",
+        "Analyzed",
+        "Created",
+        "Developed",
+        "Led",
+        "Designed",
+      ],
+      atsKeywords: [
+        "project",
+        "portfolio",
+        "React",
+        "SQL",
+        "Python",
+        "dashboard",
+        "documentation",
+      ],
+      commonMistakes: [
+        "Only naming the project title",
+        "Skipping technical decisions",
+        "Not explaining outcome",
+      ],
+      relatedSlugs: [
+        "resume-bullet-generator-for-students",
+        "software-engineer-resume-bullets",
+        "resume-bullet-examples-with-metrics",
+      ],
       faqs: [
-        { question: "Can I include projects on a resume?", answer: "Yes, especially when projects prove skills relevant to the role." },
-        { question: "How do I write project bullets?", answer: "Describe the problem, tools, deliverable, and result or learning outcome." },
-        { question: "Should project bullets include links?", answer: "If available, add GitHub, portfolio, demo, or case study links elsewhere on the resume." },
+        {
+          question: "Can I include projects on a resume?",
+          answer:
+            "Yes, especially when projects prove skills relevant to the role.",
+        },
+        {
+          question: "How do I write project bullets?",
+          answer:
+            "Describe the problem, tools, deliverable, and result or learning outcome.",
+        },
+        {
+          question: "Should project bullets include links?",
+          answer:
+            "If available, add GitHub, portfolio, demo, or case study links elsewhere on the resume.",
+        },
       ],
     },
     {
@@ -1375,10 +2081,15 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
       title: "Resume Bullet Examples with Metrics",
       intro:
         "Metrics make resume bullets easier to trust. Use these examples to add numbers, scale, frequency, quality, or time saved without exaggerating.",
-      metaTitle: "Resume Bullet Examples with Metrics | Quantified Resume Bullets",
+      metaTitle:
+        "Resume Bullet Examples with Metrics | Quantified Resume Bullets",
       metaDescription:
         "Browse resume bullet examples with metrics, percentages, time saved, scope, action verbs, mistakes, and FAQs.",
-      keywords: ["resume bullet examples with metrics", "quantified resume bullets", "resume bullets with numbers"],
+      keywords: [
+        "resume bullet examples with metrics",
+        "quantified resume bullets",
+        "resume bullets with numbers",
+      ],
       audience: "Job seekers adding measurable impact",
       category: "goal",
       examplesTitle: "Resume Bullet Examples with Metrics",
@@ -1392,22 +2103,64 @@ function createGrowthSeoLandingPages(): SeoLandingPage[] {
         "Coordinated a campus event for 120 attendees, managing volunteer assignments, vendor outreach, and registration.",
         "Reduced duplicate CRM records by 22% through data cleanup, validation rules, and reporting checks.",
       ],
-      tips: ["Use exact numbers when you know them.", "Use ranges or approximations when appropriate.", "Do not invent metrics that you cannot explain."],
-      actionVerbs: ["Reduced", "Analyzed", "Managed", "Improved", "Created", "Resolved"],
-      atsKeywords: ["metrics", "KPI", "percentage", "time saved", "records analyzed", "conversion"],
-      commonMistakes: ["Using extreme fabricated numbers", "Adding metrics unrelated to the result", "Forgetting context"],
-      relatedSlugs: ["resume-achievement-rewriter", "resume-bullet-keyword-optimizer", "ats-resume-bullet-checker"],
+      tips: [
+        "Use exact numbers when you know them.",
+        "Use ranges or approximations when appropriate.",
+        "Do not invent metrics that you cannot explain.",
+      ],
+      actionVerbs: [
+        "Reduced",
+        "Analyzed",
+        "Managed",
+        "Improved",
+        "Created",
+        "Resolved",
+      ],
+      atsKeywords: [
+        "metrics",
+        "KPI",
+        "percentage",
+        "time saved",
+        "records analyzed",
+        "conversion",
+      ],
+      commonMistakes: [
+        "Using extreme fabricated numbers",
+        "Adding metrics unrelated to the result",
+        "Forgetting context",
+      ],
+      relatedSlugs: [
+        "resume-achievement-rewriter",
+        "resume-bullet-keyword-optimizer",
+        "ats-resume-bullet-checker",
+      ],
       faqs: [
-        { question: "What metrics can I use on a resume?", answer: "Use time saved, users supported, records analyzed, revenue influenced, conversion lift, error reduction, or quality improvement." },
-        { question: "Can I estimate resume metrics?", answer: "Use conservative approximations only when you can explain how you reached them." },
-        { question: "Do all bullets need numbers?", answer: "No. Some bullets can show scope, tools, stakeholders, or strategic value without a metric." },
+        {
+          question: "What metrics can I use on a resume?",
+          answer:
+            "Use time saved, users supported, records analyzed, revenue influenced, conversion lift, error reduction, or quality improvement.",
+        },
+        {
+          question: "Can I estimate resume metrics?",
+          answer:
+            "Use conservative approximations only when you can explain how you reached them.",
+        },
+        {
+          question: "Do all bullets need numbers?",
+          answer:
+            "No. Some bullets can show scope, tools, stakeholders, or strategic value without a metric.",
+        },
       ],
     },
   ];
 
   return pages.map((page) => ({
     ...page,
-    relatedSlugs: page.relatedSlugs || ["resume-bullet-generator", "resources", "tools"],
+    relatedSlugs: page.relatedSlugs || [
+      "resume-bullet-generator",
+      "resources",
+      "tools",
+    ],
   }));
 }
 

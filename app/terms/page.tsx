@@ -16,9 +16,9 @@ export default function TermsPage() {
       title: "Drafting support",
       body: (
         <p>
-          SkillMint AI provides career writing tools for drafting and editing. Generated content
-          should be reviewed before use in resumes, profiles, applications, or professional
-          communication.
+          SkillMint AI provides career writing tools for drafting and editing.
+          Generated content should be reviewed before use in resumes, profiles,
+          applications, or professional communication.
         </p>
       ),
     },
@@ -27,12 +27,12 @@ export default function TermsPage() {
       body: (
         <>
           <p>
-            You are responsible for ensuring that your final resume content is truthful, accurate,
-            and appropriate for your background.
+            You are responsible for ensuring that your final resume content is
+            truthful, accurate, and appropriate for your background.
           </p>
           <p>
-            Do not use SkillMint AI to create misleading claims, impersonate another person, or
-            submit false qualifications.
+            Do not use SkillMint AI to create misleading claims, impersonate
+            another person, or submit false qualifications.
           </p>
         </>
       ),
@@ -41,8 +41,8 @@ export default function TermsPage() {
       title: "No guarantees",
       body: (
         <p>
-          The service is provided as-is. We do not guarantee job interviews, offers, recruiter
-          responses, or application outcomes.
+          The service is provided as-is. We do not guarantee job interviews,
+          offers, recruiter responses, or application outcomes.
         </p>
       ),
     },
@@ -50,8 +50,9 @@ export default function TermsPage() {
       title: "Resources",
       body: (
         <p>
-          SkillMint may show recommended resources, affiliate links, or disabled ad placements when
-          configured. These should be treated as optional resources, not guarantees of outcomes.
+          SkillMint may show recommended resources, affiliate links, or disabled
+          ad placements when configured. These should be treated as optional
+          resources, not guarantees of outcomes.
         </p>
       ),
     },

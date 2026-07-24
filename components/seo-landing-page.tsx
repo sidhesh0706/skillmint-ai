@@ -7,7 +7,11 @@ import { TrackedLink } from "@/components/tracked-link";
 import { recommendedResources } from "@/config/monetization";
 import type { SeoLandingPage as SeoLandingPageData } from "@/data/seo-landing-pages";
 import { getSeoLandingPage } from "@/data/seo-landing-pages";
-import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/structured-data";
+import {
+  articleSchema,
+  breadcrumbSchema,
+  faqSchema,
+} from "@/lib/structured-data";
 
 type SeoLandingPageProps = {
   page: SeoLandingPageData;
@@ -16,14 +20,20 @@ type SeoLandingPageProps = {
 export function SeoLandingPage({ page }: SeoLandingPageProps) {
   const relatedPages = (page.relatedSlugs || [])
     .map((slug) => getSeoLandingPage(slug))
-    .filter((relatedPage): relatedPage is SeoLandingPageData => Boolean(relatedPage))
+    .filter((relatedPage): relatedPage is SeoLandingPageData =>
+      Boolean(relatedPage),
+    )
     .slice(0, 5);
   const atsKeywords = page.atsKeywords?.length
     ? page.atsKeywords
     : page.keywords.slice(0, 6);
   const commonMistakes = page.commonMistakes?.length
     ? page.commonMistakes
-    : ["Using vague task descriptions", "Skipping measurable scope", "Leaving out role keywords"];
+    : [
+        "Using vague task descriptions",
+        "Skipping measurable scope",
+        "Leaving out role keywords",
+      ];
 
   return (
     <>
@@ -82,13 +92,16 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
             <article className="card-surface p-5 sm:p-7">
               <div className="mb-6">
-                <p className="text-sm font-semibold uppercase text-mint-700">Examples</p>
+                <p className="text-sm font-semibold uppercase text-mint-700">
+                  Examples
+                </p>
                 <h2 className="mt-2 text-3xl font-semibold leading-tight text-ink">
                   {page.examplesTitle}
                 </h2>
                 <p className="mt-3 leading-7 text-slate-600">
-                  Adapt these bullets to your real work, tools, and outcomes. The strongest resume
-                  bullets are specific, honest, and easy for recruiters to scan.
+                  Adapt these bullets to your real work, tools, and outcomes.
+                  The strongest resume bullets are specific, honest, and easy
+                  for recruiters to scan.
                 </p>
               </div>
 
@@ -110,13 +123,15 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
             </article>
 
             <aside className="card-surface p-5 sm:p-6 lg:sticky lg:top-24">
-              <p className="text-sm font-semibold uppercase text-mint-700">Quick writing formula</p>
+              <p className="text-sm font-semibold uppercase text-mint-700">
+                Quick writing formula
+              </p>
               <h2 className="mt-2 text-2xl font-semibold text-ink">
                 Action + scope + result
               </h2>
               <p className="mt-3 leading-7 text-slate-600">
-                Start with a strong verb, add the work you owned, then finish with a metric,
-                outcome, or business reason.
+                Start with a strong verb, add the work you owned, then finish
+                with a metric, outcome, or business reason.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {page.actionVerbs.map((verb) => (
@@ -129,7 +144,9 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
                 ))}
               </div>
               <div className="mt-6 border-t border-slate-200 pt-5">
-                <p className="text-sm font-semibold uppercase text-mint-700">ATS keywords</p>
+                <p className="text-sm font-semibold uppercase text-mint-700">
+                  ATS keywords
+                </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {atsKeywords.map((keyword) => (
                     <span
@@ -143,7 +160,9 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
               </div>
               {relatedPages.length ? (
                 <div className="mt-6 border-t border-slate-200 pt-5">
-                  <p className="text-sm font-semibold uppercase text-mint-700">Related guides</p>
+                  <p className="text-sm font-semibold uppercase text-mint-700">
+                    Related guides
+                  </p>
                   <div className="mt-3 grid gap-2">
                     {relatedPages.map((relatedPage) => (
                       <Link
@@ -151,7 +170,9 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
                         href={`/${relatedPage.slug}`}
                         className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
                       >
-                        {relatedPage.title.replace(" (2026 Guide)", "").replace(" (2026 Examples)", "")}
+                        {relatedPage.title
+                          .replace(" (2026 Guide)", "")
+                          .replace(" (2026 Examples)", "")}
                       </Link>
                     ))}
                   </div>
@@ -166,18 +187,23 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
         <div className="container-shell">
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
             <div>
-              <p className="text-sm font-semibold uppercase text-mint-700">Common mistakes</p>
+              <p className="text-sm font-semibold uppercase text-mint-700">
+                Common mistakes
+              </p>
               <h2 className="mt-2 text-3xl font-semibold leading-tight text-ink">
                 What weakens these bullets
               </h2>
               <p className="mt-4 leading-7 text-slate-600">
-                Small wording mistakes can make strong experience look generic. Avoid these before
-                sending applications.
+                Small wording mistakes can make strong experience look generic.
+                Avoid these before sending applications.
               </p>
             </div>
             <div className="grid gap-3">
               {commonMistakes.map((mistake) => (
-                <div key={mistake} className="rounded-lg border border-amber-200 bg-amber-50/80 p-4">
+                <div
+                  key={mistake}
+                  className="rounded-lg border border-amber-200 bg-amber-50/80 p-4"
+                >
                   <p className="leading-7 text-amber-900">{mistake}</p>
                 </div>
               ))}
@@ -210,13 +236,16 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
           <div className="card-surface overflow-hidden bg-ink p-6 text-white sm:p-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <p className="text-sm font-semibold uppercase text-mint-100">Create yours faster</p>
+                <p className="text-sm font-semibold uppercase text-mint-100">
+                  Create yours faster
+                </p>
                 <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
                   Paste one work note and get scored resume bullets.
                 </h2>
                 <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-                  SkillMint AI can turn your real projects, tools, and results into recruiter-ready
-                  bullets with scores, rewrites, keyword suggestions, and exports.
+                  SkillMint AI can turn your real projects, tools, and results
+                  into recruiter-ready bullets with scores, rewrites, keyword
+                  suggestions, and exports.
                 </p>
               </div>
               <TrackedLink
@@ -237,20 +266,29 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
         <div className="container-shell">
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
             <div>
-              <p className="text-sm font-semibold uppercase text-mint-700">Tips</p>
+              <p className="text-sm font-semibold uppercase text-mint-700">
+                Tips
+              </p>
               <h2 className="mt-2 text-3xl font-semibold leading-tight text-ink">
                 How to write better resume bullets
               </h2>
               <p className="mt-4 leading-7 text-slate-600">
-                Recruiters look for proof of impact. Small improvements in specificity,
-                keywords, and metrics can make a resume much easier to understand.
+                Recruiters look for proof of impact. Small improvements in
+                specificity, keywords, and metrics can make a resume much easier
+                to understand.
               </p>
             </div>
             <div className="grid gap-3">
               {page.tips.map((tip) => (
-                <div key={tip} className="rounded-lg border border-slate-200 bg-white p-4 shadow-line">
+                <div
+                  key={tip}
+                  className="rounded-lg border border-slate-200 bg-white p-4 shadow-line"
+                >
                   <div className="flex gap-3">
-                    <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-mint-700" aria-hidden="true" />
+                    <CheckCircle2
+                      className="mt-1 h-5 w-5 shrink-0 text-mint-700"
+                      aria-hidden="true"
+                    />
                     <p className="leading-7 text-slate-700">{tip}</p>
                   </div>
                 </div>
@@ -265,13 +303,16 @@ export function SeoLandingPage({ page }: SeoLandingPageProps) {
           <div className="card-surface overflow-hidden bg-ink p-6 text-white sm:p-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <p className="text-sm font-semibold uppercase text-mint-100">AI resume tool</p>
+                <p className="text-sm font-semibold uppercase text-mint-100">
+                  AI resume tool
+                </p>
                 <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
                   Generate your own resume bullets with AI
                 </h2>
                 <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-                  Add your role, level, tools, and results. SkillMint AI turns your notes into
-                  five recruiter-ready resume bullets you can copy or export.
+                  Add your role, level, tools, and results. SkillMint AI turns
+                  your notes into five recruiter-ready resume bullets you can
+                  copy or export.
                 </p>
               </div>
               <TrackedLink

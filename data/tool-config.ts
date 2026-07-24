@@ -117,14 +117,16 @@ export const tools: ToolConfig[] = [
         name: "achievement",
         label: "Achievement or task",
         type: "textarea",
-        placeholder: "Describe what you did, improved, supported, analyzed, launched, or managed.",
+        placeholder:
+          "Describe what you did, improved, supported, analyzed, launched, or managed.",
         rows: 6,
       },
       {
         name: "jobDescription",
         label: "Job description / target posting",
         type: "textarea",
-        placeholder: "Optional: paste the role description so SkillMint can suggest truthful missing keywords.",
+        placeholder:
+          "Optional: paste the role description so SkillMint can suggest truthful missing keywords.",
         rows: 5,
       },
       {
@@ -151,7 +153,8 @@ export const tools: ToolConfig[] = [
     quickFacts: ["Recruiter-ready", "ATS-friendly", "5 AI bullets"],
     output: {
       title: "Recruiter-ready output",
-      description: "Review the strongest bullets, keywords, and improvement tips.",
+      description:
+        "Review the strongest bullets, keywords, and improvement tips.",
       emptyTitle: "Your AI resume bullets will appear here.",
       emptyDescription:
         "Start with one honest work note. SkillMint will turn it into clean, recruiter-friendly bullets you can review, copy, and refine.",
@@ -204,10 +207,15 @@ export const tools: ToolConfig[] = [
         layout: "half",
       },
     ],
-    quickFacts: ["Recruiter critique", "Score breakdown", "Rewrite suggestions"],
+    quickFacts: [
+      "Recruiter critique",
+      "Score breakdown",
+      "Rewrite suggestions",
+    ],
     output: {
       title: "Resume roast report",
-      description: "Review scores, weak phrases, missing proof, and stronger bullet options.",
+      description:
+        "Review scores, weak phrases, missing proof, and stronger bullet options.",
       emptyTitle: "Your resume critique will appear here.",
       emptyDescription:
         "Paste a resume section to get a practical, truth-first review with clearer next steps.",
@@ -255,7 +263,8 @@ export const tools: ToolConfig[] = [
     quickFacts: ["Match score", "Keyword gaps", "Truthful tailoring"],
     output: {
       title: "JD match report",
-      description: "See matched keywords, missing gaps, tailored rewrites, and warnings.",
+      description:
+        "See matched keywords, missing gaps, tailored rewrites, and warnings.",
       emptyTitle: "Your job match report will appear here.",
       emptyDescription:
         "Paste a target posting and your current experience to find honest ways to tailor your resume.",
@@ -278,29 +287,53 @@ export const tools: ToolConfig[] = [
     status: "live",
     icon: FileText,
     inputFields: [
-      { name: "projectName", label: "Project name", type: "text", placeholder: "e.g. Campus Event Dashboard" },
+      {
+        name: "projectName",
+        label: "Project name",
+        type: "text",
+        placeholder: "e.g. Campus Event Dashboard",
+      },
       {
         name: "projectDescription",
         label: "Project description",
         type: "textarea",
-        placeholder: "What did the project do, who was it for, and what problem did it solve?",
+        placeholder:
+          "What did the project do, who was it for, and what problem did it solve?",
         rows: 5,
       },
-      { name: "techStack", label: "Tech stack / tools", type: "text", placeholder: "React, SQL, Python, Excel, Figma" },
+      {
+        name: "techStack",
+        label: "Tech stack / tools",
+        type: "text",
+        placeholder: "React, SQL, Python, Excel, Figma",
+      },
       {
         name: "contribution",
         label: "Your contribution",
         type: "textarea",
-        placeholder: "What did you personally build, analyze, design, coordinate, or improve?",
+        placeholder:
+          "What did you personally build, analyze, design, coordinate, or improve?",
         rows: 5,
       },
-      { name: "metrics", label: "Optional metrics/results", type: "text", placeholder: "e.g. 500 records, 30% faster, 6 teammates" },
-      { name: "targetRole", label: "Target role", type: "text", placeholder: "e.g. Frontend Developer", layout: "half" },
+      {
+        name: "metrics",
+        label: "Optional metrics/results",
+        type: "text",
+        placeholder: "e.g. 500 records, 30% faster, 6 teammates",
+      },
+      {
+        name: "targetRole",
+        label: "Target role",
+        type: "text",
+        placeholder: "e.g. Frontend Developer",
+        layout: "half",
+      },
     ],
     quickFacts: ["Project bullets", "LinkedIn copy", "GitHub summary"],
     output: {
       title: "Project career assets",
-      description: "Get resume bullets, profile copy, README wording, and keywords.",
+      description:
+        "Get resume bullets, profile copy, README wording, and keywords.",
       emptyTitle: "Your project resume assets will appear here.",
       emptyDescription:
         "Describe a real project and SkillMint will turn it into truthful application-ready wording.",
@@ -323,22 +356,47 @@ export const tools: ToolConfig[] = [
     status: "live",
     icon: FileText,
     inputFields: [
-      { name: "targetRole", label: "Target role", type: "text", placeholder: "e.g. Product Analyst" },
-      { name: "company", label: "Company", type: "text", placeholder: "e.g. Stripe" },
-      { name: "jobDescription", label: "Job description", type: "textarea", rows: 5, placeholder: "Optional: paste the posting for better alignment." },
-      { name: "background", label: "Relevant background", type: "textarea", rows: 6, placeholder: "Paste 2-4 honest wins, projects, or skills you want included." },
+      {
+        name: "targetRole",
+        label: "Target role",
+        type: "text",
+        placeholder: "e.g. Product Analyst",
+      },
+      {
+        name: "company",
+        label: "Company",
+        type: "text",
+        placeholder: "e.g. Stripe",
+      },
+      {
+        name: "jobDescription",
+        label: "Job description",
+        type: "textarea",
+        rows: 5,
+        placeholder: "Optional: paste the posting for better alignment.",
+      },
+      {
+        name: "background",
+        label: "Relevant background",
+        type: "textarea",
+        rows: 6,
+        placeholder:
+          "Paste 2-4 honest wins, projects, or skills you want included.",
+      },
     ],
     quickFacts: ["Role-aware", "Recruiter-ready", "Editable drafts"],
     output: {
       title: "Cover letter draft",
       description: "Review a concise, editable draft tailored to the role.",
       emptyTitle: "Your cover letter draft will appear here.",
-      emptyDescription: "Add a role, company, and honest background notes to create a concise first draft.",
+      emptyDescription:
+        "Add a role, company, and honest background notes to create a concise first draft.",
       downloadFileName: "skillmint-cover-letter.txt",
     },
     seo: {
       title: "AI Cover Letter Generator",
-      description: "Generate a concise AI cover letter draft tailored to a role, company, and your real background.",
+      description:
+        "Generate a concise AI cover letter draft tailored to a role, company, and your real background.",
     },
   },
   {
@@ -352,22 +410,46 @@ export const tools: ToolConfig[] = [
     status: "live",
     icon: Linkedin,
     inputFields: [
-      { name: "targetRole", label: "Target role", type: "text", placeholder: "e.g. Data Analyst" },
-      { name: "currentRole", label: "Current role or background", type: "text", placeholder: "e.g. Final-year CS student" },
-      { name: "specialty", label: "Skills or specialty", type: "text", placeholder: "SQL, dashboards, customer analytics" },
-      { name: "tone", label: "Tone", type: "select", options: toneOptions, defaultValue: "Professional" },
+      {
+        name: "targetRole",
+        label: "Target role",
+        type: "text",
+        placeholder: "e.g. Data Analyst",
+      },
+      {
+        name: "currentRole",
+        label: "Current role or background",
+        type: "text",
+        placeholder: "e.g. Final-year CS student",
+      },
+      {
+        name: "specialty",
+        label: "Skills or specialty",
+        type: "text",
+        placeholder: "SQL, dashboards, customer analytics",
+      },
+      {
+        name: "tone",
+        label: "Tone",
+        type: "select",
+        options: toneOptions,
+        defaultValue: "Professional",
+      },
     ],
     quickFacts: ["Profile-ready", "Concise", "Professional"],
     output: {
       title: "LinkedIn headlines",
-      description: "Review profile-ready headline options and short positioning copy.",
+      description:
+        "Review profile-ready headline options and short positioning copy.",
       emptyTitle: "Your LinkedIn headline options will appear here.",
-      emptyDescription: "Add your target role and specialty to create credible LinkedIn headline options.",
+      emptyDescription:
+        "Add your target role and specialty to create credible LinkedIn headline options.",
       downloadFileName: "skillmint-linkedin-headlines.txt",
     },
     seo: {
       title: "AI LinkedIn Headline Generator",
-      description: "Generate recruiter-friendly LinkedIn headline options from your role, skills, and career direction.",
+      description:
+        "Generate recruiter-friendly LinkedIn headline options from your role, skills, and career direction.",
     },
   },
   {
@@ -381,7 +463,12 @@ export const tools: ToolConfig[] = [
     status: "coming-soon",
     icon: MessageCircleQuestion,
     inputFields: [
-      { name: "question", label: "Interview question", type: "textarea", rows: 4 },
+      {
+        name: "question",
+        label: "Interview question",
+        type: "textarea",
+        rows: 4,
+      },
       { name: "example", label: "Your example", type: "textarea", rows: 5 },
     ],
     quickFacts: ["STAR-friendly", "Clear structure", "Practice-ready"],
@@ -389,12 +476,14 @@ export const tools: ToolConfig[] = [
       title: "Coached answer",
       description: "A structured interview answer will appear here.",
       emptyTitle: "Interview coaching is coming soon.",
-      emptyDescription: "This tool will help shape rough examples into stronger interview responses.",
+      emptyDescription:
+        "This tool will help shape rough examples into stronger interview responses.",
       downloadFileName: "skillmint-interview-answer.txt",
     },
     seo: {
       title: "AI Interview Answer Coach",
-      description: "Prepare for SkillMint AI's upcoming interview answer coach.",
+      description:
+        "Prepare for SkillMint AI's upcoming interview answer coach.",
     },
   },
   {
@@ -408,7 +497,12 @@ export const tools: ToolConfig[] = [
     status: "coming-soon",
     icon: Mail,
     inputFields: [
-      { name: "incomingEmail", label: "Incoming email", type: "textarea", rows: 5 },
+      {
+        name: "incomingEmail",
+        label: "Incoming email",
+        type: "textarea",
+        rows: 5,
+      },
       { name: "replyGoal", label: "Reply goal", type: "text" },
       { name: "tone", label: "Tone", type: "select", options: toneOptions },
     ],
@@ -417,12 +511,14 @@ export const tools: ToolConfig[] = [
       title: "Email reply",
       description: "A professional reply will appear here.",
       emptyTitle: "Email replies are coming soon.",
-      emptyDescription: "This tool will help turn context into crisp workplace responses.",
+      emptyDescription:
+        "This tool will help turn context into crisp workplace responses.",
       downloadFileName: "skillmint-email-reply.txt",
     },
     seo: {
       title: "AI Email Reply Assistant",
-      description: "Prepare for SkillMint AI's upcoming professional email reply assistant.",
+      description:
+        "Prepare for SkillMint AI's upcoming professional email reply assistant.",
     },
   },
 ];

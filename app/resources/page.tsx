@@ -1,17 +1,29 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BookOpen, Gauge, Layers3, Search, Target } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Gauge,
+  Layers3,
+  Search,
+  Target,
+} from "lucide-react";
 import { ResourceCard } from "@/components/resource-card";
 import { seoLandingPages } from "@/data/seo-landing-pages";
 
-function pagesInCategory(category: "experience" | "role" | "goal" | "use-case") {
+function pagesInCategory(
+  category: "experience" | "role" | "goal" | "use-case",
+) {
   return seoLandingPages.filter((page) => {
     if (page.category) {
       return page.category === category;
     }
 
     if (category === "experience") {
-      return ["resume-bullets-for-freshers", "entry-level-resume-bullets"].includes(page.slug);
+      return [
+        "resume-bullets-for-freshers",
+        "entry-level-resume-bullets",
+      ].includes(page.slug);
     }
 
     if (category === "role") {
@@ -30,7 +42,11 @@ function pagesInCategory(category: "experience" | "role" | "goal" | "use-case") 
     }
 
     if (category === "goal") {
-      return ["resume-bullet-generator", "ats-resume-bullet-generator", "resume-bullet-examples"].includes(page.slug);
+      return [
+        "resume-bullet-generator",
+        "ats-resume-bullet-generator",
+        "resume-bullet-examples",
+      ].includes(page.slug);
     }
 
     return false;
@@ -41,41 +57,46 @@ const resourceCategories = [
   {
     title: "By experience level",
     eyebrow: "Students and freshers",
-    description: "Guides for students, freshers, interns, and entry-level candidates.",
+    description:
+      "Guides for students, freshers, interns, and entry-level candidates.",
     pages: pagesInCategory("experience"),
   },
   {
     title: "By job role",
     eyebrow: "Role examples",
-    description: "Role-specific examples for common career paths and job families.",
+    description:
+      "Role-specific examples for common career paths and job families.",
     pages: pagesInCategory("role"),
   },
   {
     title: "By resume goal",
     eyebrow: "Improve the draft",
-    description: "Improve ATS fit, rewrite achievements, add metrics, and optimize keywords.",
+    description:
+      "Improve ATS fit, rewrite achievements, add metrics, and optimize keywords.",
     pages: pagesInCategory("goal"),
   },
   {
     title: "By use case",
     eyebrow: "Projects and internships",
-    description: "Focused guides for projects, internships, and practical resume scenarios.",
+    description:
+      "Focused guides for projects, internships, and practical resume scenarios.",
     pages: pagesInCategory("use-case"),
   },
 ].filter((category) => category.pages.length);
 
 const startHereSlugs = [
   "resume-bullet-generator-for-students",
-  "resume-achievement-rewriter",
-  "resume-bullet-examples-with-metrics",
-  "ats-resume-bullet-checker",
   "software-engineer-resume-bullets",
-  "data-analyst-resume-bullets",
+  "resume-bullet-examples-with-metrics",
 ];
 
 const startHerePages = startHereSlugs
   .map((slug) => seoLandingPages.find((page) => page.slug === slug))
   .filter((page): page is (typeof seoLandingPages)[number] => Boolean(page));
+
+const featuredGuide = seoLandingPages.find(
+  (page) => page.slug === "resume-achievement-rewriter",
+);
 
 export const metadata: Metadata = {
   title: "Resume Bullet Resources",
@@ -116,7 +137,16 @@ export const metadata: Metadata = {
 };
 
 export default function ResourcesPage() {
-  const filters = ["Students", "Freshers", "Software", "Data", "ATS", "Metrics", "Projects", "Internships"];
+  const filters = [
+    "Students",
+    "Freshers",
+    "Software",
+    "Data",
+    "ATS",
+    "Metrics",
+    "Projects",
+    "Internships",
+  ];
 
   return (
     <>
@@ -131,15 +161,18 @@ export default function ResourcesPage() {
               Resume resources that turn examples into application-ready proof.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Browse examples by role, experience level, metrics, ATS keywords, and project type,
-              then turn the closest example into your own bullet.
+              Browse examples by role, experience level, metrics, ATS keywords,
+              and project type, then turn the closest example into your own
+              bullet.
             </p>
           </div>
 
           <div className="app-panel p-4">
             <div className="flex min-h-12 items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-slate-600">
               <Search className="h-4 w-4 text-emerald-600" aria-hidden="true" />
-              <span className="text-sm">Find guides by role, goal, project, metric, or ATS keyword</span>
+              <span className="text-sm">
+                Find guides by role, goal, project, metric, or ATS keyword
+              </span>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {filters.map((item) => (
@@ -153,7 +186,10 @@ export default function ResourcesPage() {
               ))}
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <Link href="/tools/resume-bullet-generator" className="button-primary">
+              <Link
+                href="/tools/resume-bullet-generator"
+                className="button-primary"
+              >
                 Generate bullets
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
@@ -162,12 +198,21 @@ export default function ResourcesPage() {
               </Link>
             </div>
             <div className="mt-4 grid gap-2 sm:grid-cols-3">
-              {["Pick a guide", "Borrow structure", "Generate your version"].map((item, index) => (
-                <div key={item} className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-3 py-2 shadow-line">
+              {[
+                "Pick a guide",
+                "Borrow structure",
+                "Generate your version",
+              ].map((item, index) => (
+                <div
+                  key={item}
+                  className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-3 py-2 shadow-line"
+                >
                   <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
                     Step {index + 1}
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-slate-800">{item}</p>
+                  <p className="mt-1 text-sm font-semibold text-slate-800">
+                    {item}
+                  </p>
                 </div>
               ))}
             </div>
@@ -186,8 +231,8 @@ export default function ResourcesPage() {
                 Choose the guide closest to your situation.
               </h2>
               <p className="mt-4 leading-7 text-slate-600">
-                These are the highest-leverage guides for turning rough experience into clear
-                application language.
+                These are the highest-leverage guides for turning rough
+                experience into clear application language.
               </p>
             </div>
             <div className="interactive-card rounded-3xl p-5">
@@ -196,11 +241,53 @@ export default function ResourcesPage() {
                   <Target className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <p className="text-sm leading-6 text-slate-600">
-                  Best workflow: open a guide, borrow the structure, then use the generator with your real proof.
+                  Best workflow: open a guide, borrow the structure, then use
+                  the generator with your real proof.
                 </p>
               </div>
             </div>
           </div>
+
+          {featuredGuide ? (
+            <div className="mb-5 grid gap-4 lg:grid-cols-[1.35fr_0.65fr]">
+              <ResourceCard page={featuredGuide} featured />
+              <aside className="resource-quickstart rounded-[1.5rem] p-5 sm:p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                  Featured workflow
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-slate-950">
+                  Fix the weakest line first.
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-slate-600">
+                  Rewrite one achievement, learn the pattern, then apply it to
+                  the rest of your resume.
+                </p>
+                <ol className="mt-5 space-y-3">
+                  {[
+                    "Start with the honest task",
+                    "Add scope, tools, and proof",
+                    "Review every claim before use",
+                  ].map((step, index) => (
+                    <li key={step} className="flex items-center gap-3">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-950 text-xs font-semibold text-white">
+                        {index + 1}
+                      </span>
+                      <span className="text-sm font-semibold text-slate-700">
+                        {step}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+                <Link
+                  href="/tools/resume-bullet-generator"
+                  className="button-primary mt-6"
+                >
+                  Try the workflow
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </aside>
+            </div>
+          ) : null}
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {startHerePages.map((page) => (
@@ -212,7 +299,8 @@ export default function ResourcesPage() {
             {[
               {
                 title: "Find the role language",
-                description: "Use role-specific examples to understand what recruiters expect.",
+                description:
+                  "Use role-specific examples to understand what recruiters expect.",
                 icon: Search,
               },
               {
@@ -222,19 +310,27 @@ export default function ResourcesPage() {
               },
               {
                 title: "Build the application kit",
-                description: "Move from bullets to job match, LinkedIn, and cover-letter drafts.",
+                description:
+                  "Move from bullets to job match, LinkedIn, and cover-letter drafts.",
                 icon: Layers3,
               },
             ].map((item) => {
               const Icon = item.icon;
 
               return (
-                <article key={item.title} className="feature-card rounded-3xl p-5">
+                <article
+                  key={item.title}
+                  className="feature-card rounded-3xl p-5"
+                >
                   <div className="feature-icon flex h-11 w-11 items-center justify-center rounded-2xl text-emerald-700">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <h3 className="mt-4 text-xl font-semibold text-slate-950">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
+                  <h3 className="mt-4 text-xl font-semibold text-slate-950">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">
+                    {item.description}
+                  </p>
                 </article>
               );
             })}
@@ -242,7 +338,10 @@ export default function ResourcesPage() {
 
           <div className="mt-12 space-y-7">
             {resourceCategories.map((category) => (
-              <section key={category.title} className="resource-shelf rounded-[2rem] border border-slate-200 p-5 sm:p-7">
+              <section
+                key={category.title}
+                className="resource-shelf rounded-[2rem] border border-slate-200 p-5 sm:p-7"
+              >
                 <div className="mb-6 grid gap-3 lg:grid-cols-[0.35fr_0.65fr] lg:items-end">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
@@ -250,17 +349,20 @@ export default function ResourcesPage() {
                         {category.eyebrow}
                       </p>
                       <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 shadow-line">
-                        {category.pages.length} guides
+                        Curated {Math.min(category.pages.length, 6)} of{" "}
+                        {category.pages.length}
                       </span>
                     </div>
                     <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl">
                       {category.title}
                     </h2>
                   </div>
-                  <p className="leading-7 text-slate-600">{category.description}</p>
+                  <p className="leading-7 text-slate-600">
+                    {category.description}
+                  </p>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {category.pages.map((page) => (
+                  {category.pages.slice(0, 6).map((page) => (
                     <ResourceCard key={page.slug} page={page} />
                   ))}
                 </div>
@@ -276,10 +378,14 @@ export default function ResourcesPage() {
                   Turn examples into your own bullets
                 </p>
                 <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-white">
-                  Use a guide for direction, then generate bullets tailored to your real role.
+                  Use a guide for direction, then generate bullets tailored to
+                  your real role.
                 </h2>
               </div>
-              <Link href="/tools/resume-bullet-generator" className="button-primary">
+              <Link
+                href="/tools/resume-bullet-generator"
+                className="button-primary"
+              >
                 Generate resume bullets
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>

@@ -6,7 +6,11 @@ type AnimatedScoreBadgeProps = {
   className?: string;
 };
 
-export function AnimatedScoreBadge({ score, label = "Score", className }: AnimatedScoreBadgeProps) {
+export function AnimatedScoreBadge({
+  score,
+  label = "Score",
+  className,
+}: AnimatedScoreBadgeProps) {
   return (
     <div
       className={clsx(

@@ -1,36 +1,41 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowRight,
-  BarChart3,
-  CheckCircle2,
   Clipboard,
   Download,
-  Eye,
   FileDown,
   FileText,
-  History,
   Linkedin,
-  RefreshCw,
   Share2,
   Sparkles,
   Target,
-  Trash2,
   Wand2,
 } from "lucide-react";
 import { AdSlot } from "@/components/ad-slot";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
-import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { EmailCapture } from "@/components/email-capture";
 import { EmptyStatePreview } from "@/components/empty-state-preview";
-import { InsightPanel } from "@/components/insight-panel";
-import { KeywordChip } from "@/components/keyword-chip";
 import { LoadingIntelligenceState } from "@/components/loading-intelligence-state";
 import { MotionButton } from "@/components/motion-button";
 import { OutputActionBar } from "@/components/output-action-bar";
-import { ScoreMeter } from "@/components/score-meter";
+import { ComposerPanel } from "@/components/tool-workspace/composer-panel";
+import { ComposerStep } from "@/components/tool-workspace/composer-step";
+import { HistoryPanel } from "@/components/tool-workspace/history-panel";
+import { KeywordIntelligence } from "@/components/tool-workspace/keyword-intelligence";
+import { OutputStudio } from "@/components/tool-workspace/output-studio";
+import { OutputSummary } from "@/components/tool-workspace/output-summary";
+import { PresetPicker } from "@/components/tool-workspace/preset-picker";
+import { ResultCard } from "@/components/tool-workspace/result-card";
+import { RewriteComparison } from "@/components/tool-workspace/rewrite-comparison";
+import {
+  type BulletScore,
+  type BulletScoreBreakdown,
+  type GenerationHistoryItem,
+  type ResumeOutput,
+  type RewriteResult,
+} from "@/components/tool-workspace/types";
+import { WorkspaceShell } from "@/components/tool-workspace/workspace-shell";
 import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
@@ -42,55 +47,6 @@ import { trackEvent } from "@/lib/analytics";
 
 type ToolWorkspaceProps = {
   slug: string;
-};
-
-type ResumeOutput = {
-  bullets: string[];
-  keywords: string[];
-  tips: string[];
-  scores: BulletScore[];
-  summary: ResumeStrengthSummary;
-  missingKeywords: string[];
-  actionVerbs: string[];
-  whatToAdd: string[];
-  comparisons: Record<number, BulletComparison>;
-};
-
-type BulletScore = {
-  score: number;
-  reason: string;
-  suggestion: string;
-  breakdown: BulletScoreBreakdown;
-};
-
-type BulletScoreBreakdown = {
-  clarity: number;
-  impact: number;
-  specificity: number;
-  metrics: number;
-  atsKeywordFit: number;
-  actionVerbStrength: number;
-};
-
-type BulletComparison = {
-  original: string;
-  improved: string;
-  changes: string[];
-};
-
-type ResumeStrengthSummary = {
-  overallScore: number;
-  strengths: string[];
-  weaknesses: string[];
-  nextAction: string;
-};
-
-type GenerationHistoryItem = {
-  id: string;
-  role: string;
-  createdAt: string;
-  form: ToolFormValues;
-  output: ResumeOutput;
 };
 
 const emptyOutput: ResumeOutput = {
@@ -108,13 +64,6 @@ const emptyOutput: ResumeOutput = {
   actionVerbs: [],
   whatToAdd: [],
   comparisons: {},
-};
-
-type RewriteResult = {
-  original: string;
-  bullet: string;
-  score: BulletScore;
-  changes: string[];
 };
 
 const examplePresets = [
@@ -144,7 +93,8 @@ const examplePresets = [
       achievement:
         "Analyzed customer purchase data to identify retention patterns and campaign opportunities.",
       tools: "SQL, Excel, Tableau",
-      metrics: "analyzed 50,000 customer records and reduced weekly reporting time by 6 hours",
+      metrics:
+        "analyzed 50,000 customer records and reduced weekly reporting time by 6 hours",
       tone: "Professional",
       jobDescription:
         "Data analyst role requiring SQL, dashboards, customer analytics, stakeholder reporting, data cleaning, and business insights.",
@@ -214,15 +164,6 @@ const examplePresets = [
         "Digital marketing role focused on paid social campaigns, conversion optimization, reporting, Google Analytics, CRM, and lifecycle messaging.",
     },
   },
-];
-
-const breakdownLabels: Array<[keyof BulletScoreBreakdown, string]> = [
-  ["clarity", "Clarity"],
-  ["impact", "Impact"],
-  ["specificity", "Specificity"],
-  ["metrics", "Metrics"],
-  ["atsKeywordFit", "ATS fit"],
-  ["actionVerbStrength", "Verb"],
 ];
 
 const exportActions = [
@@ -314,9 +255,15 @@ function formatOutputText(output: ResumeOutput) {
   return [
     "Resume Strength Summary",
     `Overall score: ${output.summary.overallScore || 0}/100`,
-    output.summary.strengths.length ? `Strengths: ${output.summary.strengths.join("; ")}` : "",
-    output.summary.weaknesses.length ? `Weaknesses: ${output.summary.weaknesses.join("; ")}` : "",
-    output.summary.nextAction ? `Next action: ${output.summary.nextAction}` : "",
+    output.summary.strengths.length
+      ? `Strengths: ${output.summary.strengths.join("; ")}`
+      : "",
+    output.summary.weaknesses.length
+      ? `Weaknesses: ${output.summary.weaknesses.join("; ")}`
+      : "",
+    output.summary.nextAction
+      ? `Next action: ${output.summary.nextAction}`
+      : "",
     "",
     "Best 5 bullets",
     ...output.bullets.map((bullet, index) => {
@@ -348,9 +295,15 @@ function formatOutputMarkdown(output: ResumeOutput) {
     "## Resume Strength Summary",
     `Overall score: **${output.summary.overallScore || 0}/100**`,
     "",
-    output.summary.strengths.length ? `**Strengths:** ${output.summary.strengths.join("; ")}` : "",
-    output.summary.weaknesses.length ? `**Weaknesses:** ${output.summary.weaknesses.join("; ")}` : "",
-    output.summary.nextAction ? `**Next action:** ${output.summary.nextAction}` : "",
+    output.summary.strengths.length
+      ? `**Strengths:** ${output.summary.strengths.join("; ")}`
+      : "",
+    output.summary.weaknesses.length
+      ? `**Weaknesses:** ${output.summary.weaknesses.join("; ")}`
+      : "",
+    output.summary.nextAction
+      ? `**Next action:** ${output.summary.nextAction}`
+      : "",
     "",
     "## Best 5 bullets",
     ...output.bullets.map((bullet, index) => {
@@ -359,7 +312,9 @@ function formatOutputMarkdown(output: ResumeOutput) {
     }),
     "",
     "## Keywords used",
-    output.keywords.length ? output.keywords.map((keyword) => `\`${keyword}\``).join(", ") : "None",
+    output.keywords.length
+      ? output.keywords.map((keyword) => `\`${keyword}\``).join(", ")
+      : "None",
     "",
     "## Missing keywords to consider",
     output.missingKeywords.length
@@ -372,7 +327,9 @@ function formatOutputMarkdown(output: ResumeOutput) {
       : "None",
     "",
     "## What to add if truthful",
-    ...(output.whatToAdd.length ? output.whatToAdd.map((item) => `- ${item}`) : ["None"]),
+    ...(output.whatToAdd.length
+      ? output.whatToAdd.map((item) => `- ${item}`)
+      : ["None"]),
     "",
     "## Improvement tips",
     ...output.tips.map((tip) => `- ${tip}`),
@@ -417,7 +374,13 @@ function normalizeBreakdown(
   fallbackScore: number,
 ): BulletScoreBreakdown {
   const clean = (value: unknown) =>
-    Math.max(0, Math.min(100, Math.round(typeof value === "number" ? value : fallbackScore)));
+    Math.max(
+      0,
+      Math.min(
+        100,
+        Math.round(typeof value === "number" ? value : fallbackScore),
+      ),
+    );
 
   return {
     clarity: clean(breakdown?.clarity),
@@ -429,8 +392,16 @@ function normalizeBreakdown(
   };
 }
 
-function normalizeScore(score: Partial<BulletScore> | undefined, bullet: string): BulletScore {
-  const numericScore = typeof score?.score === "number" ? score.score : bullet.match(/\d/) ? 78 : 68;
+function normalizeScore(
+  score: Partial<BulletScore> | undefined,
+  bullet: string,
+): BulletScore {
+  const numericScore =
+    typeof score?.score === "number"
+      ? score.score
+      : bullet.match(/\d/)
+        ? 78
+        : 68;
   const cleanScore = Math.max(0, Math.min(100, Math.round(numericScore)));
 
   return {
@@ -449,22 +420,37 @@ function normalizeScore(score: Partial<BulletScore> | undefined, bullet: string)
   };
 }
 
-function normalizeOutput(output: Partial<ResumeOutput> | null | undefined): ResumeOutput {
-  const bullets = Array.isArray(output?.bullets) ? output.bullets.filter(Boolean).slice(0, 5) : [];
-  const scores = bullets.map((bullet, index) => normalizeScore(output?.scores?.[index], bullet));
+function normalizeOutput(
+  output: Partial<ResumeOutput> | null | undefined,
+): ResumeOutput {
+  const bullets = Array.isArray(output?.bullets)
+    ? output.bullets.filter(Boolean).slice(0, 5)
+    : [];
+  const scores = bullets.map((bullet, index) =>
+    normalizeScore(output?.scores?.[index], bullet),
+  );
   const averageScore = scores.length
-    ? Math.round(scores.reduce((total, score) => total + score.score, 0) / scores.length)
+    ? Math.round(
+        scores.reduce((total, score) => total + score.score, 0) / scores.length,
+      )
     : 0;
 
   return {
     bullets,
-    keywords: Array.isArray(output?.keywords) ? output.keywords.filter(Boolean).slice(0, 10) : [],
-    tips: Array.isArray(output?.tips) ? output.tips.filter(Boolean).slice(0, 3) : [],
+    keywords: Array.isArray(output?.keywords)
+      ? output.keywords.filter(Boolean).slice(0, 10)
+      : [],
+    tips: Array.isArray(output?.tips)
+      ? output.tips.filter(Boolean).slice(0, 3)
+      : [],
     scores,
     summary: {
       overallScore: Math.max(
         0,
-        Math.min(100, Math.round(Number(output?.summary?.overallScore) || averageScore)),
+        Math.min(
+          100,
+          Math.round(Number(output?.summary?.overallScore) || averageScore),
+        ),
       ),
       strengths: Array.isArray(output?.summary?.strengths)
         ? output.summary.strengths.filter(Boolean).slice(0, 3)
@@ -495,33 +481,11 @@ function getFieldLayout(field: ToolField) {
   return "block sm:col-span-2";
 }
 
-function getScoreClasses(score: number) {
-  if (score >= 85) {
-    return "border-mint-100 bg-mint-50 text-mint-700";
-  }
-
-  if (score >= 70) {
-    return "border-amber-200 bg-amber-50 text-amber-700";
-  }
-
-  return "border-red-200 bg-red-50 text-red-700";
-}
-
-function getScoreBarColor(score: number) {
-  if (score >= 85) {
-    return "bg-mint-500";
-  }
-
-  if (score >= 70) {
-    return "bg-amber-400";
-  }
-
-  return "bg-red-400";
-}
-
 function getPresetDescription(values: ToolFormValues) {
   const role = values.targetRole || "Target role";
-  const tools = values.tools ? values.tools.split(",").slice(0, 2).join(", ") : "real tools";
+  const tools = values.tools
+    ? values.tools.split(",").slice(0, 2).join(", ")
+    : "real tools";
   return `${role} - ${tools}`;
 }
 
@@ -531,7 +495,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   const outputStorageKey = `skillmint:${tool.slug}:output`;
   const historyStorageKey = `skillmint:${tool.slug}:history`;
 
-  const [form, setForm] = useState<ToolFormValues>(() => getInitialToolValues(tool));
+  const [form, setForm] = useState<ToolFormValues>(() =>
+    getInitialToolValues(tool),
+  );
   const [generated, setGenerated] = useState<ResumeOutput>(emptyOutput);
   const [history, setHistory] = useState<GenerationHistoryItem[]>([]);
   const [copied, setCopied] = useState(false);
@@ -541,24 +507,45 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   const [lastGeneratedAt, setLastGeneratedAt] = useState(0);
   const [isHydrated, setIsHydrated] = useState(false);
   const [toast, setToast] = useState("");
-  const [expandedComparisons, setExpandedComparisons] = useState<Record<number, boolean>>({});
+  const [expandedComparisons, setExpandedComparisons] = useState<
+    Record<number, boolean>
+  >({});
   const [hasTrackedFormStart, setHasTrackedFormStart] = useState(false);
   const [existingBullet, setExistingBullet] = useState("");
-  const [rewriteResult, setRewriteResult] = useState<RewriteResult | null>(null);
+  const [rewriteResult, setRewriteResult] = useState<RewriteResult | null>(
+    null,
+  );
   const [isRewriting, setIsRewriting] = useState(false);
 
   const hasOutput = generated.bullets.length > 0;
   const outputText = useMemo(() => formatOutputText(generated), [generated]);
-  const outputMarkdown = useMemo(() => formatOutputMarkdown(generated), [generated]);
-  const contextFields = tool.inputFields.filter((field) =>
-    ["targetRole", "industry", "experienceLevel", "outputMode", "tone"].includes(field.name),
+  const outputMarkdown = useMemo(
+    () => formatOutputMarkdown(generated),
+    [generated],
   );
-  const detailFields = tool.inputFields.filter((field) =>
-    ["achievement", "jobDescription"].includes(field.name),
+  const roleFields = tool.inputFields.filter((field) =>
+    ["targetRole", "industry", "experienceLevel"].includes(field.name),
+  );
+  const experienceFields = tool.inputFields.filter(
+    (field) => field.name === "achievement",
   );
   const proofFields = tool.inputFields.filter((field) =>
     ["tools", "metrics"].includes(field.name),
   );
+  const jobMatchFields = tool.inputFields.filter(
+    (field) => field.name === "jobDescription",
+  );
+  const styleFields = tool.inputFields.filter((field) =>
+    ["outputMode", "tone"].includes(field.name),
+  );
+  const completedSections = [
+    Boolean(form.targetRole),
+    Boolean(form.achievement),
+    Boolean(form.tools || form.metrics),
+    Boolean(form.jobDescription),
+    Boolean(form.outputMode && form.tone),
+  ];
+  const completedSectionCount = completedSections.filter(Boolean).length;
 
   useEffect(() => {
     try {
@@ -574,7 +561,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
       }
 
       if (savedOutput) {
-        const parsedOutput = normalizeOutput(JSON.parse(savedOutput) as Partial<ResumeOutput>);
+        const parsedOutput = normalizeOutput(
+          JSON.parse(savedOutput) as Partial<ResumeOutput>,
+        );
         if (parsedOutput.bullets.length) {
           setGenerated(parsedOutput);
         }
@@ -690,7 +679,10 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     return "";
   }
 
-  async function requestGeneration(action: "generate" | "improve-bullet", bullet?: string) {
+  async function requestGeneration(
+    action: "generate" | "improve-bullet",
+    bullet?: string,
+  ) {
     const validationError = validateInputs();
 
     if (validationError) {
@@ -718,18 +710,26 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     };
 
     if (!response.ok) {
-      throw new Error(data.error || "Unable to generate resume bullets right now.");
+      throw new Error(
+        data.error || "Unable to generate resume bullets right now.",
+      );
     }
 
     return data;
   }
 
-  async function handleGenerate(eventName: "generate_click" | "regenerate_click" = hasOutput ? "regenerate_click" : "generate_click") {
+  async function handleGenerate(
+    eventName: "generate_click" | "regenerate_click" = hasOutput
+      ? "regenerate_click"
+      : "generate_click",
+  ) {
     const now = Date.now();
     const cooldownRemaining = 10_000 - (now - lastGeneratedAt);
 
     if (cooldownRemaining > 0) {
-      setError(`Please wait ${Math.ceil(cooldownRemaining / 1000)} seconds before generating again.`);
+      setError(
+        `Please wait ${Math.ceil(cooldownRemaining / 1000)} seconds before generating again.`,
+      );
       return;
     }
 
@@ -737,7 +737,10 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setCopied(false);
     setIsGenerating(true);
     trackEvent(eventName, { tool: tool.slug, outputMode: form.outputMode });
-    trackEvent("tool_generate_clicked", { tool: tool.slug, outputMode: form.outputMode });
+    trackEvent("tool_generate_clicked", {
+      tool: tool.slug,
+      outputMode: form.outputMode,
+    });
 
     try {
       const data = await requestGeneration("generate");
@@ -783,7 +786,10 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     setImprovingIndex(index);
 
     try {
-      const data = await requestGeneration("improve-bullet", generated.bullets[index]);
+      const data = await requestGeneration(
+        "improve-bullet",
+        generated.bullets[index],
+      );
 
       if (!data?.bullet) {
         throw new Error("Unable to improve this bullet right now.");
@@ -796,7 +802,10 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
             : score,
         );
         const nextOverallScore = nextScores.length
-          ? Math.round(nextScores.reduce((total, score) => total + score.score, 0) / nextScores.length)
+          ? Math.round(
+              nextScores.reduce((total, score) => total + score.score, 0) /
+                nextScores.length,
+            )
           : current.summary.overallScore;
 
         return {
@@ -808,7 +817,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           summary: {
             ...current.summary,
             overallScore: nextOverallScore,
-            nextAction: "Review the strengthened bullet and add any truthful missing keywords that fit your experience.",
+            nextAction:
+              "Review the strengthened bullet and add any truthful missing keywords that fit your experience.",
           },
           comparisons: {
             ...current.comparisons,
@@ -817,7 +827,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               improved: data.bullet || current.bullets[index],
               changes: data.changes?.length
                 ? data.changes
-                : ["Improved clarity, action verb strength, and recruiter readability."],
+                : [
+                    "Improved clarity, action verb strength, and recruiter readability.",
+                  ],
             },
           },
         };
@@ -865,10 +877,14 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         }),
       });
 
-      const data = (await response.json()) as Partial<RewriteResult> & { error?: string };
+      const data = (await response.json()) as Partial<RewriteResult> & {
+        error?: string;
+      };
 
       if (!response.ok) {
-        throw new Error(data.error || "Unable to rewrite this bullet right now.");
+        throw new Error(
+          data.error || "Unable to rewrite this bullet right now.",
+        );
       }
 
       if (!data.bullet) {
@@ -879,11 +895,15 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         original: data.original || cleanBullet,
         bullet: data.bullet,
         score: normalizeScore(data.score, data.bullet),
-        changes: Array.isArray(data.changes) && data.changes.length
-          ? data.changes
-          : ["Improved action verb, clarity, and recruiter readability."],
+        changes:
+          Array.isArray(data.changes) && data.changes.length
+            ? data.changes
+            : ["Improved action verb, clarity, and recruiter readability."],
       });
-      trackEvent("bullet_improved", { tool: tool.slug, source: "before_after" });
+      trackEvent("bullet_improved", {
+        tool: tool.slug,
+        source: "before_after",
+      });
       showToast("Before vs after rewrite ready.");
     } catch (caughtError) {
       setError(
@@ -910,7 +930,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   }
 
   async function copyGeneratorLink(message = "Generator link copied.") {
-    await navigator.clipboard.writeText(`${window.location.origin}/tools/${tool.slug}`);
+    await navigator.clipboard.writeText(
+      `${window.location.origin}/tools/${tool.slug}`,
+    );
     trackEvent("share_click", { tool: tool.slug, action: "copy_link" });
     showToast(message);
   }
@@ -942,7 +964,9 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     });
   }
 
-  function handleExportAction(action: (typeof exportActions)[number]["action"]) {
+  function handleExportAction(
+    action: (typeof exportActions)[number]["action"],
+  ) {
     if (action === "copy") {
       trackEvent("export_used", { tool: tool.slug, format: "copy" });
       copyText(outputText, "Copied resume output.");
@@ -959,7 +983,11 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     if (action === "markdown") {
       trackEvent("export_used", { tool: tool.slug, format: "markdown" });
       trackEvent("export_markdown_clicked", { tool: tool.slug });
-      downloadText(outputMarkdown, "skillmint-resume-bullets.md", "Markdown downloaded.");
+      downloadText(
+        outputMarkdown,
+        "skillmint-resume-bullets.md",
+        "Markdown downloaded.",
+      );
       return;
     }
 
@@ -970,7 +998,10 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     }
 
     trackEvent("export_used", { tool: tool.slug, format: "docs" });
-    copyText(formatDocsCopy(generated), "Copied for Google Docs / resume editor.");
+    copyText(
+      formatDocsCopy(generated),
+      "Copied for Google Docs / resume editor.",
+    );
   }
 
   const weakestBulletIndex = generated.scores.length
@@ -981,807 +1012,490 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
       )
     : 0;
   const cockpitStats = [
-    { label: "Output", value: hasOutput ? `${generated.bullets.length} bullets` : "Ready" },
+    {
+      label: "Output",
+      value: hasOutput ? `${generated.bullets.length} bullets` : "Ready",
+    },
     { label: "Mode", value: form.outputMode || "Recruiter-friendly" },
     { label: "Target", value: form.targetRole || "Role pending" },
   ];
 
   return (
-    <div className="relative z-10 space-y-4">
-      <div className="app-panel relative min-w-0 overflow-hidden p-4 text-slate-950 sm:p-5">
-        <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/80 to-transparent" />
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0">
-            <p className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              Resume workspace
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-3xl">
-              Build one focused resume studio.
-            </h2>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
-              Add role context on the left. Review scored bullets, keywords, rewrites, and exports on the right.
-            </p>
-          </div>
-          <div className="grid min-w-0 gap-2 sm:grid-cols-3 lg:min-w-[30rem]">
-            {cockpitStats.map((stat) => (
-              <div
-                key={stat.label}
-                className="app-panel-muted px-4 py-3"
-              >
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  {stat.label}
+    <div className="relative z-10">
+      <WorkspaceShell
+        title="Build one focused resume studio."
+        description="Add role context in the composer. Review scored bullets, keyword intelligence, rewrites, and clean exports in the studio."
+        stats={cockpitStats}
+        composer={
+          <ComposerPanel
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleGenerate(
+                hasOutput ? "regenerate_click" : "generate_click",
+              );
+            }}
+          >
+            <PresetPicker
+              presets={examplePresets}
+              onApply={applyPreset}
+              getDescription={getPresetDescription}
+            />
+
+            <div className="composer-progress">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-xs font-semibold text-slate-700">
+                  {completedSectionCount} of 5 sections complete
                 </p>
-                <p className="mt-1 truncate text-sm font-semibold text-slate-950">{stat.value}</p>
+                <span className="text-[11px] font-semibold text-emerald-700">
+                  {Math.round((completedSectionCount / 5) * 100)}%
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(22rem,0.88fr)_minmax(0,1.42fr)] xl:items-start">
-      <form
-        className="app-panel relative min-w-0 overflow-hidden border-emerald-100/80 p-4 text-slate-950 sm:p-5 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
-        }}
-      >
-        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/70 to-transparent" />
-        <div className="mb-5 flex items-start gap-4 sm:mb-6">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 shadow-line">
-            <FileText className="h-5 w-5" aria-hidden="true" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
-              Composer
-            </p>
-            <h2 className="mt-1 text-2xl font-semibold tracking-[-0.03em] text-slate-950">Build the signal</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-600">
-              Use the shortest truthful proof you have. SkillMint will shape it into recruiter-ready language.
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div className="app-panel-muted p-3">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="text-sm font-semibold text-emerald-700">Try a sample</p>
-              <span className="hidden text-xs font-semibold text-slate-500 sm:inline">
-                Great for first-time users
-              </span>
+              <div className="composer-progress-track">
+                <div
+                  className="composer-progress-fill"
+                  style={{ width: `${(completedSectionCount / 5) * 100}%` }}
+                />
+              </div>
             </div>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {examplePresets.map((preset) => (
-                <button
-                  key={preset.label}
-                  type="button"
-                  onClick={() => applyPreset(preset.values)}
-                  className="preset-card"
-                >
-                  <span className="block text-xs font-semibold text-slate-950">{preset.label}</span>
-                  <span className="mt-1 block truncate text-[11px] font-medium text-slate-500">
-                    {getPresetDescription(preset.values)}
+
+            <ComposerStep
+              step={1}
+              title="Role context"
+              description="Who these bullets should sound tailored for."
+              complete={completedSections[0]}
+            >
+              {roleFields.map((field) => (
+                <label key={field.name} className={getFieldLayout(field)}>
+                  <span className="text-sm font-semibold text-ink">
+                    {field.label}
                   </span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="control-card p-4">
-            <div className="flex items-center gap-3">
-              <span className="composer-step">
-                1
-              </span>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-mint-700">Role context</p>
-                <p className="mt-1 text-xs leading-5 text-slate-500">Who the bullets should sound tailored for.</p>
-              </div>
-            </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {contextFields.map((field) => (
-                <label key={field.name} className={getFieldLayout(field)}>
-                  <span className="text-sm font-semibold text-ink">{field.label}</span>
                   {renderField(field, form[field.name] || "", updateForm)}
                 </label>
               ))}
-            </div>
-          </div>
+            </ComposerStep>
 
-          <div className="control-card p-4">
-            <div className="flex items-center gap-3">
-              <span className="composer-step">
-                2
-              </span>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-mint-700">Experience details</p>
-                <p className="mt-1 text-xs leading-5 text-slate-500">Describe the work, target posting, and the raw material.</p>
-              </div>
-            </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {detailFields.map((field) => (
+            <ComposerStep
+              step={2}
+              title="Experience details"
+              description="Describe the work, ownership, and outcome in plain language."
+              complete={completedSections[1]}
+            >
+              {experienceFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
-                  <span className="text-sm font-semibold text-ink">{field.label}</span>
+                  <span className="text-sm font-semibold text-ink">
+                    {field.label}
+                  </span>
                   {renderField(field, form[field.name] || "", updateForm)}
-                  {field.name === "achievement" ? (
-                    <span className="mt-2 block text-xs leading-5 text-slate-500">
-                      Example: improved onboarding docs, analyzed support tickets, launched a dashboard,
-                      or coordinated a campaign.
-                    </span>
-                  ) : (
-                    <span className="mt-2 block text-xs leading-5 text-slate-500">
-                      Optional, but useful: paste responsibilities, tools, qualifications, or keywords from the posting.
-                    </span>
-                  )}
+                  <span className="mt-2 block text-xs leading-5 text-slate-500">
+                    Example: improved onboarding, analyzed support tickets,
+                    launched a dashboard, or coordinated a campaign.
+                  </span>
                 </label>
               ))}
-            </div>
-          </div>
+            </ComposerStep>
 
-          <div className="control-card p-4">
-            <div className="flex items-center gap-3">
-              <span className="composer-step">
-                3
-              </span>
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-mint-700">Proof and metrics</p>
-                <p className="mt-1 text-xs leading-5 text-slate-500">Tools, numbers, and scope help the output feel specific.</p>
-              </div>
-            </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <ComposerStep
+              step={3}
+              title="Proof and metrics"
+              description="Tools, numbers, and scope make the output specific."
+              complete={completedSections[2]}
+            >
               {proofFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>
-                  <span className="text-sm font-semibold text-ink">{field.label}</span>
+                  <span className="text-sm font-semibold text-ink">
+                    {field.label}
+                  </span>
                   {renderField(field, form[field.name] || "", updateForm)}
                 </label>
               ))}
-            </div>
-          </div>
+            </ComposerStep>
 
-          <div className="grid gap-2 sm:grid-cols-3">
-            {[
-              ["Role", form.targetRole ? "set" : "needed"],
-              ["Proof", form.achievement ? "ready" : "needed"],
-              ["Metrics", form.metrics ? "added" : "optional"],
-            ].map(([label, value]) => (
-              <div key={label} className="rounded-2xl border border-slate-200 bg-[#FAFAF8] px-3 py-2 shadow-line">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                  {label}
-                </p>
-                <p className="mt-0.5 text-sm font-semibold capitalize text-slate-950">{value}</p>
-              </div>
-            ))}
-          </div>
+            <ComposerStep
+              step={4}
+              title="Job match"
+              description="Paste the target posting to surface truthful keyword gaps."
+              complete={completedSections[3]}
+            >
+              {jobMatchFields.map((field) => (
+                <label key={field.name} className={getFieldLayout(field)}>
+                  <span className="text-sm font-semibold text-ink">
+                    {field.label}
+                  </span>
+                  {renderField(field, form[field.name] || "", updateForm)}
+                  <span className="mt-2 block text-xs leading-5 text-slate-500">
+                    Optional. Add responsibilities, tools, and qualifications
+                    from the posting.
+                  </span>
+                </label>
+              ))}
+            </ComposerStep>
 
-          <MotionButton
-            type="submit"
-            loading={isGenerating}
-            disabled={isGenerating}
-            icon={Sparkles}
-            className="sticky bottom-3 z-10 w-full sm:static"
+            <ComposerStep
+              step={5}
+              title="Style and output"
+              description="Choose the level of optimization and writing tone."
+              complete={completedSections[4]}
+            >
+              {styleFields.map((field) => (
+                <label key={field.name} className={getFieldLayout(field)}>
+                  <span className="text-sm font-semibold text-ink">
+                    {field.label}
+                  </span>
+                  {renderField(field, form[field.name] || "", updateForm)}
+                </label>
+              ))}
+            </ComposerStep>
+
+            <MotionButton
+              type="submit"
+              loading={isGenerating}
+              disabled={isGenerating}
+              icon={Sparkles}
+              className="sticky bottom-3 z-10 w-full sm:static"
+            >
+              {hasOutput
+                ? "Regenerate resume bullets"
+                : "Generate resume bullets"}
+            </MotionButton>
+
+          </ComposerPanel>
+        }
+        studio={
+          <OutputStudio
+            title={tool.output.title}
+            description={tool.output.description}
+            hasOutput={hasOutput}
+            isGenerating={isGenerating}
+            onRegenerate={() => handleGenerate("regenerate_click")}
+            actions={
+              <>
+                {exportActions.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <button
+                      key={item.action}
+                      type="button"
+                      onClick={() => handleExportAction(item.action)}
+                      disabled={!hasOutput}
+                      className="output-export-action group"
+                      aria-label={item.label}
+                      title={item.description}
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-mint-700 transition group-hover:bg-white">
+                        <Icon className="h-4 w-4" aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-sm font-semibold text-ink">
+                          {item.label}
+                        </span>
+                        <span className="hidden truncate text-xs text-slate-500 sm:block">
+                          {item.description}
+                        </span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </>
+            }
           >
-            {hasOutput ? "Regenerate resume bullets" : "Generate resume bullets"}
-          </MotionButton>
-
-          <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
-            Saved only in your browser. No account required.
-          </p>
-        </div>
-      </form>
-
-      <section className="app-panel flex min-h-[34rem] min-w-0 flex-col overflow-hidden border-emerald-100/80 shadow-[0_34px_100px_rgba(15,23,42,0.13)]" aria-live="polite">
-        <div className="relative overflow-hidden border-b border-slate-200 bg-[linear-gradient(135deg,#ffffff,#f3fbf7)] p-4 text-slate-950 sm:p-6">
-          <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/90 to-transparent" />
-          <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-mint-100/45 blur-3xl" />
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div className="relative z-10">
-              <p className="inline-flex items-center gap-2 rounded-full border border-mint-100 bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-mint-700 shadow-line">
-                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                Resume Intelligence
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink">{tool.output.title}</h2>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">{tool.output.description}</p>
-            </div>
-            <div className="relative z-10 flex flex-wrap gap-2 sm:justify-end">
-              {hasOutput ? (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => handleGenerate("regenerate_click")}
-                    disabled={isGenerating}
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
-                    aria-label="Tailor output to job description"
-                    title="Tailor to JD"
-                  >
-                    <RefreshCw className="h-4 w-4" aria-hidden="true" />
-                    Tailor to JD
-                  </button>
-                  <Link
-                    href="/tools/cover-letter-generator"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white shadow-line transition duration-300 hover:-translate-y-0.5 hover:bg-slate-800"
-                  >
-                    Cover letter
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="relative z-10 mt-5 grid gap-2 sm:grid-cols-5">
-            {exportActions.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <button
-                  key={item.action}
-                  type="button"
-                  onClick={() => handleExportAction(item.action)}
-                  disabled={!hasOutput}
-                  className="group flex min-h-16 items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-left shadow-line transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/70 hover:shadow-soft disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:shadow-line"
-                  aria-label={item.label}
-                  title={item.description}
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-mint-700 transition group-hover:bg-white">
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-sm font-semibold text-ink">{item.label}</span>
-                    <span className="hidden truncate text-xs text-slate-500 sm:block">
-                      {item.description}
-                    </span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="flex flex-1 flex-col bg-[radial-gradient(circle_at_8%_0%,rgba(31,201,153,0.08),transparent_28%),linear-gradient(180deg,#f8fafc,#ffffff_36%,#f8fafc)] p-4 sm:p-5">
-          <div className="mb-5 grid gap-3 sm:grid-cols-3">
-            {cockpitStats.map((stat) => (
-              <div
-                key={stat.label}
-                className="app-panel-muted px-3 py-3 text-center"
-              >
-                <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                  {stat.label}
-                </span>
-                <span className="mt-1 block truncate text-sm font-semibold text-ink">{stat.value}</span>
-              </div>
-            ))}
-          </div>
-
-          {error ? (
-            <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
-              {error}
-            </div>
-          ) : null}
-
-          {isGenerating && !hasOutput ? (
-            <div className="space-y-4">
-              <LoadingIntelligenceState steps={loadingSteps} />
-              {[0, 1, 2].map((item) => (
+            <div className="mb-5 grid gap-3 sm:grid-cols-3">
+              {cockpitStats.map((stat) => (
                 <div
-                  key={item}
-                  className="animate-pulse rounded-lg border border-slate-200 bg-white p-4 shadow-line"
+                  key={stat.label}
+                  className="app-panel-muted px-3 py-3 text-center"
                 >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="h-3 w-24 rounded-full bg-mint-100" />
-                    <div className="h-7 w-16 rounded-full bg-slate-100" />
-                  </div>
-                  <div className="mt-4 h-4 w-11/12 rounded-full bg-slate-100" />
-                  <div className="mt-3 h-4 w-2/3 rounded-full bg-slate-100" />
-                  <div className="mt-4 grid gap-2 sm:grid-cols-3">
-                    <div className="h-12 rounded-lg bg-slate-50" />
-                    <div className="h-12 rounded-lg bg-slate-50" />
-                    <div className="h-12 rounded-lg bg-slate-50" />
-                  </div>
+                  <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                    {stat.label}
+                  </span>
+                  <span className="mt-1 block truncate text-sm font-semibold text-ink">
+                    {stat.value}
+                  </span>
                 </div>
               ))}
             </div>
-          ) : hasOutput ? (
-            <div className="flex flex-1 flex-col gap-5">
-              <section className="output-card-pro scan-line p-4">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
-                      <BarChart3 className="h-4 w-4" aria-hidden="true" />
-                      Resume Strength Summary
-                    </p>
-                    <h3 className="mt-2 text-2xl font-semibold text-ink">
-                      {generated.summary.overallScore || 0}/100
-                    </h3>
-                    <p className="mt-2 leading-7 text-slate-600">
-                      {generated.summary.nextAction ||
-                        "Add truthful metrics and role-specific keywords to keep improving this draft."}
-                    </p>
-                  </div>
-                  <AnimatedScoreBadge
-                    score={`${generated.summary.overallScore || 0}/100`}
-                    label="Overall"
-                    className={`shrink-0 ${getScoreClasses(generated.summary.overallScore)}`}
-                  />
-                </div>
-                <ScoreMeter
-                  value={generated.summary.overallScore || 0}
-                  label="Overall strength"
-                  className="mt-5"
-                />
 
-                <div className="mt-4 grid gap-2 sm:grid-cols-4">
-                  {[
-                    ["Overall score", `${generated.summary.overallScore || 0}/100`],
-                    ["Bullet drafts", `${generated.bullets.length}/5`],
-                    ["Keywords", `${generated.keywords.length} used`],
-                    ["Exports", "5 formats"],
-                  ].map(([label, value]) => (
-                    <div key={label} className="rounded-2xl border border-slate-200 bg-white px-3 py-3 shadow-line">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                        {label}
-                      </p>
-                      <p className="mt-1 text-sm font-semibold text-ink">{value}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-slate-200 bg-white/85 p-3.5">
-                    <p className="flex items-center gap-2 text-sm font-semibold text-ink">
-                      <CheckCircle2 className="h-4 w-4 text-mint-700" aria-hidden="true" />
-                      Strengths
-                    </p>
-                    <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
-                      {(generated.summary.strengths.length
-                        ? generated.summary.strengths
-                        : ["Action-oriented language", "Recruiter-friendly structure"]).map((item) => (
-                        <li key={item}>- {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="rounded-2xl border border-slate-200 bg-white/85 p-3.5">
-                    <p className="flex items-center gap-2 text-sm font-semibold text-ink">
-                      <Target className="h-4 w-4 text-amber-600" aria-hidden="true" />
-                      Weaknesses
-                    </p>
-                    <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
-                      {(generated.summary.weaknesses.length
-                        ? generated.summary.weaknesses
-                        : ["More metrics or scope could strengthen the proof."]).map((item) => (
-                        <li key={item}>- {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-sm font-semibold uppercase text-mint-700">Best 5 bullets</h3>
-                <div className="mt-3 space-y-3">
-                  {generated.bullets.map((item, index) => (
-                    <div
-                      key={`${item}-${index}`}
-                      className="output-card-pro scan-line p-4"
-                      style={{ animationDelay: `${index * 80}ms` }}
-                    >
-                      <div className="flex gap-3">
-                        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-mint-50 text-xs font-semibold text-mint-700 ring-1 ring-mint-100">
-                          {index + 1}
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_7rem] md:items-start">
-                            <div>
-                              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
-                                Recruiter-ready bullet
-                              </p>
-                              <p className="mt-2 text-sm leading-6 text-slate-800 sm:text-base sm:leading-7">{item}</p>
-                            </div>
-                            <div className="shrink-0 md:text-right">
-                              <span
-                                className={`inline-flex items-center justify-center rounded-full border px-3 py-1 text-xs font-semibold ${getScoreClasses(
-                                  generated.scores[index]?.score || 0,
-                                )}`}
-                              >
-                                {generated.scores[index]?.score || 0}/100
-                              </span>
-                              <div className="mt-2 h-1.5 w-24 overflow-hidden rounded-full bg-slate-100 md:ml-auto">
-                                <div
-                                  className={`score-fill h-full rounded-full ${getScoreBarColor(
-                                    generated.scores[index]?.score || 0,
-                                  )}`}
-                                  style={{ width: `${generated.scores[index]?.score || 0}%` }}
-                                />
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="mt-4 rounded-2xl border border-slate-200 bg-[#FAFAF8] p-3 text-xs leading-5 text-slate-600 shadow-line sm:text-sm sm:leading-6">
-                            <div className="grid gap-2 lg:grid-cols-2">
-                              <p>
-                                <span className="font-semibold text-ink">Why:</span>{" "}
-                                {generated.scores[index]?.reason}
-                              </p>
-                              <p>
-                                <span className="font-semibold text-ink">Improve:</span>{" "}
-                                {generated.scores[index]?.suggestion}
-                              </p>
-                            </div>
-                            <div className="mt-3 grid gap-1.5 sm:grid-cols-3">
-                              {breakdownLabels.map(([key, label]) => (
-                                <div key={key} className="rounded-xl border border-slate-100 bg-white px-2.5 py-2 shadow-line">
-                                  <span className="block text-[11px] font-semibold uppercase text-slate-500">
-                                    {label}
-                                  </span>
-                                  <span className="mt-0.5 block font-semibold text-ink">
-                                    {generated.scores[index]?.breakdown?.[key] || 0}/100
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            <button
-                              type="button"
-                              onClick={() => copyText(item, "Bullet copied.")}
-                              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-line transition hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
-                            >
-                              <Clipboard className="h-3.5 w-3.5" aria-hidden="true" />
-                              Copy bullet
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => handleImproveBullet(index)}
-                              disabled={improvingIndex !== null || isGenerating}
-                              className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700 disabled:cursor-not-allowed disabled:opacity-50"
-                            >
-                              <Wand2 className="h-3.5 w-3.5" aria-hidden="true" />
-                              {improvingIndex === index ? "Strengthening..." : "Make it stronger"}
-                            </button>
-
-                            {generated.comparisons[index] ? (
-                              <button
-                                type="button"
-                                onClick={() => toggleComparison(index)}
-                                className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
-                              >
-                                <Eye className="h-3.5 w-3.5" aria-hidden="true" />
-                                Compare versions
-                              </button>
-                            ) : null}
-                          </div>
-
-                          {generated.comparisons[index] && expandedComparisons[index] ? (
-                            <div className="mt-4 grid gap-3 rounded-2xl border border-mint-100 bg-mint-50/50 p-3 text-sm sm:grid-cols-2">
-                              <div>
-                                <p className="font-semibold uppercase text-slate-500">Original</p>
-                                <p className="mt-2 leading-6 text-slate-700">
-                                  {generated.comparisons[index].original}
-                                </p>
-                              </div>
-                              <div>
-                                <p className="font-semibold uppercase text-mint-700">Improved</p>
-                                <p className="mt-2 leading-6 text-slate-700">
-                                  {generated.comparisons[index].improved}
-                                </p>
-                              </div>
-                              <div className="sm:col-span-2">
-                                <p className="font-semibold uppercase text-slate-500">What changed</p>
-                                <ul className="mt-2 space-y-1 leading-6 text-slate-700">
-                                  {generated.comparisons[index].changes.map((change) => (
-                                    <li key={change}>- {change}</li>
-                                  ))}
-                                </ul>
-                              </div>
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {generated.keywords.length ? (
-                <section>
-                  <h3 className="text-sm font-semibold uppercase text-mint-700">Keywords used</h3>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {generated.keywords.map((keyword, index) => (
-                      <KeywordChip key={keyword} style={{ animationDelay: `${index * 55}ms` }}>
-                        {keyword}
-                      </KeywordChip>
-                    ))}
-                  </div>
-                </section>
-              ) : null}
-
-              {generated.missingKeywords.length ? (
-                <InsightPanel title="Missing keywords from job description">
-                  <h3 className="text-sm font-semibold uppercase text-amber-700">
-                    Add only if truthful
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-amber-800">
-                    Add these only if they truthfully match your experience, tools, or role scope.
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {generated.missingKeywords.map((keyword, index) => (
-                      <KeywordChip
-                        key={keyword}
-                        className="border-amber-200 bg-white text-amber-700"
-                        style={{ animationDelay: `${index * 55}ms` }}
-                      >
-                        {keyword}
-                      </KeywordChip>
-                    ))}
-                  </div>
-                </InsightPanel>
-              ) : null}
-
-              {generated.actionVerbs.length ? (
-                <section>
-                  <h3 className="text-sm font-semibold uppercase text-mint-700">
-                    Stronger action verbs
-                  </h3>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {generated.actionVerbs.map((verb) => (
-                      <span
-                        key={verb}
-                        className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-line"
-                      >
-                        {verb}
-                      </span>
-                    ))}
-                  </div>
-                </section>
-              ) : null}
-
-              {generated.whatToAdd.length ? (
-                <section className="output-card-pro p-4">
-                  <h3 className="text-sm font-semibold uppercase text-mint-700">
-                    What to add if truthful
-                  </h3>
-                  <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
-                    {generated.whatToAdd.map((item) => (
-                      <li key={item}>- {item}</li>
-                    ))}
-                  </ul>
-                </section>
-              ) : null}
-
-              {generated.tips.length ? (
-                <section className="gloss-panel p-4">
-                  <div className="gloss-content">
-                  <h3 className="text-sm font-semibold uppercase text-slate-700">Improvement tips</h3>
-                  <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
-                    {generated.tips.map((tip) => (
-                      <li key={tip}>- {tip}</li>
-                    ))}
-                  </ul>
-                  </div>
-                </section>
-              ) : null}
-
-              <section className="output-card-pro p-4">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
-                      <Share2 className="h-4 w-4" aria-hidden="true" />
-                      Share and keep improving
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
-                      Send the generator to a friend or start a fresh draft for another target role.
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-2 sm:flex-row">
-                    <button
-                      type="button"
-                      onClick={() => copyGeneratorLink("Share link copied.")}
-                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
-                    >
-                      <Clipboard className="h-4 w-4" aria-hidden="true" />
-                      Copy link
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setGenerated(emptyOutput);
-                        setExpandedComparisons({});
-                        setError("");
-                        trackEvent("share_click", { tool: tool.slug, action: "try_another_role" });
-                        showToast("Ready for another role.");
-                      }}
-                      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
-                    >
-                      Try another role
-                    </button>
-                  </div>
-                </div>
-              </section>
-
-              <EmailCapture compact location="tool_output_capture" />
-
-              <section>
-                <h3 className="text-sm font-semibold uppercase text-mint-700">Recommended next steps</h3>
-                <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                  {recommendedResources.slice(0, 3).map((recommendation) => (
-                    <AffiliateRecommendationCard
-                      key={recommendation.title}
-                      title={recommendation.title}
-                      description={recommendation.description}
-                      href={recommendation.href}
-                      label="Next step"
-                      onClick={() => {
-                        trackEvent("affiliate_click", {
-                          tool: tool.slug,
-                          resource: recommendation.title,
-                        });
-                        trackEvent("affiliate_card_clicked", {
-                          tool: tool.slug,
-                          resource: recommendation.title,
-                        });
-                      }}
-                    />
-                  ))}
-                </div>
-              </section>
-
-              <AdSlot label="Resume tool resource placement" />
-
-              {copied ? (
-                <p className="text-sm font-semibold text-mint-700">Copied to clipboard.</p>
-              ) : null}
-            </div>
-          ) : (
-            <EmptyStatePreview
-              title={tool.output.emptyTitle}
-              description={tool.output.emptyDescription}
-            />
-          )}
-
-          {hasOutput ? (
-            <div className="mt-6">
-              <OutputActionBar
-                actions={[
-                  {
-                    label: "Copy all",
-                    icon: Clipboard,
-                    onClick: () => handleExportAction("copy"),
-                  },
-                  {
-                    label: "TXT",
-                    icon: Download,
-                    onClick: () => handleExportAction("txt"),
-                  },
-                  {
-                    label: "Markdown",
-                    icon: FileDown,
-                    onClick: () => handleExportAction("markdown"),
-                  },
-                  {
-                    label: "Improve",
-                    icon: Wand2,
-                    onClick: () => handleImproveBullet(weakestBulletIndex),
-                    disabled: isGenerating || improvingIndex !== null,
-                  },
-                  {
-                    label: "Tailor to JD",
-                    icon: Target,
-                    onClick: () => handleGenerate("regenerate_click"),
-                    disabled: isGenerating,
-                  },
-                  {
-                    label: "Cover letter",
-                    icon: FileText,
-                    onClick: () => {
-                      window.location.href = "/tools/cover-letter-generator";
-                    },
-                  },
-                ]}
-              />
-            </div>
-          ) : null}
-
-          <section className="mt-6 output-card-pro p-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <p className="text-sm font-semibold uppercase text-mint-700">Before vs After</p>
-                <h3 className="mt-1 text-xl font-semibold text-ink">Rewrite an existing bullet</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Paste a bullet you already have. SkillMint will score it, rewrite it, and explain
-                  what changed.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={handleRewriteExisting}
-                disabled={isRewriting}
-                className="button-secondary min-h-10 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <Wand2 className="h-4 w-4" aria-hidden="true" />
-                {isRewriting ? "Rewriting..." : "Rewrite"}
-              </button>
-            </div>
-            <textarea
-              value={existingBullet}
-              onChange={(event) => setExistingBullet(event.target.value)}
-              rows={3}
-              placeholder="e.g. Responsible for creating weekly reports for sales team."
-              className="premium-input mt-4 min-h-24 resize-none px-4 py-3"
-            />
-            {rewriteResult ? (
-              <div className="mt-4 grid gap-3 rounded-2xl border border-mint-100 bg-mint-50/50 p-4 sm:grid-cols-2">
-                <div>
-                  <p className="text-xs font-semibold uppercase text-slate-500">Before</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-700">{rewriteResult.original}</p>
-                </div>
-                <div>
-                  <p className="text-xs font-semibold uppercase text-mint-700">
-                    After - {rewriteResult.score.score}/100
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-slate-700">{rewriteResult.bullet}</p>
-                </div>
-                <div className="sm:col-span-2">
-                  <p className="text-xs font-semibold uppercase text-slate-500">What changed</p>
-                  <ul className="mt-2 space-y-1 text-sm leading-6 text-slate-700">
-                    {rewriteResult.changes.map((change) => (
-                      <li key={change}>- {change}</li>
-                    ))}
-                  </ul>
-                </div>
+            {error ? (
+              <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                {error}
               </div>
             ) : null}
-          </section>
 
-          {history.length ? (
-            <section className="mt-6 output-card-pro p-4">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
-                    <History className="h-4 w-4" aria-hidden="true" />
-                    Recent generations
+            {isGenerating && !hasOutput ? (
+              <div className="space-y-4">
+                <LoadingIntelligenceState steps={loadingSteps} />
+                {[0, 1, 2].map((item) => (
+                  <div
+                    key={item}
+                    className="animate-pulse rounded-lg border border-slate-200 bg-white p-4 shadow-line"
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="h-3 w-24 rounded-full bg-mint-100" />
+                      <div className="h-7 w-16 rounded-full bg-slate-100" />
+                    </div>
+                    <div className="mt-4 h-4 w-11/12 rounded-full bg-slate-100" />
+                    <div className="mt-3 h-4 w-2/3 rounded-full bg-slate-100" />
+                    <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                      <div className="h-12 rounded-lg bg-slate-50" />
+                      <div className="h-12 rounded-lg bg-slate-50" />
+                      <div className="h-12 rounded-lg bg-slate-50" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : hasOutput ? (
+              <div className="flex flex-1 flex-col gap-5">
+                <OutputSummary
+                  summary={generated.summary}
+                  bulletCount={generated.bullets.length}
+                  keywordCount={generated.keywords.length}
+                />
+
+                <section>
+                  <div className="flex items-end justify-between gap-4">
+                    <div>
+                      <p className="workspace-label">Best five bullets</p>
+                      <h3 className="mt-1 text-xl font-semibold text-slate-950">
+                        Recruiter-ready output
+                      </h3>
+                    </div>
+                    <span className="hidden text-xs font-medium text-slate-500 sm:block">
+                      Improve any card independently
+                    </span>
+                  </div>
+                  <div className="mt-3 space-y-3">
+                    {generated.bullets.map((item, index) => (
+                      <ResultCard
+                        key={`${item}-${index}`}
+                        index={index}
+                        bullet={item}
+                        score={generated.scores[index]}
+                        comparison={generated.comparisons[index]}
+                        comparisonExpanded={Boolean(
+                          expandedComparisons[index],
+                        )}
+                        improving={improvingIndex === index}
+                        copyConfirmed={copied}
+                        onCopy={() => copyText(item, "Bullet copied.")}
+                        onImprove={() => handleImproveBullet(index)}
+                        onToggleComparison={() => toggleComparison(index)}
+                      />
+                    ))}
+                  </div>
+                </section>
+
+                <KeywordIntelligence
+                  included={generated.keywords}
+                  missing={generated.missingKeywords}
+                  actionVerbs={generated.actionVerbs}
+                />
+
+                {generated.whatToAdd.length ? (
+                  <section className="output-card-pro p-4">
+                    <h3 className="text-sm font-semibold uppercase text-mint-700">
+                      What to add if truthful
+                    </h3>
+                    <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                      {generated.whatToAdd.map((item) => (
+                        <li key={item}>- {item}</li>
+                      ))}
+                    </ul>
+                  </section>
+                ) : null}
+
+                {generated.tips.length ? (
+                  <section className="gloss-panel p-4">
+                    <div className="gloss-content">
+                      <h3 className="text-sm font-semibold uppercase text-slate-700">
+                        Improvement tips
+                      </h3>
+                      <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+                        {generated.tips.map((tip) => (
+                          <li key={tip}>- {tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </section>
+                ) : null}
+
+                <section className="output-card-pro p-4">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
+                        <Share2 className="h-4 w-4" aria-hidden="true" />
+                        Share and keep improving
+                      </h3>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">
+                        Send the generator to a friend or start a fresh draft
+                        for another target role.
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                      <button
+                        type="button"
+                        onClick={() => copyGeneratorLink("Share link copied.")}
+                        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                      >
+                        <Clipboard className="h-4 w-4" aria-hidden="true" />
+                        Copy link
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setGenerated(emptyOutput);
+                          setExpandedComparisons({});
+                          setError("");
+                          trackEvent("share_click", {
+                            tool: tool.slug,
+                            action: "try_another_role",
+                          });
+                          showToast("Ready for another role.");
+                        }}
+                        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+                      >
+                        Try another role
+                      </button>
+                    </div>
+                  </div>
+                </section>
+
+                <EmailCapture compact location="tool_output_capture" />
+
+                <section>
+                  <h3 className="text-sm font-semibold uppercase text-mint-700">
+                    Recommended next steps
+                  </h3>
+                  <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                    {recommendedResources.slice(0, 3).map((recommendation) => (
+                      <AffiliateRecommendationCard
+                        key={recommendation.title}
+                        title={recommendation.title}
+                        description={recommendation.description}
+                        href={recommendation.href}
+                        label="Next step"
+                        onClick={() => {
+                          trackEvent("affiliate_click", {
+                            tool: tool.slug,
+                            resource: recommendation.title,
+                          });
+                          trackEvent("affiliate_card_clicked", {
+                            tool: tool.slug,
+                            resource: recommendation.title,
+                          });
+                        }}
+                      />
+                    ))}
+                  </div>
+                </section>
+
+                <AdSlot label="Resume tool resource placement" />
+
+                {copied ? (
+                  <p className="text-sm font-semibold text-mint-700">
+                    Copied to clipboard.
                   </p>
-                  <p className="mt-1 text-sm text-slate-500">
-                    Saved locally for quick reuse while you apply.
+                ) : null}
+              </div>
+            ) : (
+              <EmptyStatePreview
+                title={tool.output.emptyTitle}
+                description={tool.output.emptyDescription}
+              />
+            )}
+
+            {hasOutput ? (
+              <div className="mt-6">
+                <OutputActionBar
+                  actions={[
+                    {
+                      label: "Copy all",
+                      icon: Clipboard,
+                      onClick: () => handleExportAction("copy"),
+                    },
+                    {
+                      label: "TXT",
+                      icon: Download,
+                      onClick: () => handleExportAction("txt"),
+                    },
+                    {
+                      label: "Markdown",
+                      icon: FileDown,
+                      onClick: () => handleExportAction("markdown"),
+                    },
+                    {
+                      label: "Improve",
+                      icon: Wand2,
+                      onClick: () => handleImproveBullet(weakestBulletIndex),
+                      disabled: isGenerating || improvingIndex !== null,
+                    },
+                    {
+                      label: "Tailor to JD",
+                      icon: Target,
+                      onClick: () => handleGenerate("regenerate_click"),
+                      disabled: isGenerating,
+                    },
+                    {
+                      label: "Cover letter",
+                      icon: FileText,
+                      onClick: () => {
+                        window.location.href = "/tools/cover-letter-generator";
+                      },
+                    },
+                  ]}
+                />
+              </div>
+            ) : null}
+
+            <section className="mt-6 output-card-pro p-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase text-mint-700">
+                    Before vs After
+                  </p>
+                  <h3 className="mt-1 text-xl font-semibold text-ink">
+                    Rewrite an existing bullet
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    Paste a bullet you already have. SkillMint will score it,
+                    rewrite it, and explain what changed.
                   </p>
                 </div>
                 <button
                   type="button"
-                  onClick={clearHistory}
-                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+                  onClick={handleRewriteExisting}
+                  disabled={isRewriting}
+                  className="button-secondary min-h-10 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  <Trash2 className="h-4 w-4" aria-hidden="true" />
-                  Clear history
+                  <Wand2 className="h-4 w-4" aria-hidden="true" />
+                  {isRewriting ? "Rewriting..." : "Rewrite"}
                 </button>
               </div>
-
-              <div className="mt-4 space-y-3">
-                {history.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => reopenHistoryItem(item)}
-                    className="block w-full rounded-2xl border border-slate-200 bg-slate-50 p-4 text-left transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-mint-50/60"
-                  >
-                    <span className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                      <span className="font-semibold text-ink">{item.role}</span>
-                      <span className="text-xs font-semibold uppercase text-slate-500">
-                        {new Intl.DateTimeFormat(undefined, {
-                          dateStyle: "medium",
-                          timeStyle: "short",
-                        }).format(new Date(item.createdAt))}
-                      </span>
-                    </span>
-                    <span className="mt-2 line-clamp-2 block text-sm leading-6 text-slate-600">
-                      {item.output.bullets[0] || "Resume bullets saved in this browser."}
-                    </span>
-                  </button>
-                ))}
-              </div>
+              <textarea
+                value={existingBullet}
+                onChange={(event) => setExistingBullet(event.target.value)}
+                rows={3}
+                placeholder="e.g. Responsible for creating weekly reports for sales team."
+                className="premium-input mt-4 min-h-24 resize-none px-4 py-3"
+              />
+              {rewriteResult ? (
+                <RewriteComparison
+                  comparison={{
+                    original: rewriteResult.original,
+                    improved: rewriteResult.bullet,
+                    changes: rewriteResult.changes,
+                  }}
+                />
+              ) : null}
             </section>
-          ) : null}
-        </div>
-      </section>
-      </div>
+
+            <HistoryPanel
+              items={history}
+              onOpen={reopenHistoryItem}
+              onClear={clearHistory}
+            />
+          </OutputStudio>
+        }
+      />
 
       {toast ? (
         <div className="success-pulse fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-full border border-mint-100 bg-ink px-5 py-3 text-center text-sm font-semibold text-white shadow-soft">

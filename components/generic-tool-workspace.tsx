@@ -7,7 +7,6 @@ import {
   Clipboard,
   Download,
   FileDown,
-  Loader2,
   Sparkles,
 } from "lucide-react";
 import { AdSlot } from "@/components/ad-slot";
@@ -17,7 +16,12 @@ import { EmailCapture } from "@/components/email-capture";
 import { EmptyStatePreview } from "@/components/empty-state-preview";
 import { KeywordChip } from "@/components/keyword-chip";
 import { LoadingIntelligenceState } from "@/components/loading-intelligence-state";
+import { MotionButton } from "@/components/motion-button";
 import { ScoreMeter } from "@/components/score-meter";
+import { ComposerPanel } from "@/components/tool-workspace/composer-panel";
+import { ComposerStep } from "@/components/tool-workspace/composer-step";
+import { OutputStudio } from "@/components/tool-workspace/output-studio";
+import { WorkspaceShell } from "@/components/tool-workspace/workspace-shell";
 import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
@@ -99,7 +103,13 @@ function formatResultText(result: GenericToolResult) {
     result.summary,
     "",
     ...(result.scores?.length
-      ? ["Scores", ...result.scores.map((score) => `- ${score.label}: ${score.score}/100`), ""]
+      ? [
+          "Scores",
+          ...result.scores.map(
+            (score) => `- ${score.label}: ${score.score}/100`,
+          ),
+          "",
+        ]
       : []),
     ...result.sections.flatMap((section) => [
       section.title,
@@ -108,7 +118,10 @@ function formatResultText(result: GenericToolResult) {
       "",
     ]),
     ...(result.warnings?.length
-      ? ["Truthfulness checks", ...result.warnings.map((warning) => `- ${warning}`)]
+      ? [
+          "Truthfulness checks",
+          ...result.warnings.map((warning) => `- ${warning}`),
+        ]
       : []),
   ]
     .filter((line, index, lines) => line || lines[index - 1] !== "")
@@ -141,13 +154,18 @@ function getScoreColor(score: number) {
 
 export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
   const tool = getToolBySlug(slug) as ToolConfig;
-  const [form, setForm] = useState<ToolFormValues>(() => getInitialToolValues(tool));
+  const [form, setForm] = useState<ToolFormValues>(() =>
+    getInitialToolValues(tool),
+  );
   const [result, setResult] = useState<GenericToolResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [toast, setToast] = useState("");
 
-  const outputText = useMemo(() => (result ? formatResultText(result) : ""), [result]);
+  const outputText = useMemo(
+    () => (result ? formatResultText(result) : ""),
+    [result],
+  );
 
   function updateForm(name: string, value: string) {
     setForm((current) => ({ ...current, [name]: value }));
@@ -171,10 +189,14 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
         body: JSON.stringify(form),
       });
 
-      const payload = (await response.json()) as { error?: string } & GenericToolResult;
+      const payload = (await response.json()) as {
+        error?: string;
+      } & GenericToolResult;
 
       if (!response.ok) {
-        throw new Error(payload.error || "Something went wrong. Try again in a moment.");
+        throw new Error(
+          payload.error || "Something went wrong. Try again in a moment.",
+        );
       }
 
       const nextResult: GenericToolResult = {
@@ -195,7 +217,9 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
       showToast("Output ready. Review before using it.");
     } catch (caughtError) {
       const message =
-        caughtError instanceof Error ? caughtError.message : "Something went wrong. Try again.";
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Something went wrong. Try again.";
       setError(message);
       trackEvent("tool_generate_error", { tool: tool.slug });
     } finally {
@@ -221,11 +245,15 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
     const markdown = format === "markdown";
     const text = markdown
       ? outputText.replace(/^(.+)$/gm, (line) =>
-          line.startsWith("- ") || line.endsWith("/100") || !line ? line : `## ${line}`,
+          line.startsWith("- ") || line.endsWith("/100") || !line
+            ? line
+            : `## ${line}`,
         )
       : outputText;
     downloadText(
-      markdown ? tool.output.downloadFileName.replace(".txt", ".md") : tool.output.downloadFileName,
+      markdown
+        ? tool.output.downloadFileName.replace(".txt", ".md")
+        : tool.output.downloadFileName,
       text,
       markdown ? "text/markdown" : "text/plain",
     );
@@ -234,73 +262,92 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
-      <form
-        onSubmit={handleSubmit}
-        className="relative rounded-[1.75rem] border border-slate-200 bg-white p-4 text-slate-950 shadow-soft sm:p-5 lg:sticky lg:top-24"
-      >
-        <div className="rounded-2xl border border-slate-200 bg-[#FAFAF8] p-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">AI workspace</p>
-          <h2 className="mt-1 text-2xl font-semibold text-slate-950">Build the input</h2>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            Add honest context. SkillMint will improve clarity and positioning without encouraging
-            overclaiming.
-          </p>
-        </div>
-
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          {tool.inputFields.map((field) => (
-            <label
-              key={field.name}
-              className={field.layout === "half" ? "block" : "block sm:col-span-2"}
+    <div className="relative z-10">
+      <WorkspaceShell
+        title={`${tool.name} workspace`}
+        description="Build the input on the left, then review the intelligence report and export the useful parts on the right."
+        stats={[
+          {
+            label: "Output",
+            value: result ? "Report ready" : "Ready",
+          },
+          {
+            label: "Score",
+            value:
+              typeof result?.score === "number"
+                ? `${result.score}/100`
+                : "Pending",
+          },
+          { label: "Privacy", value: "No signup" },
+        ]}
+        composer={
+          <ComposerPanel onSubmit={handleSubmit}>
+            <ComposerStep
+              step={1}
+              title="Add your context"
+              description="Use specific, truthful details for a stronger report."
             >
-              <span className="text-sm font-semibold text-slate-950">{field.label}</span>
-              {renderField(field, form[field.name] || "", updateForm)}
-            </label>
-          ))}
-        </div>
+              {tool.inputFields.map((field) => (
+                <label
+                  key={field.name}
+                  className={
+                    field.layout === "half"
+                      ? "block"
+                      : "block sm:col-span-2"
+                  }
+                >
+                  <span className="text-sm font-semibold text-slate-950">
+                    {field.label}
+                  </span>
+                  {renderField(field, form[field.name] || "", updateForm)}
+                </label>
+              ))}
+            </ComposerStep>
 
-        {error ? (
-          <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">
-            {error}
-          </div>
-        ) : null}
+            {error ? (
+              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">
+                {error}
+              </div>
+            ) : null}
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-          ) : (
-            <Sparkles className="h-4 w-4" aria-hidden="true" />
-          )}
-          {isLoading ? "Generating..." : `Run ${tool.name}`}
-        </button>
-
-        <p className="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">
-          Privacy-first: no signup required. Review every generated claim before using it.
-        </p>
-      </form>
-
-      <section className="min-h-[34rem] overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-soft">
-        <div className="sticky top-16 z-10 border-b border-slate-200/80 bg-white/90 px-4 py-3 backdrop-blur sm:px-5">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase text-mint-700">Output workspace</p>
-              <h2 className="text-xl font-semibold text-ink">{tool.output.title}</h2>
-            </div>
-            {result ? (
-              <div className="flex flex-wrap gap-2">
-                <button type="button" onClick={copyOutput} className="button-secondary min-h-10 px-3 py-2 text-xs">
+            <MotionButton
+              type="submit"
+              loading={isLoading}
+              disabled={isLoading}
+              icon={Sparkles}
+              className="w-full"
+            >
+              {isLoading ? "Building report" : `Run ${tool.name}`}
+            </MotionButton>
+          </ComposerPanel>
+        }
+        studio={
+          <OutputStudio
+            title={tool.output.title}
+            description={tool.output.description}
+            hasOutput={Boolean(result)}
+            isGenerating={isLoading}
+            onRegenerate={() => {
+              const syntheticEvent = {
+                preventDefault() {},
+              } as FormEvent<HTMLFormElement>;
+              void handleSubmit(syntheticEvent);
+            }}
+            actions={
+              result ? (
+                <>
+                <button
+                  type="button"
+                  onClick={copyOutput}
+                  className="output-export-action group"
+                >
                   <Clipboard className="h-3.5 w-3.5" aria-hidden="true" />
                   Copy
                 </button>
                 <button
                   type="button"
                   onClick={() => exportOutput("txt")}
-                  className="button-secondary min-h-10 px-3 py-2 text-xs"
+                  className="output-export-action group"
                 >
                   <Download className="h-3.5 w-3.5" aria-hidden="true" />
                   TXT
@@ -308,22 +355,27 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                 <button
                   type="button"
                   onClick={() => exportOutput("markdown")}
-                  className="button-secondary min-h-10 px-3 py-2 text-xs"
+                  className="output-export-action group"
                 >
                   <FileDown className="h-3.5 w-3.5" aria-hidden="true" />
                   Markdown
                 </button>
-              </div>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="space-y-5 p-4 sm:p-5">
+                </>
+              ) : (
+                <div className="col-span-full rounded-2xl border border-dashed border-slate-200 px-4 py-3 text-center text-xs font-semibold text-slate-400">
+                  Export actions appear after generation
+                </div>
+              )
+            }
+          >
           {isLoading ? (
             <div className="space-y-4">
               <LoadingIntelligenceState />
               {[0, 1, 2].map((item) => (
-                <div key={item} className="animate-pulse rounded-2xl border border-slate-200 bg-white p-4 shadow-line">
+                <div
+                  key={item}
+                  className="animate-pulse rounded-2xl border border-slate-200 bg-white p-4 shadow-line"
+                >
                   <div className="h-3 w-24 rounded-full bg-mint-100" />
                   <div className="mt-4 h-4 w-3/4 rounded-full bg-slate-100" />
                   <div className="mt-3 h-4 w-5/6 rounded-full bg-slate-100" />
@@ -335,8 +387,12 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               <div className="output-card-pro p-4">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <h3 className="text-2xl font-semibold text-ink">{result.title}</h3>
-                    <p className="mt-2 leading-7 text-slate-600">{result.summary}</p>
+                    <h3 className="text-2xl font-semibold text-ink">
+                      {result.title}
+                    </h3>
+                    <p className="mt-2 leading-7 text-slate-600">
+                      {result.summary}
+                    </p>
                   </div>
                   {typeof result.score === "number" ? (
                     <AnimatedScoreBadge
@@ -347,7 +403,11 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                   ) : null}
                 </div>
                 {typeof result.score === "number" ? (
-                  <ScoreMeter value={result.score} label="Overall score" className="mt-5" />
+                  <ScoreMeter
+                    value={result.score}
+                    label="Overall score"
+                    className="mt-5"
+                  />
                 ) : null}
               </div>
 
@@ -356,15 +416,21 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                   {result.scores.map((score) => (
                     <div key={score.label} className="output-card-pro p-3">
                       <div className="flex items-center justify-between gap-3">
-                        <p className="text-sm font-semibold text-ink">{score.label}</p>
-                        <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${getScoreColor(score.score)}`}>
+                        <p className="text-sm font-semibold text-ink">
+                          {score.label}
+                        </p>
+                        <span
+                          className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${getScoreColor(score.score)}`}
+                        >
                           {score.score}/100
                         </span>
                       </div>
                       <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
                         <div
                           className="h-full rounded-full bg-mint-500"
-                          style={{ width: `${Math.max(0, Math.min(100, score.score))}%` }}
+                          style={{
+                            width: `${Math.max(0, Math.min(100, score.score))}%`,
+                          }}
                         />
                       </div>
                     </div>
@@ -378,11 +444,18 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                     <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                     {section.title}
                   </h3>
-                  {section.text ? <p className="mt-3 leading-7 text-slate-700">{section.text}</p> : null}
+                  {section.text ? (
+                    <p className="mt-3 leading-7 text-slate-700">
+                      {section.text}
+                    </p>
+                  ) : null}
                   {section.items?.length ? (
                     <div className="mt-3 grid gap-2">
                       {section.items.map((item) => (
-                        <div key={item} className="rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-700">
+                        <div
+                          key={item}
+                          className="rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-700"
+                        >
                           {section.title.toLowerCase().includes("keyword") ? (
                             <KeywordChip>{item}</KeywordChip>
                           ) : (
@@ -412,7 +485,9 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               <EmailCapture compact location={`${tool.slug}_output_capture`} />
 
               <div>
-                <h3 className="text-sm font-semibold uppercase text-mint-700">Recommended next steps</h3>
+                <h3 className="text-sm font-semibold uppercase text-mint-700">
+                  Recommended next steps
+                </h3>
                 <div className="mt-3 grid gap-3 sm:grid-cols-3">
                   {recommendedResources.slice(0, 3).map((recommendation) => (
                     <AffiliateRecommendationCard
@@ -441,11 +516,12 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               description={tool.output.emptyDescription}
             />
           )}
-        </div>
-      </section>
+          </OutputStudio>
+        }
+      />
 
       {toast ? (
-        <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-full border border-mint-100 bg-ink px-5 py-3 text-center text-sm font-semibold text-white shadow-soft">
+        <div className="success-pulse fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-full border border-mint-100 bg-ink px-5 py-3 text-center text-sm font-semibold text-white shadow-soft">
           {toast}
         </div>
       ) : null}

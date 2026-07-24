@@ -16,7 +16,12 @@ export function SectionHeading({
   className,
 }: SectionHeadingProps) {
   return (
-    <div className={clsx(centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl", className)}>
+    <div
+      className={clsx(
+        centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl",
+        className,
+      )}
+    >
       {eyebrow ? (
         <p className="mb-3 text-sm font-semibold uppercase text-mint-700">
           {eyebrow}

@@ -39,16 +39,24 @@ export function MotionButton({
       "border border-white/15 bg-white/[0.08] text-white shadow-line backdrop-blur hover:-translate-y-0.5 hover:bg-white/[0.14] focus:ring-white/20",
     variant === "danger" &&
       "border border-red-200 bg-red-50 text-red-700 hover:-translate-y-0.5 hover:bg-red-100 focus:ring-red-100",
-    (disabled || loading) && "pointer-events-none cursor-not-allowed opacity-60 hover:translate-y-0",
+    (disabled || loading) &&
+      "pointer-events-none cursor-not-allowed opacity-60 hover:translate-y-0",
     className,
   );
   const content = (
     <>
-      {loading ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-      {!loading && Icon ? <Icon className="h-4 w-4" aria-hidden="true" /> : null}
+      {loading ? (
+        <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+      ) : null}
+      {!loading && Icon ? (
+        <Icon className="h-4 w-4" aria-hidden="true" />
+      ) : null}
       {children}
       {showArrow ? (
-        <ArrowRight className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+        <ArrowRight
+          className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5"
+          aria-hidden="true"
+        />
       ) : null}
     </>
   );
@@ -62,7 +70,12 @@ export function MotionButton({
   }
 
   return (
-    <button type={type} disabled={disabled || loading} className={classes} {...buttonProps}>
+    <button
+      type={type}
+      disabled={disabled || loading}
+      className={classes}
+      {...buttonProps}
+    >
       {content}
     </button>
   );

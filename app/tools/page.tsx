@@ -41,13 +41,7 @@ const workflowSteps = [
 ];
 
 const liveTools = tools.filter((tool) => tool.status === "live");
-const suiteTools = [...tools].sort((a, b) => {
-  if (a.status === b.status) {
-    return a.name.localeCompare(b.name);
-  }
-
-  return a.status === "live" ? -1 : 1;
-});
+const comingSoonTools = tools.filter((tool) => tool.status === "coming-soon");
 
 function cardProps(tool: ToolConfig) {
   return {
@@ -56,7 +50,8 @@ function cardProps(tool: ToolConfig) {
     description: tool.shortDescription,
     href: getToolHref(tool),
     icon: tool.icon,
-    status: tool.status === "live" ? ("live" as const) : ("coming-soon" as const),
+    status:
+      tool.status === "live" ? ("live" as const) : ("coming-soon" as const),
     cta: tool.status === "live" ? "Open tool" : "Preview tool",
     preview: tool.quickFacts,
   };
@@ -115,8 +110,9 @@ export default function ToolsPage() {
                 Build your application kit.
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-                Start with your real experience, then turn it into resume bullets, recruiter
-                critique, job-match insights, LinkedIn copy, and cover letters.
+                Start with your real experience, then turn it into resume
+                bullets, recruiter critique, job-match insights, LinkedIn copy,
+                and cover letters.
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <MotionButton href="/tools/resume-bullet-generator" showArrow>
@@ -127,9 +123,20 @@ export default function ToolsPage() {
                 </MotionButton>
               </div>
               <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-700">
-                {["No signup", "Truth-first rewrites", "Browser-only history", "Clean exports"].map((item) => (
-                  <span key={item} className="trust-pill inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-semibold">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                {[
+                  "No signup",
+                  "Truth-first rewrites",
+                  "Browser-only history",
+                  "Clean exports",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="trust-pill inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-semibold"
+                  >
+                    <CheckCircle2
+                      className="h-4 w-4 text-emerald-600"
+                      aria-hidden="true"
+                    />
                     {item}
                   </span>
                 ))}
@@ -141,9 +148,18 @@ export default function ToolsPage() {
               subtitle={`${liveTools.length} live tools ready`}
               tabs={["Resume", "Review", "JD Match", "Project", "Apply"]}
               bullets={[
-                { score: 94, text: "Generate proof-driven bullets from rough experience notes." },
-                { score: 89, text: "Review weak sections before sending applications." },
-                { score: 86, text: "Match wording against the role without overclaiming." },
+                {
+                  score: 94,
+                  text: "Generate proof-driven bullets from rough experience notes.",
+                },
+                {
+                  score: 89,
+                  text: "Review weak sections before sending applications.",
+                },
+                {
+                  score: 86,
+                  text: "Match wording against the role without overclaiming.",
+                },
               ]}
               keywords={["resume scoring", "JD match", "export-ready copy"]}
             />
@@ -162,8 +178,8 @@ export default function ToolsPage() {
                 One connected toolkit, not scattered utilities.
               </h2>
               <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-                Live tools are ready now. Preview tools show what they will do and route you toward
-                the closest useful workflow.
+                Live tools are ready now. Preview tools show what they will do
+                and route you toward the closest useful workflow.
               </p>
             </div>
             <div className="app-panel p-5">
@@ -176,12 +192,19 @@ export default function ToolsPage() {
                   const TypedIcon = Icon as typeof FileText;
 
                   return (
-                    <div key={title as string} className="interactive-card rounded-2xl p-4">
+                    <div
+                      key={title as string}
+                      className="interactive-card rounded-2xl p-4"
+                    >
                       <span className="feature-icon flex h-9 w-9 items-center justify-center rounded-xl text-mint-700">
                         <TypedIcon className="h-5 w-5" aria-hidden="true" />
                       </span>
-                      <p className="mt-3 font-semibold text-ink">{title as string}</p>
-                      <p className="mt-1 text-sm leading-6 text-slate-600">{text as string}</p>
+                      <p className="mt-3 font-semibold text-ink">
+                        {title as string}
+                      </p>
+                      <p className="mt-1 text-sm leading-6 text-slate-600">
+                        {text as string}
+                      </p>
                     </div>
                   );
                 })}
@@ -200,7 +223,9 @@ export default function ToolsPage() {
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-semibold text-white">
                       {index + 1}
                     </span>
-                    <p className="truncate text-sm font-semibold text-ink">{step.title}</p>
+                    <p className="truncate text-sm font-semibold text-ink">
+                      {step.title}
+                    </p>
                   </div>
                   <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600">
                     {step.description}
@@ -211,7 +236,7 @@ export default function ToolsPage() {
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {suiteTools.map((tool, index) => (
+            {liveTools.map((tool, index) => (
               <ProductCard
                 key={tool.slug}
                 {...cardProps(tool)}
@@ -221,6 +246,35 @@ export default function ToolsPage() {
             ))}
           </div>
 
+          {comingSoonTools.length ? (
+            <section className="mt-10 border-t border-slate-200 pt-8">
+              <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                    Product roadmap
+                  </p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950">
+                    Useful next additions
+                  </h2>
+                </div>
+                <p className="max-w-xl text-sm leading-6 text-slate-500">
+                  Preview the workflow, vote for what should ship next, or use
+                  the closest live tool today.
+                </p>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                {comingSoonTools.map((tool, index) => (
+                  <ProductCard
+                    key={tool.slug}
+                    {...cardProps(tool)}
+                    className="tool-card-animated"
+                    style={{ animationDelay: `${index * 70}ms` }}
+                  />
+                ))}
+              </div>
+            </section>
+          ) : null}
+
           <section className="cta-panel-premium mt-12 rounded-[2rem] p-6 sm:p-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
@@ -229,14 +283,19 @@ export default function ToolsPage() {
                   Build your first application kit
                 </p>
                 <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-white">
-                  Start with one honest work note, then reuse the strongest proof everywhere.
+                  Start with one honest work note, then reuse the strongest
+                  proof everywhere.
                 </h2>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <MotionButton href="/tools/resume-bullet-generator" showArrow>
                   Generate bullets
                 </MotionButton>
-                <MotionButton href="/resources" variant="secondary" className="border-white/20 bg-white/10 text-white hover:bg-white/15">
+                <MotionButton
+                  href="/resources"
+                  variant="secondary"
+                  className="border-white/20 bg-white/10 text-white hover:bg-white/15"
+                >
                   Browse resources
                 </MotionButton>
               </div>

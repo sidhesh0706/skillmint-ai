@@ -1,14 +1,23 @@
 import Link from "next/link";
+import { clsx } from "clsx";
 import { ArrowRight, Sparkles } from "lucide-react";
 import type { SeoLandingPage } from "@/data/seo-landing-pages";
 
 type ResourceCardProps = {
   page: SeoLandingPage;
+  featured?: boolean;
 };
 
-export function ResourceCard({ page }: ResourceCardProps) {
+export function ResourceCard({ page, featured = false }: ResourceCardProps) {
   return (
-    <article className="group interactive-card relative flex h-full min-h-[20rem] flex-col rounded-[1.5rem] p-5">
+    <article
+      className={clsx(
+        "group interactive-card resource-card relative flex h-full flex-col overflow-hidden rounded-[1.5rem] p-5",
+        featured
+          ? "resource-card-featured min-h-[18rem] sm:p-7"
+          : "min-h-[19rem]",
+      )}
+    >
       <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-mint-300/0 to-transparent transition duration-300 group-hover:via-mint-300/80" />
       <div className="pointer-events-none absolute -right-16 -top-20 h-40 w-40 rounded-full bg-mint-100/0 blur-3xl transition duration-500 group-hover:bg-mint-100/55" />
       <div className="flex flex-1 flex-col">
@@ -23,8 +32,20 @@ export function ResourceCard({ page }: ResourceCardProps) {
         <p className="mt-4 text-sm font-semibold uppercase tracking-[0.12em] text-slate-500">
           {page.audience}
         </p>
-        <h3 className="mt-2 text-xl font-semibold leading-snug text-ink">{page.title}</h3>
-        <p className="mt-3 line-clamp-3 flex-1 text-sm leading-6 text-slate-600">
+        <h3
+          className={clsx(
+            "mt-2 font-semibold leading-snug tracking-[-0.025em] text-ink",
+            featured ? "max-w-2xl text-2xl sm:text-3xl" : "text-xl",
+          )}
+        >
+          {page.title}
+        </h3>
+        <p
+          className={clsx(
+            "mt-3 flex-1 text-sm leading-6 text-slate-600",
+            featured ? "max-w-2xl sm:text-base sm:leading-7" : "line-clamp-3",
+          )}
+        >
           {page.metaDescription}
         </p>
         <div className="mt-5 rounded-2xl border border-slate-200 bg-[#FAFAF8] p-3 shadow-line">

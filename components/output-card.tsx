@@ -37,22 +37,28 @@ export function OutputCard({
         ) : null}
         <div className="min-w-0 flex-1">
           <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_9rem] md:items-start">
-            <p className="text-sm leading-6 text-slate-700 sm:text-base sm:leading-7">{text}</p>
+            <p className="text-sm leading-6 text-slate-700 sm:text-base sm:leading-7">
+              {text}
+            </p>
             {typeof score === "number" ? (
               <ScoreMeter value={score} label="Score" compact />
             ) : null}
           </div>
 
-          {(reason || suggestion) ? (
+          {reason || suggestion ? (
             <div className="mt-4 grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3 text-sm leading-6 text-slate-600 lg:grid-cols-2">
               {reason ? (
                 <p>
-                  <span className="font-semibold text-ink">Why it works:</span> {reason}
+                  <span className="font-semibold text-ink">Why it works:</span>{" "}
+                  {reason}
                 </p>
               ) : null}
               {suggestion ? (
                 <p>
-                  <span className="font-semibold text-ink">Next improvement:</span> {suggestion}
+                  <span className="font-semibold text-ink">
+                    Next improvement:
+                  </span>{" "}
+                  {suggestion}
                 </p>
               ) : null}
             </div>
@@ -61,22 +67,35 @@ export function OutputCard({
           {keywords.length ? (
             <div className="mt-4 flex flex-wrap gap-2">
               {keywords.slice(0, 5).map((keyword, chipIndex) => (
-                <KeywordChip key={keyword} style={{ animationDelay: `${chipIndex * 70}ms` }}>
+                <KeywordChip
+                  key={keyword}
+                  style={{ animationDelay: `${chipIndex * 70}ms` }}
+                >
                   {keyword}
                 </KeywordChip>
               ))}
             </div>
           ) : null}
 
-          {(onCopy || onImprove) ? (
+          {onCopy || onImprove ? (
             <div className="mt-4 flex flex-wrap gap-2">
               {onCopy ? (
-                <MotionButton compact variant="secondary" icon={Clipboard} onClick={onCopy}>
+                <MotionButton
+                  compact
+                  variant="secondary"
+                  icon={Clipboard}
+                  onClick={onCopy}
+                >
                   Copy
                 </MotionButton>
               ) : null}
               {onImprove ? (
-                <MotionButton compact variant="secondary" icon={Wand2} onClick={onImprove}>
+                <MotionButton
+                  compact
+                  variant="secondary"
+                  icon={Wand2}
+                  onClick={onImprove}
+                >
                   Improve
                 </MotionButton>
               ) : null}

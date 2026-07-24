@@ -65,9 +65,10 @@ export function StaticPageFrame({
                 Plain-English summary
               </p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                SkillMint is built as a free, no-login career workspace. Review generated content,
-                keep claims truthful, and avoid entering sensitive personal data that is not needed
-                for your application material.
+                SkillMint is built as a free, no-login career workspace. Review
+                generated content, keep claims truthful, and avoid entering
+                sensitive personal data that is not needed for your application
+                material.
               </p>
             </div>
             <div className="space-y-8">
@@ -85,7 +86,9 @@ export function StaticPageFrame({
                       {section.title}
                     </h2>
                   </div>
-                  <div className="mt-3 space-y-4 leading-7 text-slate-600">{section.body}</div>
+                  <div className="mt-3 space-y-4 leading-7 text-slate-600">
+                    {section.body}
+                  </div>
                 </section>
               ))}
             </div>
@@ -109,7 +112,7 @@ export function StaticPageFrame({
             <div className="mt-5 rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
               <p className="text-sm font-semibold text-ink">Need help?</p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Send feedback or questions about SkillMint’s policies.
+                Send feedback or questions about SkillMint&apos;s policies.
               </p>
               <Link
                 href="/contact"

@@ -34,7 +34,12 @@ export function PremiumPageShell({
       )}
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
-      <div className={clsx(contained ? "container-command" : "container-shell", "relative")}>
+      <div
+        className={clsx(
+          contained ? "container-command" : "container-shell",
+          "relative",
+        )}
+      >
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div className="fade-in-up max-w-3xl">
             <p
@@ -50,16 +55,27 @@ export function PremiumPageShell({
             <h1
               className={clsx(
                 "font-semibold leading-[1.01] tracking-[-0.045em]",
-                compact ? "mt-4 text-4xl sm:text-5xl" : "mt-5 text-4xl sm:text-6xl",
+                compact
+                  ? "mt-4 text-4xl sm:text-5xl"
+                  : "mt-5 text-4xl sm:text-6xl",
                 dark ? "text-white" : "text-slate-950",
               )}
             >
               {title}
             </h1>
-            <p className={clsx(compact ? "mt-4 max-w-2xl text-base leading-7" : "mt-5 max-w-2xl text-lg leading-8", dark ? "text-slate-300" : "text-slate-600")}>
+            <p
+              className={clsx(
+                compact
+                  ? "mt-4 max-w-2xl text-base leading-7"
+                  : "mt-5 max-w-2xl text-lg leading-8",
+                dark ? "text-slate-300" : "text-slate-600",
+              )}
+            >
               {description}
             </p>
-            {children ? <div className={compact ? "mt-5" : "mt-7"}>{children}</div> : null}
+            {children ? (
+              <div className={compact ? "mt-5" : "mt-7"}>{children}</div>
+            ) : null}
           </div>
           {side ? <div className="fade-in-up-delayed">{side}</div> : null}
         </div>

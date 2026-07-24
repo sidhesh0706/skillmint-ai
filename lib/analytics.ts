@@ -50,17 +50,26 @@ declare global {
   }
 }
 
-export function trackEvent(event: AnalyticsEventName, payload: AnalyticsPayload = {}) {
+export function trackEvent(
+  event: AnalyticsEventName,
+  payload: AnalyticsPayload = {},
+) {
   if (typeof window === "undefined") {
     return;
   }
 
   try {
     const cleanPayload = Object.fromEntries(
-      Object.entries(payload).filter((entry): entry is [string, string | number | boolean] => {
-        const value = entry[1];
-        return typeof value === "string" || typeof value === "number" || typeof value === "boolean";
-      }),
+      Object.entries(payload).filter(
+        (entry): entry is [string, string | number | boolean] => {
+          const value = entry[1];
+          return (
+            typeof value === "string" ||
+            typeof value === "number" ||
+            typeof value === "boolean"
+          );
+        },
+      ),
     );
 
     window.dataLayer?.push({

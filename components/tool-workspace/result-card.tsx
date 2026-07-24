@@ -1,0 +1,119 @@
+import { Check, Clipboard, Eye, Wand2 } from "lucide-react";
+import { ScoreMeter } from "@/components/score-meter";
+import { RewriteComparison } from "@/components/tool-workspace/rewrite-comparison";
+import type {
+  BulletComparison,
+  BulletScore,
+} from "@/components/tool-workspace/types";
+
+type ResultCardProps = {
+  index: number;
+  bullet: string;
+  score: BulletScore;
+  comparison?: BulletComparison;
+  comparisonExpanded: boolean;
+  improving: boolean;
+  copyConfirmed: boolean;
+  onCopy: () => void;
+  onImprove: () => void;
+  onToggleComparison: () => void;
+};
+
+const breakdownItems: Array<[keyof BulletScore["breakdown"], string]> = [
+  ["clarity", "Clarity"],
+  ["impact", "Impact"],
+  ["specificity", "Specificity"],
+  ["metrics", "Metrics"],
+  ["atsKeywordFit", "ATS fit"],
+  ["actionVerbStrength", "Action verb"],
+];
+
+export function ResultCard({
+  index,
+  bullet,
+  score,
+  comparison,
+  comparisonExpanded,
+  improving,
+  copyConfirmed,
+  onCopy,
+  onImprove,
+  onToggleComparison,
+}: ResultCardProps) {
+  return (
+    <article
+      className="result-card"
+      style={{ animationDelay: `${Math.min(index * 70, 280)}ms` }}
+    >
+      <div className="result-card-rail">
+        <span>{index + 1}</span>
+        <ScoreMeter value={score.score} compact />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <p className="text-[15px] font-medium leading-7 text-slate-900">
+            {bullet}
+          </p>
+          <span className="score-chip">{score.score}/100</span>
+        </div>
+
+        <div className="result-rationale">
+          <div>
+            <p className="comparison-label">Why it works</p>
+            <p className="mt-1 text-sm leading-6 text-slate-600">
+              {score.reason}
+            </p>
+          </div>
+          <div>
+            <p className="comparison-label">Next improvement</p>
+            <p className="mt-1 text-sm leading-6 text-slate-600">
+              {score.suggestion}
+            </p>
+          </div>
+        </div>
+
+        <dl className="score-breakdown">
+          {breakdownItems.map(([key, label]) => (
+            <div key={key}>
+              <dt>{label}</dt>
+              <dd>{score.breakdown[key]}/100</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          <button type="button" onClick={onCopy} className="result-action">
+            {copyConfirmed ? (
+              <Check className="h-3.5 w-3.5" aria-hidden="true" />
+            ) : (
+              <Clipboard className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
+            {copyConfirmed ? "Copied" : "Copy"}
+          </button>
+          <button
+            type="button"
+            onClick={onImprove}
+            disabled={improving}
+            className="result-action result-action-primary"
+          >
+            <Wand2 className="h-3.5 w-3.5" aria-hidden="true" />
+            {improving ? "Strengthening..." : "Make stronger"}
+          </button>
+          {comparison ? (
+            <button
+              type="button"
+              onClick={onToggleComparison}
+              className="result-action"
+            >
+              <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+              {comparisonExpanded ? "Hide comparison" : "Compare"}
+            </button>
+          ) : null}
+        </div>
+        {comparison && comparisonExpanded ? (
+          <RewriteComparison comparison={comparison} />
+        ) : null}
+      </div>
+    </article>
+  );
+}
