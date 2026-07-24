@@ -42,7 +42,7 @@ export function ProductWindow({
         className,
       )}
     >
-      <div className="flex items-center justify-between gap-4 border-b border-slate-200 bg-slate-50 px-4 py-3">
+      <div className="scan-line flex items-center justify-between gap-4 border-b border-slate-200 bg-slate-50 px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="h-3 w-3 rounded-full bg-red-300" />
           <span className="h-3 w-3 rounded-full bg-amber-300" />
@@ -63,12 +63,18 @@ export function ProductWindow({
               <div
                 key={tab}
                 className={clsx(
-                  "rounded-xl border px-3 py-2 text-sm transition",
+                  "flex items-center gap-2 rounded-xl border px-3 py-2 text-sm transition",
                   index === 0
                     ? "border-white/16 bg-white/12 text-white"
                     : "border-white/8 bg-white/[0.04] text-slate-300",
                 )}
               >
+                <span
+                  className={clsx(
+                    "h-1.5 w-1.5 rounded-full transition",
+                    index === 0 ? "bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.8)]" : "bg-slate-600",
+                  )}
+                />
                 {tab}
               </div>
             ))}

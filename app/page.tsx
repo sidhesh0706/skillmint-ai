@@ -104,22 +104,22 @@ export default function Home() {
     <>
       <JsonLd data={[softwareApplicationSchema(), breadcrumbSchema([{ name: "Home", path: "/" }])]} />
 
-      <section className="premium-hero py-12 sm:py-16 lg:py-20">
+      <section className="premium-hero py-10 sm:py-12 lg:py-14">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
-        <div className="container-shell relative z-10 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div className="container-shell relative z-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="fade-in-up">
             <div className="hero-badge mb-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-emerald-700">
               <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
               Free AI career workspace
             </div>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-6xl lg:text-6xl xl:text-7xl">
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-6xl lg:text-[3.55rem] xl:text-[4.25rem]">
               Turn rough experience into job-ready career assets.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
               Generate resume bullets, match job descriptions, improve LinkedIn copy, and draft
               cover letters from the same real experience.
             </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <TrackedLink href="/tools/resume-bullet-generator" className="button-primary" eventName="homepage_cta_click" eventPayload={{ cta: "start_resume_bullets" }}>
                 Start with resume bullets
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -128,7 +128,7 @@ export default function Home() {
                 Explore tools
               </TrackedLink>
             </div>
-            <div className="mt-7 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-2">
               {trustPills.map((pill) => (
                 <span key={pill} className="trust-pill inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold text-slate-700">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -141,7 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="surface-band py-12 sm:py-16">
+      <section className="surface-band py-11 sm:py-14">
         <div className="container-shell">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">Workflow</p>
@@ -149,7 +149,7 @@ export default function Home() {
               Build the application kit in the right order.
             </h2>
           </div>
-          <div className="mt-10 grid gap-3 md:grid-cols-3 xl:grid-cols-6">
+          <div className="mt-8 grid gap-3 md:grid-cols-3 xl:grid-cols-6">
             {workflowSteps.map(([title, text], index) => (
               <div key={title} className="workflow-card rounded-3xl p-4">
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-950 text-sm font-semibold text-white">{index + 1}</span>
@@ -161,7 +161,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="soft-stage py-14 sm:py-20">
+      <section className="soft-stage py-12 sm:py-16">
         <div className="container-shell">
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -192,7 +192,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="surface-band py-14 sm:py-20">
+      <section className="surface-band py-12 sm:py-16">
         <div className="container-shell grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">Example transformation</p>
@@ -227,7 +227,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="soft-stage py-14 sm:py-20">
+      <section className="soft-stage py-12 sm:py-16">
         <div className="container-shell">
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -244,7 +244,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="surface-band py-14 sm:py-20">
+      <section className="surface-band py-12 sm:py-16">
         <div className="container-shell">
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -276,7 +276,7 @@ export default function Home() {
 
       <EmailCapture />
 
-      <section className="soft-stage py-14 sm:py-20">
+      <section className="soft-stage py-12 sm:py-16">
         <div className="container-shell">
           <div className="cta-panel-premium rounded-[2rem] p-6 sm:p-8 lg:flex lg:items-center lg:justify-between">
             <div>

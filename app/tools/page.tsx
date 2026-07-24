@@ -103,7 +103,7 @@ export default function ToolsPage() {
         ])}
       />
 
-      <section className="premium-hero py-12 sm:py-16">
+      <section className="premium-hero py-10 sm:py-14">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
         <div className="container-command relative">
           <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
@@ -118,7 +118,7 @@ export default function ToolsPage() {
                 Start with your real experience, then turn it into resume bullets, recruiter
                 critique, job-match insights, LinkedIn copy, and cover letters.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <MotionButton href="/tools/resume-bullet-generator" showArrow>
                   Start with resume bullets
                 </MotionButton>
@@ -151,9 +151,9 @@ export default function ToolsPage() {
         </div>
       </section>
 
-      <section className="premium-shell py-14 sm:py-20">
+      <section className="premium-shell py-12 sm:py-16">
         <div className="container-command">
-          <div className="mb-8 grid gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
+          <div className="mb-7 grid gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.14em] text-mint-700">
                 Product suite
@@ -221,7 +221,7 @@ export default function ToolsPage() {
             ))}
           </div>
 
-          <section className="cta-panel-premium mt-14 rounded-[2rem] p-6 sm:p-8">
+          <section className="cta-panel-premium mt-12 rounded-[2rem] p-6 sm:p-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
                 <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-200">

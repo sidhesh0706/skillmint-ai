@@ -987,7 +987,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
   ];
 
   return (
-    <div className="relative z-10 space-y-5">
+    <div className="relative z-10 space-y-4">
       <div className="app-panel relative min-w-0 overflow-hidden p-4 text-slate-950 sm:p-5">
         <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/80 to-transparent" />
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -1019,7 +1019,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
         </div>
       </div>
 
-      <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(22rem,0.88fr)_minmax(0,1.42fr)] xl:items-start">
+      <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(22rem,0.88fr)_minmax(0,1.42fr)] xl:items-start">
       <form
         className="app-panel relative min-w-0 overflow-hidden border-emerald-100/80 p-4 text-slate-950 sm:p-5 xl:sticky xl:top-24 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto"
         onSubmit={(event) => {

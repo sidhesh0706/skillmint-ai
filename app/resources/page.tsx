@@ -120,7 +120,7 @@ export default function ResourcesPage() {
 
   return (
     <>
-      <section className="premium-hero py-12 sm:py-16 lg:py-20">
+      <section className="premium-hero py-10 sm:py-14 lg:py-16">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
         <div className="container-shell relative grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
           <div>
@@ -175,7 +175,7 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className="surface-band py-14 sm:py-20" id="resource-library">
+      <section className="surface-band py-12 sm:py-16" id="resource-library">
         <div className="container-shell">
           <div className="mb-10 grid gap-5 lg:grid-cols-[0.66fr_0.34fr] lg:items-end">
             <div className="max-w-2xl">
@@ -208,7 +208,7 @@ export default function ResourcesPage() {
             ))}
           </div>
 
-          <div className="mt-12 grid gap-4 md:grid-cols-3">
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
               {
                 title: "Find the role language",
@@ -240,7 +240,7 @@ export default function ResourcesPage() {
             })}
           </div>
 
-          <div className="mt-14 space-y-8">
+          <div className="mt-12 space-y-7">
             {resourceCategories.map((category) => (
               <section key={category.title} className="resource-shelf rounded-[2rem] border border-slate-200 p-5 sm:p-7">
                 <div className="mb-6 grid gap-3 lg:grid-cols-[0.35fr_0.65fr] lg:items-end">
@@ -268,7 +268,7 @@ export default function ResourcesPage() {
             ))}
           </div>
 
-          <section className="cta-panel-premium mt-12 rounded-[2rem] p-6 sm:p-8">
+          <section className="cta-panel-premium mt-10 rounded-[2rem] p-6 sm:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-200">
