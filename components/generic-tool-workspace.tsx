@@ -3,25 +3,30 @@
 import { useMemo, useState, type FormEvent } from "react";
 import {
   AlertTriangle,
+  Check,
   CheckCircle2,
   Clipboard,
   Download,
   FileDown,
+  RefreshCw,
+  ShieldCheck,
   Sparkles,
 } from "lucide-react";
 import { AdSlot } from "@/components/ad-slot";
 import { AffiliateRecommendationCard } from "@/components/affiliate-recommendation-card";
 import { AnimatedScoreBadge } from "@/components/animated-score-badge";
 import { EmailCapture } from "@/components/email-capture";
-import { EmptyStatePreview } from "@/components/empty-state-preview";
 import { KeywordChip } from "@/components/keyword-chip";
-import { LoadingIntelligenceState } from "@/components/loading-intelligence-state";
 import { MotionButton } from "@/components/motion-button";
 import { ScoreMeter } from "@/components/score-meter";
-import { ComposerPanel } from "@/components/tool-workspace/composer-panel";
 import { ComposerStep } from "@/components/tool-workspace/composer-step";
-import { OutputStudio } from "@/components/tool-workspace/output-studio";
-import { WorkspaceShell } from "@/components/tool-workspace/workspace-shell";
+import { PurposeLoadingState } from "@/components/generic-tool-workspace/purpose-loading-state";
+import { PurposePreview } from "@/components/generic-tool-workspace/purpose-preview";
+import {
+  getPurposeToolPresentation,
+  isPurposeToolSlug,
+} from "@/components/generic-tool-workspace/presentation-config";
+import styles from "@/components/generic-tool-workspace/workspace.module.css";
 import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
@@ -55,17 +60,21 @@ function renderField(
   field: ToolField,
   value: string,
   onChange: (name: string, value: string) => void,
+  optional: boolean,
 ) {
-  const baseClass = "premium-input";
+  const baseClass = styles.fieldControl;
+  const id = `purpose-field-${field.name}`;
 
   if (field.type === "textarea") {
     return (
       <textarea
+        id={id}
         value={value}
         onChange={(event) => onChange(field.name, event.target.value)}
         placeholder={field.placeholder}
         rows={field.rows || 5}
-        className={`${baseClass} min-h-28 resize-none`}
+        className={`${baseClass} ${styles.textarea}`}
+        aria-required={!optional}
       />
     );
   }
@@ -73,9 +82,11 @@ function renderField(
   if (field.type === "select") {
     return (
       <select
+        id={id}
         value={value}
         onChange={(event) => onChange(field.name, event.target.value)}
-        className={`${baseClass} min-h-11`}
+        className={baseClass}
+        aria-required={!optional}
       >
         {field.options?.map((option) => (
           <option key={option.value} value={option.value}>
@@ -88,10 +99,12 @@ function renderField(
 
   return (
     <input
+      id={id}
       value={value}
       onChange={(event) => onChange(field.name, event.target.value)}
       placeholder={field.placeholder}
-      className={`${baseClass} min-h-11`}
+      className={baseClass}
+      aria-required={!optional}
     />
   );
 }
@@ -152,8 +165,32 @@ function getScoreColor(score: number) {
   return "text-red-700 bg-red-50 border-red-200";
 }
 
+function isKeywordSection(title: string) {
+  const normalized = title.toLowerCase();
+  return (
+    normalized.includes("keyword") ||
+    normalized.includes("skill") ||
+    normalized.includes("action verb")
+  );
+}
+
+function isOptionSection(title: string) {
+  const normalized = title.toLowerCase();
+  return (
+    normalized.includes("headline") ||
+    normalized.includes("improved bullet") ||
+    normalized.includes("resume bullet")
+  );
+}
+
 export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
   const tool = getToolBySlug(slug) as ToolConfig;
+  const presentation = getPurposeToolPresentation(slug);
+  const purposeSlug = isPurposeToolSlug(slug) ? slug : "resume-roast";
+  const ToolIcon = tool.icon;
+  const fieldsByName = new Map(
+    tool.inputFields.map((field) => [field.name, field]),
+  );
   const [form, setForm] = useState<ToolFormValues>(() =>
     getInitialToolValues(tool),
   );
@@ -261,55 +298,124 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
     showToast(markdown ? "Markdown downloaded." : "TXT downloaded.");
   }
 
+  function rerunTool() {
+    const syntheticEvent = {
+      preventDefault() {},
+    } as FormEvent<HTMLFormElement>;
+    void handleSubmit(syntheticEvent);
+  }
+
   return (
-    <div className="relative z-10">
-      <WorkspaceShell
-        title={`${tool.name} workspace`}
-        description="Build the input on the left, then review the intelligence report and export the useful parts on the right."
-        stats={[
-          {
-            label: "Output",
-            value: result ? "Report ready" : "Ready",
-          },
-          {
-            label: "Score",
-            value:
-              typeof result?.score === "number"
+    <div className={styles.workspace}>
+      <header className={styles.workspaceToolbar}>
+        <div className={styles.workspaceTitle}>
+          <span className={styles.workspaceIcon}>
+            <ToolIcon className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <div>
+            <span className={styles.workspaceKicker}>Live AI workspace</span>
+            <h2>{presentation.workspaceTitle}</h2>
+            <p>{presentation.workspaceDescription}</p>
+          </div>
+        </div>
+        <dl className={styles.workspaceStats}>
+          <div>
+            <dt>Report</dt>
+            <dd>{result ? "Ready" : "Waiting"}</dd>
+          </div>
+          <div>
+            <dt>{presentation.scoreLabel}</dt>
+            <dd>
+              {typeof result?.score === "number"
                 ? `${result.score}/100`
-                : "Pending",
-          },
-          { label: "Privacy", value: "No signup" },
-        ]}
-        composer={
-          <ComposerPanel onSubmit={handleSubmit}>
-            <ComposerStep
-              step={1}
-              title="Add your context"
-              description="Use specific, truthful details for a stronger report."
-            >
-              {tool.inputFields.map((field) => (
-                <label
-                  key={field.name}
-                  className={
-                    field.layout === "half"
-                      ? "block"
-                      : "block sm:col-span-2"
-                  }
+                : "Pending"}
+            </dd>
+          </div>
+          <div>
+            <dt>Privacy</dt>
+            <dd>No signup</dd>
+          </div>
+        </dl>
+      </header>
+
+      <div className={styles.workspaceColumns}>
+        <form className={styles.composer} onSubmit={handleSubmit}>
+          <div className={styles.composerHeading}>
+            <span className={styles.composerIcon}>
+              <ToolIcon className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <div>
+              <span className={styles.workspaceLabel}>
+                {presentation.composerLabel}
+              </span>
+              <h2>{presentation.composerTitle}</h2>
+              <p>{presentation.composerDescription}</p>
+            </div>
+          </div>
+
+          <div className={styles.composerGroups}>
+            {presentation.fieldGroups.map((group, groupIndex) => {
+              const groupFields = group.fields
+                .map((fieldName) => fieldsByName.get(fieldName))
+                .filter((field): field is ToolField => Boolean(field));
+              const requiredGroupFields = groupFields.filter(
+                (field) => !presentation.optionalFields.includes(field.name),
+              );
+              const complete =
+                requiredGroupFields.length > 0 &&
+                requiredGroupFields.every((field) =>
+                  Boolean(form[field.name]?.trim()),
+                );
+
+              return (
+                <ComposerStep
+                  key={group.title}
+                  step={groupIndex + 1}
+                  title={group.title}
+                  description={group.description}
+                  optional={group.optional}
+                  complete={complete}
                 >
-                  <span className="text-sm font-semibold text-slate-950">
-                    {field.label}
-                  </span>
-                  {renderField(field, form[field.name] || "", updateForm)}
-                </label>
-              ))}
-            </ComposerStep>
+                  {groupFields.map((field) => {
+                    const optional = presentation.optionalFields.includes(
+                      field.name,
+                    );
+                    return (
+                      <label
+                        key={field.name}
+                        htmlFor={`purpose-field-${field.name}`}
+                        className={
+                          field.layout === "half"
+                            ? styles.field
+                            : `${styles.field} sm:col-span-2`
+                        }
+                      >
+                        <span className={styles.fieldLabel}>
+                          {field.label}
+                          {optional ? <small>Optional</small> : null}
+                        </span>
+                        {renderField(
+                          field,
+                          form[field.name] || "",
+                          updateForm,
+                          optional,
+                        )}
+                      </label>
+                    );
+                  })}
+                </ComposerStep>
+              );
+            })}
+          </div>
 
-            {error ? (
-              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">
-                {error}
-              </div>
-            ) : null}
+          {error ? (
+            <div className={styles.errorState} role="alert">
+              <AlertTriangle className="h-4 w-4" aria-hidden="true" />
+              {error}
+            </div>
+          ) : null}
 
+          <div className={styles.submitDock}>
             <MotionButton
               type="submit"
               loading={isLoading}
@@ -317,211 +423,223 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
               icon={Sparkles}
               className="w-full"
             >
-              {isLoading ? "Building report" : `Run ${tool.name}`}
+              {isLoading ? presentation.loadingLabel : presentation.submitLabel}
             </MotionButton>
-          </ComposerPanel>
-        }
-        studio={
-          <OutputStudio
-            title={tool.output.title}
-            description={tool.output.description}
-            hasOutput={Boolean(result)}
-            isGenerating={isLoading}
-            onRegenerate={() => {
-              const syntheticEvent = {
-                preventDefault() {},
-              } as FormEvent<HTMLFormElement>;
-              void handleSubmit(syntheticEvent);
-            }}
-            actions={
-              result ? (
+          </div>
+
+          <p className={styles.privacyNote}>
+            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+            No account required. Review every generated claim before using it.
+          </p>
+        </form>
+
+        <section className={styles.studio} aria-live="polite">
+          <header className={styles.studioHeader}>
+            <div className={styles.studioTitleRow}>
+              <div>
+                <span className={styles.studioLabel}>
+                  {presentation.studioLabel}
+                </span>
+                <h2>{presentation.studioTitle}</h2>
+                <p>{presentation.studioDescription}</p>
+              </div>
+              {result ? (
+                <button
+                  type="button"
+                  className={styles.rerunButton}
+                  onClick={rerunTool}
+                  disabled={isLoading}
+                >
+                  <RefreshCw className="h-4 w-4" aria-hidden="true" />
+                  Run again
+                </button>
+              ) : null}
+            </div>
+
+            <div className={styles.exportStrip}>
+              {result ? (
                 <>
-                <button
-                  type="button"
-                  onClick={copyOutput}
-                  className="output-export-action group"
-                >
-                  <Clipboard className="h-3.5 w-3.5" aria-hidden="true" />
-                  Copy
-                </button>
-                <button
-                  type="button"
-                  onClick={() => exportOutput("txt")}
-                  className="output-export-action group"
-                >
-                  <Download className="h-3.5 w-3.5" aria-hidden="true" />
-                  TXT
-                </button>
-                <button
-                  type="button"
-                  onClick={() => exportOutput("markdown")}
-                  className="output-export-action group"
-                >
-                  <FileDown className="h-3.5 w-3.5" aria-hidden="true" />
-                  Markdown
-                </button>
+                  <button type="button" onClick={copyOutput}>
+                    <Clipboard className="h-4 w-4" aria-hidden="true" />
+                    Copy report
+                  </button>
+                  <button type="button" onClick={() => exportOutput("txt")}>
+                    <Download className="h-4 w-4" aria-hidden="true" />
+                    TXT
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => exportOutput("markdown")}
+                  >
+                    <FileDown className="h-4 w-4" aria-hidden="true" />
+                    Markdown
+                  </button>
                 </>
               ) : (
-                <div className="col-span-full rounded-2xl border border-dashed border-slate-200 px-4 py-3 text-center text-xs font-semibold text-slate-400">
-                  Export actions appear after generation
-                </div>
-              )
-            }
-          >
-          {isLoading ? (
-            <div className="space-y-4">
-              <LoadingIntelligenceState />
-              {[0, 1, 2].map((item) => (
-                <div
-                  key={item}
-                  className="animate-pulse rounded-2xl border border-slate-200 bg-white p-4 shadow-line"
-                >
-                  <div className="h-3 w-24 rounded-full bg-mint-100" />
-                  <div className="mt-4 h-4 w-3/4 rounded-full bg-slate-100" />
-                  <div className="mt-3 h-4 w-5/6 rounded-full bg-slate-100" />
-                </div>
-              ))}
+                <span>Copy and export actions appear with your report.</span>
+              )}
             </div>
-          ) : result ? (
-            <>
-              <div className="output-card-pro p-4">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          </header>
+
+          <div className={styles.studioBody}>
+            {isLoading ? (
+              <PurposeLoadingState presentation={presentation} />
+            ) : result ? (
+              <>
+                <div className={styles.resultSummary}>
                   <div>
-                    <h3 className="text-2xl font-semibold text-ink">
-                      {result.title}
-                    </h3>
-                    <p className="mt-2 leading-7 text-slate-600">
-                      {result.summary}
-                    </p>
+                    <span className={styles.studioLabel}>Report overview</span>
+                    <h3>{result.title}</h3>
+                    <p>{result.summary}</p>
                   </div>
                   {typeof result.score === "number" ? (
                     <AnimatedScoreBadge
                       score={`${result.score}/100`}
-                      label="Score"
+                      label={presentation.scoreLabel}
                       className={`px-4 py-3 text-sm ${getScoreColor(result.score)}`}
                     />
                   ) : null}
-                </div>
-                {typeof result.score === "number" ? (
-                  <ScoreMeter
-                    value={result.score}
-                    label="Overall score"
-                    className="mt-5"
-                  />
-                ) : null}
-              </div>
-
-              {result.scores?.length ? (
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {result.scores.map((score) => (
-                    <div key={score.label} className="output-card-pro p-3">
-                      <div className="flex items-center justify-between gap-3">
-                        <p className="text-sm font-semibold text-ink">
-                          {score.label}
-                        </p>
-                        <span
-                          className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${getScoreColor(score.score)}`}
-                        >
-                          {score.score}/100
-                        </span>
-                      </div>
-                      <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
-                        <div
-                          className="h-full rounded-full bg-mint-500"
-                          style={{
-                            width: `${Math.max(0, Math.min(100, score.score))}%`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-
-              {result.sections.map((section) => (
-                <article key={section.title} className="output-card-pro p-4">
-                  <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
-                    <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                    {section.title}
-                  </h3>
-                  {section.text ? (
-                    <p className="mt-3 leading-7 text-slate-700">
-                      {section.text}
-                    </p>
-                  ) : null}
-                  {section.items?.length ? (
-                    <div className="mt-3 grid gap-2">
-                      {section.items.map((item) => (
-                        <div
-                          key={item}
-                          className="rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-700"
-                        >
-                          {section.title.toLowerCase().includes("keyword") ? (
-                            <KeywordChip>{item}</KeywordChip>
-                          ) : (
-                            item
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-                </article>
-              ))}
-
-              {result.warnings?.length ? (
-                <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
-                  <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-amber-700">
-                    <AlertTriangle className="h-4 w-4" aria-hidden="true" />
-                    Truthfulness checks
-                  </h3>
-                  <ul className="mt-3 space-y-2 text-sm leading-6 text-amber-800">
-                    {result.warnings.map((warning) => (
-                      <li key={warning}>- {warning}</li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
-              <EmailCapture compact location={`${tool.slug}_output_capture`} />
-
-              <div>
-                <h3 className="text-sm font-semibold uppercase text-mint-700">
-                  Recommended next steps
-                </h3>
-                <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                  {recommendedResources.slice(0, 3).map((recommendation) => (
-                    <AffiliateRecommendationCard
-                      key={recommendation.title}
-                      title={recommendation.title}
-                      description={recommendation.description}
-                      href={recommendation.href}
-                      whyThisHelps={recommendation.whyThisHelps}
-                      label="Next step"
-                      onClick={() =>
-                        trackEvent("affiliate_click", {
-                          tool: tool.slug,
-                          resource: recommendation.title,
-                        })
-                      }
+                  {typeof result.score === "number" ? (
+                    <ScoreMeter
+                      value={result.score}
+                      label={presentation.scoreLabel}
+                      className={styles.overallMeter}
                     />
-                  ))}
+                  ) : null}
                 </div>
-              </div>
 
-              <AdSlot label={`${tool.name} resource placement`} />
-            </>
-          ) : (
-            <EmptyStatePreview
-              title={tool.output.emptyTitle}
-              description={tool.output.emptyDescription}
-            />
-          )}
-          </OutputStudio>
-        }
-      />
+                {result.scores?.length ? (
+                  <div className={styles.scoreGrid}>
+                    {result.scores.map((score, index) => (
+                      <div
+                        key={score.label}
+                        className={styles.scoreCard}
+                        style={{ animationDelay: `${index * 70}ms` }}
+                      >
+                        <div>
+                          <p>{score.label}</p>
+                          <span className={getScoreColor(score.score)}>
+                            {score.score}/100
+                          </span>
+                        </div>
+                        <div>
+                          <span
+                            style={{
+                              width: `${Math.max(0, Math.min(100, score.score))}%`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+
+                <div className={styles.reportSections}>
+                  {result.sections.map((section, sectionIndex) => {
+                    const keywordSection = isKeywordSection(section.title);
+                    const optionSection = isOptionSection(section.title);
+
+                    return (
+                      <article
+                        key={section.title}
+                        className={`${styles.reportSection} ${
+                          keywordSection ? styles.keywordSection : ""
+                        } ${optionSection ? styles.optionSection : ""}`}
+                        style={{ animationDelay: `${sectionIndex * 80}ms` }}
+                      >
+                        <h3>
+                          <CheckCircle2
+                            className="h-4 w-4"
+                            aria-hidden="true"
+                          />
+                          {section.title}
+                        </h3>
+                        {section.text ? <p>{section.text}</p> : null}
+                        {section.items?.length ? (
+                          <div className={styles.sectionItems}>
+                            {section.items.map((item, itemIndex) => (
+                              <div key={`${item}-${itemIndex}`}>
+                                {keywordSection ? (
+                                  <KeywordChip>{item}</KeywordChip>
+                                ) : (
+                                  <>
+                                    {optionSection ? (
+                                      <span className={styles.itemNumber}>
+                                        {String(itemIndex + 1).padStart(2, "0")}
+                                      </span>
+                                    ) : null}
+                                    <span>{item}</span>
+                                  </>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : null}
+                      </article>
+                    );
+                  })}
+                </div>
+
+                {result.warnings?.length ? (
+                  <div className={styles.warningPanel}>
+                    <h3>
+                      <AlertTriangle className="h-4 w-4" aria-hidden="true" />
+                      {presentation.warningLabel}
+                    </h3>
+                    <ul>
+                      {result.warnings.map((warning) => (
+                        <li key={warning}>
+                          <Check className="h-4 w-4" aria-hidden="true" />
+                          {warning}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                <EmailCapture
+                  compact
+                  location={`${tool.slug}_output_capture`}
+                />
+
+                <div>
+                  <h3 className={styles.recommendationTitle}>
+                    Recommended next steps
+                  </h3>
+                  <div className={styles.recommendationGrid}>
+                    {recommendedResources.slice(0, 3).map((recommendation) => (
+                      <AffiliateRecommendationCard
+                        key={recommendation.title}
+                        title={recommendation.title}
+                        description={recommendation.description}
+                        href={recommendation.href}
+                        whyThisHelps={recommendation.whyThisHelps}
+                        label="Next step"
+                        onClick={() =>
+                          trackEvent("affiliate_click", {
+                            tool: tool.slug,
+                            resource: recommendation.title,
+                          })
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <AdSlot label={`${tool.name} resource placement`} />
+              </>
+            ) : (
+              <PurposePreview
+                slug={purposeSlug}
+                presentation={presentation}
+              />
+            )}
+          </div>
+        </section>
+      </div>
 
       {toast ? (
-        <div className="success-pulse fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-full border border-mint-100 bg-ink px-5 py-3 text-center text-sm font-semibold text-white shadow-soft">
+        <div className={styles.toast} role="status">
           {toast}
         </div>
       ) : null}

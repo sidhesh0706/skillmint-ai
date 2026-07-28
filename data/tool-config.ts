@@ -383,6 +383,22 @@ export const tools: ToolConfig[] = [
         placeholder:
           "Paste 2-4 honest wins, projects, or skills you want included.",
       },
+      {
+        name: "strongestProof",
+        label: "Strongest proof",
+        type: "textarea",
+        rows: 4,
+        placeholder:
+          "Add the one project, result, or responsibility that best proves your fit.",
+      },
+      {
+        name: "tone",
+        label: "Tone",
+        type: "select",
+        options: toneOptions,
+        defaultValue: "Professional",
+        layout: "half",
+      },
     ],
     quickFacts: ["Role-aware", "Recruiter-ready", "Editable drafts"],
     output: {
@@ -418,15 +434,23 @@ export const tools: ToolConfig[] = [
       },
       {
         name: "currentRole",
-        label: "Current role or background",
+        label: "Current status",
         type: "text",
         placeholder: "e.g. Final-year CS student",
       },
       {
         name: "specialty",
-        label: "Skills or specialty",
+        label: "Skills",
         type: "text",
         placeholder: "SQL, dashboards, customer analytics",
+      },
+      {
+        name: "achievements",
+        label: "Projects or achievements",
+        type: "textarea",
+        rows: 4,
+        placeholder:
+          "Add 1-3 projects, outcomes, internships, or responsibilities that support your positioning.",
       },
       {
         name: "tone",

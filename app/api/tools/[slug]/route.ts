@@ -552,7 +552,7 @@ function buildGenericToolPrompt(slug: string, input: Record<string, string>) {
       `Experience level: ${input.experienceLevel || "Not specified"}`,
       `Job description: ${input.jobDescription || "Not provided"}`,
       `Resume text: ${input.resumeText || ""}`,
-      "Include scores for Overall, Clarity, Impact, ATS keywords, Metrics, and Action verbs.",
+      "Include scores for Clarity, Impact, Metrics, Weak phrases, and ATS readiness.",
       "Sections must include: Recruiter-style critique, Weak phrases detected, Missing metrics suggestions, Improved bullet versions.",
     ].join("\n");
   }
@@ -564,7 +564,7 @@ function buildGenericToolPrompt(slug: string, input: Record<string, string>) {
       `Target role: ${input.targetRole || "Not specified"}`,
       `Job description: ${input.jobDescription || ""}`,
       `Resume / experience text: ${input.resumeText || ""}`,
-      "Include a match score and scores for Keyword fit, Skills alignment, Specificity, Metrics, and Truthfulness.",
+      "Include a match score and scores for Match score, Missing keywords, Matched skills, and Overclaiming risk.",
       "Sections must include: Matched keywords, Missing keywords, Skills to emphasize, Tailored bullet rewrites, Truthful improvement suggestions.",
       "Warnings should flag anything the user should not claim unless true.",
     ].join("\n");
@@ -580,6 +580,7 @@ function buildGenericToolPrompt(slug: string, input: Record<string, string>) {
       `User contribution: ${input.contribution || ""}`,
       `Metrics/results: ${input.metrics || "Not provided"}`,
       `Target role: ${input.targetRole || "Not specified"}`,
+      "Include scores for Technical clarity, Ownership, Tools, Impact, and ATS keywords.",
       "Sections must include: 5 resume bullets, Short project summary, LinkedIn project description, GitHub README description, ATS keywords.",
     ].join("\n");
   }
@@ -592,7 +593,10 @@ function buildGenericToolPrompt(slug: string, input: Record<string, string>) {
       `Company: ${input.company || ""}`,
       `Job description: ${input.jobDescription || "Not provided"}`,
       `Relevant background: ${input.background || ""}`,
+      `Strongest proof: ${input.strongestProof || "Not provided"}`,
+      `Tone: ${input.tone || "Professional"}`,
       "Sections must include: Cover letter draft, Why it works, Customization checklist.",
+      "Include scores for Role fit, Company relevance, Proof strength, and Tone.",
       "Keep it under 260 words, specific, and not exaggerated.",
     ].join("\n");
   }
@@ -604,8 +608,10 @@ function buildGenericToolPrompt(slug: string, input: Record<string, string>) {
       `Target role: ${input.targetRole || ""}`,
       `Current role/background: ${input.currentRole || ""}`,
       `Skills/specialty: ${input.specialty || ""}`,
+      `Projects/achievements: ${input.achievements || "Not provided"}`,
       `Tone: ${input.tone || "Professional"}`,
       "Sections must include: Headline options, Best option, About section starter, Keywords to include.",
+      "Include scores for Keyword strength, Recruiter clarity, and Professional tone.",
       "Keep headlines credible and recruiter-friendly.",
     ].join("\n");
   }

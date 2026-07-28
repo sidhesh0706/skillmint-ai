@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { ComingSoonTool } from "@/components/coming-soon-tool";
 import { GenericToolWorkspace } from "@/components/generic-tool-workspace";
+import { ToolIdentityPanel } from "@/components/generic-tool-workspace/tool-identity-panel";
 import { JsonLd } from "@/components/json-ld";
 import { PremiumPageShell } from "@/components/premium-page-shell";
 import { ToolWorkspace } from "@/components/tool-workspace";
@@ -177,31 +178,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
           eyebrow={tool.category}
           title={tool.name}
           description={tool.longDescription}
-          side={
-            <div className="app-panel p-4">
-              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
-                Workspace signals
-              </p>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {liveToolHighlights.map((highlight) => {
-                  const Icon = highlight.icon;
-
-                  return (
-                    <span
-                      key={highlight.label}
-                      className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-700 shadow-line"
-                    >
-                      <Icon
-                        className="h-4 w-4 text-emerald-600"
-                        aria-hidden="true"
-                      />
-                      {highlight.label}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-          }
+          side={<ToolIdentityPanel slug={tool.slug} icon={tool.icon} />}
+          compact
         >
           <TrustPills />
         </PremiumPageShell>
