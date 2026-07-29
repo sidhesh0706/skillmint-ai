@@ -44,9 +44,9 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
     workspaceDescription:
       "Paste a real resume section, then review recruiter-level scores, weak phrases, and stronger alternatives.",
     composerLabel: "Resume review input",
-    composerTitle: "Give the reviewer enough context",
+    composerTitle: "Paste the resume section to critique",
     composerDescription:
-      "Use the section you would actually send. The critique is most useful when the wording is real.",
+      "Use the exact section you would send so the critique can assess the real wording.",
     submitLabel: "Roast this resume",
     loadingLabel: "Recruiter review in progress",
     loadingDescription:
@@ -70,16 +70,20 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
         fields: ["resumeText"],
       },
       {
-        title: "Review context",
-        description:
-          "Add the role and experience level so the critique matches your situation.",
-        fields: ["targetRole", "experienceLevel"],
+        title: "Target role",
+        description: "Tell the reviewer which role this section should support.",
+        fields: ["targetRole"],
       },
       {
-        title: "Target posting",
-        description: "Optional context for a more role-specific review.",
+        title: "Optional job description",
+        description: "Add the target posting for a more role-specific critique.",
         fields: ["jobDescription"],
         optional: true,
+      },
+      {
+        title: "Experience level",
+        description: "Set the seniority level the wording should communicate.",
+        fields: ["experienceLevel"],
       },
     ],
     optionalFields: ["jobDescription"],
@@ -101,7 +105,7 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
     workspaceDescription:
       "Compare a real job posting with your current experience and identify truthful ways to close the language gap.",
     composerLabel: "Role comparison input",
-    composerTitle: "Compare the posting with your proof",
+    composerTitle: "Compare resume language to the role",
     composerDescription:
       "Paste both sides of the comparison. SkillMint will surface matches, gaps, and claims you should avoid.",
     submitLabel: "Check job match",
@@ -122,21 +126,21 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
     warningLabel: "Overclaiming checks",
     fieldGroups: [
       {
-        title: "Target role",
-        description: "Name the role you are preparing for.",
-        fields: ["targetRole"],
-        optional: true,
-      },
-      {
         title: "Job description",
         description: "Paste the responsibilities, requirements, and skills.",
         fields: ["jobDescription"],
       },
       {
-        title: "Resume evidence",
+        title: "Resume bullets",
         description:
           "Add the bullets or experience text you want compared with the posting.",
         fields: ["resumeText"],
+      },
+      {
+        title: "Target role",
+        description: "Name the role when it helps clarify the comparison.",
+        fields: ["targetRole"],
+        optional: true,
       },
     ],
     optionalFields: ["targetRole"],
@@ -157,7 +161,7 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
     workspaceDescription:
       "Turn one real project into resume proof, a LinkedIn description, and reusable portfolio language.",
     composerLabel: "Project evidence input",
-    composerTitle: "Package the work you actually owned",
+    composerTitle: "Package your project into career proof",
     composerDescription:
       "Separate what the project did from what you personally built, analyzed, designed, or improved.",
     submitLabel: "Package this project",
@@ -178,21 +182,36 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
     warningLabel: "Ownership checks",
     fieldGroups: [
       {
-        title: "Project basics",
-        description: "Name the project and the role it should support.",
-        fields: ["projectName", "targetRole"],
+        title: "Project name",
+        description: "Give the project a clear, recognizable name.",
+        fields: ["projectName"],
       },
       {
-        title: "Project context",
-        description:
-          "Explain what the project did and the tools or technologies involved.",
-        fields: ["projectDescription", "techStack"],
+        title: "Project description",
+        description: "Explain what the project did and the problem it addressed.",
+        fields: ["projectDescription"],
       },
       {
-        title: "Your ownership and proof",
-        description:
-          "Describe your personal contribution and any truthful result or scope.",
-        fields: ["contribution", "metrics"],
+        title: "Tech stack",
+        description: "List the tools and technologies you used.",
+        fields: ["techStack"],
+        optional: true,
+      },
+      {
+        title: "Contribution",
+        description: "Describe what you personally built, analyzed, or improved.",
+        fields: ["contribution"],
+      },
+      {
+        title: "Metrics/results",
+        description: "Add truthful scale, speed, quality, or usage evidence.",
+        fields: ["metrics"],
+        optional: true,
+      },
+      {
+        title: "Target role",
+        description: "Set the role this project should help you pursue.",
+        fields: ["targetRole"],
       },
     ],
     optionalFields: ["techStack", "metrics"],
@@ -214,7 +233,7 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
     workspaceDescription:
       "Connect your strongest proof to a specific role and company in a concise, editable letter.",
     composerLabel: "Letter brief",
-    composerTitle: "Build a focused writing brief",
+    composerTitle: "Connect your proof to the company",
     composerDescription:
       "Give the draft a clear role, company, and honest proof point instead of generic enthusiasm.",
     submitLabel: "Draft cover letter",
@@ -235,21 +254,31 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
     warningLabel: "Details to verify",
     fieldGroups: [
       {
-        title: "Role and company",
-        description: "Set the target for the letter.",
-        fields: ["targetRole", "company"],
+        title: "Role",
+        description: "Name the position you are applying for.",
+        fields: ["targetRole"],
       },
       {
-        title: "Role context",
-        description: "Optional posting context for a more specific draft.",
+        title: "Company",
+        description: "Add the company the letter should address.",
+        fields: ["company"],
+      },
+      {
+        title: "Job description",
+        description: "Add the posting for a more specific draft.",
         fields: ["jobDescription"],
         optional: true,
       },
       {
-        title: "Background and proof",
-        description:
-          "Add the experience and one strongest example that demonstrate fit.",
-        fields: ["background", "strongestProof"],
+        title: "Background",
+        description: "Summarize the experience that is relevant to this role.",
+        fields: ["background"],
+      },
+      {
+        title: "Strongest proof",
+        description: "Add the project, result, or responsibility that best proves fit.",
+        fields: ["strongestProof"],
+        optional: true,
       },
       {
         title: "Tone",

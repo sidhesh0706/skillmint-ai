@@ -31,7 +31,6 @@ import { recommendedResources } from "@/config/monetization";
 import {
   getInitialToolValues,
   getToolBySlug,
-  type ToolConfig,
   type ToolField,
   type ToolFormValues,
 } from "@/data/tool-config";
@@ -184,9 +183,15 @@ function isOptionSection(title: string) {
 }
 
 export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
-  const tool = getToolBySlug(slug) as ToolConfig;
-  const presentation = getPurposeToolPresentation(slug);
-  const purposeSlug = isPurposeToolSlug(slug) ? slug : "resume-roast";
+  const configuredTool = getToolBySlug(slug);
+  const purposeSlug = configuredTool?.slug;
+
+  if (!configuredTool || !purposeSlug || !isPurposeToolSlug(purposeSlug)) {
+    throw new Error(`Unsupported live tool workspace: ${slug}`);
+  }
+
+  const tool = configuredTool;
+  const presentation = getPurposeToolPresentation(purposeSlug);
   const ToolIcon = tool.icon;
   const fieldsByName = new Map(
     tool.inputFields.map((field) => [field.name, field]),
