@@ -28,7 +28,8 @@ export function MotionButton({
   ...buttonProps
 }: MotionButtonProps) {
   const classes = clsx(
-    "group inline-flex items-center justify-center gap-2 rounded-full font-semibold transition duration-300",
+    "motion-button group inline-flex items-center justify-center gap-2 rounded-full font-semibold transition duration-300",
+    `motion-button-${variant}`,
     "focus:outline-none focus:ring-4 active:translate-y-0",
     compact ? "min-h-10 px-4 py-2 text-sm" : "min-h-12 px-6 py-3",
     variant === "primary" &&
@@ -73,6 +74,7 @@ export function MotionButton({
     <button
       type={type}
       disabled={disabled || loading}
+      aria-busy={loading}
       className={classes}
       {...buttonProps}
     >

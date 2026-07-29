@@ -45,7 +45,8 @@ export function HistoryPanel({ items, onOpen, onClear }: HistoryPanelProps) {
               />
             </span>
             <span className="mt-2 line-clamp-2 block text-xs leading-5 text-slate-500">
-              {item.output.bullets[0] || "Resume bullets saved in this browser."}
+              {item.output.bullets[0] ||
+                "Resume bullets saved in this browser."}
             </span>
             <span className="mt-3 block text-[11px] font-semibold text-emerald-700">
               {new Intl.DateTimeFormat(undefined, {

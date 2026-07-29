@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { ResourceLibrary } from "@/components/resource-library";
 import type { ResourceCardPage } from "@/components/resource-card";
-import {
-  seoLandingPages,
-  type SeoLandingPage,
-} from "@/data/seo-landing-pages";
+import { seoLandingPages, type SeoLandingPage } from "@/data/seo-landing-pages";
 
 export const metadata: Metadata = {
   title: "Resume Bullet Resources",

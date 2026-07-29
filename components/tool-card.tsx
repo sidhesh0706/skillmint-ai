@@ -15,7 +15,7 @@ export function ToolCard({ tool }: ToolCardProps) {
   return (
     <article
       className={clsx(
-        "tool-card-animated hover-gloss group flex h-full min-h-[24rem] flex-col overflow-hidden rounded-[1.75rem] border p-5 shadow-[0_24px_84px_rgba(23,32,51,0.10)] backdrop-blur-xl transition duration-300 sm:p-6",
+        "tool-card-shell tool-card-animated hover-gloss group flex h-full min-h-[24rem] flex-col overflow-hidden rounded-[1.75rem] border p-5 shadow-[0_24px_84px_rgba(23,32,51,0.10)] backdrop-blur-xl transition duration-300 sm:p-6",
         isLive
           ? "border-mint-100/90 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.18),transparent_16rem),linear-gradient(180deg,rgba(255,255,255,0.94),rgba(239,253,248,0.72))]"
           : "border-slate-200/90 bg-[radial-gradient(circle_at_20%_0%,rgba(56,189,248,0.12),transparent_16rem),linear-gradient(180deg,rgba(255,255,255,0.92),rgba(248,250,252,0.76))]",
@@ -75,7 +75,7 @@ export function ToolCard({ tool }: ToolCardProps) {
         <Link
           href={getToolHref(tool)}
           className={clsx(
-            "mt-6 inline-flex items-center gap-2 self-start rounded-full px-4 py-2 text-sm font-semibold transition duration-300",
+            "tool-card-cta mt-6 inline-flex items-center gap-2 self-start rounded-full px-4 py-2 text-sm font-semibold transition duration-300",
             isLive
               ? "bg-ink text-white hover:-translate-y-0.5 hover:bg-slate-800"
               : "bg-slate-100 text-slate-600 hover:-translate-y-0.5 hover:bg-slate-200",

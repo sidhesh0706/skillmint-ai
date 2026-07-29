@@ -55,9 +55,7 @@ function ResumeRoastPreview() {
           <MessageCircleQuestion className="h-4 w-4" aria-hidden="true" />
           Recruiter critique
         </span>
-        <p>
-          Passive opener, no scope, and no decision or customer outcome.
-        </p>
+        <p>Passive opener, no scope, and no decision or customer outcome.</p>
       </div>
       <ArrowRight className={styles.flowArrow} aria-hidden="true" />
       <div className={styles.improvedStage}>
@@ -105,9 +103,7 @@ function ProjectPreview() {
     <div className={styles.projectPreview}>
       <div className={styles.projectSource}>
         <span>Project note</span>
-        <p>
-          Built a campus events app with React and worked on the dashboard.
-        </p>
+        <p>Built a campus events app with React and worked on the dashboard.</p>
       </div>
       <ArrowRight className={styles.flowArrow} aria-hidden="true" />
       <div className={styles.projectOutputs}>
@@ -190,10 +186,7 @@ function LinkedInPreview() {
   );
 }
 
-export function PurposePreview({
-  slug,
-  presentation,
-}: PurposePreviewProps) {
+export function PurposePreview({ slug, presentation }: PurposePreviewProps) {
   return (
     <div className={styles.emptyPreview}>
       <div className={styles.emptyPreviewHeading}>
@@ -212,9 +205,7 @@ export function PurposePreview({
         {slug === "job-description-match" ? <JdMatchPreview /> : null}
         {slug === "project-to-resume" ? <ProjectPreview /> : null}
         {slug === "cover-letter-generator" ? <CoverLetterPreview /> : null}
-        {slug === "linkedin-headline-generator" ? (
-          <LinkedInPreview />
-        ) : null}
+        {slug === "linkedin-headline-generator" ? <LinkedInPreview /> : null}
       </div>
 
       <PreviewMetrics presentation={presentation} />

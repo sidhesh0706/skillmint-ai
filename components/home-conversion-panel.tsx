@@ -51,7 +51,9 @@ export function HomeConversionPanel() {
     trackEvent("email_signup_click", { location: "home_conversion" });
     trackEvent("email_signup_submitted", { location: "home_conversion" });
     setEmail("");
-    setMessage("You're on the list. The checklist will be part of a future update.");
+    setMessage(
+      "You're on the list. The checklist will be part of a future update.",
+    );
     window.setTimeout(() => setIsSuppressed(true), 1800);
   }
 

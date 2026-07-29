@@ -1,4 +1,10 @@
-import { ArrowUpRight, Blocks, ChartNoAxesCombined, Headphones, Users } from "lucide-react";
+import {
+  ArrowUpRight,
+  Blocks,
+  ChartNoAxesCombined,
+  Headphones,
+  Users,
+} from "lucide-react";
 import type { ToolFormValues } from "@/data/tool-config";
 
 type Preset = {

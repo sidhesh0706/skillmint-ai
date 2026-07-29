@@ -751,7 +751,8 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
     if (window.matchMedia("(max-width: 1279px)").matches) {
       window.requestAnimationFrame(() => {
         studioRef.current?.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
             ? "auto"
             : "smooth",
           block: "start",
@@ -1052,9 +1053,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
           <ComposerPanel
             onSubmit={(event) => {
               event.preventDefault();
-              handleGenerate(
-                hasOutput ? "regenerate_click" : "generate_click",
-              );
+              handleGenerate(hasOutput ? "regenerate_click" : "generate_click");
             }}
           >
             <PresetPicker
@@ -1192,7 +1191,6 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 {hasOutput ? "Regenerate bullets" : "Generate bullets"}
               </MotionButton>
             </div>
-
           </ComposerPanel>
         }
         studio={
@@ -1235,271 +1233,276 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 </>
               }
             >
-            {error ? (
-              <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
-                {error}
-              </div>
-            ) : null}
+              {error ? (
+                <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                  {error}
+                </div>
+              ) : null}
 
-            {isGenerating && !hasOutput ? (
-              <LoadingSequence steps={loadingSteps} />
-            ) : hasOutput ? (
-              <div className="flex flex-1 flex-col gap-5">
-                <OutputSummary
-                  summary={generated.summary}
-                  bulletCount={generated.bullets.length}
-                  atsReadiness={atsReadiness}
-                  missingKeywordCount={generated.missingKeywords.length}
-                />
+              {isGenerating && !hasOutput ? (
+                <LoadingSequence steps={loadingSteps} />
+              ) : hasOutput ? (
+                <div className="flex flex-1 flex-col gap-5">
+                  <OutputSummary
+                    summary={generated.summary}
+                    bulletCount={generated.bullets.length}
+                    atsReadiness={atsReadiness}
+                    missingKeywordCount={generated.missingKeywords.length}
+                  />
 
-                <section>
-                  <div className="flex items-end justify-between gap-4">
-                    <div>
-                      <p className="workspace-label">Best five bullets</p>
-                      <h3 className="mt-1 text-xl font-semibold text-slate-950">
-                        Recruiter-ready output
-                      </h3>
+                  <section>
+                    <div className="flex items-end justify-between gap-4">
+                      <div>
+                        <p className="workspace-label">Best five bullets</p>
+                        <h3 className="mt-1 text-xl font-semibold text-slate-950">
+                          Recruiter-ready output
+                        </h3>
+                      </div>
+                      <span className="hidden text-xs font-medium text-slate-500 sm:block">
+                        Improve any card independently
+                      </span>
                     </div>
-                    <span className="hidden text-xs font-medium text-slate-500 sm:block">
-                      Improve any card independently
-                    </span>
-                  </div>
-                  <div className="mt-3 space-y-3">
-                    {generated.bullets.map((item, index) => (
-                      <ResultCard
-                        key={`${item}-${index}`}
-                        index={index}
-                        bullet={item}
-                        score={generated.scores[index]}
-                        comparison={generated.comparisons[index]}
-                        comparisonExpanded={Boolean(
-                          expandedComparisons[index],
-                        )}
-                        improving={improvingIndex === index}
-                        copyConfirmed={copied}
-                        onCopy={() => copyText(item, "Bullet copied.")}
-                        onImprove={() => handleImproveBullet(index)}
-                        onToggleComparison={() => toggleComparison(index)}
-                      />
-                    ))}
-                  </div>
-                </section>
-
-                <KeywordIntelligence
-                  included={generated.keywords}
-                  missing={generated.missingKeywords}
-                  actionVerbs={generated.actionVerbs}
-                />
-
-                {generated.whatToAdd.length ? (
-                  <section className="output-card-pro p-4">
-                    <h3 className="text-sm font-semibold uppercase text-mint-700">
-                      What to add if truthful
-                    </h3>
-                    <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
-                      {generated.whatToAdd.map((item) => (
-                        <li key={item}>- {item}</li>
+                    <div className="mt-3 space-y-3">
+                      {generated.bullets.map((item, index) => (
+                        <ResultCard
+                          key={`${item}-${index}`}
+                          index={index}
+                          bullet={item}
+                          score={generated.scores[index]}
+                          comparison={generated.comparisons[index]}
+                          comparisonExpanded={Boolean(
+                            expandedComparisons[index],
+                          )}
+                          improving={improvingIndex === index}
+                          copyConfirmed={copied}
+                          onCopy={() => copyText(item, "Bullet copied.")}
+                          onImprove={() => handleImproveBullet(index)}
+                          onToggleComparison={() => toggleComparison(index)}
+                        />
                       ))}
-                    </ul>
+                    </div>
                   </section>
-                ) : null}
 
-                {generated.tips.length ? (
-                  <section className="gloss-panel p-4">
-                    <div className="gloss-content">
-                      <h3 className="text-sm font-semibold uppercase text-slate-700">
-                        Improvement tips
+                  <KeywordIntelligence
+                    included={generated.keywords}
+                    missing={generated.missingKeywords}
+                    actionVerbs={generated.actionVerbs}
+                  />
+
+                  {generated.whatToAdd.length ? (
+                    <section className="output-card-pro p-4">
+                      <h3 className="text-sm font-semibold uppercase text-mint-700">
+                        What to add if truthful
                       </h3>
-                      <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
-                        {generated.tips.map((tip) => (
-                          <li key={tip}>- {tip}</li>
+                      <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                        {generated.whatToAdd.map((item) => (
+                          <li key={item}>- {item}</li>
                         ))}
                       </ul>
+                    </section>
+                  ) : null}
+
+                  {generated.tips.length ? (
+                    <section className="gloss-panel p-4">
+                      <div className="gloss-content">
+                        <h3 className="text-sm font-semibold uppercase text-slate-700">
+                          Improvement tips
+                        </h3>
+                        <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+                          {generated.tips.map((tip) => (
+                            <li key={tip}>- {tip}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </section>
+                  ) : null}
+
+                  <section className="output-card-pro p-4">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
+                          <Share2 className="h-4 w-4" aria-hidden="true" />
+                          Share and keep improving
+                        </h3>
+                        <p className="mt-2 text-sm leading-6 text-slate-600">
+                          Send the generator to a friend or start a fresh draft
+                          for another target role.
+                        </p>
+                      </div>
+                      <div className="flex flex-col gap-2 sm:flex-row">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            copyGeneratorLink("Share link copied.")
+                          }
+                          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                        >
+                          <Clipboard className="h-4 w-4" aria-hidden="true" />
+                          Copy link
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setGenerated(emptyOutput);
+                            setExpandedComparisons({});
+                            setError("");
+                            trackEvent("share_click", {
+                              tool: tool.slug,
+                              action: "try_another_role",
+                            });
+                            showToast("Ready for another role.");
+                          }}
+                          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+                        >
+                          Try another role
+                        </button>
+                      </div>
                     </div>
                   </section>
-                ) : null}
 
-                <section className="output-card-pro p-4">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
-                        <Share2 className="h-4 w-4" aria-hidden="true" />
-                        Share and keep improving
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-slate-600">
-                        Send the generator to a friend or start a fresh draft
-                        for another target role.
-                      </p>
+                  <EmailCapture compact location="tool_output_capture" />
+
+                  <section>
+                    <h3 className="text-sm font-semibold uppercase text-mint-700">
+                      Recommended next steps
+                    </h3>
+                    <div className="mt-3 grid gap-3 sm:grid-cols-3">
+                      {recommendedResources
+                        .slice(0, 3)
+                        .map((recommendation) => (
+                          <AffiliateRecommendationCard
+                            key={recommendation.title}
+                            title={recommendation.title}
+                            description={recommendation.description}
+                            href={recommendation.href}
+                            label="Next step"
+                            onClick={() => {
+                              trackEvent("affiliate_click", {
+                                tool: tool.slug,
+                                resource: recommendation.title,
+                              });
+                              trackEvent("affiliate_card_clicked", {
+                                tool: tool.slug,
+                                resource: recommendation.title,
+                              });
+                            }}
+                          />
+                        ))}
                     </div>
-                    <div className="flex flex-col gap-2 sm:flex-row">
-                      <button
-                        type="button"
-                        onClick={() => copyGeneratorLink("Share link copied.")}
-                        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
-                      >
-                        <Clipboard className="h-4 w-4" aria-hidden="true" />
-                        Copy link
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setGenerated(emptyOutput);
-                          setExpandedComparisons({});
-                          setError("");
-                          trackEvent("share_click", {
-                            tool: tool.slug,
-                            action: "try_another_role",
-                          });
-                          showToast("Ready for another role.");
-                        }}
-                        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
-                      >
-                        Try another role
-                      </button>
-                    </div>
-                  </div>
-                </section>
+                  </section>
 
-                <EmailCapture compact location="tool_output_capture" />
+                  <AdSlot label="Resume tool resource placement" />
 
-                <section>
-                  <h3 className="text-sm font-semibold uppercase text-mint-700">
-                    Recommended next steps
-                  </h3>
-                  <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                    {recommendedResources.slice(0, 3).map((recommendation) => (
-                      <AffiliateRecommendationCard
-                        key={recommendation.title}
-                        title={recommendation.title}
-                        description={recommendation.description}
-                        href={recommendation.href}
-                        label="Next step"
-                        onClick={() => {
-                          trackEvent("affiliate_click", {
-                            tool: tool.slug,
-                            resource: recommendation.title,
-                          });
-                          trackEvent("affiliate_card_clicked", {
-                            tool: tool.slug,
-                            resource: recommendation.title,
-                          });
-                        }}
-                      />
-                    ))}
-                  </div>
-                </section>
-
-                <AdSlot label="Resume tool resource placement" />
-
-                {copied ? (
-                  <p className="text-sm font-semibold text-mint-700">
-                    Copied to clipboard.
-                  </p>
-                ) : null}
-              </div>
-            ) : (
-              <EmptyPreview
-                title={tool.output.emptyTitle}
-                description={tool.output.emptyDescription}
-                onTrySample={() =>
-                  applyPreset(
-                    examplePresets[0].values,
-                    examplePresets[0].label,
-                  )
-                }
-              />
-            )}
-
-            {hasOutput ? (
-              <div className="mt-6">
-                <OutputActionBar
-                  actions={[
-                    {
-                      label: "Copy all",
-                      icon: Clipboard,
-                      onClick: () => handleExportAction("copy"),
-                    },
-                    {
-                      label: "TXT",
-                      icon: Download,
-                      onClick: () => handleExportAction("txt"),
-                    },
-                    {
-                      label: "Markdown",
-                      icon: FileDown,
-                      onClick: () => handleExportAction("markdown"),
-                    },
-                    {
-                      label: "Improve",
-                      icon: Wand2,
-                      onClick: () => handleImproveBullet(weakestBulletIndex),
-                      disabled: isGenerating || improvingIndex !== null,
-                    },
-                    {
-                      label: "Tailor to JD",
-                      icon: Target,
-                      onClick: () => handleGenerate("regenerate_click"),
-                      disabled: isGenerating,
-                    },
-                    {
-                      label: "Cover letter",
-                      icon: FileText,
-                      onClick: () => {
-                        window.location.href = "/tools/cover-letter-generator";
-                      },
-                    },
-                  ]}
-                />
-              </div>
-            ) : null}
-
-            <section className="mt-6 output-card-pro p-4">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <p className="text-sm font-semibold uppercase text-mint-700">
-                    Before vs After
-                  </p>
-                  <h3 className="mt-1 text-xl font-semibold text-ink">
-                    Rewrite an existing bullet
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    Paste a bullet you already have. SkillMint will score it,
-                    rewrite it, and explain what changed.
-                  </p>
+                  {copied ? (
+                    <p className="text-sm font-semibold text-mint-700">
+                      Copied to clipboard.
+                    </p>
+                  ) : null}
                 </div>
-                <button
-                  type="button"
-                  onClick={handleRewriteExisting}
-                  disabled={isRewriting}
-                  className="button-secondary min-h-10 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  <Wand2 className="h-4 w-4" aria-hidden="true" />
-                  {isRewriting ? "Rewriting..." : "Rewrite"}
-                </button>
-              </div>
-              <textarea
-                value={existingBullet}
-                onChange={(event) => setExistingBullet(event.target.value)}
-                rows={3}
-                placeholder="e.g. Responsible for creating weekly reports for sales team."
-                className="premium-input mt-4 min-h-24 resize-none px-4 py-3"
-              />
-              {rewriteResult ? (
-                <RewriteComparison
-                  comparison={{
-                    original: rewriteResult.original,
-                    improved: rewriteResult.bullet,
-                    changes: rewriteResult.changes,
-                  }}
+              ) : (
+                <EmptyPreview
+                  title={tool.output.emptyTitle}
+                  description={tool.output.emptyDescription}
+                  onTrySample={() =>
+                    applyPreset(
+                      examplePresets[0].values,
+                      examplePresets[0].label,
+                    )
+                  }
                 />
-              ) : null}
-            </section>
+              )}
 
-            <HistoryPanel
-              items={history}
-              onOpen={reopenHistoryItem}
-              onClear={clearHistory}
-            />
+              {hasOutput ? (
+                <div className="mt-6">
+                  <OutputActionBar
+                    actions={[
+                      {
+                        label: "Copy all",
+                        icon: Clipboard,
+                        onClick: () => handleExportAction("copy"),
+                      },
+                      {
+                        label: "TXT",
+                        icon: Download,
+                        onClick: () => handleExportAction("txt"),
+                      },
+                      {
+                        label: "Markdown",
+                        icon: FileDown,
+                        onClick: () => handleExportAction("markdown"),
+                      },
+                      {
+                        label: "Improve",
+                        icon: Wand2,
+                        onClick: () => handleImproveBullet(weakestBulletIndex),
+                        disabled: isGenerating || improvingIndex !== null,
+                      },
+                      {
+                        label: "Tailor to JD",
+                        icon: Target,
+                        onClick: () => handleGenerate("regenerate_click"),
+                        disabled: isGenerating,
+                      },
+                      {
+                        label: "Cover letter",
+                        icon: FileText,
+                        onClick: () => {
+                          window.location.href =
+                            "/tools/cover-letter-generator";
+                        },
+                      },
+                    ]}
+                  />
+                </div>
+              ) : null}
+
+              <section className="mt-6 output-card-pro p-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-sm font-semibold uppercase text-mint-700">
+                      Before vs After
+                    </p>
+                    <h3 className="mt-1 text-xl font-semibold text-ink">
+                      Rewrite an existing bullet
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                      Paste a bullet you already have. SkillMint will score it,
+                      rewrite it, and explain what changed.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRewriteExisting}
+                    disabled={isRewriting}
+                    className="button-secondary min-h-10 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <Wand2 className="h-4 w-4" aria-hidden="true" />
+                    {isRewriting ? "Rewriting..." : "Rewrite"}
+                  </button>
+                </div>
+                <textarea
+                  value={existingBullet}
+                  onChange={(event) => setExistingBullet(event.target.value)}
+                  rows={3}
+                  placeholder="e.g. Responsible for creating weekly reports for sales team."
+                  className="premium-input mt-4 min-h-24 resize-none px-4 py-3"
+                />
+                {rewriteResult ? (
+                  <RewriteComparison
+                    comparison={{
+                      original: rewriteResult.original,
+                      improved: rewriteResult.bullet,
+                      changes: rewriteResult.changes,
+                    }}
+                  />
+                ) : null}
+              </section>
+
+              <HistoryPanel
+                items={history}
+                onOpen={reopenHistoryItem}
+                onClear={clearHistory}
+              />
             </OutputStudio>
           </div>
         }

@@ -18,7 +18,7 @@ export function KeywordChip({
     <span
       style={style}
       className={clsx(
-        "keyword-chip inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-semibold",
+        "keyword-chip keyword-chip-premium inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-semibold",
         dark
           ? "border-slate-200 bg-white/85 text-slate-700"
           : "border-mint-100 bg-mint-50 text-mint-700",

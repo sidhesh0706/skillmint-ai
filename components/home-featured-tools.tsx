@@ -22,7 +22,8 @@ const tools: FeaturedTool[] = [
   {
     name: "Resume Bullet Generator",
     category: "Build",
-    description: "Turn one honest note into five scored, recruiter-ready bullets.",
+    description:
+      "Turn one honest note into five scored, recruiter-ready bullets.",
     href: "/tools/resume-bullet-generator",
     nextStep: "Next: pressure-test the wording",
     icon: FileText,
@@ -40,7 +41,8 @@ const tools: FeaturedTool[] = [
   {
     name: "Job Description Match",
     category: "Target",
-    description: "See matched skills, keyword gaps, and truthful tailoring options.",
+    description:
+      "See matched skills, keyword gaps, and truthful tailoring options.",
     href: "/tools/job-description-match",
     nextStep: "Next: carry the proof into your profile",
     icon: BriefcaseBusiness,
@@ -49,7 +51,8 @@ const tools: FeaturedTool[] = [
   {
     name: "Project to Resume",
     category: "Package",
-    description: "Convert project ownership into resume and LinkedIn-ready proof.",
+    description:
+      "Convert project ownership into resume and LinkedIn-ready proof.",
     href: "/tools/project-to-resume",
     nextStep: "Next: complete the application kit",
     icon: FolderGit2,

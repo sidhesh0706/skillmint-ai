@@ -148,8 +148,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
               </div>
 
               <p className="hidden max-w-xl text-sm leading-6 text-slate-600 lg:block">
-                Turn honest work notes into five scored, recruiter-ready
-                bullets with keyword and rewrite guidance.
+                Turn honest work notes into five scored, recruiter-ready bullets
+                with keyword and rewrite guidance.
               </p>
 
               <div className="resume-tool-signals">
@@ -157,10 +157,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
                   const Icon = highlight.icon;
 
                   return (
-                    <span
-                      key={highlight.label}
-                      className="resume-tool-signal"
-                    >
+                    <span key={highlight.label} className="resume-tool-signal">
                       <Icon
                         className="h-3.5 w-3.5 text-emerald-600"
                         aria-hidden="true"

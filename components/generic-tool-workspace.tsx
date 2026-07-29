@@ -634,10 +634,7 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
                 <AdSlot label={`${tool.name} resource placement`} />
               </>
             ) : (
-              <PurposePreview
-                slug={purposeSlug}
-                presentation={presentation}
-              />
+              <PurposePreview slug={purposeSlug} presentation={presentation} />
             )}
           </div>
         </section>

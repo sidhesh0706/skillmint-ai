@@ -101,11 +101,11 @@ export function ProductWindow({ className }: ProductWindowProps) {
   return (
     <div
       className={clsx(
-        "premium-window overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white",
+        "product-window-shell premium-window overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white",
         className,
       )}
     >
-      <div className="scan-line flex items-center justify-between gap-4 border-b border-slate-200 bg-slate-50 px-4 py-3">
+      <div className="product-window-bar scan-line flex items-center justify-between gap-4 border-b border-slate-200 bg-slate-50 px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="h-3 w-3 rounded-full bg-red-300" />
           <span className="h-3 w-3 rounded-full bg-amber-300" />
@@ -115,13 +115,13 @@ export function ProductWindow({ className }: ProductWindowProps) {
           <span className="hidden text-xs font-medium text-slate-500 sm:inline">
             SkillMint application workspace
           </span>
-          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+          <span className="product-window-status rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
             Live preview
           </span>
         </div>
       </div>
 
-      <div className="border-b border-slate-200 bg-white p-2 sm:p-3">
+      <div className="product-window-tabs border-b border-slate-200 bg-white p-2 sm:p-3">
         <div
           className="grid grid-cols-2 gap-1.5 sm:grid-cols-4"
           role="tablist"
@@ -204,7 +204,7 @@ export function ProductWindow({ className }: ProductWindowProps) {
             ))}
           </div>
 
-          <aside className="home-keyword-panel">
+          <aside className="home-keyword-panel product-window-intelligence">
             <p className="text-xs font-semibold uppercase tracking-[0.13em] text-slate-500">
               Intelligence signals
             </p>
@@ -232,7 +232,7 @@ export function ProductWindow({ className }: ProductWindowProps) {
           </aside>
         </div>
 
-        <div className="mt-4 grid grid-cols-3 gap-2">
+        <div className="product-window-actions mt-4 grid grid-cols-3 gap-2">
           {activePreview.actions.map((action, index) => {
             const Icon =
               index === 0 ? Clipboard : index === 1 ? RefreshCw : Download;

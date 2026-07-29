@@ -48,7 +48,9 @@ export function ResultCard({
       <div className="min-w-0 flex-1">
         <div className="result-card-header">
           <div className="flex items-center gap-3">
-            <span className="result-index">{String(index + 1).padStart(2, "0")}</span>
+            <span className="result-index">
+              {String(index + 1).padStart(2, "0")}
+            </span>
             <div>
               <p className="comparison-label">Resume bullet</p>
               <p className="mt-0.5 text-xs font-medium text-slate-500">

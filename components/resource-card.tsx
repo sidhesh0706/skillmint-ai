@@ -13,11 +13,9 @@ type ResourceCardProps = {
 
 export function ResourceCard({ page }: ResourceCardProps) {
   return (
-    <article className="resource-card group section-reveal">
+    <article className="resource-card resource-card-shell group section-reveal">
       <div className="flex items-start justify-between gap-3">
-        <p className="resource-category">
-          {page.category || "guide"}
-        </p>
+        <p className="resource-category">{page.category || "guide"}</p>
         <span className="resource-card-icon" aria-hidden="true">
           <WandSparkles className="h-4 w-4" />
         </span>
@@ -39,7 +37,7 @@ export function ResourceCard({ page }: ResourceCardProps) {
         ))}
       </div>
 
-      <div className="resource-card-actions">
+      <div className="resource-card-actions resource-card-action-row">
         <Link href={`/${page.slug}`} className="resource-open-link">
           Open guide
           <ArrowRight className="h-4 w-4" aria-hidden="true" />

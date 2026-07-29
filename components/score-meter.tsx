@@ -23,11 +23,19 @@ export function ScoreMeter({
       : safeValue >= 70
         ? "Needs proof"
         : "Needs work");
+  const strengthClass =
+    safeValue >= 85
+      ? "score-meter-strong"
+      : safeValue >= 70
+        ? "score-meter-medium"
+        : "score-meter-low";
 
   return (
     <div
+      data-score={safeValue}
       className={clsx(
-        "rounded-2xl border border-slate-200 bg-white/90 shadow-line",
+        "score-meter rounded-2xl border border-slate-200 bg-white/90 shadow-line",
+        strengthClass,
         compact ? "p-2.5" : "p-3.5",
         className,
       )}
@@ -42,17 +50,22 @@ export function ScoreMeter({
       </div>
       <div
         className={clsx(
-          "overflow-hidden rounded-full bg-slate-100",
+          "score-meter-track overflow-hidden rounded-full bg-slate-100",
           compact ? "mt-2 h-1.5" : "mt-3 h-2",
         )}
+        role="progressbar"
+        aria-label={label || "Score"}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={safeValue}
       >
         <div
-          className="score-fill h-full rounded-full bg-gradient-to-r from-mint-500 via-emerald to-cyan transition-[width] duration-700"
+          className="score-meter-fill score-fill h-full rounded-full bg-gradient-to-r from-mint-500 via-emerald to-cyan transition-[width] duration-700"
           style={{ width: `${safeValue}%` }}
         />
       </div>
       {!compact ? (
-        <p className="mt-2 text-xs font-semibold text-slate-500">
+        <p className="score-meter-status mt-2 text-xs font-semibold text-slate-500">
           {statusText}
         </p>
       ) : null}

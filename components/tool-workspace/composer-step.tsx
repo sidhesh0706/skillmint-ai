@@ -25,11 +25,7 @@ export function ComposerStep({
     >
       <div className="flex items-start gap-3">
         <span className={`composer-step ${complete ? "is-complete" : ""}`}>
-          {complete ? (
-            <Check className="h-4 w-4" aria-hidden="true" />
-          ) : (
-            step
-          )}
+          {complete ? <Check className="h-4 w-4" aria-hidden="true" /> : step}
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -42,9 +38,7 @@ export function ComposerStep({
               {complete ? "Complete" : optional ? "Optional" : "Required"}
             </span>
           </div>
-          <p className="mt-1 text-xs leading-5 text-slate-500">
-            {description}
-          </p>
+          <p className="mt-1 text-xs leading-5 text-slate-500">{description}</p>
         </div>
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">{children}</div>

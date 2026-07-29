@@ -12,13 +12,7 @@ type EmptyPreviewProps = {
   onTrySample: () => void;
 };
 
-const checks = [
-  "Clarity",
-  "Impact",
-  "Metrics",
-  "ATS keywords",
-  "Truthfulness",
-];
+const checks = ["Clarity", "Impact", "Metrics", "ATS keywords", "Truthfulness"];
 
 export function EmptyPreview({
   title,
@@ -75,8 +69,8 @@ export function EmptyPreview({
             </span>
           </div>
           <p>
-            Built a sales dashboard using SQL and Excel to track weekly
-            pipeline trends and identify underperforming regions faster.
+            Built a sales dashboard using SQL and Excel to track weekly pipeline
+            trends and identify underperforming regions faster.
           </p>
           <div className="empty-score is-after">
             <span>91</span>

@@ -71,12 +71,14 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
       },
       {
         title: "Target role",
-        description: "Tell the reviewer which role this section should support.",
+        description:
+          "Tell the reviewer which role this section should support.",
         fields: ["targetRole"],
       },
       {
         title: "Optional job description",
-        description: "Add the target posting for a more role-specific critique.",
+        description:
+          "Add the target posting for a more role-specific critique.",
         fields: ["jobDescription"],
         optional: true,
       },
@@ -188,7 +190,8 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
       },
       {
         title: "Project description",
-        description: "Explain what the project did and the problem it addressed.",
+        description:
+          "Explain what the project did and the problem it addressed.",
         fields: ["projectDescription"],
       },
       {
@@ -199,7 +202,8 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
       },
       {
         title: "Contribution",
-        description: "Describe what you personally built, analyzed, or improved.",
+        description:
+          "Describe what you personally built, analyzed, or improved.",
         fields: ["contribution"],
       },
       {
@@ -276,7 +280,8 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
       },
       {
         title: "Strongest proof",
-        description: "Add the project, result, or responsibility that best proves fit.",
+        description:
+          "Add the project, result, or responsibility that best proves fit.",
         fields: ["strongestProof"],
         optional: true,
       },

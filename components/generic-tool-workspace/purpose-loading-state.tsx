@@ -11,7 +11,9 @@ export function PurposeLoadingState({
     <div className={styles.loadingState}>
       <div className={styles.loadingHeading}>
         <div>
-          <span className={styles.studioLabel}>{presentation.loadingLabel}</span>
+          <span className={styles.studioLabel}>
+            {presentation.loadingLabel}
+          </span>
           <h3>{presentation.studioTitle}</h3>
           <p>{presentation.loadingDescription}</p>
         </div>
@@ -31,7 +33,10 @@ export function PurposeLoadingState({
           >
             <span className={styles.loadingStepIcon}>
               {index === 0 ? (
-                <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+                <LoaderCircle
+                  className="h-4 w-4 animate-spin"
+                  aria-hidden="true"
+                />
               ) : (
                 <Check className="h-4 w-4" aria-hidden="true" />
               )}

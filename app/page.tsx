@@ -277,16 +277,19 @@ export default function Home() {
                 </div>
                 <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex flex-wrap gap-2">
-                    {["Action verb", "Tools", "Clear impact", "ATS language"].map(
-                      (item) => (
-                        <span
-                          key={item}
-                          className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600"
-                        >
-                          {item}
-                        </span>
-                      ),
-                    )}
+                    {[
+                      "Action verb",
+                      "Tools",
+                      "Clear impact",
+                      "ATS language",
+                    ].map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600"
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
                   <Link
                     href="/tools/resume-bullet-generator"

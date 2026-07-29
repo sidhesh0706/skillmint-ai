@@ -19,7 +19,7 @@ export function GradientButton({
   disabled,
   onClick,
 }: GradientButtonProps) {
-  const classes = clsx("button-primary", className);
+  const classes = clsx("button-primary motion-button", className);
 
   if (href) {
     return (
@@ -33,6 +33,7 @@ export function GradientButton({
     <button
       type={type}
       disabled={disabled}
+      aria-disabled={disabled}
       onClick={onClick}
       className={classes}
     >

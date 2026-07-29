@@ -201,10 +201,7 @@ export function ResourceLibrary({
                       href="/tools/resume-bullet-generator"
                       className="resource-featured-secondary"
                     >
-                      <WandSparkles
-                        className="h-4 w-4"
-                        aria-hidden="true"
-                      />
+                      <WandSparkles className="h-4 w-4" aria-hidden="true" />
                       Generate bullets
                     </Link>
                   </div>

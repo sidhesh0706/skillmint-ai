@@ -16,11 +16,7 @@ import {
   WandSparkles,
 } from "lucide-react";
 import { useState } from "react";
-import {
-  getToolHref,
-  tools,
-  type ToolConfig,
-} from "@/data/tool-config";
+import { getToolHref, tools, type ToolConfig } from "@/data/tool-config";
 
 const workflowOrder = [
   "resume-bullet-generator",
@@ -73,7 +69,13 @@ const nextSteps: Record<string, { label: string; href: string }> = {
   },
 };
 
-function ToolPreview({ slug, compact = false }: { slug: string; compact?: boolean }) {
+function ToolPreview({
+  slug,
+  compact = false,
+}: {
+  slug: string;
+  compact?: boolean;
+}) {
   if (slug === "resume-bullet-generator") {
     return (
       <div className="tools-preview tools-preview-bullet">
@@ -85,8 +87,8 @@ function ToolPreview({ slug, compact = false }: { slug: string; compact?: boolea
           <span className="tools-score-fill w-[92%]" />
         </div>
         <p>
-          Built an interactive sales dashboard to surface weekly pipeline
-          trends and regional gaps.
+          Built an interactive sales dashboard to surface weekly pipeline trends
+          and regional gaps.
         </p>
         {!compact ? (
           <div className="tools-chip-row">
@@ -209,7 +211,10 @@ function ToolCard({ tool, index }: { tool: ToolConfig; index: number }) {
       <ToolPreview slug={tool.slug} />
 
       <div className="tools-card-actions">
-        <Link className="tools-primary-link group/action" href={getToolHref(tool)}>
+        <Link
+          className="tools-primary-link group/action"
+          href={getToolHref(tool)}
+        >
           Open tool
           <ArrowRight
             className="h-4 w-4 transition-transform group-hover/action:translate-x-1"
@@ -262,8 +267,8 @@ export function ToolsDashboard() {
                   />
                 </Link>
                 <span>
-                  <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                  6 live tools, no signup
+                  <CheckCircle2 className="h-4 w-4" aria-hidden="true" />6 live
+                  tools, no signup
                 </span>
               </div>
             </div>
@@ -273,7 +278,9 @@ export function ToolsDashboard() {
                 <WandSparkles className="h-5 w-5" aria-hidden="true" />
               </div>
               <div>
-                <p className="tools-mini-label">If you only use one tool first</p>
+                <p className="tools-mini-label">
+                  If you only use one tool first
+                </p>
                 <h2>Start with the Resume Bullet Generator.</h2>
                 <p>
                   It turns your raw experience into reusable proof for every
@@ -316,7 +323,11 @@ export function ToolsDashboard() {
           </div>
 
           <div className="tools-path-module section-reveal">
-            <div className="tools-path-list" role="tablist" aria-label="Recommended tool path">
+            <div
+              className="tools-path-list"
+              role="tablist"
+              aria-label="Recommended tool path"
+            >
               {liveTools.map((tool, index) => {
                 const isActive = activeStep === index;
 
@@ -343,7 +354,10 @@ export function ToolsDashboard() {
                     </span>
                     <span className="tools-path-live">Live</span>
                     {index < liveTools.length - 1 ? (
-                      <span className="tools-path-connector" aria-hidden="true" />
+                      <span
+                        className="tools-path-connector"
+                        aria-hidden="true"
+                      />
                     ) : null}
                   </button>
                 );
@@ -386,7 +400,10 @@ export function ToolsDashboard() {
                     aria-hidden="true"
                   />
                 </Link>
-                <Link className="tools-next-link group/detail-next" href={selectedNextStep.href}>
+                <Link
+                  className="tools-next-link group/detail-next"
+                  href={selectedNextStep.href}
+                >
                   {selectedNextStep.label}
                   <ChevronRight
                     className="h-4 w-4 transition-transform group-hover/detail-next:translate-x-0.5"
@@ -423,7 +440,10 @@ export function ToolsDashboard() {
                   <p className="tools-section-kicker">Coming next</p>
                   <h2>Smaller additions to complete the workflow.</h2>
                 </div>
-                <p>Preview what is planned without losing focus on the live toolkit.</p>
+                <p>
+                  Preview what is planned without losing focus on the live
+                  toolkit.
+                </p>
               </div>
               <div className="tools-roadmap-list">
                 {comingSoonTools.map((tool) => {
@@ -438,7 +458,10 @@ export function ToolsDashboard() {
                         <h3>{tool.name}</h3>
                         <span>{tool.shortDescription}</span>
                       </div>
-                      <Link className="tools-inline-link group/roadmap" href={getToolHref(tool)}>
+                      <Link
+                        className="tools-inline-link group/roadmap"
+                        href={getToolHref(tool)}
+                      >
                         Preview
                         <ArrowRight
                           className="h-4 w-4 transition-transform group-hover/roadmap:translate-x-1"
