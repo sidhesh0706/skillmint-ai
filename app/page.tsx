@@ -2,20 +2,19 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import {
   ArrowRight,
-  BarChart3,
+  BriefcaseBusiness,
   CheckCircle2,
-  Download,
-  Search,
-  Wand2,
+  FileText,
+  MessageCircleQuestion,
+  PanelsTopLeft,
+  Send,
   type LucideIcon,
 } from "lucide-react";
-import { EmailCapture } from "@/components/email-capture";
+import { HomeConversionPanel } from "@/components/home-conversion-panel";
+import { HomeFeaturedTools } from "@/components/home-featured-tools";
 import { JsonLd } from "@/components/json-ld";
 import { ProductWindow } from "@/components/product-window";
-import { ToolGrid } from "@/components/tool-grid";
 import { TrackedLink } from "@/components/tracked-link";
-import { seoLandingPages } from "@/data/seo-landing-pages";
-import { featuredTools } from "@/data/tool-config";
 import {
   breadcrumbSchema,
   softwareApplicationSchema,
@@ -28,47 +27,43 @@ const trustPills = [
   "ATS-friendly outputs",
 ];
 
-const workflowSteps = [
-  ["Resume bullets", "Turn notes into proof."],
-  ["Resume roast", "Find weak wording."],
-  ["JD match", "Spot keyword gaps."],
-  ["Project to resume", "Package projects."],
-  ["LinkedIn", "Reuse positioning."],
-  ["Cover letter", "Draft faster."],
-];
-
-const features: Array<{
+const workflowSteps: Array<{
   title: string;
   description: string;
+  outcome: string;
   icon: LucideIcon;
 }> = [
   {
-    title: "Score weak bullets",
-    description:
-      "Get clarity, impact, specificity, metric, keyword, and action-verb signals.",
-    icon: BarChart3,
+    title: "Build proof",
+    description: "Turn rough notes into scored resume bullets.",
+    outcome: "Resume bullets",
+    icon: FileText,
   },
   {
-    title: "Rewrite with context",
-    description:
-      "Improve wording while keeping claims grounded in your actual experience.",
-    icon: Wand2,
+    title: "Pressure-test it",
+    description: "Find weak phrasing before a recruiter does.",
+    outcome: "Resume roast",
+    icon: MessageCircleQuestion,
   },
   {
-    title: "Match job descriptions",
-    description:
-      "Compare your resume language against a target posting and find truthful gaps.",
-    icon: Search,
+    title: "Match the role",
+    description: "Compare your evidence with the target posting.",
+    outcome: "JD match",
+    icon: BriefcaseBusiness,
   },
   {
-    title: "Export clean copy",
-    description:
-      "Copy or download resume-ready output for docs, editors, LinkedIn, and TXT.",
-    icon: Download,
+    title: "Package the story",
+    description: "Reuse the strongest proof across your profile and letter.",
+    outcome: "LinkedIn + cover letter",
+    icon: PanelsTopLeft,
+  },
+  {
+    title: "Apply clearly",
+    description: "Export clean, truthful copy wherever you need it.",
+    outcome: "Application ready",
+    icon: Send,
   },
 ];
-
-const featuredSeoLandingPages = seoLandingPages.slice(0, 3);
 
 export const metadata: Metadata = {
   title: "SkillMint AI | Recruiter-Ready Career Tools",
@@ -101,10 +96,6 @@ export const metadata: Metadata = {
   },
 };
 
-function PreviewPanel() {
-  return <ProductWindow />;
-}
-
 export default function Home() {
   return (
     <>
@@ -115,45 +106,53 @@ export default function Home() {
         ]}
       />
 
-      <section className="premium-hero py-10 sm:py-12 lg:py-14">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
-        <div className="container-shell relative z-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <section className="premium-hero py-8 sm:py-10 lg:py-12">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
+        <div className="container-shell relative z-10 grid gap-7 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="fade-in-up">
-            <div className="hero-badge mb-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-emerald-700">
+            <div className="hero-badge mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-emerald-700">
               <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
               Free AI career workspace
             </div>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-6xl lg:text-[3.55rem] xl:text-[4.25rem]">
-              Turn rough experience into job-ready career assets.
+            <h1 className="max-w-3xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-5xl lg:text-[3.3rem] xl:text-[3.85rem]">
+              <span className="block">Turn real experience into</span>
+              <span className="block">job-ready career assets.</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-              Generate resume bullets, match job descriptions, improve LinkedIn
-              copy, and draft cover letters from the same real experience.
+            <p className="mt-4 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+              Build stronger resume bullets, match job descriptions, and carry
+              the same truthful proof into LinkedIn and cover letters.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <TrackedLink
                 href="/tools/resume-bullet-generator"
-                className="button-primary"
+                className="button-primary group"
                 eventName="homepage_cta_click"
-                eventPayload={{ cta: "start_resume_bullets" }}
+                eventPayload={{ cta: "generate_resume_bullets" }}
               >
-                Start with resume bullets
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                Generate resume bullets
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
               </TrackedLink>
               <TrackedLink
                 href="/tools"
-                className="button-secondary"
+                className="button-secondary group"
                 eventName="homepage_cta_click"
-                eventPayload={{ cta: "explore_tools" }}
+                eventPayload={{ cta: "explore_application_tools" }}
               >
-                Explore tools
+                Explore application tools
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
               </TrackedLink>
             </div>
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {trustPills.map((pill) => (
                 <span
                   key={pill}
-                  className="trust-pill inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold text-slate-700"
+                  className="trust-pill inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-slate-700 sm:text-sm"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                   {pill}
@@ -161,66 +160,53 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <PreviewPanel />
+          <ProductWindow />
         </div>
       </section>
 
-      <section className="surface-band py-11 sm:py-14">
-        <div className="container-shell">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
-              Workflow
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl">
-              Build the application kit in the right order.
-            </h2>
-          </div>
-          <div className="mt-8 grid gap-3 md:grid-cols-3 xl:grid-cols-6">
-            {workflowSteps.map(([title, text], index) => (
-              <div key={title} className="workflow-card rounded-3xl p-4">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-950 text-sm font-semibold text-white">
-                  {index + 1}
-                </span>
-                <h3 className="mt-4 font-semibold text-slate-950">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="soft-stage py-12 sm:py-16">
-        <div className="container-shell">
-          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
-                Features
+      <section className="surface-band py-10 sm:py-12">
+        <div className="container-shell section-reveal">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+                One connected workflow
               </p>
-              <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl">
-                Everything you need to sharpen a draft.
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                From rough notes to a ready application.
               </h2>
             </div>
-            <Link href="/tools" className="button-secondary self-start">
-              View tools
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            <p className="max-w-xl text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
+              Start with proof, test it against the role, then reuse the best
+              language across the rest of your application.
+            </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature) => {
-              const Icon = feature.icon;
+
+          <div className="home-workflow-grid mt-7">
+            {workflowSteps.map((step, index) => {
+              const Icon = step.icon;
+
               return (
                 <article
-                  key={feature.title}
-                  className="feature-card rounded-3xl p-6"
+                  key={step.title}
+                  className="home-workflow-step"
+                  style={{ animationDelay: `${index * 70}ms` }}
                 >
-                  <div className="feature-icon flex h-11 w-11 items-center justify-center rounded-2xl text-emerald-700">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="home-workflow-icon">
+                      <Icon className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                    <span className="text-xs font-semibold text-slate-400">
+                      0{index + 1}
+                    </span>
                   </div>
-                  <h3 className="mt-5 text-lg font-semibold text-slate-950">
-                    {feature.title}
+                  <p className="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-700">
+                    {step.outcome}
+                  </p>
+                  <h3 className="mt-2 font-semibold text-slate-950">
+                    {step.title}
                   </h3>
-                  <p className="mt-3 leading-7 text-slate-600">
-                    {feature.description}
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    {step.description}
                   </p>
                 </article>
               );
@@ -229,178 +215,122 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="surface-band py-12 sm:py-16">
-        <div className="container-shell grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
-              Example transformation
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl">
-              From plain task to application-ready proof.
-            </h2>
-            <p className="mt-4 leading-7 text-slate-600">
-              SkillMint improves structure, action verbs, keywords, and impact
-              without pushing you to overclaim.
-            </p>
-          </div>
-          <div className="transformation-panel rounded-[2rem] border border-slate-200 p-5">
-            <div className="mb-4 flex items-center justify-between gap-3">
+      <section className="soft-stage py-10 sm:py-12">
+        <div className="container-shell section-reveal">
+          <div className="transformation-panel rounded-[1.75rem] border border-slate-200 p-5 sm:p-7">
+            <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-                  Resume intelligence
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+                  Example transformation
                 </p>
-                <p className="mt-1 text-sm font-semibold text-slate-950">
-                  Clarity and impact improved
+                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                  Make the proof easier to see.
+                </h2>
+                <p className="mt-4 max-w-lg leading-7 text-slate-600">
+                  SkillMint strengthens structure, action verbs, keywords, and
+                  impact without inventing claims.
                 </p>
-              </div>
-              <span className="rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-sm font-semibold text-emerald-700 shadow-line">
-                68 → 91
-              </span>
-            </div>
-            <div className="rounded-2xl border border-slate-200 bg-white p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-                Before
-              </p>
-              <p className="mt-2 text-lg text-slate-700">
-                Made dashboard for sales data.
-              </p>
-            </div>
-            <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">
-                After
-              </p>
-              <p className="mt-2 text-lg leading-8 text-slate-800">
-                <mark className="rounded bg-emerald-100 px-1 text-slate-900">
-                  Built
-                </mark>{" "}
-                an interactive sales dashboard using{" "}
-                <mark className="rounded bg-cyan-100 px-1 text-slate-900">
-                  SQL and Excel
-                </mark>{" "}
-                to track weekly pipeline trends and{" "}
-                <mark className="rounded bg-amber-100 px-1 text-slate-900">
-                  identify underperforming regions faster
-                </mark>
-                .
-              </p>
-            </div>
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex flex-wrap gap-2">
-                {["action verb", "tools", "clear impact", "ATS language"].map(
-                  (item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600"
-                    >
-                      {item}
+                <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-line">
+                  <div className="flex items-center justify-between text-sm font-semibold">
+                    <span className="text-slate-500">Bullet strength</span>
+                    <span className="flex items-center gap-2 text-emerald-700">
+                      68
+                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      91
                     </span>
-                  ),
-                )}
+                  </div>
+                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
+                    <span className="score-fill block h-full w-[91%] rounded-full bg-emerald-500" />
+                  </div>
+                </div>
               </div>
-              <Link
-                href="/tools/resume-bullet-generator"
-                className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-emerald-700"
-              >
-                Use this pattern
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
+
+              <div>
+                <div className="grid gap-3 sm:grid-cols-[0.72fr_1.28fr]">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                      Before
+                    </p>
+                    <p className="mt-3 text-lg leading-7 text-slate-700">
+                      Made dashboard for sales data.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">
+                      After
+                    </p>
+                    <p className="mt-3 text-lg leading-8 text-slate-800">
+                      <mark className="rounded bg-emerald-100 px-1 text-slate-950">
+                        Built
+                      </mark>{" "}
+                      an interactive sales dashboard using{" "}
+                      <mark className="rounded bg-cyan-100 px-1 text-slate-950">
+                        SQL and Excel
+                      </mark>{" "}
+                      to track weekly pipeline trends and{" "}
+                      <mark className="rounded bg-amber-100 px-1 text-slate-950">
+                        identify underperforming regions faster
+                      </mark>
+                      .
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex flex-wrap gap-2">
+                    {["Action verb", "Tools", "Clear impact", "ATS language"].map(
+                      (item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600"
+                        >
+                          {item}
+                        </span>
+                      ),
+                    )}
+                  </div>
+                  <Link
+                    href="/tools/resume-bullet-generator"
+                    className="group inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-emerald-700"
+                  >
+                    Use this pattern
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="soft-stage py-12 sm:py-16">
-        <div className="container-shell">
-          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
+      <section className="surface-band py-10 sm:py-12">
+        <div className="container-shell section-reveal">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
                 Featured tools
               </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl">
-                Start your application kit.
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                Start with the tool your application needs next.
               </h2>
             </div>
-            <Link href="/resources" className="button-secondary self-start">
-              Browse resources
+            <Link href="/tools" className="button-secondary group self-start">
+              View all tools
+              <ArrowRight
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </Link>
           </div>
-          <ToolGrid tools={featuredTools.slice(0, 4)} />
+          <HomeFeaturedTools />
         </div>
       </section>
 
-      <section className="surface-band py-12 sm:py-16">
-        <div className="container-shell">
-          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
-                Resume examples
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-slate-950 sm:text-5xl">
-                Learn from role-specific guides.
-              </h2>
-            </div>
-            <Link href="/resources" className="button-secondary self-start">
-              View all resources
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredSeoLandingPages.map((page) => (
-              <Link
-                key={page.slug}
-                href={`/${page.slug}`}
-                className="interactive-card group rounded-3xl p-5"
-              >
-                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-emerald-700">
-                  {page.audience}
-                </p>
-                <h3 className="mt-3 text-lg font-semibold leading-snug text-slate-950">
-                  {page.title}
-                </h3>
-                <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
-                  {page.metaDescription}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700">
-                  Open guide
-                  <ArrowRight
-                    className="h-4 w-4 transition group-hover:translate-x-1"
-                    aria-hidden="true"
-                  />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <EmailCapture />
-
-      <section className="soft-stage py-12 sm:py-16">
-        <div className="container-shell">
-          <div className="cta-panel-premium rounded-[2rem] p-6 sm:p-8 lg:flex lg:items-center lg:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-200">
-                Start now
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-white">
-                Build your first application kit.
-              </h2>
-              <p className="mt-3 max-w-2xl leading-7 text-slate-300">
-                Start with one honest note and turn it into resume-ready proof.
-              </p>
-            </div>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:mt-0">
-              <Link
-                href="/tools/resume-bullet-generator"
-                className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 font-semibold text-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-emerald-50"
-              >
-                Generate resume bullets
-              </Link>
-              <Link href="/resources" className="button-ghost">
-                Browse resources
-              </Link>
-            </div>
-          </div>
+      <section className="soft-stage py-10 sm:py-12">
+        <div className="container-shell section-reveal">
+          <HomeConversionPanel />
         </div>
       </section>
     </>
