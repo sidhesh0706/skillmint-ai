@@ -28,7 +28,7 @@ export function PremiumPageShell({
     <section
       className={clsx(
         dark ? "bg-slate-950 text-white" : "bg-[#FAFAF8] text-ink",
-        "relative isolate overflow-hidden",
+        "premium-page-shell relative isolate overflow-hidden",
         compact ? "py-10 sm:py-12" : "py-14 sm:py-20",
         className,
       )}

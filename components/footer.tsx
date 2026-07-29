@@ -31,7 +31,7 @@ export function Footer() {
             </p>
             <Link
               href="/tools/resume-bullet-generator"
-              className="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-white px-4 py-2 text-sm font-semibold text-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-emerald-50"
+              className="footer-primary-link mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-white px-4 py-2 text-sm font-semibold text-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-emerald-50"
             >
               Generate resume bullets
             </Link>

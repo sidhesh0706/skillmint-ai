@@ -32,7 +32,7 @@ export function Header() {
           </Link>
           <Link
             href="/tools/resume-bullet-generator"
-            className="group hidden items-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-white shadow-[0_14px_34px_rgba(15,23,42,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(16,185,129,0.22)] sm:inline-flex"
+            className="site-header-cta group hidden items-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-white shadow-[0_14px_34px_rgba(15,23,42,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(16,185,129,0.22)] sm:inline-flex"
           >
             Try Generator
             <ArrowRight
