@@ -232,14 +232,19 @@ export default function Home() {
                 </p>
                 <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-line">
                   <div className="flex items-center justify-between text-sm font-semibold">
-                    <span className="text-slate-500">Bullet strength</span>
+                    <span className="text-slate-500" aria-hidden="true">
+                      Bullet strength
+                    </span>
+                    <span className="sr-only">
+                      Bullet strength improved from 68 to 91 out of 100.
+                    </span>
                     <span
                       className="flex items-center gap-2 text-emerald-700"
-                      aria-label="Score improved from 68 to 91 out of 100"
+                      aria-hidden="true"
                     >
-                      <span aria-hidden="true">68</span>
-                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                      <span aria-hidden="true">91</span>
+                      <span>68</span>
+                      <span>→</span>
+                      <span>91</span>
                     </span>
                   </div>
                   <div
