@@ -318,7 +318,9 @@ export function GenericToolWorkspace({ slug }: GenericToolWorkspaceProps) {
             <ToolIcon className="h-5 w-5" aria-hidden="true" />
           </span>
           <div>
-            <span className={styles.workspaceKicker}>Live AI workspace</span>
+            <span className={styles.workspaceKicker}>
+              {presentation.workspaceKicker || "Live AI workspace"}
+            </span>
             <h2>{presentation.workspaceTitle}</h2>
             <p>{presentation.workspaceDescription}</p>
           </div>

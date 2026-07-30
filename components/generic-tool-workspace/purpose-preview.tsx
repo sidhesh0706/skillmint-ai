@@ -108,14 +108,14 @@ function ProjectPreview() {
       <ArrowRight className={styles.flowArrow} aria-hidden="true" />
       <div className={styles.projectOutputs}>
         <div>
-          <span>Resume bullet</span>
+          <span>Resume proof</span>
           <p>
             Built a React dashboard that helped organizers track attendance
             across 12 campus events.
           </p>
         </div>
         <div>
-          <span>LinkedIn project description</span>
+          <span>LinkedIn project copy</span>
           <p>
             A campus event platform focused on clearer attendance reporting and
             organizer workflows.

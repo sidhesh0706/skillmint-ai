@@ -18,6 +18,7 @@ export type PurposePreviewMetric = {
 };
 
 export type PurposeToolPresentation = {
+  workspaceKicker?: string;
   workspaceTitle: string;
   workspaceDescription: string;
   composerLabel: string;
@@ -159,6 +160,7 @@ const presentations: Record<PurposeToolSlug, PurposeToolPresentation> = {
     ],
   },
   "project-to-resume": {
+    workspaceKicker: "Project-to-career workflow",
     workspaceTitle: "Project packaging workspace",
     workspaceDescription:
       "Turn one real project into resume proof, a LinkedIn description, and reusable portfolio language.",
