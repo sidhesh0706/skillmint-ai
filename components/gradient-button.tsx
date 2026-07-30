@@ -23,7 +23,17 @@ export function GradientButton({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link
+        href={href}
+        className={classes}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : undefined}
+        onClick={(event) => {
+          if (disabled) {
+            event.preventDefault();
+          }
+        }}
+      >
         {children}
       </Link>
     );

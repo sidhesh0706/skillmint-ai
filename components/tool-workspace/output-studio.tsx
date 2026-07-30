@@ -28,7 +28,7 @@ export function OutputStudio({
           <div className="relative z-10">
             <p className="workspace-kicker">
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              Resume intelligence
+              Resume bullet analysis
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950">
               {title}
@@ -44,6 +44,7 @@ export function OutputStudio({
                 onClick={onRegenerate}
                 disabled={isGenerating}
                 className="workspace-action"
+                aria-label="Regenerate bullets using the current job description"
               >
                 <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 Tailor to JD

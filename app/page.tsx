@@ -233,13 +233,24 @@ export default function Home() {
                 <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-line">
                   <div className="flex items-center justify-between text-sm font-semibold">
                     <span className="text-slate-500">Bullet strength</span>
-                    <span className="flex items-center gap-2 text-emerald-700">
-                      68
+                    <span
+                      className="flex items-center gap-2 text-emerald-700"
+                      aria-label="Score improved from 68 to 91 out of 100"
+                    >
+                      <span aria-hidden="true">68</span>
                       <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                      91
+                      <span aria-hidden="true">91</span>
                     </span>
                   </div>
-                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100"
+                    role="progressbar"
+                    aria-label="Improved bullet strength"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={91}
+                    aria-valuetext="91 out of 100"
+                  >
                     <span className="score-fill block h-full w-[91%] rounded-full bg-emerald-500" />
                   </div>
                 </div>

@@ -36,8 +36,11 @@ export function EmptyStatePreview({
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-mint-700">
               Preview transformation
             </p>
-            <span className="inline-flex w-max items-center rounded-full border border-mint-100 bg-mint-50 px-3 py-1 text-xs font-semibold text-mint-700">
-              68 to 91 score
+            <span
+              className="inline-flex w-max items-center rounded-full border border-mint-100 bg-mint-50 px-3 py-1 text-xs font-semibold text-mint-700"
+              aria-label="Score improved from 68 to 91 out of 100"
+            >
+              <span aria-hidden="true">Score: 68 → 91</span>
             </span>
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto_1.25fr] sm:items-stretch">

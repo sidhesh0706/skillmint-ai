@@ -27,13 +27,18 @@ export function LoadingSequence({ steps }: LoadingSequenceProps) {
         <div>
           <p className="workspace-label flex items-center gap-2">
             <Sparkles className="h-4 w-4" aria-hidden="true" />
-            Resume intelligence running
+            Resume bullet analysis in progress
           </p>
           <h3 className="mt-2 text-xl font-semibold tracking-[-0.025em] text-slate-950">
             Building your recruiter-ready report
           </h3>
         </div>
-        <span className="loading-percent">{Math.round(progress)}%</span>
+        <span
+          className="loading-percent"
+          aria-label={`${Math.round(progress)} percent complete`}
+        >
+          {Math.round(progress)}%
+        </span>
       </div>
 
       <div className="loading-progress" aria-hidden="true">

@@ -46,7 +46,9 @@ export function ScoreMeter({
             {label}
           </p>
         ) : null}
-        <p className="text-sm font-semibold text-ink">{safeValue}/100</p>
+        <p className="text-sm font-semibold text-ink" aria-hidden="true">
+          {safeValue}/100
+        </p>
       </div>
       <div
         className={clsx(
@@ -58,6 +60,7 @@ export function ScoreMeter({
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={safeValue}
+        aria-valuetext={`${safeValue} out of 100, ${statusText}`}
       >
         <div
           className="score-meter-fill score-fill h-full rounded-full bg-gradient-to-r from-mint-500 via-emerald to-cyan transition-[width] duration-700"

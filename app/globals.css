@@ -1245,6 +1245,11 @@ main * {
     @apply flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-semibold text-slate-900 transition hover:bg-slate-50;
   }
 
+  .resource-link-index summary:focus-visible {
+    outline: 2px solid var(--mint);
+    outline-offset: -3px;
+  }
+
   .resource-link-index summary::-webkit-details-marker {
     display: none;
   }

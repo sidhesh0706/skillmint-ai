@@ -64,7 +64,17 @@ export function MotionButton({
 
   if (href) {
     return (
-      <Link href={href} className={classes} aria-disabled={disabled || loading}>
+      <Link
+        href={href}
+        className={classes}
+        aria-disabled={disabled || loading}
+        tabIndex={disabled || loading ? -1 : undefined}
+        onClick={(event) => {
+          if (disabled || loading) {
+            event.preventDefault();
+          }
+        }}
+      >
         {content}
       </Link>
     );

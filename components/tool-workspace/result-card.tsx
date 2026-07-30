@@ -40,6 +40,8 @@ export function ResultCard({
   onImprove,
   onToggleComparison,
 }: ResultCardProps) {
+  const comparisonId = `bullet-comparison-${index}`;
+
   return (
     <article
       className="result-card"
@@ -60,7 +62,9 @@ export function ResultCard({
           </div>
           <div className="result-score-block">
             <ScoreMeter value={score.score} compact />
-            <span className="score-chip">{score.score}/100</span>
+            <span className="score-chip" aria-hidden="true">
+              {score.score}/100
+            </span>
           </div>
         </div>
 
@@ -115,6 +119,8 @@ export function ResultCard({
               type="button"
               onClick={onToggleComparison}
               className="result-action"
+              aria-expanded={comparisonExpanded}
+              aria-controls={comparisonId}
             >
               <Eye className="h-3.5 w-3.5" aria-hidden="true" />
               {comparisonExpanded ? "Hide comparison" : "Compare"}
@@ -122,7 +128,7 @@ export function ResultCard({
           ) : null}
         </div>
         {comparison && comparisonExpanded ? (
-          <RewriteComparison comparison={comparison} />
+          <RewriteComparison id={comparisonId} comparison={comparison} />
         ) : null}
       </div>
     </article>

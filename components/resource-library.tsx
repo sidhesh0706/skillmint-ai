@@ -69,6 +69,7 @@ export function ResourceLibrary({
 }: ResourceLibraryProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("");
+  const [allGuidesExpanded, setAllGuidesExpanded] = useState(false);
   const effectiveQuery = query.trim() || activeFilter;
   const filteredPages = useMemo(
     () =>
@@ -295,13 +296,21 @@ export function ResourceLibrary({
                 ))}
               </div>
 
-              <details className="resource-link-index section-reveal">
-                <summary>
+              <details
+                className="resource-link-index section-reveal"
+                onToggle={(event) =>
+                  setAllGuidesExpanded(event.currentTarget.open)
+                }
+              >
+                <summary aria-expanded={allGuidesExpanded}>
                   <span>
-                    Browse every resume guide
+                    {allGuidesExpanded
+                      ? "Hide the complete guide index"
+                      : "Browse every resume guide"}
                     <small>
-                      All {pages.length} internal resource links remain
-                      available.
+                      {allGuidesExpanded
+                        ? `Showing all ${pages.length} resume guides.`
+                        : `Expand to see all ${pages.length} resume guides.`}
                     </small>
                   </span>
                   <ChevronDown className="h-5 w-5" aria-hidden="true" />

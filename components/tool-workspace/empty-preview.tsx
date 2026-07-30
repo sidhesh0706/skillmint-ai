@@ -48,8 +48,11 @@ export function EmptyPreview({
         <article className="empty-note">
           <span>Before</span>
           <p>Made dashboard for sales data.</p>
-          <div className="empty-score is-before">
-            <span>68</span>
+          <div
+            className="empty-score is-before"
+            aria-label="Starting score: 68 out of 100"
+          >
+            <span aria-hidden="true">68/100</span>
             <div>
               <span style={{ width: "68%" }} />
             </div>
@@ -65,15 +68,18 @@ export function EmptyPreview({
             <span>Recruiter-ready</span>
             <span className="empty-ready-badge">
               <TrendingUp className="h-3.5 w-3.5" aria-hidden="true" />
-              +23
+              +23 points
             </span>
           </div>
           <p>
             Built a sales dashboard using SQL and Excel to track weekly pipeline
             trends and identify underperforming regions faster.
           </p>
-          <div className="empty-score is-after">
-            <span>91</span>
+          <div
+            className="empty-score is-after"
+            aria-label="Improved score: 91 out of 100"
+          >
+            <span aria-hidden="true">91/100</span>
             <div>
               <span style={{ width: "91%" }} />
             </div>

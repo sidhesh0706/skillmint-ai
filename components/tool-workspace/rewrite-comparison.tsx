@@ -2,12 +2,13 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import type { BulletComparison } from "@/components/tool-workspace/types";
 
 type RewriteComparisonProps = {
+  id?: string;
   comparison: BulletComparison;
 };
 
-export function RewriteComparison({ comparison }: RewriteComparisonProps) {
+export function RewriteComparison({ id, comparison }: RewriteComparisonProps) {
   return (
-    <div className="rewrite-comparison">
+    <div id={id} className="rewrite-comparison">
       <div className="rewrite-before">
         <p className="comparison-label">Original</p>
         <p className="mt-2 text-sm leading-6 text-slate-600">
