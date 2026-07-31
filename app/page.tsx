@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import {
   ArrowRight,
   BriefcaseBusiness,
-  CheckCircle2,
   FileText,
   MessageCircleQuestion,
   PanelsTopLeft,
@@ -12,21 +11,12 @@ import {
 } from "lucide-react";
 import { HomeConversionPanel } from "@/components/home-conversion-panel";
 import { HomeFeaturedTools } from "@/components/home-featured-tools";
+import { HeroSection } from "@/components/home/hero-section";
 import { JsonLd } from "@/components/json-ld";
-import { ProductWindow } from "@/components/product-window";
-import { TrackedLink } from "@/components/tracked-link";
 import {
   breadcrumbSchema,
   softwareApplicationSchema,
 } from "@/lib/structured-data";
-import styles from "./home.module.css";
-
-const trustPills = [
-  "No signup",
-  "Browser-only history",
-  "Truth-first rewrites",
-  "ATS-friendly outputs",
-];
 
 const workflowSteps: Array<{
   title: string;
@@ -107,62 +97,7 @@ export default function Home() {
         ]}
       />
 
-      <section className={styles.hero}>
-        <div className={styles.inner}>
-          <div className={styles.copy}>
-            <div className={styles.eyebrow}>
-              <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-              Free AI career workspace
-            </div>
-            <h1 className={styles.headline}>
-              <span className="block">Turn real experience into</span>
-              <span className={`${styles.headlineAccent} block`}>
-                job-ready career assets.
-              </span>
-            </h1>
-            <p className={styles.subheadline}>
-              Build stronger resume bullets, match job descriptions, and carry
-              the same truthful proof into LinkedIn and cover letters.
-            </p>
-            <div className={styles.actions}>
-              <TrackedLink
-                href="/tools/resume-bullet-generator"
-                className={`${styles.primaryAction} group`}
-                eventName="homepage_cta_click"
-                eventPayload={{ cta: "generate_resume_bullets" }}
-              >
-                Generate resume bullets
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </TrackedLink>
-              <TrackedLink
-                href="/tools"
-                className={`${styles.secondaryAction} group`}
-                eventName="homepage_cta_click"
-                eventPayload={{ cta: "explore_application_tools" }}
-              >
-                Explore application tools
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </TrackedLink>
-            </div>
-            <div className={styles.trustRow}>
-              {trustPills.map((pill) => (
-                <span key={pill} className={styles.trustPill}>
-                  {pill}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className={styles.previewStage}>
-            <ProductWindow />
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
       <section className="surface-band py-10 sm:py-12">
         <div className="container-shell section-reveal">
@@ -243,7 +178,7 @@ export default function Home() {
                       aria-hidden="true"
                     >
                       <span>68</span>
-                      <span>→</span>
+                      <ArrowRight className="h-4 w-4" />
                       <span>91</span>
                     </span>
                   </div>
