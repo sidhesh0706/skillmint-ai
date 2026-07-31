@@ -69,8 +69,8 @@ export function EmailCapture({
   if (compact) {
     return (
       <div className="rounded-lg border border-mint-100 bg-[linear-gradient(135deg,#ffffff,#effdf8)] p-4 shadow-line">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(19rem,0.85fr)] md:items-center">
+          <div className="min-w-0">
             <h3 className="text-base font-semibold text-ink">
               Want more resume tools and templates?
             </h3>
@@ -79,14 +79,15 @@ export function EmailCapture({
               {leadMagnet}.
             </p>
           </div>
-          <form onSubmit={handleSubmit} className="min-w-0 flex-1 sm:max-w-md">
-            <div className="flex flex-col gap-2 sm:flex-row">
+          <form onSubmit={handleSubmit} className="min-w-0 w-full">
+            <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
               <input
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
-                className="min-h-11 flex-1 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100"
+                aria-label="Email address"
+                className="min-h-11 w-full min-w-0 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100"
               />
               <button
                 type="submit"

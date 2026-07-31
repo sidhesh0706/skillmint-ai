@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { clsx } from "clsx";
 import {
   ArrowRight,
   Check,
   Clipboard,
   Download,
+  PanelsTopLeft,
   RefreshCw,
 } from "lucide-react";
 import { ScoreMeter } from "@/components/score-meter";
+import styles from "./product-window.module.css";
 
 type ProductWindowProps = {
   className?: string;
@@ -96,34 +98,33 @@ const previews = [
 
 export function ProductWindow({ className }: ProductWindowProps) {
   const [activeTab, setActiveTab] = useState(0);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activePreview = previews[activeTab];
 
+  function selectTab(index: number) {
+    const nextIndex = (index + previews.length) % previews.length;
+    setActiveTab(nextIndex);
+    tabRefs.current[nextIndex]?.focus();
+  }
+
   return (
-    <div
-      className={clsx(
-        "product-window-shell premium-window overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white",
-        className,
-      )}
-    >
-      <div className="product-window-bar scan-line flex items-center justify-between gap-4 border-b border-slate-200 bg-slate-50 px-4 py-3">
-        <div className="flex items-center gap-2">
-          <span className="h-3 w-3 rounded-full bg-red-300" />
-          <span className="h-3 w-3 rounded-full bg-amber-300" />
-          <span className="h-3 w-3 rounded-full bg-emerald-400" />
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="hidden text-xs font-medium text-slate-500 sm:inline">
-            SkillMint application workspace
+    <div className={clsx(styles.window, className)}>
+      <div className={styles.topbar}>
+        <div className={styles.brand}>
+          <span className={styles.brandIcon}>
+            <PanelsTopLeft className="h-4 w-4" aria-hidden="true" />
           </span>
-          <span className="product-window-status rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-            Live preview
+          <span className={styles.brandText}>
+            <strong>SkillMint workspace</strong>
+            <span>Career proof intelligence</span>
           </span>
         </div>
+        <span className={styles.status}>Live preview</span>
       </div>
 
-      <div className="product-window-tabs border-b border-slate-200 bg-white p-2 sm:p-3">
+      <div className={styles.tabbar}>
         <div
-          className="grid grid-cols-2 gap-1.5 sm:grid-cols-4"
+          className={styles.tabs}
           role="tablist"
           aria-label="Application workspace previews"
         >
@@ -135,18 +136,34 @@ export function ProductWindow({ className }: ProductWindowProps) {
               id={`product-preview-tab-${index}`}
               aria-controls={`product-preview-panel-${index}`}
               aria-selected={activeTab === index}
+              tabIndex={activeTab === index ? 0 : -1}
+              ref={(element) => {
+                tabRefs.current[index] = element;
+              }}
               onClick={() => setActiveTab(index)}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowRight") {
+                  event.preventDefault();
+                  selectTab(activeTab + 1);
+                }
+                if (event.key === "ArrowLeft") {
+                  event.preventDefault();
+                  selectTab(activeTab - 1);
+                }
+                if (event.key === "Home") {
+                  event.preventDefault();
+                  selectTab(0);
+                }
+                if (event.key === "End") {
+                  event.preventDefault();
+                  selectTab(previews.length - 1);
+                }
+              }}
               className={clsx(
-                "home-product-tab",
-                activeTab === index && "home-product-tab-active",
+                styles.tab,
+                activeTab === index && styles.tabActive,
               )}
             >
-              <span
-                className={clsx(
-                  "h-1.5 w-1.5 rounded-full transition-colors",
-                  activeTab === index ? "bg-emerald-500" : "bg-slate-300",
-                )}
-              />
               {preview.tab}
             </button>
           ))}
@@ -157,78 +174,72 @@ export function ProductWindow({ className }: ProductWindowProps) {
         key={activePreview.tab}
         id={`product-preview-panel-${activeTab}`}
         aria-labelledby={`product-preview-tab-${activeTab}`}
-        className="home-product-pane p-4 sm:p-5"
+        className={styles.panel}
         role="tabpanel"
       >
-        <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">
+        <div className={styles.summary}>
+          <div className={styles.summaryCopy}>
+            <p className={styles.label}>
               {activePreview.label}
             </p>
-            <h2 className="mt-2 text-lg font-semibold text-slate-950">
-              {activePreview.title}
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-slate-500">
+            <h2 className={styles.title}>{activePreview.title}</h2>
+            <p className={styles.description}>
               {activePreview.description}
             </p>
           </div>
-          <div className="home-product-score">
-            <div className="flex items-center justify-between gap-4">
+          <div className={styles.scoreCard}>
+            <div className={styles.scoreHeading}>
               <span>Overall score</span>
               <strong>{activePreview.score}/100</strong>
             </div>
             <ScoreMeter
               value={activePreview.score}
               compact
-              className="mt-2 w-full"
+              className="w-full"
             />
           </div>
         </div>
 
-        <div className="mt-4 grid gap-3 lg:grid-cols-[1fr_0.72fr]">
-          <div className="space-y-3">
+        <div className={styles.content}>
+          <div className={styles.results}>
             {activePreview.results.map((result, index) => (
               <article
                 key={result.label}
-                className="home-preview-result"
+                className={styles.result}
                 style={{ animationDelay: `${index * 80}ms` }}
               >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-xs font-semibold uppercase tracking-[0.13em] text-slate-400">
+                <div className={styles.resultHeader}>
+                  <span className={styles.resultLabel}>
                     {result.label}
                   </span>
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+                  <span className={styles.resultCheck}>
                     <Check className="h-3.5 w-3.5" aria-hidden="true" />
                   </span>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-slate-700">
-                  {result.text}
-                </p>
+                <p>{result.text}</p>
               </article>
             ))}
           </div>
 
-          <aside className="home-keyword-panel product-window-intelligence">
-            <p className="text-xs font-semibold uppercase tracking-[0.13em] text-slate-500">
-              Intelligence signals
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
+          <aside className={styles.intelligence}>
+            <p className={styles.intelligenceTitle}>Intelligence signals</p>
+            <div className={styles.chips}>
               {activePreview.keywords.map((keyword, index) => (
                 <span
                   key={keyword}
-                  className="keyword-chip rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-xs font-semibold text-emerald-700"
+                  className={styles.chip}
                   style={{ animationDelay: `${index * 70}ms` }}
                 >
                   {keyword}
                 </span>
               ))}
             </div>
-            <div className="mt-5 space-y-2 text-xs font-medium text-slate-600">
-              <span className="flex items-center gap-2">
+            <div className={styles.checks}>
+              <span className={styles.check}>
                 <Check className="h-3.5 w-3.5 text-emerald-600" />
                 Truthfulness check
               </span>
-              <span className="flex items-center gap-2">
+              <span className={styles.check}>
                 <Check className="h-3.5 w-3.5 text-emerald-600" />
                 Export-ready copy
               </span>
@@ -236,7 +247,7 @@ export function ProductWindow({ className }: ProductWindowProps) {
           </aside>
         </div>
 
-        <div className="product-window-actions mt-4 grid grid-cols-3 gap-2">
+        <div className={styles.actions}>
           {activePreview.actions.map((action, index) => {
             const Icon =
               index === 0 ? Clipboard : index === 1 ? RefreshCw : Download;
@@ -245,12 +256,13 @@ export function ProductWindow({ className }: ProductWindowProps) {
               <button
                 type="button"
                 key={action}
-                className="home-preview-action group"
+                className={styles.action}
+                aria-label={`${action} ${activePreview.tab} preview`}
               >
                 <Icon className="h-3.5 w-3.5" aria-hidden="true" />
                 {action}
                 <ArrowRight
-                  className="hidden h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 sm:block"
+                  className="hidden h-3.5 w-3.5 sm:block"
                   aria-hidden="true"
                 />
               </button>

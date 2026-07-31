@@ -19,6 +19,7 @@ import {
   breadcrumbSchema,
   softwareApplicationSchema,
 } from "@/lib/structured-data";
+import styles from "./home.module.css";
 
 const trustPills = [
   "No signup",
@@ -106,26 +107,27 @@ export default function Home() {
         ]}
       />
 
-      <section className="premium-hero py-8 sm:py-10 lg:py-12">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,#ffffff,rgba(255,255,255,0))]" />
-        <div className="container-shell relative z-10 grid gap-7 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="fade-in-up">
-            <div className="hero-badge mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-emerald-700">
+      <section className={styles.hero}>
+        <div className={styles.inner}>
+          <div className={styles.copy}>
+            <div className={styles.eyebrow}>
               <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
               Free AI career workspace
             </div>
-            <h1 className="max-w-3xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-slate-950 sm:text-5xl lg:text-[3.3rem] xl:text-[3.85rem]">
+            <h1 className={styles.headline}>
               <span className="block">Turn real experience into</span>
-              <span className="block">job-ready career assets.</span>
+              <span className={`${styles.headlineAccent} block`}>
+                job-ready career assets.
+              </span>
             </h1>
-            <p className="mt-4 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+            <p className={styles.subheadline}>
               Build stronger resume bullets, match job descriptions, and carry
               the same truthful proof into LinkedIn and cover letters.
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className={styles.actions}>
               <TrackedLink
                 href="/tools/resume-bullet-generator"
-                className="button-primary group"
+                className={`${styles.primaryAction} group`}
                 eventName="homepage_cta_click"
                 eventPayload={{ cta: "generate_resume_bullets" }}
               >
@@ -137,7 +139,7 @@ export default function Home() {
               </TrackedLink>
               <TrackedLink
                 href="/tools"
-                className="button-secondary group"
+                className={`${styles.secondaryAction} group`}
                 eventName="homepage_cta_click"
                 eventPayload={{ cta: "explore_application_tools" }}
               >
@@ -148,19 +150,17 @@ export default function Home() {
                 />
               </TrackedLink>
             </div>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className={styles.trustRow}>
               {trustPills.map((pill) => (
-                <span
-                  key={pill}
-                  className="trust-pill inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-slate-700 sm:text-sm"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                <span key={pill} className={styles.trustPill}>
                   {pill}
                 </span>
               ))}
             </div>
           </div>
-          <ProductWindow />
+          <div className={styles.previewStage}>
+            <ProductWindow />
+          </div>
         </div>
       </section>
 
