@@ -8,7 +8,6 @@ type ComposerStepProps = {
   children: ReactNode;
   complete?: boolean;
   optional?: boolean;
-  defaultSelected?: boolean;
 };
 
 export function ComposerStep({
@@ -18,18 +17,7 @@ export function ComposerStep({
   children,
   complete = false,
   optional = false,
-  defaultSelected = false,
 }: ComposerStepProps) {
-  const statusLabel = defaultSelected
-    ? "Default selected"
-    : complete
-      ? optional
-        ? "Added"
-        : "Complete"
-      : optional
-        ? "Optional"
-        : "Required";
-
   return (
     <section
       className={`composer-module ${complete ? "is-complete" : ""}`}
@@ -47,7 +35,7 @@ export function ComposerStep({
                 complete ? "is-complete" : ""
               }`}
             >
-              {statusLabel}
+              {complete ? "Complete" : optional ? "Optional" : "Required"}
             </span>
           </div>
           <p className="mt-1 text-xs leading-5 text-slate-500">{description}</p>

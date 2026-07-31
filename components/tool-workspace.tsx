@@ -1159,7 +1159,6 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
               title="Style and output"
               description="Choose the level of optimization and writing tone."
               complete={completedSections[4]}
-              defaultSelected
             >
               {styleFields.map((field) => (
                 <label key={field.name} className={getFieldLayout(field)}>

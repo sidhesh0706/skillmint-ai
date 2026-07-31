@@ -15,10 +15,10 @@ export function ToolCard({ tool }: ToolCardProps) {
   return (
     <article
       className={clsx(
-        "tool-card-shell tool-card-animated hover-gloss group relative flex h-full min-h-[23rem] flex-col overflow-hidden rounded-[1.5rem] border bg-white p-5 transition duration-300 sm:p-6",
+        "tool-card-shell tool-card-animated hover-gloss group flex h-full min-h-[24rem] flex-col overflow-hidden rounded-[1.75rem] border p-5 shadow-[0_24px_84px_rgba(23,32,51,0.10)] backdrop-blur-xl transition duration-300 sm:p-6",
         isLive
-          ? "border-emerald-200/90"
-          : "border-slate-200/90",
+          ? "border-mint-100/90 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.18),transparent_16rem),linear-gradient(180deg,rgba(255,255,255,0.94),rgba(239,253,248,0.72))]"
+          : "border-slate-200/90 bg-[radial-gradient(circle_at_20%_0%,rgba(56,189,248,0.12),transparent_16rem),linear-gradient(180deg,rgba(255,255,255,0.92),rgba(248,250,252,0.76))]",
       )}
     >
       <div
@@ -27,7 +27,7 @@ export function ToolCard({ tool }: ToolCardProps) {
           isLive ? "opacity-100" : "opacity-40",
         )}
       />
-      <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-bl-[4rem] bg-emerald-50/80 transition duration-300 group-hover:bg-emerald-100/80" />
+      <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-mint-300/10 blur-3xl transition duration-500 group-hover:bg-cyan-300/25" />
       <div className="pointer-events-none absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-300/70 to-transparent" />
       <div className="gloss-content flex items-start justify-between gap-4">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-ink via-slate-800 to-mint-700 text-white shadow-line transition duration-300 group-hover:scale-105 group-hover:shadow-[0_0_34px_rgba(31,201,153,0.22)]">
@@ -44,7 +44,7 @@ export function ToolCard({ tool }: ToolCardProps) {
         <p className="mt-3 flex-1 leading-7 text-slate-600">
           {tool.shortDescription}
         </p>
-        <div className="tool-card-preview scan-line mt-5 rounded-2xl border border-slate-200 bg-slate-50/85 p-3">
+        <div className="scan-line mt-5 rounded-2xl border border-slate-200 bg-white/82 p-3 shadow-[0_16px_50px_rgba(23,32,51,0.08)]">
           <div className="flex items-center justify-between gap-3">
             <span className="h-2 w-24 overflow-hidden rounded-full bg-slate-100">
               <span
