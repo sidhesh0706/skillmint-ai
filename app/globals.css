@@ -4318,3 +4318,407 @@ main * {
     transition: none;
   }
 }
+
+/* Final tactile finish: one shared visual signature across the existing UI. */
+@layer components {
+  .card-surface,
+  .app-panel,
+  .app-panel-muted,
+  .control-card,
+  .home-tool-card,
+  .resource-card,
+  .resource-start-card,
+  .tool-card-shell,
+  .result-card,
+  .output-card-shell {
+    border-color: rgba(203, 213, 225, 0.92);
+    box-shadow:
+      0 1px 1px rgba(15, 23, 42, 0.025),
+      0 12px 30px rgba(15, 23, 42, 0.065),
+      inset 0 1px 0 rgba(255, 255, 255, 0.98);
+  }
+
+  .card-surface,
+  .app-panel,
+  .app-panel-muted,
+  .control-card,
+  .home-tool-card,
+  .resource-card,
+  .resource-start-card,
+  .tool-card-shell,
+  .result-card,
+  .output-card-shell,
+  .home-preview-result,
+  .home-preview-action,
+  .premium-input {
+    transition:
+      transform 190ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 190ms ease,
+      background-color 190ms ease,
+      color 190ms ease,
+      box-shadow 190ms ease;
+  }
+
+  .tool-card-shell {
+    background:
+      linear-gradient(180deg, rgba(240, 253, 248, 0.52), transparent 5.5rem),
+      #fff;
+    box-shadow:
+      0 1px 1px rgba(15, 23, 42, 0.025),
+      0 16px 38px rgba(15, 23, 42, 0.075),
+      inset 0 1px 0 #fff;
+  }
+
+  .tool-card-shell:hover,
+  .tool-card-shell:focus-within {
+    transform: translateY(-5px);
+    border-color: #9edfc5;
+    box-shadow:
+      0 1px 1px rgba(15, 23, 42, 0.025),
+      0 26px 56px rgba(15, 23, 42, 0.11),
+      0 8px 22px rgba(16, 185, 129, 0.065),
+      inset 0 1px 0 #fff;
+  }
+
+  .tool-card-preview {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      0 8px 18px rgba(15, 23, 42, 0.045);
+    transition:
+      transform 190ms ease,
+      border-color 190ms ease,
+      box-shadow 190ms ease;
+  }
+
+  .tool-card-shell:hover .tool-card-preview,
+  .tool-card-shell:focus-within .tool-card-preview {
+    transform: translateY(-2px);
+    border-color: #bae6d5;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.98),
+      0 12px 26px rgba(15, 23, 42, 0.065);
+  }
+
+  .home-tool-card:hover,
+  .home-tool-card:focus-within,
+  .resource-card:hover,
+  .resource-card:focus-within,
+  .resource-start-card:hover,
+  .resource-start-card:focus-within,
+  .result-card:hover,
+  .result-card:focus-within,
+  .output-card-shell:hover,
+  .output-card-shell:focus-within {
+    transform: translateY(-4px);
+    border-color: #a8ddc9;
+    box-shadow:
+      0 1px 1px rgba(15, 23, 42, 0.025),
+      0 24px 52px rgba(15, 23, 42, 0.1),
+      0 7px 20px rgba(16, 185, 129, 0.055),
+      inset 0 1px 0 #fff;
+  }
+
+  .product-window-shell {
+    position: relative;
+    box-shadow:
+      0 1px 1px rgba(15, 23, 42, 0.03),
+      0 28px 72px rgba(15, 23, 42, 0.14),
+      0 10px 28px rgba(16, 185, 129, 0.065),
+      inset 0 1px 0 #fff;
+  }
+
+  .product-window-bar {
+    min-height: 3.25rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98), #f4f7f6),
+      #f8fafc;
+  }
+
+  .product-window-tabs > div {
+    padding: 0.2rem;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 0.95rem;
+    background: #f7f9f8;
+  }
+
+  .home-product-tab {
+    position: relative;
+    overflow: hidden;
+    min-height: 2.65rem;
+  }
+
+  .home-product-tab::after {
+    content: "";
+    position: absolute;
+    inset: auto 28% 0;
+    height: 2px;
+    border-radius: 999px;
+    background: #34d399;
+    opacity: 0;
+    transform: scaleX(0.4);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+
+  .home-product-tab-active {
+    border-color: #172033;
+    background: #101827;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.11) inset,
+      0 8px 18px rgba(15, 23, 42, 0.16);
+  }
+
+  .home-product-tab-active::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .home-product-pane {
+    background:
+      linear-gradient(180deg, rgba(248, 251, 250, 0.52), transparent 10rem),
+      #fff;
+  }
+
+  .home-preview-result {
+    position: relative;
+    overflow: hidden;
+    border-color: #d8e1e5;
+    box-shadow:
+      0 1px 0 #fff inset,
+      0 9px 22px rgba(15, 23, 42, 0.055);
+  }
+
+  .home-preview-result::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: #34d399;
+  }
+
+  .home-preview-result:hover {
+    transform: translateY(-2px);
+    border-color: #b7e2d2;
+    box-shadow:
+      0 1px 0 #fff inset,
+      0 14px 30px rgba(15, 23, 42, 0.075);
+  }
+
+  .home-keyword-panel {
+    border-color: #bde7d7;
+    background: #f1faf6;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      0 9px 22px rgba(16, 185, 129, 0.055);
+  }
+
+  .home-preview-action {
+    background: #fff;
+    box-shadow:
+      0 1px 0 #fff inset,
+      0 6px 14px rgba(15, 23, 42, 0.045);
+  }
+
+  .home-preview-action:hover {
+    transform: translateY(-2px);
+    border-color: #a9dfcb;
+    color: #047857;
+    box-shadow:
+      0 1px 0 #fff inset,
+      0 10px 22px rgba(15, 23, 42, 0.07);
+  }
+
+  .button-primary,
+  .button-secondary,
+  .motion-button,
+  .tool-card-cta,
+  .result-action,
+  .workspace-action,
+  .output-export-action {
+    min-height: 2.75rem;
+    font-weight: 650;
+    letter-spacing: -0.012em;
+    transition:
+      transform 170ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 170ms ease,
+      background-color 170ms ease,
+      color 170ms ease,
+      box-shadow 170ms ease;
+  }
+
+  .button-primary:active,
+  .button-secondary:active,
+  .motion-button:active,
+  .tool-card-cta:active,
+  .result-action:active,
+  .workspace-action:active,
+  .output-export-action:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .button-primary:focus-visible,
+  .button-secondary:focus-visible,
+  .motion-button:focus-visible,
+  .tool-card-cta:focus-visible,
+  .result-action:focus-visible,
+  .workspace-action:focus-visible,
+  .output-export-action:focus-visible,
+  .resource-open-link:focus-visible,
+  .resource-generate-link:focus-visible {
+    outline: 2px solid #10b981;
+    outline-offset: 3px;
+    box-shadow:
+      0 0 0 5px rgba(16, 185, 129, 0.12),
+      0 12px 28px rgba(15, 23, 42, 0.12);
+  }
+
+  .premium-input {
+    min-height: 2.85rem;
+    border-color: #c8d3d9;
+    border-radius: 0.9rem;
+    background: #fff;
+  }
+
+  .premium-input:hover {
+    border-color: #94a3b8;
+    box-shadow:
+      inset 0 1px 2px rgba(15, 23, 42, 0.025),
+      0 7px 16px rgba(15, 23, 42, 0.035);
+  }
+
+  .premium-input:focus,
+  .premium-input:focus-visible {
+    outline: none;
+    border-color: #10b981;
+    box-shadow:
+      0 0 0 4px rgba(16, 185, 129, 0.12),
+      0 10px 24px rgba(16, 185, 129, 0.07);
+  }
+
+  .composer-step-status {
+    min-height: 1.45rem;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .result-action:has(.lucide-check),
+  .success-pulse {
+    animation: success-pulse 520ms ease-out both;
+  }
+
+  .section-reveal,
+  .tool-card-animated,
+  .home-preview-result,
+  .keyword-chip {
+    will-change: transform, opacity;
+  }
+}
+
+@media (max-width: 640px) {
+  .product-window-tabs > div {
+    gap: 0.3rem;
+  }
+
+  .home-product-tab {
+    min-height: 2.85rem;
+    padding-inline: 0.55rem;
+  }
+
+  .tool-card-shell {
+    min-height: 0;
+    border-radius: 1.25rem;
+  }
+
+  .tool-card-cta,
+  .resource-open-link,
+  .resource-generate-link,
+  .result-action,
+  .workspace-action,
+  .output-export-action {
+    min-height: 2.75rem;
+  }
+
+  .resource-card-actions,
+  .product-window-actions,
+  .result-card-header {
+    gap: 0.55rem;
+  }
+
+  .resource-card-actions {
+    align-items: stretch;
+  }
+
+  .resource-card-actions > *,
+  .product-window-actions > * {
+    min-width: 0;
+  }
+
+  .composer-step-status {
+    max-width: 100%;
+    font-size: 0.55rem;
+  }
+
+  .site-header-link,
+  .home-tool-card a,
+  .transformation-panel a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .workspace-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .workspace-stat dd {
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+  }
+}
+
+@media (hover: none) {
+  .tool-card-shell:hover,
+  .home-tool-card:hover,
+  .resource-card:hover,
+  .resource-start-card:hover,
+  .result-card:hover,
+  .output-card-shell:hover,
+  .home-preview-result:hover,
+  .home-preview-action:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal,
+  .tool-card-animated,
+  .home-preview-result,
+  .keyword-chip,
+  .score-fill,
+  .success-pulse,
+  .result-action:has(.lucide-check) {
+    animation: none;
+  }
+
+  .card-surface,
+  .app-panel,
+  .app-panel-muted,
+  .control-card,
+  .home-tool-card,
+  .resource-card,
+  .resource-start-card,
+  .tool-card-shell,
+  .result-card,
+  .output-card-shell,
+  .home-preview-result,
+  .home-preview-action,
+  .premium-input,
+  .home-product-tab::after {
+    transition: none;
+  }
+}

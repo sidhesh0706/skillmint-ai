@@ -132,6 +132,8 @@ export function ProductWindow({ className }: ProductWindowProps) {
               type="button"
               role="tab"
               key={preview.tab}
+              id={`product-preview-tab-${index}`}
+              aria-controls={`product-preview-panel-${index}`}
               aria-selected={activeTab === index}
               onClick={() => setActiveTab(index)}
               className={clsx(
@@ -153,6 +155,8 @@ export function ProductWindow({ className }: ProductWindowProps) {
 
       <div
         key={activePreview.tab}
+        id={`product-preview-panel-${activeTab}`}
+        aria-labelledby={`product-preview-tab-${activeTab}`}
         className="home-product-pane p-4 sm:p-5"
         role="tabpanel"
       >
