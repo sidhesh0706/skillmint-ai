@@ -3,6 +3,7 @@ import { Clipboard, Wand2 } from "lucide-react";
 import { KeywordChip } from "@/components/keyword-chip";
 import { MotionButton } from "@/components/motion-button";
 import { ScoreMeter } from "@/components/score-meter";
+import { Card } from "@/components/ui/card";
 
 type OutputCardProps = {
   index?: number;
@@ -28,9 +29,7 @@ export function OutputCard({
   className,
 }: OutputCardProps) {
   return (
-    <article
-      className={clsx("output-card-pro output-card-shell p-4", className)}
-    >
+    <Card as="article" className={clsx("p-4", className)}>
       <div className="flex gap-3">
         {typeof index === "number" ? (
           <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">
@@ -105,6 +104,6 @@ export function OutputCard({
           ) : null}
         </div>
       </div>
-    </article>
+    </Card>
   );
 }

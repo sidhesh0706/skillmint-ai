@@ -4,22 +4,9 @@
 
 :root {
   color-scheme: light;
-  background: #f8faf7;
-  --ink: #080b12;
-  --navy: #0e1624;
-  --panel: #111827;
-  --panel-soft: #172033;
-  --surface: #f8faf7;
-  --surface-muted: #eef4ef;
+  background: #f8faf9;
   --text-main: #0f172a;
-  --text-muted: #64748b;
   --mint: #38d9a9;
-  --emerald: #10b981;
-  --cyan: #22d3ee;
-  --amber: #f59e0b;
-  --danger: #ef4444;
-  --glass-border: rgba(148, 163, 184, 0.34);
-  --ring: rgba(56, 217, 169, 0.24);
 }
 
 * {
@@ -33,18 +20,7 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(
-      circle at 12% -8%,
-      rgba(16, 185, 129, 0.08),
-      transparent 24rem
-    ),
-    radial-gradient(
-      circle at 88% 4%,
-      rgba(14, 165, 233, 0.06),
-      transparent 26rem
-    ),
-    linear-gradient(180deg, #fbfcfa 0%, #ffffff 42%, #f7faf8 100%);
+  background: #f8faf9;
   color: var(--text-main);
   overflow-x: hidden;
 }
@@ -94,55 +70,11 @@ main * {
   }
 
   .card-surface {
-    @apply rounded-[1.5rem] border border-slate-200/80 bg-white/[0.96] shadow-soft ring-1 ring-slate-900/[0.03] backdrop-blur;
-  }
-
-  .app-panel {
-    @apply rounded-[1.75rem] border border-slate-200/90 bg-white shadow-[0_28px_80px_rgba(15,23,42,0.11)] ring-1 ring-white;
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 1),
-      rgba(249, 252, 250, 0.96)
-    );
-    max-width: 100%;
-  }
-
-  .app-panel-muted {
-    @apply rounded-[1.5rem] border border-slate-200/90 bg-[#F8FAF8] shadow-[0_8px_24px_rgba(15,23,42,0.055)] ring-1 ring-white/80;
-    max-width: 100%;
+    @apply rounded-xl border border-slate-200 bg-white shadow-sm;
   }
 
   .workspace-product {
     @apply space-y-3;
-  }
-
-  .resume-tool-intro {
-    @apply border-b border-slate-200/80 bg-white py-2.5 sm:py-3;
-  }
-
-  .resume-tool-intro-inner {
-    @apply flex min-w-0 flex-col gap-3 rounded-[1.2rem] border border-slate-200 bg-white px-4 py-3 shadow-[0_12px_34px_rgba(15,23,42,0.06)] sm:flex-row sm:items-center sm:justify-between;
-  }
-
-  .resume-tool-mark {
-    @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-950 text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)];
-  }
-
-  .resume-live-status {
-    @apply inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700;
-  }
-
-  .resume-live-status::before {
-    content: "";
-    @apply h-1.5 w-1.5 rounded-full bg-emerald-500;
-  }
-
-  .resume-tool-signals {
-    @apply hidden shrink-0 items-center gap-1.5 2xl:flex;
-  }
-
-  .resume-tool-signal {
-    @apply inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50/80 px-3 text-xs font-semibold text-slate-600;
   }
 
   .workspace-toolbar {
@@ -640,45 +572,21 @@ main * {
   }
 
   .button-primary {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-white shadow-[0_16px_42px_rgba(8,11,18,0.22)] transition duration-300 hover:-translate-y-0.5 hover:bg-panel hover:shadow-[0_22px_60px_rgba(16,185,129,0.24)] active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-mint-100;
-    background-image: linear-gradient(
-      135deg,
-      #080b12 0%,
-      #132235 68%,
-      #0f766e 145%
-    );
-    background-size: 145% 145%;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors duration-150 hover:bg-slate-800 active:translate-y-px focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
   }
 
   .button-secondary {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-300/90 bg-white/95 px-6 py-3 font-semibold text-ink shadow-[0_8px_24px_rgba(15,23,42,0.07)] transition duration-300 hover:-translate-y-0.5 hover:border-mint-100 hover:bg-white hover:shadow-[0_16px_38px_rgba(16,185,129,0.13)] active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-mint-100;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm transition-colors duration-150 hover:border-slate-400 hover:bg-slate-50 active:translate-y-px focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
   }
 
   .button-primary svg,
   .button-secondary svg {
-    transition: transform 220ms ease;
+    transition: transform 150ms ease;
   }
 
   .button-primary:hover svg,
   .button-secondary:hover svg {
-    transform: translateX(3px);
-  }
-
-  .button-primary:hover {
-    background-position: 100% 100%;
-  }
-
-  .button-ghost {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-5 py-2.5 font-semibold text-white shadow-line backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/[0.14] active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-white/20;
-  }
-
-  .gloss-panel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1.5rem;
-    border: 1px solid #e2e8f0;
-    background: #ffffff;
-    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+    transform: translateX(2px);
   }
 
   .premium-shell {
@@ -698,69 +606,6 @@ main * {
       linear-gradient(180deg, #f8faf8 0%, #ffffff 48%, #f7faf8 100%);
   }
 
-  .control-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1.25rem;
-    border: 1px solid #e2e8f0;
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 1),
-      rgba(248, 252, 250, 0.98)
-    );
-    box-shadow:
-      0 18px 48px rgba(15, 23, 42, 0.085),
-      inset 0 1px 0 rgba(255, 255, 255, 0.94);
-    transition:
-      border-color 240ms ease,
-      box-shadow 240ms ease,
-      transform 240ms ease;
-  }
-
-  .control-card::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 3px;
-    background: #10b981;
-    opacity: 0.55;
-  }
-
-  .control-card:hover {
-    border-color: rgba(16, 185, 129, 0.28);
-    box-shadow:
-      0 24px 64px rgba(15, 23, 42, 0.095),
-      inset 0 1px 0 rgba(255, 255, 255, 0.96);
-  }
-
-  .premium-input {
-    @apply mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-text-main outline-none shadow-[inset_0_1px_2px_rgba(15,23,42,0.025),0_1px_0_rgba(255,255,255,0.9)] transition duration-200 placeholder:text-slate-400 hover:border-slate-400 focus:border-emerald-500 focus:shadow-[0_8px_22px_rgba(16,185,129,0.09)] focus:ring-4 focus:ring-emerald-100;
-  }
-
-  textarea.premium-input {
-    @apply min-h-28 leading-6;
-  }
-
-  select.premium-input {
-    @apply cursor-pointer pr-9;
-  }
-
-  .output-card-pro {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1.25rem;
-    border: 1px solid #e2e8f0;
-    background: linear-gradient(145deg, #ffffff 0%, #ffffff 72%, #f5fbf8 100%);
-    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.085);
-    animation: fade-in-up 560ms ease-out both;
-  }
-
-  .output-card-pro:hover {
-    border-color: rgba(16, 185, 129, 0.36);
-    box-shadow: 0 22px 64px rgba(15, 23, 42, 0.1);
-    transform: translateY(-2px);
-  }
-
   .composer-step {
     @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white shadow-[0_10px_24px_rgba(8,11,18,0.18)];
   }
@@ -776,10 +621,6 @@ main * {
 
   .preset-selected-label {
     @apply rounded-full border border-emerald-200 bg-white px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-emerald-700;
-  }
-
-  .result-surface {
-    @apply rounded-[1.35rem] border border-slate-200 bg-white shadow-[0_20px_58px_rgba(15,23,42,0.09)] ring-1 ring-slate-900/[0.025];
   }
 
   .surface-band {
@@ -812,87 +653,6 @@ main * {
       0 10px 30px rgba(15, 23, 42, 0.075),
       inset 0 1px 0 rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(14px);
-  }
-
-  .workflow-card,
-  .feature-card,
-  .interactive-card {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(203, 213, 225, 0.88);
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(247, 250, 248, 0.96)
-    );
-    box-shadow:
-      0 14px 38px rgba(15, 23, 42, 0.075),
-      inset 0 1px 0 rgba(255, 255, 255, 0.95);
-    transition:
-      transform 260ms ease,
-      border-color 260ms ease,
-      box-shadow 260ms ease;
-  }
-
-  .workflow-card::after,
-  .feature-card::after,
-  .interactive-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      115deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.82) 48%,
-      transparent 74%
-    );
-    transform: translateX(-125%);
-    transition: transform 600ms ease;
-  }
-
-  .workflow-card:hover,
-  .feature-card:hover,
-  .interactive-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(16, 185, 129, 0.28);
-    box-shadow:
-      0 26px 68px rgba(15, 23, 42, 0.11),
-      0 12px 28px rgba(16, 185, 129, 0.08);
-  }
-
-  .workflow-card:hover::after,
-  .feature-card:hover::after,
-  .interactive-card:hover::after {
-    transform: translateX(125%);
-  }
-
-  .workflow-card::before,
-  .feature-card::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto auto 1.25rem;
-    width: 3.5rem;
-    height: 2px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #10b981, rgba(34, 211, 238, 0.45));
-    opacity: 0.58;
-    transition:
-      width 260ms ease,
-      opacity 260ms ease;
-  }
-
-  .workflow-card:hover::before,
-  .feature-card:hover::before {
-    width: 5rem;
-    opacity: 0.9;
-  }
-
-  .feature-icon {
-    background: linear-gradient(145deg, #ecfdf5, #ffffff);
-    box-shadow:
-      0 12px 28px rgba(16, 185, 129, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.94);
   }
 
   .transformation-panel {
@@ -1113,20 +873,7 @@ main * {
   }
 
   .resource-card {
-    @apply relative flex min-h-[17rem] flex-col overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white p-4 shadow-[0_10px_30px_rgba(15,23,42,0.055)] transition duration-200 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_18px_42px_rgba(15,23,42,0.085)];
-  }
-
-  .resource-card::before {
-    content: "";
-    @apply absolute inset-x-0 top-0 h-0.5 bg-emerald-500 opacity-0 transition-opacity duration-200;
-  }
-
-  .resource-card:hover::before {
-    @apply opacity-100;
-  }
-
-  .resource-category {
-    @apply rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-700;
+    @apply relative flex min-h-[17rem] flex-col overflow-hidden p-4;
   }
 
   .resource-card-icon {
@@ -1276,28 +1023,6 @@ main * {
         transparent 26rem
       ),
       linear-gradient(180deg, #f7faf8 0%, #ffffff 36%, #f7faf8 100%);
-  }
-
-  .cta-panel-premium {
-    position: relative;
-    overflow: hidden;
-    color: white;
-    border: 1px solid rgba(16, 185, 129, 0.26);
-    background:
-      radial-gradient(
-        circle at 12% 0%,
-        rgba(16, 185, 129, 0.34),
-        transparent 18rem
-      ),
-      radial-gradient(
-        circle at 96% 100%,
-        rgba(14, 165, 233, 0.18),
-        transparent 20rem
-      ),
-      linear-gradient(135deg, #0b1220, #111c2d 62%, #12362f);
-    box-shadow:
-      0 30px 90px rgba(15, 23, 42, 0.24),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
   .home-workflow-grid {
@@ -1464,64 +1189,6 @@ main * {
     box-shadow: 0 30px 90px rgba(15, 23, 42, 0.2);
   }
 
-  .gloss-panel > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  .gloss-content {
-    position: relative;
-    z-index: 1;
-  }
-
-  .hover-gloss {
-    transition:
-      transform 300ms ease,
-      border-color 300ms ease,
-      box-shadow 300ms ease,
-      background 300ms ease;
-  }
-
-  .hover-gloss:hover {
-    transform: translateY(-4px);
-    border-color: rgba(31, 201, 153, 0.35);
-    box-shadow:
-      0 34px 96px rgba(15, 118, 110, 0.14),
-      inset 0 1px 0 rgba(255, 255, 255, 0.92);
-  }
-
-  .tool-card-animated {
-    animation: fade-in-up 620ms ease-out both;
-  }
-
-  .tool-card-animated:nth-child(2) {
-    animation-delay: 70ms;
-  }
-
-  .tool-card-animated:nth-child(3) {
-    animation-delay: 140ms;
-  }
-
-  .tool-card-animated:nth-child(4) {
-    animation-delay: 210ms;
-  }
-
-  .tool-card-animated:nth-child(5) {
-    animation-delay: 280ms;
-  }
-
-  .tool-card-animated:nth-child(6) {
-    animation-delay: 350ms;
-  }
-
-  .tool-card-animated:nth-child(7) {
-    animation-delay: 420ms;
-  }
-
-  .tool-card-animated:nth-child(8) {
-    animation-delay: 490ms;
-  }
-
   .fade-in-up {
     animation: fade-in-up 680ms ease-out both;
   }
@@ -1555,25 +1222,6 @@ main * {
 
   .section-reveal-delay-md {
     animation-delay: 180ms;
-  }
-
-  .scan-line {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .scan-line::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    transform: translateX(-120%);
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(125, 211, 252, 0.18),
-      transparent
-    );
-    animation: scan-pass 4.5s ease-in-out infinite;
   }
 
   .keyword-chip {
@@ -2872,7 +2520,6 @@ main * {
   .fade-in-up,
   .fade-in-up-delayed,
   .section-reveal,
-  .scan-line::after,
   .keyword-chip,
   .score-fill,
   .success-pulse,
@@ -2885,19 +2532,9 @@ main * {
     animation: none;
   }
 
-  .tool-card-animated {
-    animation: none;
-  }
 }
 
 @media (max-width: 639px) {
-  .app-panel,
-  .gloss-panel,
-  .control-card,
-  .output-card-pro {
-    max-width: calc(100vw - 2rem);
-  }
-
   h1,
   h2,
   h3,
@@ -2919,10 +2556,6 @@ main * {
 
   .workspace-stat dd {
     font-size: 0.75rem;
-  }
-
-  .resume-tool-intro-inner {
-    padding: 0.75rem;
   }
 
   .workspace-columns {
@@ -2968,19 +2601,9 @@ main * {
 }
 
 @media (max-width: 640px) {
-  .gloss-panel {
-    border-radius: 1.25rem;
-  }
-
   .button-primary,
-  .button-secondary,
-  .button-ghost {
+  .button-secondary {
     width: 100%;
-  }
-
-  .output-card-pro:hover,
-  .hover-gloss:hover {
-    transform: none;
   }
 }
 
@@ -2991,9 +2614,7 @@ main * {
     overflow: hidden;
     border-color: #d8e1e5;
     background: #ffffff;
-    box-shadow:
-      0 1px 0 #ffffff inset,
-      0 7px 18px rgba(15, 23, 42, 0.045);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
   .score-meter-track {
@@ -3027,127 +2648,12 @@ main * {
     opacity: 0.65;
   }
 
-  .keyword-chip-premium {
-    min-height: 1.9rem;
-    border-color: #bfe6d7;
-    background: #f2faf6;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.035);
-    transition:
-      transform 170ms ease,
-      border-color 170ms ease,
-      box-shadow 170ms ease;
-  }
-
-  .keyword-chip-premium::before {
-    content: "";
-    width: 0.32rem;
-    height: 0.32rem;
-    margin-right: 0.42rem;
-    border-radius: 999px;
-    background: #10b981;
-  }
-
-  .keyword-chip-premium:hover {
-    transform: translateY(-1px);
-    border-color: #84d7b8;
-    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.055);
-  }
-
-  .motion-button {
-    min-width: max-content;
-    letter-spacing: -0.01em;
-    transition:
-      transform 170ms ease,
-      border-color 170ms ease,
-      background-color 170ms ease,
-      color 170ms ease,
-      box-shadow 170ms ease;
-  }
-
-  .motion-button:hover {
-    transform: translateY(-2px);
-  }
-
-  .motion-button:active {
-    transform: translateY(0) scale(0.98);
-  }
-
-  .motion-button-primary {
-    background: #101827;
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.12) inset,
-      0 12px 26px rgba(15, 23, 42, 0.18);
-  }
-
-  .motion-button-secondary {
-    border-color: #cfd9df;
-    background: #ffffff;
-    box-shadow:
-      0 1px 0 #ffffff inset,
-      0 7px 18px rgba(15, 23, 42, 0.05);
-  }
-
-  .motion-button-secondary:hover {
-    border-color: #9bdac2;
-    color: #047857;
-  }
-
-  .motion-button:focus-visible {
-    outline: 2px solid #10b981;
-    outline-offset: 3px;
-    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.12);
-  }
-
-  .tool-card-shell,
-  .resource-card-shell,
-  .output-card-shell {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .tool-card-shell::after,
-  .resource-card-shell::after,
-  .output-card-shell::after {
-    content: "";
-    position: absolute;
-    inset: 0 auto auto 1.25rem;
-    width: 3.5rem;
-    height: 2px;
-    border-radius: 999px;
-    background: #10b981;
-    opacity: 0.72;
-    transition:
-      width 190ms ease,
-      opacity 190ms ease;
-  }
-
-  .tool-card-shell:hover::after,
-  .resource-card-shell:hover::after,
-  .output-card-shell:hover::after {
-    width: 5.25rem;
-    opacity: 1;
-  }
-
-  .tool-card-cta {
-    min-height: 2.65rem;
-    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.11);
-  }
-
-  .tool-card-cta svg {
-    transition: transform 170ms ease;
-  }
-
-  .tool-card-cta:hover svg {
-    transform: translateX(3px);
-  }
-
   .resource-card-action-row {
     margin-top: auto;
     padding-top: 1rem;
     border-top: 1px solid #e2e8f0;
   }
 
-  .output-card-shell,
   .empty-state-shell,
   .loading-state-shell,
   .insight-panel-shell {
@@ -3155,21 +2661,6 @@ main * {
     box-shadow:
       0 1px 0 #ffffff inset,
       0 16px 38px rgba(15, 23, 42, 0.075);
-  }
-
-  .output-card-shell {
-    transition:
-      transform 180ms ease,
-      border-color 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  .output-card-shell:hover {
-    transform: translateY(-3px);
-    border-color: #a9ddc9;
-    box-shadow:
-      0 1px 0 #ffffff inset,
-      0 22px 48px rgba(15, 23, 42, 0.1);
   }
 
   .animated-score-badge {
@@ -3193,22 +2684,8 @@ main * {
   }
 }
 
-@media (max-width: 640px) {
-  .motion-button,
-  .tool-card-cta {
-    min-width: 0;
-    min-height: 2.75rem;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .keyword-chip-premium,
-  .motion-button,
-  .tool-card-cta svg,
-  .tool-card-shell::after,
-  .resource-card-shell::after,
-  .output-card-shell,
-  .output-card-shell::after {
-    transition: none;
+  .keyword-chip {
+    animation: none;
   }
 }

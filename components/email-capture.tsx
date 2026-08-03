@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { trackEvent } from "@/lib/analytics";
 
 type EmailCaptureProps = {
@@ -81,20 +83,17 @@ export function EmailCapture({
           </div>
           <form onSubmit={handleSubmit} className="min-w-0 w-full">
             <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
-              <input
+              <Input
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
                 aria-label="Email address"
-                className="min-h-11 w-full min-w-0 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100"
+                className="min-h-11 min-w-0"
               />
-              <button
-                type="submit"
-                className="button-primary min-h-11 px-4 py-2 text-sm"
-              >
+              <Button type="submit" size="sm">
                 Join free
-              </button>
+              </Button>
             </div>
             {message ? (
               <p className="mt-2 text-sm font-semibold text-mint-700">
@@ -126,16 +125,15 @@ export function EmailCapture({
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="flex flex-col gap-3 sm:flex-row">
-              <input
+              <Input
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
-                className="min-h-12 flex-1 rounded-full border border-slate-300 bg-white px-5 py-3 text-ink outline-none transition placeholder:text-slate-400 focus:border-mint-600 focus:ring-4 focus:ring-mint-100"
+                aria-label="Email address"
+                className="min-h-11 flex-1"
               />
-              <button type="submit" className="button-primary">
-                Sign up
-              </button>
+              <Button type="submit">Sign up</Button>
             </div>
             {message ? (
               <p className="text-sm font-semibold text-mint-700">{message}</p>

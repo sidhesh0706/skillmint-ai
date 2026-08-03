@@ -34,7 +34,7 @@ export function ScoreMeter({
     <div
       data-score={safeValue}
       className={clsx(
-        "score-meter rounded-2xl border border-slate-200 bg-white/90 shadow-line",
+        "score-meter rounded-lg border border-slate-200 bg-white shadow-sm",
         strengthClass,
         compact ? "p-2.5" : "p-3.5",
         className,
@@ -63,7 +63,7 @@ export function ScoreMeter({
         aria-valuetext={`${safeValue} out of 100, ${statusText}`}
       >
         <div
-          className="score-meter-fill score-fill h-full rounded-full bg-gradient-to-r from-mint-500 via-emerald to-cyan transition-[width] duration-700"
+          className="score-meter-fill score-fill h-full rounded-full bg-emerald-500 transition-[width] duration-700"
           style={{ width: `${safeValue}%` }}
         />
       </div>

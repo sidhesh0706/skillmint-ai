@@ -1,7 +1,9 @@
-import Link from "next/link";
-import { ArrowRight, Bell, ThumbsUp } from "lucide-react";
+import { Bell, ThumbsUp } from "lucide-react";
 import { clsx } from "clsx";
+import { MotionButton } from "@/components/motion-button";
 import { ToolStatusBadge } from "@/components/tool-status-badge";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { getToolHref, type ToolConfig } from "@/data/tool-config";
 
 type ToolCardProps = {
@@ -13,45 +15,39 @@ export function ToolCard({ tool }: ToolCardProps) {
   const isLive = tool.status === "live";
 
   return (
-    <article
+    <Card
+      as="article"
+      interactive
       className={clsx(
-        "tool-card-shell tool-card-animated hover-gloss group flex h-full min-h-[24rem] flex-col overflow-hidden rounded-[1.75rem] border p-5 shadow-[0_24px_84px_rgba(23,32,51,0.10)] backdrop-blur-xl transition duration-300 sm:p-6",
-        isLive
-          ? "border-mint-100/90 bg-[radial-gradient(circle_at_20%_0%,rgba(31,201,153,0.18),transparent_16rem),linear-gradient(180deg,rgba(255,255,255,0.94),rgba(239,253,248,0.72))]"
-          : "border-slate-200/90 bg-[radial-gradient(circle_at_20%_0%,rgba(56,189,248,0.12),transparent_16rem),linear-gradient(180deg,rgba(255,255,255,0.92),rgba(248,250,252,0.76))]",
+        "group flex h-full min-h-[24rem] flex-col overflow-hidden p-5 sm:p-6",
+        isLive && "border-emerald-200",
       )}
     >
-      <div
-        className={clsx(
-          "pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-mint-300 to-transparent transition duration-300",
-          isLive ? "opacity-100" : "opacity-40",
-        )}
-      />
-      <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-mint-300/10 blur-3xl transition duration-500 group-hover:bg-cyan-300/25" />
-      <div className="pointer-events-none absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-300/70 to-transparent" />
-      <div className="gloss-content flex items-start justify-between gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-ink via-slate-800 to-mint-700 text-white shadow-line transition duration-300 group-hover:scale-105 group-hover:shadow-[0_0_34px_rgba(31,201,153,0.22)]">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 bg-slate-950 text-white shadow-sm">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </div>
         <ToolStatusBadge status={tool.status} />
       </div>
 
-      <div className="gloss-content mt-6 flex flex-1 flex-col">
-        <p className="text-xs font-semibold uppercase text-mint-700">
+      <div className="mt-5 flex flex-1 flex-col">
+        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-emerald-700">
           {tool.category}
         </p>
-        <h3 className="text-lg font-semibold text-ink">{tool.name}</h3>
+        <h3 className="mt-1 text-lg font-semibold text-slate-950">
+          {tool.name}
+        </h3>
         <p className="mt-3 flex-1 leading-7 text-slate-600">
           {tool.shortDescription}
         </p>
-        <div className="scan-line mt-5 rounded-2xl border border-slate-200 bg-white/82 p-3 shadow-[0_16px_50px_rgba(23,32,51,0.08)]">
+        <div className="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-3">
           <div className="flex items-center justify-between gap-3">
             <span className="h-2 w-24 overflow-hidden rounded-full bg-slate-100">
               <span
                 className={clsx(
                   "block h-full rounded-full",
                   isLive
-                    ? "w-4/5 bg-gradient-to-r from-mint-500 to-cyan-300"
+                    ? "w-4/5 bg-emerald-500"
                     : "w-2/5 bg-slate-300",
                 )}
               />
@@ -62,44 +58,42 @@ export function ToolCard({ tool }: ToolCardProps) {
           </div>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {tool.quickFacts.slice(0, 3).map((fact, index) => (
-              <span
+              <Badge
                 key={fact}
-                className="keyword-chip rounded-full bg-mint-50 px-2.5 py-1 text-[11px] font-semibold text-mint-700"
+                variant={isLive ? "success" : "neutral"}
+                className="keyword-chip text-[11px]"
                 style={{ animationDelay: `${index * 80}ms` }}
               >
                 {fact}
-              </span>
+              </Badge>
             ))}
           </div>
         </div>
-        <Link
+        <MotionButton
           href={getToolHref(tool)}
-          className={clsx(
-            "tool-card-cta mt-6 inline-flex items-center gap-2 self-start rounded-full px-4 py-2 text-sm font-semibold transition duration-300",
-            isLive
-              ? "bg-ink text-white hover:-translate-y-0.5 hover:bg-slate-800"
-              : "bg-slate-100 text-slate-600 hover:-translate-y-0.5 hover:bg-slate-200",
-          )}
+          variant={isLive ? "primary" : "secondary"}
+          compact
+          showArrow
+          className="mt-6 self-start"
         >
           {isLive ? "Open tool" : "View details"}
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
+        </MotionButton>
         {!isLive ? (
           <div className="mt-3 flex gap-2">
-            <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white/75 px-3 py-1.5 text-xs font-semibold text-slate-600">
+            <Badge>
               <Bell className="h-3.5 w-3.5 text-mint-700" aria-hidden="true" />
               Notify me
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white/75 px-3 py-1.5 text-xs font-semibold text-slate-600">
+            </Badge>
+            <Badge>
               <ThumbsUp
                 className="h-3.5 w-3.5 text-mint-700"
                 aria-hidden="true"
               />
               Vote
-            </span>
+            </Badge>
           </div>
         ) : null}
       </div>
-    </article>
+    </Card>
   );
 }

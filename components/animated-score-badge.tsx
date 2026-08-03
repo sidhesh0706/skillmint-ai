@@ -1,5 +1,7 @@
 import { clsx } from "clsx";
 
+import { Badge } from "@/components/ui/badge";
+
 type AnimatedScoreBadgeProps = {
   score: string | number;
   label?: string;
@@ -12,15 +14,13 @@ export function AnimatedScoreBadge({
   className,
 }: AnimatedScoreBadgeProps) {
   return (
-    <div
-      className={clsx(
-        "animated-score-badge inline-flex items-center gap-2 rounded-full border border-mint-100 bg-mint-50 px-3 py-1.5 text-xs font-semibold text-mint-700 shadow-[0_12px_30px_rgba(31,201,153,0.12)]",
-        className,
-      )}
+    <Badge
+      variant="success"
+      className={clsx("animated-score-badge gap-2", className)}
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-mint-300 shadow-[0_0_14px_rgba(31,201,153,0.85)]" />
+      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
       {score}
-      <span className="text-mint-700/65">{label}</span>
-    </div>
+      <span className="text-emerald-700/70">{label}</span>
+    </Badge>
   );
 }

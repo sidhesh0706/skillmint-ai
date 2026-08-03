@@ -17,6 +17,10 @@ import { AffiliateRecommendationCard } from "@/components/affiliate-recommendati
 import { EmailCapture } from "@/components/email-capture";
 import { MotionButton } from "@/components/motion-button";
 import { OutputActionBar } from "@/components/output-action-bar";
+import { Input, controlStyles } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { ComposerPanel } from "@/components/tool-workspace/composer-panel";
 import { ComposerStep } from "@/components/tool-workspace/composer-step";
 import { EmptyPreview } from "@/components/tool-workspace/empty-preview";
@@ -212,16 +216,14 @@ function renderField(
   value: string,
   onChange: (name: string, value: string) => void,
 ) {
-  const commonClasses = "premium-input";
-
   if (field.type === "textarea") {
     return (
-      <textarea
+      <Textarea
         value={value}
         onChange={(event) => onChange(field.name, event.target.value)}
         placeholder={field.placeholder}
         rows={field.rows || 5}
-        className={`${commonClasses} resize-none`}
+        className="mt-2 resize-none"
       />
     );
   }
@@ -231,7 +233,7 @@ function renderField(
       <select
         value={value}
         onChange={(event) => onChange(field.name, event.target.value)}
-        className={commonClasses}
+        className={`${controlStyles} mt-2`}
       >
         {field.options?.map((option) => (
           <option key={option.value} value={option.value}>
@@ -243,11 +245,11 @@ function renderField(
   }
 
   return (
-    <input
+    <Input
       value={value}
       onChange={(event) => onChange(field.name, event.target.value)}
       placeholder={field.placeholder}
-      className={commonClasses}
+      className="mt-2"
     />
   );
 }
@@ -1290,7 +1292,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                   />
 
                   {generated.whatToAdd.length ? (
-                    <section className="output-card-pro p-4">
+                    <Card as="section" className="p-4">
                       <h3 className="text-sm font-semibold uppercase text-mint-700">
                         What to add if truthful
                       </h3>
@@ -1299,25 +1301,23 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                           <li key={item}>- {item}</li>
                         ))}
                       </ul>
-                    </section>
+                    </Card>
                   ) : null}
 
                   {generated.tips.length ? (
-                    <section className="gloss-panel p-4">
-                      <div className="gloss-content">
-                        <h3 className="text-sm font-semibold uppercase text-slate-700">
-                          Improvement tips
-                        </h3>
-                        <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
-                          {generated.tips.map((tip) => (
-                            <li key={tip}>- {tip}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </section>
+                    <Card as="section" className="p-4">
+                      <h3 className="text-sm font-semibold uppercase text-slate-700">
+                        Improvement tips
+                      </h3>
+                      <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+                        {generated.tips.map((tip) => (
+                          <li key={tip}>- {tip}</li>
+                        ))}
+                      </ul>
+                    </Card>
                   ) : null}
 
-                  <section className="output-card-pro p-4">
+                  <Card as="section" className="p-4">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                       <div>
                         <h3 className="flex items-center gap-2 text-sm font-semibold uppercase text-mint-700">
@@ -1330,16 +1330,17 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                         </p>
                       </div>
                       <div className="flex flex-col gap-2 sm:flex-row">
-                        <button
+                        <Button
                           type="button"
                           onClick={() =>
                             copyGeneratorLink("Share link copied.")
                           }
-                          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-mint-100 hover:bg-mint-50 hover:text-mint-700"
+                          variant="secondary"
+                          size="sm"
                         >
                           <Clipboard className="h-4 w-4" aria-hidden="true" />
                           Copy link
-                        </button>
+                        </Button>
                         <button
                           type="button"
                           onClick={() => {
@@ -1358,7 +1359,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                         </button>
                       </div>
                     </div>
-                  </section>
+                  </Card>
 
                   <EmailCapture compact location="tool_output_capture" />
 
@@ -1456,7 +1457,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                 </div>
               ) : null}
 
-              <section className="mt-6 output-card-pro p-4">
+              <Card as="section" className="mt-6 p-4">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p className="text-sm font-semibold uppercase text-mint-700">
@@ -1470,22 +1471,23 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                       rewrite it, and explain what changed.
                     </p>
                   </div>
-                  <button
+                  <Button
                     type="button"
                     onClick={handleRewriteExisting}
                     disabled={isRewriting}
-                    className="button-secondary min-h-10 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+                    variant="secondary"
+                    size="sm"
                   >
                     <Wand2 className="h-4 w-4" aria-hidden="true" />
                     {isRewriting ? "Rewriting..." : "Rewrite"}
-                  </button>
+                  </Button>
                 </div>
-                <textarea
+                <Textarea
                   value={existingBullet}
                   onChange={(event) => setExistingBullet(event.target.value)}
                   rows={3}
                   placeholder="e.g. Responsible for creating weekly reports for sales team."
-                  className="premium-input mt-4 min-h-24 resize-none px-4 py-3"
+                  className="mt-4 min-h-24 resize-none px-4 py-3"
                 />
                 {rewriteResult ? (
                   <RewriteComparison
@@ -1496,7 +1498,7 @@ export function ToolWorkspace({ slug }: ToolWorkspaceProps) {
                     }}
                   />
                 ) : null}
-              </section>
+              </Card>
 
               <HistoryPanel
                 items={history}

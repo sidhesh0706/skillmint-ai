@@ -2,6 +2,8 @@ import { clsx } from "clsx";
 import { type LucideIcon } from "lucide-react";
 import type { CSSProperties } from "react";
 import { MotionButton } from "@/components/motion-button";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 
 type ProductCardProps = {
   title: string;
@@ -40,40 +42,26 @@ export function ProductCard({
     : "Join the waitlist preview";
 
   return (
-    <article
+    <Card
+      as="article"
+      interactive
       className={clsx(
-        "group interactive-card relative flex h-full min-h-[19rem] flex-col rounded-[1.65rem] p-5",
-        isLive
-          ? "border-emerald-200/80 bg-[linear-gradient(145deg,#ffffff,#f1fbf7)]"
-          : "border-slate-200/90 bg-[linear-gradient(180deg,#ffffff,#fafafa)]",
+        "group relative flex h-full min-h-[19rem] flex-col p-5",
+        isLive && "border-emerald-200",
         className,
       )}
       style={style}
     >
-      <div
-        className={clsx(
-          "pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent to-transparent",
-          isLive ? "via-mint-500/70" : "via-slate-300/80",
-        )}
-      />
-      <div className="pointer-events-none absolute -right-16 -top-20 h-40 w-40 rounded-full bg-mint-100/0 blur-3xl transition duration-500 group-hover:bg-mint-100/60" />
       <div className="flex items-start justify-between gap-4">
         <div
           className={clsx(
-            "flex h-12 w-12 items-center justify-center rounded-2xl shadow-crisp transition duration-300 group-hover:scale-105",
+            "flex h-11 w-11 items-center justify-center rounded-lg border",
             isLive ? "bg-ink text-white" : "bg-slate-100 text-slate-700",
           )}
         >
           <Icon className="h-5 w-5" aria-hidden="true" />
         </div>
-        <span
-          className={clsx(
-            "inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-semibold",
-            isLive
-              ? "border-mint-100 bg-mint-50 text-mint-700"
-              : "border-slate-200 bg-white text-slate-600",
-          )}
-        >
+        <Badge variant={isLive ? "success" : "neutral"}>
           <span
             className={clsx(
               "h-1.5 w-1.5 rounded-full",
@@ -81,7 +69,7 @@ export function ProductCard({
             )}
           />
           {statusLabels[status]}
-        </span>
+        </Badge>
       </div>
 
       <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-mint-700">
@@ -94,22 +82,20 @@ export function ProductCard({
         {description}
       </p>
 
-      <div className="mt-4 rounded-2xl border border-slate-200 bg-white px-3 py-2 shadow-line">
+      <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
           Related next step
         </p>
         <p className="mt-1 text-sm font-semibold text-slate-800">{nextStep}</p>
       </div>
 
-      <div className="mt-5 rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
+      <div className="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-3">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-24 overflow-hidden rounded-full bg-white">
+          <span className="h-2 w-24 overflow-hidden rounded-full bg-slate-200">
             <span
               className={clsx(
-                "score-fill block h-full rounded-full bg-gradient-to-r",
-                isLive
-                  ? "w-4/5 from-mint-500 to-cyan"
-                  : "w-2/3 from-slate-300 to-slate-200",
+                "score-fill block h-full rounded-full",
+                isLive ? "w-4/5 bg-emerald-500" : "w-2/3 bg-slate-300",
               )}
             />
           </span>
@@ -120,12 +106,9 @@ export function ProductCard({
         {preview.length ? (
           <div className="mt-3 flex flex-wrap gap-1.5">
             {preview.slice(0, 3).map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600"
-              >
+              <Badge key={item} className="text-[11px]">
                 {item}
-              </span>
+              </Badge>
             ))}
           </div>
         ) : null}
@@ -140,6 +123,6 @@ export function ProductCard({
       >
         {cta}
       </MotionButton>
-    </article>
+    </Card>
   );
 }

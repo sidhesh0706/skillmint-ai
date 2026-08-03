@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import type { CSSProperties, ReactNode } from "react";
+import { Badge } from "@/components/ui/badge";
 
 type KeywordChipProps = {
   children: ReactNode;
@@ -15,17 +16,16 @@ export function KeywordChip({
   style,
 }: KeywordChipProps) {
   return (
-    <span
+    <Badge
       style={style}
+      variant={dark ? "neutral" : "success"}
       className={clsx(
-        "keyword-chip keyword-chip-premium inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-semibold",
-        dark
-          ? "border-slate-200 bg-white/85 text-slate-700"
-          : "border-mint-100 bg-mint-50 text-mint-700",
+        "keyword-chip",
+        dark && "bg-white text-slate-700",
         className,
       )}
     >
       {children}
-    </span>
+    </Badge>
   );
 }

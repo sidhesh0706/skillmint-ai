@@ -1,7 +1,6 @@
-import { clsx } from "clsx";
-import Link from "next/link";
 import { ArrowRight, Loader2, type LucideIcon } from "lucide-react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 
 type MotionButtonProps = {
   children: ReactNode;
@@ -27,23 +26,6 @@ export function MotionButton({
   type = "button",
   ...buttonProps
 }: MotionButtonProps) {
-  const classes = clsx(
-    "motion-button group inline-flex items-center justify-center gap-2 rounded-full font-semibold transition duration-300",
-    `motion-button-${variant}`,
-    "focus:outline-none focus:ring-4 active:translate-y-0",
-    compact ? "min-h-10 px-4 py-2 text-sm" : "min-h-12 px-6 py-3",
-    variant === "primary" &&
-      "bg-ink text-white shadow-[0_16px_42px_rgba(8,11,18,0.20)] hover:-translate-y-0.5 hover:bg-panel hover:shadow-[0_22px_60px_rgba(16,185,129,0.18)] focus:ring-mint-100",
-    variant === "secondary" &&
-      "border border-slate-300 bg-white/90 text-ink shadow-line hover:-translate-y-0.5 hover:border-slate-400 hover:bg-white hover:shadow-soft focus:ring-mint-100",
-    variant === "ghost" &&
-      "border border-white/15 bg-white/[0.08] text-white shadow-line backdrop-blur hover:-translate-y-0.5 hover:bg-white/[0.14] focus:ring-white/20",
-    variant === "danger" &&
-      "border border-red-200 bg-red-50 text-red-700 hover:-translate-y-0.5 hover:bg-red-100 focus:ring-red-100",
-    (disabled || loading) &&
-      "pointer-events-none cursor-not-allowed opacity-60 hover:translate-y-0",
-    className,
-  );
   const content = (
     <>
       {loading ? (
@@ -55,40 +37,45 @@ export function MotionButton({
       {children}
       {showArrow ? (
         <ArrowRight
-          className="h-4 w-4 transition duration-300 group-hover:translate-x-0.5"
+          className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
           aria-hidden="true"
         />
       ) : null}
     </>
   );
 
+  const buttonVariant =
+    variant === "danger" ? "secondary" : variant === "ghost" ? "ghost" : variant;
+  const dangerClasses =
+    variant === "danger"
+      ? "border-red-200 bg-red-50 text-red-700 hover:border-red-300 hover:bg-red-100"
+      : undefined;
+
   if (href) {
     return (
-      <Link
+      <Button
         href={href}
-        className={classes}
-        aria-disabled={disabled || loading}
-        tabIndex={disabled || loading ? -1 : undefined}
-        onClick={(event) => {
-          if (disabled || loading) {
-            event.preventDefault();
-          }
-        }}
+        variant={buttonVariant}
+        size={compact ? "sm" : "md"}
+        className={`${dangerClasses || ""} ${className || ""}`}
+        disabled={disabled || loading}
       >
         {content}
-      </Link>
+      </Button>
     );
   }
 
   return (
-    <button
+    <Button
       type={type}
       disabled={disabled || loading}
       aria-busy={loading}
-      className={classes}
+      variant={buttonVariant}
+      size={compact ? "sm" : "md"}
+      className={`${dangerClasses || ""} ${className || ""}`}
       {...buttonProps}
     >
       {content}
-    </button>
+    </Button>
   );
 }

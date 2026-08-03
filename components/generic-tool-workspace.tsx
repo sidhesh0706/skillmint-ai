@@ -19,6 +19,8 @@ import { EmailCapture } from "@/components/email-capture";
 import { KeywordChip } from "@/components/keyword-chip";
 import { MotionButton } from "@/components/motion-button";
 import { ScoreMeter } from "@/components/score-meter";
+import { Input, controlStyles } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ComposerStep } from "@/components/tool-workspace/composer-step";
 import { PurposeLoadingState } from "@/components/generic-tool-workspace/purpose-loading-state";
 import { PurposePreview } from "@/components/generic-tool-workspace/purpose-preview";
@@ -61,18 +63,17 @@ function renderField(
   onChange: (name: string, value: string) => void,
   optional: boolean,
 ) {
-  const baseClass = styles.fieldControl;
   const id = `purpose-field-${field.name}`;
 
   if (field.type === "textarea") {
     return (
-      <textarea
+      <Textarea
         id={id}
         value={value}
         onChange={(event) => onChange(field.name, event.target.value)}
         placeholder={field.placeholder}
         rows={field.rows || 5}
-        className={`${baseClass} ${styles.textarea}`}
+        className="mt-2"
         aria-required={!optional}
       />
     );
@@ -84,7 +85,7 @@ function renderField(
         id={id}
         value={value}
         onChange={(event) => onChange(field.name, event.target.value)}
-        className={baseClass}
+        className={`${controlStyles} mt-2`}
         aria-required={!optional}
       >
         {field.options?.map((option) => (
@@ -97,12 +98,12 @@ function renderField(
   }
 
   return (
-    <input
+    <Input
       id={id}
       value={value}
       onChange={(event) => onChange(field.name, event.target.value)}
       placeholder={field.placeholder}
-      className={baseClass}
+      className="mt-2"
       aria-required={!optional}
     />
   );

@@ -1,6 +1,5 @@
-import { clsx } from "clsx";
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 
 type GradientButtonProps = {
   children: ReactNode;
@@ -19,35 +18,27 @@ export function GradientButton({
   disabled,
   onClick,
 }: GradientButtonProps) {
-  const classes = clsx("button-primary motion-button", className);
-
   if (href) {
     return (
-      <Link
+      <Button
         href={href}
-        className={classes}
-        aria-disabled={disabled}
-        tabIndex={disabled ? -1 : undefined}
-        onClick={(event) => {
-          if (disabled) {
-            event.preventDefault();
-          }
-        }}
+        className={className}
+        disabled={disabled}
       >
         {children}
-      </Link>
+      </Button>
     );
   }
 
   return (
-    <button
+    <Button
       type={type}
       disabled={disabled}
       aria-disabled={disabled}
       onClick={onClick}
-      className={classes}
+      className={className}
     >
       {children}
-    </button>
+    </Button>
   );
 }
