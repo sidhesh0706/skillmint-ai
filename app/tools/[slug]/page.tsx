@@ -34,15 +34,15 @@ export function generateStaticParams() {
 
 const liveToolHighlights = [
   {
-    label: "AI workspace",
+    label: "Guided workspace",
     icon: Sparkles,
   },
   {
-    label: "Score insights",
+    label: "Scored results",
     icon: BarChart3,
   },
   {
-    label: "Truth-first rewrites",
+    label: "Truthful rewrites",
     icon: Wand2,
   },
   {

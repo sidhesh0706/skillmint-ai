@@ -3253,7 +3253,12 @@ main * {
 
   .resume-tool-signal {
     min-width: 0;
+    justify-content: center;
     font-size: 0.65rem;
+  }
+
+  .resume-tool-signal:last-child {
+    grid-column: 1 / -1;
   }
 
   .home-workflow-step {

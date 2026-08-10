@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Sparkles, WandSparkles } from "lucide-react";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { InteractiveProductDemo } from "@/components/home/interactive-product-demo";
 import { TrackedLink } from "@/components/tracked-link";
 import styles from "./hero-section.module.css";
@@ -70,20 +70,6 @@ export function HeroSection() {
         </div>
 
         <div className={styles.demoStage}>
-          <div className={styles.floatingSignal} aria-hidden="true">
-            <span>
-              <WandSparkles />
-            </span>
-            <div>
-              <small>Live intelligence</small>
-              <strong>Proof, not filler</strong>
-            </div>
-          </div>
-          <div className={styles.demoContext} aria-hidden="true">
-            <span>Application workspace</span>
-            <span className={styles.demoContextRule} />
-            <strong>Interactive preview</strong>
-          </div>
           <InteractiveProductDemo />
         </div>
       </div>
