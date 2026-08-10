@@ -10,13 +10,13 @@ export type ButtonVariant = "primary" | "secondary" | "ghost";
 export type ButtonSize = "sm" | "md";
 
 const baseStyles =
-  "group inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:translate-y-px";
+  "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:translate-y-px";
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "border border-slate-950 bg-slate-950 text-white shadow-sm hover:bg-slate-800",
+    "border border-slate-950 bg-slate-950 text-white shadow-[0_12px_28px_rgba(15,23,42,0.16)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[0_17px_36px_rgba(15,23,42,0.2)]",
   secondary:
-    "border border-slate-300 bg-white text-slate-900 shadow-sm hover:border-slate-400 hover:bg-slate-50",
+    "border border-slate-300 bg-white text-slate-900 shadow-sm hover:-translate-y-0.5 hover:border-emerald-300 hover:bg-emerald-50/40 hover:shadow-md",
   ghost:
     "border border-transparent bg-transparent text-slate-700 hover:bg-slate-100 hover:text-slate-950",
 };

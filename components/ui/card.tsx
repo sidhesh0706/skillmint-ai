@@ -17,7 +17,7 @@ export function Card({
       className={clsx(
         "rounded-xl border border-slate-200 bg-white shadow-sm",
         interactive &&
-          "transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md",
+          "card-interactive relative isolate overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_22px_48px_rgba(15,23,42,0.09)]",
         className,
       )}
       {...props}

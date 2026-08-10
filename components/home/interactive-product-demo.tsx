@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useEffect,
   useId,
   useRef,
   useState,
@@ -14,6 +15,8 @@ import {
   FileText,
   Linkedin,
   Mail,
+  Pause,
+  Play,
   Search,
   ShieldCheck,
   Sparkles,
@@ -135,14 +138,31 @@ const previews: Preview[] = [
 
 export function InteractiveProductDemo() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const instanceId = useId().replaceAll(":", "");
   const activePreview = previews[activeIndex];
   const ActiveIcon = activePreview.icon;
 
+  useEffect(() => {
+    if (
+      !isPlaying ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % previews.length);
+    }, 5600);
+
+    return () => window.clearInterval(timer);
+  }, [isPlaying]);
+
   function activateTab(index: number) {
     const nextIndex = (index + previews.length) % previews.length;
     setActiveIndex(nextIndex);
+    setIsPlaying(false);
     tabRefs.current[nextIndex]?.focus();
   }
 
@@ -167,6 +187,15 @@ export function InteractiveProductDemo() {
           <span aria-hidden="true" />
           Live workspace
         </span>
+        <button
+          type="button"
+          className={styles.playbackControl}
+          aria-label={isPlaying ? "Pause preview rotation" : "Play preview rotation"}
+          aria-pressed={isPlaying}
+          onClick={() => setIsPlaying((current) => !current)}
+        >
+          {isPlaying ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
+        </button>
       </div>
 
       <div
@@ -191,7 +220,10 @@ export function InteractiveProductDemo() {
               role="tab"
               tabIndex={isActive ? 0 : -1}
               type="button"
-              onClick={() => setActiveIndex(index)}
+              onClick={() => {
+                setActiveIndex(index);
+                setIsPlaying(false);
+              }}
               onKeyDown={(event) => {
                 if (event.key === "ArrowRight") {
                   event.preventDefault();
@@ -213,6 +245,9 @@ export function InteractiveProductDemo() {
             >
               <Icon aria-hidden="true" />
               <span>{preview.tab}</span>
+              {isActive && isPlaying ? (
+                <span className={styles.tabProgress} aria-hidden="true" />
+              ) : null}
             </button>
           );
         })}

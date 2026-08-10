@@ -13,7 +13,7 @@ export function AppShell({
   narrow = false,
 }: AppShellProps) {
   return (
-    <div className={clsx("bg-[#FAFAF8]", className)}>
+    <div className={clsx("app-canvas", className)}>
       <div
         className={clsx(
           "mx-auto w-full px-4 sm:px-6 lg:px-8",
